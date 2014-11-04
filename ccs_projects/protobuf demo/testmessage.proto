@@ -1,0 +1,6 @@
+package maav;
+
+message testmessage {
+	required int32 i32thefirst = 1;
+	required int32 i32thesecond = 2;
+}
