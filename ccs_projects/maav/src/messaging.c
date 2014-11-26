@@ -34,6 +34,8 @@ void messaging_init(messaging_t *messagedata)
 {
 	mdat = messagedata;
 	ringbuf_init(&ringbuf);
+
+	// initialize uart ports and whatever stuff here
 }
 
 /*
