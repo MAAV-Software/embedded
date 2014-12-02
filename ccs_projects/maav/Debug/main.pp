@@ -23,18 +23,20 @@ main.obj: C:/ti/TivaWare_C_Series-2.1.0.12573/driverlib/uart.h
 main.obj: C:/ti/TivaWare_C_Series-2.1.0.12573/driverlib/eeprom.h
 main.obj: C:/ti/TivaWare_C_Series-2.1.0.12573/utils/uartstdio.h
 main.obj: c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/stdarg.h
-main.obj: C:/Users/Sasawat/workspace_v6_0/CommsIntegration/include/PPM.h
-main.obj: C:/Users/Sasawat/workspace_v6_0/CommsIntegration/include/px4_i2c.h
-main.obj: C:/Users/Sasawat/workspace_v6_0/CommsIntegration/include/servoIn.h
-main.obj: C:/Users/Sasawat/workspace_v6_0/CommsIntegration/include/time_util.h
-main.obj: C:/Users/Sasawat/workspace_v6_0/CommsIntegration/include/px4_kalman.h
-main.obj: C:/Users/Sasawat/workspace_v6_0/CommsIntegration/include/dof.h
+main.obj: C:/Users/Sasawat/2workspace/maav-controls/ccs_projects/maav/include/PPM.h
+main.obj: C:/Users/Sasawat/2workspace/maav-controls/ccs_projects/maav/include/px4_i2c.h
+main.obj: C:/Users/Sasawat/2workspace/maav-controls/ccs_projects/maav/include/servoIn.h
+main.obj: C:/Users/Sasawat/2workspace/maav-controls/ccs_projects/maav/include/time_util.h
+main.obj: C:/Users/Sasawat/2workspace/maav-controls/ccs_projects/maav/include/px4_kalman.h
+main.obj: C:/Users/Sasawat/2workspace/maav-controls/ccs_projects/maav/include/dof.h
 main.obj: c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/stdio.h
 main.obj: c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/math.h
 main.obj: c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/ymath.h
 main.obj: c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/stdlib.h
-main.obj: C:/Users/Sasawat/workspace_v6_0/CommsIntegration/include/quad_ctrl.h
+main.obj: C:/Users/Sasawat/2workspace/maav-controls/ccs_projects/maav/include/quad_ctrl.h
 main.obj: c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/math.h
+main.obj: C:/Users/Sasawat/2workspace/maav-controls/ccs_projects/maav/include/messaging.h
+main.obj: C:/Users/Sasawat/2workspace/maav-controls/ccs_projects/maav/include/protobuf.h
 
 ../main.c: 
 c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/stdlib.h: 
@@ -59,15 +61,17 @@ C:/ti/TivaWare_C_Series-2.1.0.12573/driverlib/uart.h:
 C:/ti/TivaWare_C_Series-2.1.0.12573/driverlib/eeprom.h: 
 C:/ti/TivaWare_C_Series-2.1.0.12573/utils/uartstdio.h: 
 c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/stdarg.h: 
-C:/Users/Sasawat/workspace_v6_0/CommsIntegration/include/PPM.h: 
-C:/Users/Sasawat/workspace_v6_0/CommsIntegration/include/px4_i2c.h: 
-C:/Users/Sasawat/workspace_v6_0/CommsIntegration/include/servoIn.h: 
-C:/Users/Sasawat/workspace_v6_0/CommsIntegration/include/time_util.h: 
-C:/Users/Sasawat/workspace_v6_0/CommsIntegration/include/px4_kalman.h: 
-C:/Users/Sasawat/workspace_v6_0/CommsIntegration/include/dof.h: 
+C:/Users/Sasawat/2workspace/maav-controls/ccs_projects/maav/include/PPM.h: 
+C:/Users/Sasawat/2workspace/maav-controls/ccs_projects/maav/include/px4_i2c.h: 
+C:/Users/Sasawat/2workspace/maav-controls/ccs_projects/maav/include/servoIn.h: 
+C:/Users/Sasawat/2workspace/maav-controls/ccs_projects/maav/include/time_util.h: 
+C:/Users/Sasawat/2workspace/maav-controls/ccs_projects/maav/include/px4_kalman.h: 
+C:/Users/Sasawat/2workspace/maav-controls/ccs_projects/maav/include/dof.h: 
 c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/stdio.h: 
 c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/math.h: 
 c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/ymath.h: 
 c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/stdlib.h: 
-C:/Users/Sasawat/workspace_v6_0/CommsIntegration/include/quad_ctrl.h: 
+C:/Users/Sasawat/2workspace/maav-controls/ccs_projects/maav/include/quad_ctrl.h: 
 c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/math.h: 
+C:/Users/Sasawat/2workspace/maav-controls/ccs_projects/maav/include/messaging.h: 
+C:/Users/Sasawat/2workspace/maav-controls/ccs_projects/maav/include/protobuf.h: 

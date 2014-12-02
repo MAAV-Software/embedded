@@ -43,6 +43,10 @@
 	</linkedResources>
 	<variableList>
 		<variable>
+			<name>TIVAWARE_INSTALL</name>
+			<value>file:/C:/ti/TivaWare_C_Series-2.1.0.12573</value>
+		</variable>
+		<variable>
 			<name>TIVA_LOC</name>
 			<value>file:/C:/ti/TivaWare_C_Series-2.1.0.12573</value>
 		</variable>
