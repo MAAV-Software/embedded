@@ -23,18 +23,21 @@ main.obj: C:/ti/TivaWare_C_Series-2.1.0.12573/driverlib/uart.h
 main.obj: C:/ti/TivaWare_C_Series-2.1.0.12573/driverlib/eeprom.h
 main.obj: C:/ti/TivaWare_C_Series-2.1.0.12573/utils/uartstdio.h
 main.obj: c:/ti/ccsv6/tools/compiler/arm_5.1.5/include/stdarg.h
-main.obj: C:/Users/MAAV/Documents/MyWorkspaceTM4C123G/maav/include/PPM.h
-main.obj: C:/Users/MAAV/Documents/MyWorkspaceTM4C123G/maav/include/px4_i2c.h
-main.obj: C:/Users/MAAV/Documents/MyWorkspaceTM4C123G/maav/include/servoIn.h
-main.obj: C:/Users/MAAV/Documents/MyWorkspaceTM4C123G/maav/include/time_util.h
-main.obj: C:/Users/MAAV/Documents/MyWorkspaceTM4C123G/maav/include/px4_kalman.h
-main.obj: C:/Users/MAAV/Documents/MyWorkspaceTM4C123G/maav/include/dof.h
+main.obj: C:/Users/MAAV/maav-controls/ccs_projects/maav/include/PPM.h
+main.obj: C:/Users/MAAV/maav-controls/ccs_projects/maav/include/px4_i2c.h
+main.obj: C:/Users/MAAV/maav-controls/ccs_projects/maav/include/servoIn.h
+main.obj: C:/Users/MAAV/maav-controls/ccs_projects/maav/include/time_util.h
+main.obj: C:/Users/MAAV/maav-controls/ccs_projects/maav/include/px4_kalman.h
+main.obj: C:/Users/MAAV/maav-controls/ccs_projects/maav/include/dof.h
 main.obj: c:/ti/ccsv6/tools/compiler/arm_5.1.5/include/stdio.h
 main.obj: c:/ti/ccsv6/tools/compiler/arm_5.1.5/include/math.h
 main.obj: c:/ti/ccsv6/tools/compiler/arm_5.1.5/include/ymath.h
 main.obj: c:/ti/ccsv6/tools/compiler/arm_5.1.5/include/stdlib.h
-main.obj: C:/Users/MAAV/Documents/MyWorkspaceTM4C123G/maav/include/quad_ctrl.h
+main.obj: C:/Users/MAAV/maav-controls/ccs_projects/maav/include/quad_ctrl.h
 main.obj: c:/ti/ccsv6/tools/compiler/arm_5.1.5/include/math.h
+main.obj: C:/Users/MAAV/maav-controls/ccs_projects/maav/include/utility.h
+main.obj: c:/ti/ccsv6/tools/compiler/arm_5.1.5/include/stdlib.h
+main.obj: c:/ti/ccsv6/tools/compiler/arm_5.1.5/include/stdio.h
 
 ../main.c: 
 c:/ti/ccsv6/tools/compiler/arm_5.1.5/include/stdlib.h: 
@@ -59,15 +62,18 @@ C:/ti/TivaWare_C_Series-2.1.0.12573/driverlib/uart.h:
 C:/ti/TivaWare_C_Series-2.1.0.12573/driverlib/eeprom.h: 
 C:/ti/TivaWare_C_Series-2.1.0.12573/utils/uartstdio.h: 
 c:/ti/ccsv6/tools/compiler/arm_5.1.5/include/stdarg.h: 
-C:/Users/MAAV/Documents/MyWorkspaceTM4C123G/maav/include/PPM.h: 
-C:/Users/MAAV/Documents/MyWorkspaceTM4C123G/maav/include/px4_i2c.h: 
-C:/Users/MAAV/Documents/MyWorkspaceTM4C123G/maav/include/servoIn.h: 
-C:/Users/MAAV/Documents/MyWorkspaceTM4C123G/maav/include/time_util.h: 
-C:/Users/MAAV/Documents/MyWorkspaceTM4C123G/maav/include/px4_kalman.h: 
-C:/Users/MAAV/Documents/MyWorkspaceTM4C123G/maav/include/dof.h: 
+C:/Users/MAAV/maav-controls/ccs_projects/maav/include/PPM.h: 
+C:/Users/MAAV/maav-controls/ccs_projects/maav/include/px4_i2c.h: 
+C:/Users/MAAV/maav-controls/ccs_projects/maav/include/servoIn.h: 
+C:/Users/MAAV/maav-controls/ccs_projects/maav/include/time_util.h: 
+C:/Users/MAAV/maav-controls/ccs_projects/maav/include/px4_kalman.h: 
+C:/Users/MAAV/maav-controls/ccs_projects/maav/include/dof.h: 
 c:/ti/ccsv6/tools/compiler/arm_5.1.5/include/stdio.h: 
 c:/ti/ccsv6/tools/compiler/arm_5.1.5/include/math.h: 
 c:/ti/ccsv6/tools/compiler/arm_5.1.5/include/ymath.h: 
 c:/ti/ccsv6/tools/compiler/arm_5.1.5/include/stdlib.h: 
-C:/Users/MAAV/Documents/MyWorkspaceTM4C123G/maav/include/quad_ctrl.h: 
+C:/Users/MAAV/maav-controls/ccs_projects/maav/include/quad_ctrl.h: 
 c:/ti/ccsv6/tools/compiler/arm_5.1.5/include/math.h: 
+C:/Users/MAAV/maav-controls/ccs_projects/maav/include/utility.h: 
+c:/ti/ccsv6/tools/compiler/arm_5.1.5/include/stdlib.h: 
+c:/ti/ccsv6/tools/compiler/arm_5.1.5/include/stdio.h: 

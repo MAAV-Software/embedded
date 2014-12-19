@@ -1,7 +1,7 @@
 ******************************************************************************
                   TI ARM Linker PC v5.1.5                      
 ******************************************************************************
->> Linked Wed Oct 29 12:50:09 2014
+>> Linked Thu Dec 18 21:15:57 2014
 
 OUTPUT FILE NAME:   <maav.out>
 ENTRY POINT SYMBOL: "_c_int00"  address: 000079c9
@@ -11,25 +11,25 @@ MEMORY CONFIGURATION
 
          name            origin    length      used     unused   attr    fill
 ----------------------  --------  ---------  --------  --------  ----  --------
-  FLASH                 00000000   00040000  00008b98  00037468  R  X
-  SRAM                  20000000   00008000  00001d7c  00006284  RW X
+  FLASH                 00000000   00040000  00008b90  00037470  R  X
+  SRAM                  20000000   00008000  00001d78  00006288  RW X
 
 
 SEGMENT ALLOCATION MAP
 
 run origin  load origin   length   init length attrs members
 ----------  ----------- ---------- ----------- ----- -------
-00000000    00000000    00008b98   00008b98    r-x
+00000000    00000000    00008b90   00008b90    r-x
   00000000    00000000    0000026c   0000026c    r-- .intvecs
   0000026c    0000026c    000080f4   000080f4    r-x .text
   00008360    00008360    000006c8   000006c8    r-- .const
-  00008a28    00008a28    00000170   00000170    r-- .cinit
-20000000    20000000    00001d84   00000000    rw-
+  00008a28    00008a28    00000168   00000168    r-- .cinit
+20000000    20000000    00001d7c   00000000    rw-
   20000000    20000000    0000026c   00000000    rw- .vtable
   2000026c    2000026c    00001000   00000000    rw- .stack
-  20001270    20001270    00000424   00000000    rw- .data
-  20001698    20001698    00000400   00000000    rw- .sysmem
-  20001a98    20001a98    000002ec   00000000    rw- .bss
+  20001270    20001270    00000420   00000000    rw- .data
+  20001690    20001690    00000400   00000000    rw- .sysmem
+  20001a90    20001a90    000002ec   00000000    rw- .bss
 
 
 SECTION ALLOCATION MAP
@@ -47,8 +47,9 @@ section   page    origin      length       input sections
                   0000026c    00001300     px4_kalman.obj (.text)
                   0000156c    00000ec0     rtsv7M4_T_le_v4SPD16_eabi.lib : _printfi.obj (.text)
                   0000242c    00000dc0     dof.obj (.text)
-                  000031ec    00000dc0     main.obj (.text)
-                  00003fac    00000600     quad_ctrl.obj (.text)
+                  000031ec    000008f8     main.obj (.text)
+                  00003ae4    00000600     quad_ctrl.obj (.text)
+                  000040e4    000004c8     utility.obj (.text)
                   000045ac    0000049c     uartstdio.obj (.text)
                   00004a48    000003cc     rtsv7M4_T_le_v4SPD16_eabi.lib : memory.obj (.text)
                   00004e14    00000310                                   : lowlev.obj (.text)
@@ -212,14 +213,12 @@ section   page    origin      length       input sections
                   00008a16    00000002     --HOLE-- [fill = 0]
                   00008a18    00000010     px4_kalman.obj (.const)
 
-.cinit     0    00008a28    00000170     
-                  00008a28    00000136     (.cinit..data.load) [load image, compression = rle]
-                  00008b5e    00000002     --HOLE-- [fill = 0]
-                  00008b60    0000000c     (__TI_handler_table)
-                  00008b6c    00000004     --HOLE-- [fill = 0]
-                  00008b70    00000008     (.cinit..bss.load) [load image, compression = zero_init]
-                  00008b78    00000008     (.cinit..vtable.load) [load image, compression = zero_init]
-                  00008b80    00000018     (__TI_cinit_table)
+.cinit     0    00008a28    00000168     
+                  00008a28    00000134     (.cinit..data.load) [load image, compression = rle]
+                  00008b5c    0000000c     (__TI_handler_table)
+                  00008b68    00000008     (.cinit..bss.load) [load image, compression = zero_init]
+                  00008b70    00000008     (.cinit..vtable.load) [load image, compression = zero_init]
+                  00008b78    00000018     (__TI_cinit_table)
 
 .vtable    0    20000000    0000026c     UNINITIALIZED
                   20000000    0000026c     driverlib.lib : interrupt.obj (.vtable)
@@ -227,7 +226,7 @@ section   page    origin      length       input sections
 .stack     0    2000026c    00001000     UNINITIALIZED
                   2000026c    00001000     --HOLE--
 
-.data      0    20001270    00000424     UNINITIALIZED
+.data      0    20001270    00000420     UNINITIALIZED
                   20001270    000000f0     rtsv7M4_T_le_v4SPD16_eabi.lib : defs.obj (.data:_ftable)
                   20001360    000000d0                                   : lowlev.obj (.data)
                   20001430    000000b0                                   : signal.obj (.data:sigtable)
@@ -235,68 +234,68 @@ section   page    origin      length       input sections
                   20001560    00000068     px4_kalman.obj (.data)
                   200015c8    00000068     rtsv7M4_T_le_v4SPD16_eabi.lib : xfvalues.obj (.data)
                   20001630    00000010                                   : defs.obj (.data)
-                  20001640    0000000c     main.obj (.data)
-                  2000164c    0000000c     rtsv7M4_T_le_v4SPD16_eabi.lib : memory.obj (.data)
-                  20001658    00000008     dof.obj (.data)
-                  20001660    00000008     rtsv7M4_T_le_v4SPD16_eabi.lib : _lock.obj (.data)
-                  20001668    00000008                                   : exit.obj (.data)
-                  20001670    00000008                                   : feraiseexcept.obj (.data)
-                  20001678    00000005     time_util.obj (.data)
-                  2000167d    00000003     --HOLE--
-                  20001680    00000005     uartstdio.obj (.data)
-                  20001685    00000003     --HOLE--
-                  20001688    00000004     rtsv7M4_T_le_v4SPD16_eabi.lib : errno.obj (.data)
-                  2000168c    00000004                                   : fopen.obj (.data)
-                  20001690    00000004                                   : stkdepth_vars.obj (.data)
+                  20001640    0000000c                                   : memory.obj (.data)
+                  2000164c    00000008     dof.obj (.data)
+                  20001654    00000008     rtsv7M4_T_le_v4SPD16_eabi.lib : _lock.obj (.data)
+                  2000165c    00000008                                   : exit.obj (.data)
+                  20001664    00000008                                   : feraiseexcept.obj (.data)
+                  2000166c    00000008     utility.obj (.data)
+                  20001674    00000005     time_util.obj (.data)
+                  20001679    00000003     --HOLE--
+                  2000167c    00000005     uartstdio.obj (.data)
+                  20001681    00000003     --HOLE--
+                  20001684    00000004     rtsv7M4_T_le_v4SPD16_eabi.lib : errno.obj (.data)
+                  20001688    00000004                                   : fopen.obj (.data)
+                  2000168c    00000004                                   : stkdepth_vars.obj (.data)
 
-.sysmem    0    20001698    00000400     UNINITIALIZED
-                  20001698    00000008     rtsv7M4_T_le_v4SPD16_eabi.lib : memory.obj (.sysmem)
-                  200016a0    000003f8     --HOLE--
+.sysmem    0    20001690    00000400     UNINITIALIZED
+                  20001690    00000008     rtsv7M4_T_le_v4SPD16_eabi.lib : memory.obj (.sysmem)
+                  20001698    000003f8     --HOLE--
 
-.bss       0    20001a98    000002ec     UNINITIALIZED
-                  20001a98    00000120     rtsv7M4_T_le_v4SPD16_eabi.lib : trgmsg.obj (.bss:__CIOBUF_)
-                  20001bb8    000000a0                                   : defs.obj (.bss:__TI_tmpnams)
-                  20001c58    00000028     PPM.obj (.bss:ui32_PPM_Arr)
-                  20001c80    00000020     (.common:pulseIn_PortA)
-                  20001ca0    00000020     (.common:pulseIn_PortE)
-                  20001cc0    00000020     (.common:riseTime$1)
-                  20001ce0    00000020     (.common:riseTime$2)
-                  20001d00    00000016     (.common:px4)
-                  20001d16    00000016     (.common:px4_buffer)
-                  20001d2c    00000004     (.common:CENTERTHROT)
-                  20001d30    00000008     (.common:frequency)
-                  20001d38    00000008     (.common:parmbuf)
-                  20001d40    00000008     (.common:timer_cycles_per_overflow)
-                  20001d48    00000008     (.common:timer_period_us)
-                  20001d50    00000004     (.common:GPIO_pinMask)
-                  20001d54    00000004     (.common:GPIO_portBase)
-                  20001d58    00000004     (.common:I2C_Base)
-                  20001d5c    00000004     (.common:idx_px4)
-                  20001d60    00000004     (.common:stickPosScale)
-                  20001d64    00000004     (.common:sysClock)
-                  20001d68    00000004     (.common:timerBase)
-                  20001d6c    00000004     (.common:timerBase)
-                  20001d70    00000004     (.common:ui32_PPM_FrameLen)
-                  20001d74    00000004     (.common:ui32_PPM_Max)
-                  20001d78    00000004     (.common:ui32_PPM_Min)
-                  20001d7c    00000004     (.common:ui32_PPM_TimeLow)
-                  20001d80    00000001     (.common:PPM_Channel)
-                  20001d81    00000001     (.common:dataFresh)
-                  20001d82    00000001     (.common:g_PX4_State)
-                  20001d83    00000001     (.common:num_PPM_Channels)
+.bss       0    20001a90    000002ec     UNINITIALIZED
+                  20001a90    00000120     rtsv7M4_T_le_v4SPD16_eabi.lib : trgmsg.obj (.bss:__CIOBUF_)
+                  20001bb0    000000a0                                   : defs.obj (.bss:__TI_tmpnams)
+                  20001c50    00000028     PPM.obj (.bss:ui32_PPM_Arr)
+                  20001c78    00000020     (.common:pulseIn_PortA)
+                  20001c98    00000020     (.common:pulseIn_PortE)
+                  20001cb8    00000020     (.common:riseTime$1)
+                  20001cd8    00000020     (.common:riseTime$2)
+                  20001cf8    00000016     (.common:px4)
+                  20001d0e    00000016     (.common:px4_buffer)
+                  20001d24    00000004     (.common:CENTERTHROT)
+                  20001d28    00000008     (.common:frequency)
+                  20001d30    00000008     (.common:parmbuf)
+                  20001d38    00000008     (.common:timer_cycles_per_overflow)
+                  20001d40    00000008     (.common:timer_period_us)
+                  20001d48    00000004     (.common:GPIO_pinMask)
+                  20001d4c    00000004     (.common:GPIO_portBase)
+                  20001d50    00000004     (.common:I2C_Base)
+                  20001d54    00000004     (.common:idx_px4)
+                  20001d58    00000004     (.common:stickPosScale)
+                  20001d5c    00000004     (.common:sysClock)
+                  20001d60    00000004     (.common:timerBase)
+                  20001d64    00000004     (.common:timerBase)
+                  20001d68    00000004     (.common:ui32_PPM_FrameLen)
+                  20001d6c    00000004     (.common:ui32_PPM_Max)
+                  20001d70    00000004     (.common:ui32_PPM_Min)
+                  20001d74    00000004     (.common:ui32_PPM_TimeLow)
+                  20001d78    00000001     (.common:PPM_Channel)
+                  20001d79    00000001     (.common:dataFresh)
+                  20001d7a    00000001     (.common:g_PX4_State)
+                  20001d7b    00000001     (.common:num_PPM_Channels)
 
 
 LINKER GENERATED COPY TABLES
 
-__TI_cinit_table @ 00008b80 records: 3, size/record: 8, table size: 24
-	.data: load addr=00008a28, load size=00000136 bytes, run addr=20001270, run size=00000424 bytes, compression=rle
-	.bss: load addr=00008b70, load size=00000008 bytes, run addr=20001a98, run size=000002ec bytes, compression=zero_init
-	.vtable: load addr=00008b78, load size=00000008 bytes, run addr=20000000, run size=0000026c bytes, compression=zero_init
+__TI_cinit_table @ 00008b78 records: 3, size/record: 8, table size: 24
+	.data: load addr=00008a28, load size=00000134 bytes, run addr=20001270, run size=00000420 bytes, compression=rle
+	.bss: load addr=00008b68, load size=00000008 bytes, run addr=20001a90, run size=000002ec bytes, compression=zero_init
+	.vtable: load addr=00008b70, load size=00000008 bytes, run addr=20000000, run size=0000026c bytes, compression=zero_init
 
 
 LINKER GENERATED HANDLER TABLE
 
-__TI_handler_table @ 00008b60 records: 3, size/record: 4, table size: 12
+__TI_handler_table @ 00008b5c records: 3, size/record: 4, table size: 12
 	index: 0, handler: __TI_zero_init
 	index: 1, handler: __TI_decompress_rle24
 	index: 2, handler: __TI_decompress_none
@@ -308,7 +307,7 @@ address    name
 --------   ----
 00007a9d   C$$EXIT
 00007607   C$$IO$$
-00003f13   ConfigureUART
+000044cb   ConfigureUART
 00007b69   EEPROMInit
 00006b7d   EEPROMProgram
 00007d55   EEPROMRead
@@ -349,7 +348,7 @@ address    name
 0000830d   I2CMasterIntClear
 00008315   I2CMasterIntEnableEx
 0000831d   I2CMasterSlaveAddrSet
-20001d58   I2C_Base
+20001d50   I2C_Base
 0000757d   IntEnable
 00008005   IntPrioritySet
 00007d89   IntRegister
@@ -362,7 +361,7 @@ address    name
 20001580   Kqz
 20001588   Kqzdot
 00005301   MinMaxPulseThresh
-000032f7   PID_XY_2ms
+000041ef   PID_XY_2ms
 00005125   PPM_init
 0000527f   PPM_setPulse
 000052a7   PPM_setStickPos
@@ -409,7 +408,7 @@ UNDEFED    SHT$$INIT_ARRAY$$Limit
 00007ae1   _Dtest
 00007519   _Dunscale
 200014f0   _Eps
-20001688   _Errno
+20001684   _Errno
 00006f21   _FAtan
 200015c8   _FDenorm
 00007e8d   _FDtest
@@ -420,40 +419,40 @@ UNDEFED    SHT$$INIT_ARRAY$$Limit
 20001608   _FSnan
 20001628   _FXbig
 2000162c   _FZero
-20001670   _Fenv
+20001664   _Fenv
 00007f21   _Feraise
 20001500   _Hugeval
 20001510   _Inf
 20001520   _Nan
 20001540   _Rteps
 20001530   _Snan
-20001674   _Tls_setup__Fenv
+20001668   _Tls_setup__Fenv
 20001550   _Xbig
 20001558   _Zero
-20001a98   __CIOBUF_
+20001a90   __CIOBUF_
 2000126c   __STACK_END
 00001000   __STACK_SIZE
 2000046c   __STACK_TOP
 00000400   __SYSMEM_SIZE
-00008b80   __TI_CINIT_Base
-00008b98   __TI_CINIT_Limit
-00008b60   __TI_Handler_Table_Base
-00008b6c   __TI_Handler_Table_Limit
+00008b78   __TI_CINIT_Base
+00008b90   __TI_CINIT_Limit
+00008b5c   __TI_Handler_Table_Base
+00008b68   __TI_Handler_Table_Limit
 00000001   __TI_args_main
 00007231   __TI_auto_init
 00006011   __TI_cleanup
-20001668   __TI_cleanup_ptr
+2000165c   __TI_cleanup_ptr
 00007101   __TI_closefile
 000082c1   __TI_decompress_none
 0000834b   __TI_decompress_rle24
 00006d05   __TI_doflush
-2000166c   __TI_dtors_ptr
+20001660   __TI_dtors_ptr
 20001630   __TI_ft_end
 00002123   __TI_printfi
 00006ed7   __TI_rd_ok
 0000760b   __TI_readmsg
 00000000   __TI_static_base__
-20001bb8   __TI_tmpnams
+20001bb0   __TI_tmpnams
 000075dd   __TI_writemsg
 00006e75   __TI_wrt_ok
 0000823f   __TI_zero_init
@@ -495,25 +494,25 @@ ffffffff   __c_args__
 000079c9   _c_int00
 00008360   _ctypes_
 20001270   _ftable
-20001660   _lock
+20001654   _lock
 00007ec1   _nassert
 000081cb   _nop
 000081c3   _register_lock
 000081bd   _register_unlock
-20001698   _sys_memory
-20001664   _unlock
+20001690   _sys_memory
+20001658   _unlock
 00007aa1   abort
 00005077   add_device
 00006dc5   asinf
 000078a1   atoi
-0000321d   automomousMode
+00004115   automomousMode
 ffffffff   binit
 00004ddd   calloc
 00005a47   capturePortPulse
 00005025   close
-000034f5   copyGains
+00004531   copyGains
 00007a59   copy_in
-20001d81   dataFresh
+20001d79   dataFresh
 00002c99   dof_calc_ctrl_dt
 00002cf9   dof_calc_error
 00002aff   dof_discrete_d2xdt2
@@ -527,7 +526,7 @@ ffffffff   binit
 000027f3   dof_set_setpt
 000026ad   dof_set_state
 00002fe9   dof_value_PID
-0000347d   driveSwitch
+00004375   driveSwitch
 00007aa9   exit
 00007167   fclose
 00007e59   feraiseexcept
@@ -539,11 +538,11 @@ ffffffff   binit
 00004b37   free
 0000603d   freopen
 000074b5   fseek
-20001d82   g_PX4_State
+20001d7a   g_PX4_State
 20000000   g_pfnRAMVectors
 00000000   g_pfnVectors
-20001d5c   idx_px4
-00003317   initSwitch
+20001d54   idx_px4
+0000420f   initSwitch
 000057fb   init_px4_i2c
 00005877   initiate_PX4_transmit
 00000d3d   kalman_correct_xyyawdot
@@ -556,10 +555,10 @@ ffffffff   binit
 000003e9   kalman_update
 00005001   lseek
 00007755   ltoa
-0000352d   main
-20001690   main_func_sp
+000031ed   main
+2000168c   main_func_sp
 00004ad5   malloc
-00003267   map
+0000415f   map
 00004cfd   memalign
 00008089   memccpy
 0000817b   memchr
@@ -567,21 +566,20 @@ ffffffff   binit
 000073d9   memset
 00005ee7   millis
 00004a49   minit
-000032b7   ms2XY_rate
-000032d7   ms2height
-00003245   ms2pulse
+000041af   ms2XY_rate
+000041cf   ms2height
+0000413d   ms2pulse
 00004f53   open
-00003229   pulse2ms
-20001c80   pulseIn_PortA
-20001ca0   pulseIn_PortE
-00003205   pulseLowerThird
-000031ed   pulseUpperThird
+00004121   pulse2ms
+20001c78   pulseIn_PortA
+20001c98   pulseIn_PortE
+000040fd   pulseLowerThird
+000040e5   pulseUpperThird
 0000704d   putc
 00007051   putchar
 0000664d   puts
-20001d00   px4
-20001d16   px4_buffer
-20001640   px4_can_transmit
+20001cf8   px4
+20001d0e   px4_buffer
 00005895   px4_i2c_dataFresh
 000058f5   px4_i2c_getHeight
 000058ef   px4_i2c_getTimestep
@@ -596,24 +594,24 @@ ffffffff   binit
 000058b1   px4_i2c_get_pixel_flow_y_sum
 000058c9   px4_i2c_get_qual
 000058fd   px4_i2c_makeDataStale
-00003fad   qc_create
-00004599   qc_destroy
-00003fc3   qc_init
-0000424b   qc_runPID
-00004321   qc_runRatePID
-00004291   qc_runValuePID
-00004381   qc_setDJIValues
-000041e5   qc_setSetpt
-0000417f   qc_setState
+00003ae5   qc_create
+000040d1   qc_destroy
+00003afb   qc_init
+00003d83   qc_runPID
+00003e59   qc_runRatePID
+00003dc9   qc_runValuePID
+00003eb9   qc_setDJIValues
+00003d1d   qc_setSetpt
+00003cb7   qc_setState
 00007f7f   raise
 00004f2f   read
-000033eb   readSwitch
+000042e3   readSwitch
 00004bf7   realloc
-000034c5   recordGains
+00004507   recordGains
 00004ea5   remove
 00004f07   remove_device
 00004ec9   rename
-00003e15   sendToSerialPort
+000043cd   sendToSerialPort
 00005975   servoIn_attachPin
 00005a0d   servoIn_detachPin
 00005a0f   servoIn_getPulse
@@ -629,10 +627,10 @@ ffffffff   binit
 000081d1   strlen
 00007ef1   strncpy
 00005d7d   time_init
-20001d68   timerBase
+20001d60   timerBase
 00005e35   timestamp_now
 00004ea5   unlink
-20001678   uptime_overflow
+20001674   uptime_overflow
 00004e15   write
 
 
@@ -667,32 +665,32 @@ address    name
 00002cf9   dof_calc_error
 00002fe9   dof_value_PID
 000030d1   dof_rate_PID
-000031ed   pulseUpperThird
-00003205   pulseLowerThird
-0000321d   automomousMode
-00003229   pulse2ms
-00003245   ms2pulse
-00003267   map
-000032b7   ms2XY_rate
-000032d7   ms2height
-000032f7   PID_XY_2ms
-00003317   initSwitch
-000033eb   readSwitch
-0000347d   driveSwitch
-000034c5   recordGains
-000034f5   copyGains
-0000352d   main
-00003e15   sendToSerialPort
-00003f13   ConfigureUART
-00003fad   qc_create
-00003fc3   qc_init
-0000417f   qc_setState
-000041e5   qc_setSetpt
-0000424b   qc_runPID
-00004291   qc_runValuePID
-00004321   qc_runRatePID
-00004381   qc_setDJIValues
-00004599   qc_destroy
+000031ed   main
+00003ae5   qc_create
+00003afb   qc_init
+00003cb7   qc_setState
+00003d1d   qc_setSetpt
+00003d83   qc_runPID
+00003dc9   qc_runValuePID
+00003e59   qc_runRatePID
+00003eb9   qc_setDJIValues
+000040d1   qc_destroy
+000040e5   pulseUpperThird
+000040fd   pulseLowerThird
+00004115   automomousMode
+00004121   pulse2ms
+0000413d   ms2pulse
+0000415f   map
+000041af   ms2XY_rate
+000041cf   ms2height
+000041ef   PID_XY_2ms
+0000420f   initSwitch
+000042e3   readSwitch
+00004375   driveSwitch
+000043cd   sendToSerialPort
+000044cb   ConfigureUART
+00004507   recordGains
+00004531   copyGains
 000045ad   UARTStdioConfig
 000045f3   UARTwrite
 00004639   UARTgets
@@ -898,10 +896,10 @@ address    name
 00008360   _ctypes_
 00008a18   Z_MAX_RETURN
 00008a20   Z_MIN_RETURN
-00008b60   __TI_Handler_Table_Base
-00008b6c   __TI_Handler_Table_Limit
-00008b80   __TI_CINIT_Base
-00008b98   __TI_CINIT_Limit
+00008b5c   __TI_Handler_Table_Base
+00008b68   __TI_Handler_Table_Limit
+00008b78   __TI_CINIT_Base
+00008b90   __TI_CINIT_Limit
 20000000   g_pfnRAMVectors
 2000026c   __stack
 2000046c   __STACK_TOP
@@ -941,32 +939,31 @@ address    name
 20001634   __aeabi_stdin
 20001638   __aeabi_stdout
 2000163c   __aeabi_stderr
-20001640   px4_can_transmit
-20001660   _lock
-20001664   _unlock
-20001668   __TI_cleanup_ptr
-2000166c   __TI_dtors_ptr
-20001670   _Fenv
-20001674   _Tls_setup__Fenv
-20001678   uptime_overflow
-20001688   _Errno
-20001690   main_func_sp
-20001698   _sys_memory
-20001a98   __CIOBUF_
-20001bb8   __TI_tmpnams
-20001c80   pulseIn_PortA
-20001ca0   pulseIn_PortE
-20001d00   px4
-20001d16   px4_buffer
-20001d58   I2C_Base
-20001d5c   idx_px4
-20001d68   timerBase
-20001d81   dataFresh
-20001d82   g_PX4_State
+20001654   _lock
+20001658   _unlock
+2000165c   __TI_cleanup_ptr
+20001660   __TI_dtors_ptr
+20001664   _Fenv
+20001668   _Tls_setup__Fenv
+20001674   uptime_overflow
+20001684   _Errno
+2000168c   main_func_sp
+20001690   _sys_memory
+20001a90   __CIOBUF_
+20001bb0   __TI_tmpnams
+20001c78   pulseIn_PortA
+20001c98   pulseIn_PortE
+20001cf8   px4
+20001d0e   px4_buffer
+20001d50   I2C_Base
+20001d54   idx_px4
+20001d60   timerBase
+20001d79   dataFresh
+20001d7a   g_PX4_State
 ffffffff   __binit__
 ffffffff   __c_args__
 ffffffff   binit
 UNDEFED    SHT$$INIT_ARRAY$$Base
 UNDEFED    SHT$$INIT_ARRAY$$Limit
 
-[328 symbols]
+[327 symbols]

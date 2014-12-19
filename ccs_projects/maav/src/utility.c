@@ -29,8 +29,10 @@
 #include "utils/uartstdio.h"
 
 #include "px4_kalman.h"
+#include "PPM.h"
 #include "dof.h"
 #include "quad_ctrl.h"
+#include "px4_i2c.h"
 #include "utility.h"
 
 /***************** Utility Functions for RC Controller ************************/

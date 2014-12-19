@@ -13,7 +13,7 @@ src/px4_i2c.obj: C:/ti/TivaWare_C_Series-2.1.0.12573/driverlib/sysctl.h
 src/px4_i2c.obj: C:/ti/TivaWare_C_Series-2.1.0.12573/inc/hw_memmap.h
 src/px4_i2c.obj: C:/ti/TivaWare_C_Series-2.1.0.12573/utils/uartstdio.h
 src/px4_i2c.obj: c:/ti/ccsv6/tools/compiler/arm_5.1.5/include/stdarg.h
-src/px4_i2c.obj: C:/Users/MAAV/Documents/MyWorkspaceTM4C123G/maav/include/px4_i2c.h
+src/px4_i2c.obj: C:/Users/MAAV/maav-controls/ccs_projects/maav/include/px4_i2c.h
 
 ../src/px4_i2c.c: 
 c:/ti/ccsv6/tools/compiler/arm_5.1.5/include/stdbool.h: 
@@ -28,4 +28,4 @@ C:/ti/TivaWare_C_Series-2.1.0.12573/driverlib/sysctl.h:
 C:/ti/TivaWare_C_Series-2.1.0.12573/inc/hw_memmap.h: 
 C:/ti/TivaWare_C_Series-2.1.0.12573/utils/uartstdio.h: 
 c:/ti/ccsv6/tools/compiler/arm_5.1.5/include/stdarg.h: 
-C:/Users/MAAV/Documents/MyWorkspaceTM4C123G/maav/include/px4_i2c.h: 
+C:/Users/MAAV/maav-controls/ccs_projects/maav/include/px4_i2c.h: 

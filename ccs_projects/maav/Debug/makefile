@@ -8,6 +8,7 @@ CG_TOOL_ROOT := c:/ti/ccsv6/tools/compiler/arm_5.1.5
 
 ORDERED_OBJS += \
 $(GEN_CMDS__FLAG) \
+"./src/utility.obj" \
 "./src/time_util.obj" \
 "./src/servoIn.obj" \
 "./src/quad_ctrl.obj" \
@@ -140,7 +141,7 @@ all: maav.out
 maav.out: $(OBJS) $(CMD_SRCS) $(LIB_SRCS) $(GEN_CMDS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: ARM Linker'
-	"c:/ti/ccsv6/tools/compiler/arm_5.1.5/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 --abi=eabi -me -g --define=PART_TM4C1230C3PM --display_error_number --diag_warning=225 --diag_wrap=off -z -m"maav.map" --heap_size=1024 --stack_size=4096 -i"c:/ti/ccsv6/tools/compiler/arm_5.1.5/lib" -i"c:/ti/ccsv6/tools/compiler/arm_5.1.5/include" --reread_libs --warn_sections --display_error_number --diag_wrap=off --xml_link_info="maav_linkInfo.xml" --rom_model -o "maav.out" $(ORDERED_OBJS)
+	"c:/ti/ccsv6/tools/compiler/arm_5.1.5/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 --abi=eabi -me -g --define=PART_TM4C1230C3PM --display_error_number --diag_warning=225 --diag_wrap=off -z -m"maav.map" --heap_size=1024 --stack_size=4096 -i"c:/ti/ccsv6/tools/compiler/arm_5.1.5/lib" -i"c:/ti/ccsv6/tools/compiler/arm_5.1.5/include" -i"C:/Users/MAAV/maav-controls/ccs_projects/maav/include" --reread_libs --warn_sections --display_error_number --diag_wrap=off --xml_link_info="maav_linkInfo.xml" --rom_model -o "maav.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -153,8 +154,8 @@ maav.hex: $(EXE_OUTPUTS)
 # Other Targets
 clean:
 	-$(RM) $(EXE_OUTPUTS__QUOTED)$(BIN_OUTPUTS__QUOTED)
-	-$(RM) "main.pp" "tm4c123gh6pm_startup_ccs.pp" "uartstdio.pp" "src\PPM.pp" "src\dof.pp" "src\px4_i2c.pp" "src\px4_kalman.pp" "src\quad_ctrl.pp" "src\servoIn.pp" "src\time_util.pp" 
-	-$(RM) "main.obj" "tm4c123gh6pm_startup_ccs.obj" "uartstdio.obj" "src\PPM.obj" "src\dof.obj" "src\px4_i2c.obj" "src\px4_kalman.obj" "src\quad_ctrl.obj" "src\servoIn.obj" "src\time_util.obj" 
+	-$(RM) "main.pp" "tm4c123gh6pm_startup_ccs.pp" "uartstdio.pp" "src\PPM.pp" "src\dof.pp" "src\px4_i2c.pp" "src\px4_kalman.pp" "src\quad_ctrl.pp" "src\servoIn.pp" "src\time_util.pp" "src\utility.pp" 
+	-$(RM) "main.obj" "tm4c123gh6pm_startup_ccs.obj" "uartstdio.obj" "src\PPM.obj" "src\dof.obj" "src\px4_i2c.obj" "src\px4_kalman.obj" "src\quad_ctrl.obj" "src\servoIn.obj" "src\time_util.obj" "src\utility.obj" 
 	-@echo 'Finished clean'
 	-@echo ' '
 
