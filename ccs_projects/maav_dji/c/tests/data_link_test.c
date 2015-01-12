@@ -1,5 +1,5 @@
-#include "include/data_link.h"
-#include "include/test_definitions.h"
+#include "../include/data_link.h"
+#include "../include/test_definitions.h"
 #include <stdio.h>
 #include <stdint.h>
 

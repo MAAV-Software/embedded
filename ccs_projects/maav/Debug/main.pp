@@ -35,6 +35,8 @@ main.obj: c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/ymath.h
 main.obj: c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/stdlib.h
 main.obj: C:/Users/Sasawat/workspace_v6_0/CommsIntegration/include/quad_ctrl.h
 main.obj: c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/math.h
+main.obj: C:/Users/Sasawat/workspace_v6_0/CommsIntegration/include/messaging.h
+main.obj: C:/Users/Sasawat/workspace_v6_0/CommsIntegration/include/protobuf.h
 
 ../main.c: 
 c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/stdlib.h: 
@@ -71,3 +73,5 @@ c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/ymath.h:
 c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/stdlib.h: 
 C:/Users/Sasawat/workspace_v6_0/CommsIntegration/include/quad_ctrl.h: 
 c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/math.h: 
+C:/Users/Sasawat/workspace_v6_0/CommsIntegration/include/messaging.h: 
+C:/Users/Sasawat/workspace_v6_0/CommsIntegration/include/protobuf.h: 
