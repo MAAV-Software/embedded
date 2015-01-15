@@ -230,7 +230,7 @@ int main(void) {
 
 	// Initialize messaging system
 	messaging_t messages;
-	messaging_init(messages);
+	messaging_init(&messages);
 	// Load messages struct with initial values.
 	// gains
 	messages._KPX = qc.xyzh[0].value_gains[0];
@@ -344,35 +344,35 @@ int main(void) {
 			messages._cmd &= ~MESSAGING_FLAG_SET_PIDCONST;
 			// Arrays to use dof_set_gains with
 			float newGains[3];
-			float newRategains[3];
+			float newRateGains[3];
 			newGains[0] = messages._KPX;
 			newGains[1] = messages._KIX;
 			newGains[2] = messages._KDX;
 			newRateGains[0] = messages._KPXdot;
 			newRateGains[1] = messages._KIXdot;
 			newRateGains[2] = messages._KDXdot;
-			dof_set_gains(qc.xyzh[0], newGains, newRategains);
+			dof_set_gains(&qc.xyzh[0], newGains, newRateGains);
 			newGains[0] = messages._KPY;
 			newGains[1] = messages._KIY;
 			newGains[2] = messages._KDY;
 			newRateGains[0] = messages._KPYdot;
 			newRateGains[1] = messages._KIYdot;
 			newRateGains[2] = messages._KDYdot;
-			dof_set_gains(qc.xyzh[1], newGains, newRategains);
+			dof_set_gains(&qc.xyzh[1], newGains, newRateGains);
 			newGains[0] = messages._KPZ;
 			newGains[1] = messages._KIZ;
 			newGains[2] = messages._KDZ;
 			newRateGains[0] = messages._KPZdot;
 			newRateGains[1] = messages._KIZdot;
 			newRateGains[2] = messages._KDZdot;
-			dof_set_gains(qc.xyzh[2], newGains, newRategains);
+			dof_set_gains(&qc.xyzh[2], newGains, newRateGains);
 			newGains[0] = messages._KPH;
 			newGains[1] = messages._KIH;
 			newGains[2] = messages._KDH;
 			newRateGains[0] = 0;
 			newRateGains[1] = 0;
 			newRateGains[2] = 0;
-			dof_set_gains(qc.xyzh[3], newGains, newRategains);
+			dof_set_gains(&qc.xyzh[3], newGains, newRateGains);
 		}
 
 		if(loopTime-update_setPoints_time > 20) {
