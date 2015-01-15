@@ -1,8 +1,6 @@
 #include "../include/data_link.h"
 #include <stdlib.h>
 
-#include <stdio.h>
-
 char* data_frame_state_names[] = { "READY", "LEN_1", "LEN_2", "LEN_1_ESCP", "LEN_2_ESCP", "READ", "READ_ESCP", "CHECKSUM", "CHECKSUM_ESCP", "DONE", "START_ERR", "CHECKSUM_ERR", "DATA_ERR" };
 
 static inline void data_link_branchless_assemble_byte(uint8_t* pkt, size_t* pkt_i,
@@ -21,6 +19,12 @@ data_frame_t* data_frame_create(uint16_t size) {
 void data_frame_destroy(data_frame_t* frame) {
 	free(frame->buffer);
 	free(frame);
+}
+
+void data_frame_clear(data_frame_t* frame) {
+	frame->size = 0;
+	frame->index = 0;
+	frame->state = READY;
 }
 
 // state machine to process bytes in the data link layer

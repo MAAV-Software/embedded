@@ -50,6 +50,18 @@ data_frame_t* data_frame_create(uint16_t size);
 void data_frame_destroy(data_frame_t* frame);
 
 /**
+ * @brief clears the data from a dataframe after an ERROR or DONE
+ * @details
+ * Usage of this functions is as follows
+ * while (data_frame->state != DONE) {
+ * 	data_frame_push_byte(data_frame, byte);
+ * }
+ * data_frame_clear(data_frame);
+ * @param frame [description]
+ */
+void data_frame_clear(data_frame_t* frame);
+
+/**
  * @brief pushes a byte into the data frame.
  * @details used for decoding a bytes stream one at a time. frame will keep a state
  * of where it is in the decode process.
