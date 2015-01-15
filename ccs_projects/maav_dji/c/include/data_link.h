@@ -4,6 +4,8 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+#include "../include/ringbuf.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -11,6 +13,7 @@ extern "C" {
 #define DATA_FRAME_START_DELIMITER 0x7E
 #define DATA_FRAME_ESCAPE_CHAR 0x7D
 #define DATA_FRAME_XOR 0x20
+#define DATA_LINK_UART_BASE UART2_BASE //TODO: Changed to correct UART base
 
 /*
 A Data link layer packet will look at like
@@ -96,6 +99,15 @@ uint16_t data_link_assemble_packet(uint8_t* msg, uint8_t* pkt, uint16_t size);
  * @return true if successfully decoded
  */
 bool data_link_decode_packet(uint8_t* msg, uint8_t* pkt, uint16_t* size);
+
+/**
+ * @brief initializes data link
+ * @details does not initialized UART or interrupts. Those MUST be enabled
+ * separately after calling this function
+ * @param isr_read_store_to the ring buffer that incoming data will be dumped to
+ * in the interrupt service routine
+ */
+void data_link_init(ringbuf_t *isr_read_store_to);
 
 #ifdef __cplusplus
 }

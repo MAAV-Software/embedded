@@ -1,5 +1,17 @@
-#include "../include/data_link.h"
 #include <stdlib.h>
+#include <stdio.h>
+#include <stdint.h>
+#include <stdbool.h>
+
+#include "inc/hw_ints.h"
+#include "inc/hw_memmap.h"
+
+#include "driverlib/interrupt.h"
+#include "driverlib/uart.h"
+
+#include "../include/data_link.h"
+
+ringbuf_t* ringbuf;
 
 char* data_frame_state_names[] = { "READY", "LEN_1", "LEN_2", "LEN_1_ESCP", "LEN_2_ESCP", "READ", "READ_ESCP", "CHECKSUM", "CHECKSUM_ESCP", "DONE", "START_ERR", "CHECKSUM_ERR", "DATA_ERR" };
 
@@ -14,6 +26,25 @@ data_frame_t* data_frame_create(uint16_t size) {
 	frame->size = 0;
 	frame->index = 0;
 	frame->state = READY;
+
+	return frame;
+}
+
+void data_link_init(ringbuf_t *isr_read_store_to)
+{
+	ringbuf = isr_read_store_to;
+}
+
+void data_link_uart_rx_isr(void)
+{
+	//Cleaer the interrupt flag
+	uint32_t status;
+	status = UARTIntStatus(DATA_LINK_UART_BASE, true);
+	UARTIntClear(DATA_LINK_UART_BASE, status);
+
+	//Dump HW FIFO bytes into ring buffer
+	while (UARTCharsAvail(DATA_LINK_UART_BASE) &&
+			ringbuf_push(ringbuf, UARTCharGet(DATA_LINK_UART_BASE)));
 }
 
 void data_frame_destroy(data_frame_t* frame) {

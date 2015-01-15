@@ -22,7 +22,7 @@ $(GEN_CMDS__FLAG) \
 "./src/servoIn.obj" \
 "./src/time_util.obj" \
 "C:/ti/TivaWare_C_Series-2.1.0.12573/driverlib/ccs/Debug/driverlib.lib" \
-"C:/ti/TivaWare_C_Series-2.1.0.12573/sensorlib/ccs/Debug/sensorlib.lib" \
+"C:/ti/ccsv6/eclipse/TIVAWARE_INSTALL/sensorlib/ccs/Debug/sensorlib.lib" \
 "../tm4c123gh6pm.cmd" \
 -l"libc.a" \
 
@@ -124,32 +124,32 @@ endif
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXE_OUTPUTS += \
-CommsIntegration.out \
+maav.out \
 
 EXE_OUTPUTS__QUOTED += \
-"CommsIntegration.out" \
+"maav.out" \
 
 BIN_OUTPUTS += \
-CommsIntegration.hex \
+maav.hex \
 
 BIN_OUTPUTS__QUOTED += \
-"CommsIntegration.hex" \
+"maav.hex" \
 
 
 # All Target
-all: CommsIntegration.out
+all: maav.out
 
 # Tool invocations
-CommsIntegration.out: $(OBJS) $(CMD_SRCS) $(LIB_SRCS) $(GEN_CMDS)
+maav.out: $(OBJS) $(CMD_SRCS) $(LIB_SRCS) $(GEN_CMDS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: ARM Linker'
-	"c:/ti/ccsv6/tools/compiler/arm_5.1.6/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 --abi=eabi -me -g --define=PART_TM4C1230C3PM --display_error_number --diag_warning=225 --diag_wrap=off -z -m"CommsIntegration.map" --heap_size=1024 --stack_size=4096 -i"c:/ti/ccsv6/tools/compiler/arm_5.1.6/lib" -i"c:/ti/ccsv6/tools/compiler/arm_5.1.6/include" --reread_libs --warn_sections --display_error_number --diag_wrap=off --xml_link_info="CommsIntegration_linkInfo.xml" --rom_model -o "CommsIntegration.out" $(ORDERED_OBJS)
+	"c:/ti/ccsv6/tools/compiler/arm_5.1.6/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 --abi=eabi -me -g --define=PART_TM4C1230C3PM --display_error_number --diag_warning=225 --diag_wrap=off -z -m"maav.map" --heap_size=1024 --stack_size=4096 -i"c:/ti/ccsv6/tools/compiler/arm_5.1.6/lib" -i"c:/ti/ccsv6/tools/compiler/arm_5.1.6/include" --reread_libs --warn_sections --display_error_number --diag_wrap=off --xml_link_info="maav_linkInfo.xml" --rom_model -o "maav.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
-CommsIntegration.hex: $(EXE_OUTPUTS)
+maav.hex: $(EXE_OUTPUTS)
 	@echo 'Invoking: ARM Hex Utility'
-	"c:/ti/ccsv6/tools/compiler/arm_5.1.6/bin/armhex"  -o "CommsIntegration.hex" $(EXE_OUTPUTS__QUOTED)
+	"c:/ti/ccsv6/tools/compiler/arm_5.1.6/bin/armhex"  -o "maav.hex" $(EXE_OUTPUTS__QUOTED)
 	@echo 'Finished building: $@'
 	@echo ' '
 

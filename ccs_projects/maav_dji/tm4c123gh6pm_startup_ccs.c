@@ -55,6 +55,8 @@ extern uint32_t __STACK_TOP;
 //
 //*****************************************************************************
 // To be added by user
+// TODO: Stick this function into the proper spot in the interrupt vector table
+extern void data_link_uart_rx_isr(void);
 
 //*****************************************************************************
 //
