@@ -6,3 +6,5 @@ All controls code, documentation, and other important products/resources will go
 
 
 Please do all development work in your dev branch.
+
+Contact Sajan Patel at sajanptl@umich.edu for more information.
