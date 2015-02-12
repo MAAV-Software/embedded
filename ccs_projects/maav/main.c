@@ -49,7 +49,7 @@ int main(void)
 	 *  Use the #defined constant "SYSCLOCK" from utility.h instead.
 	 */
 	SysCtlClockSet(SYSCTL_SYSDIV_2_5 | SYSCTL_USE_PLL | SYSCTL_OSC_MAIN |
-			SYSCTL_XTAL_16MHZ);
+				   SYSCTL_XTAL_16MHZ);
 
 	// Init the LEDs on the Launchpad for debugging and init them to off
 	SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
@@ -65,14 +65,14 @@ int main(void)
 	// Intialize timer for PPM, PPM, and timer 4 for servo (RC) input
 	time_init(SYSCTL_PERIPH_TIMER1, SYSCLOCK, TIMER1_BASE, INT_TIMER1A);	// Chose any open timer
 	PPM_init(SYSCTL_PERIPH_TIMER2, SYSCLOCK, TIMER2_BASE, INT_TIMER2A,		// Chose any open timer
-			GPIO_PORTB_BASE, GPIO_PIN_6, 4);								// Chose any open port/pin
+			 GPIO_PORTB_BASE, GPIO_PIN_6, 4);								// Chose any open port/pin
 	servoIn_init(SYSCTL_PERIPH_TIMER4, TIMER4_BASE); // Chose timer4 until encapsulated
 	servoIn_attachPin();
 
 	// Init PX4 on I2C Ch 3 on Port D Pins 0-3
 	init_px4_i2c(SYSCTL_PERIPH_I2C3, SYSCTL_PERIPH_GPIOD, SYSCTL_PERIPH_GPIOD,
-				SYSCLOCK, I2C3_BASE, GPIO_PORTD_BASE, GPIO_PORTD_BASE,
-				GPIO_PIN_0, GPIO_PIN_1, GPIO_PD0_I2C3SCL, GPIO_PD1_I2C3SDA);
+				 SYSCLOCK, I2C3_BASE, GPIO_PORTD_BASE, GPIO_PORTD_BASE,
+				 GPIO_PIN_0, GPIO_PIN_1, GPIO_PD0_I2C3SCL, GPIO_PD1_I2C3SDA);
 
 	// Turn on Floating point hardware
 	FPULazyStackingEnable();
@@ -140,9 +140,9 @@ int main(void)
 			switchUpdateTime = loopTime;
 			int i;
 			for (i = 0; i < 3; ++i) readSwitch(&sw[i]);
-//			driveSwitch(&sw[0], sw[0].readState);
-//			driveSwitch(&sw[1], sw[1].readState);
-//			driveSwitch(&sw[2], sw[2].readState);
+			driveSwitch(&sw[0], sw[0].readState);
+			driveSwitch(&sw[1], sw[1].readState);
+			driveSwitch(&sw[2], sw[2].readState);
 		}
 
 		// Check controller mode from RC Kill Switch switch
@@ -260,7 +260,7 @@ int main(void)
 
 			// I2C Failure Recovery
 			if ((loopTime - lastFreshDataTime > 50000) || (frameCount == 65535)
-					|| (frameCount == 0))
+				|| (frameCount == 0))
 			{
 				driveSwitch(&sw[1], 1);
 				UARTprintf("\n\nI2C_fail\n\n");
@@ -269,8 +269,8 @@ int main(void)
 				SysCtlDelay(100);	// wait a few clock cycles for the switch signal to settle.
 				// re-init PX4 comm
 				init_px4_i2c(SYSCTL_PERIPH_I2C3, SYSCTL_PERIPH_GPIOD, SYSCTL_PERIPH_GPIOD,
-							SYSCLOCK, I2C3_BASE, GPIO_PORTD_BASE, GPIO_PORTD_BASE,
-							GPIO_PIN_0, GPIO_PIN_1, GPIO_PD0_I2C3SCL, GPIO_PD1_I2C3SDA);
+							 SYSCLOCK, I2C3_BASE, GPIO_PORTD_BASE, GPIO_PORTD_BASE,
+							 GPIO_PIN_0, GPIO_PIN_1, GPIO_PD0_I2C3SCL, GPIO_PD1_I2C3SDA);
 			}
             else driveSwitch(&sw[1], 0);
 
@@ -342,7 +342,7 @@ int main(void)
 				// convert Z Uval into PWM Pulse
 				float zPulse = PID_XY_2ms(qc.xyzh[Z_AXIS].Uval);
 
-				zPulse = zPulse > 1.2 ? zPulse : 1.2;
+				zPulse = (zPulse > 1.2) ? zPulse : 1.2;
 				PPM_setPulse(2, ms2pulse(zPulse));	// Z control to DJI
 				PPM_setPulse(3, servoIn_getPulse(RC_CHAN4));
 			}

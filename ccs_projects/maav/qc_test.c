@@ -56,6 +56,7 @@ int main(void)
 
 	for (i = 0; i < MAXSIZE; ++i)
 	{
+		time = i;
 		qc_setState(&qc, state, time);
 		qc_setSetpt(&qc, setpt, time);
 		qc_runPID(&qc);
@@ -67,6 +68,7 @@ int main(void)
 		}
 
 		// create new state/setpts here
+
 	}
 }
 
