@@ -37,58 +37,68 @@
 
 /***************** Utility Functions for RC Controller ************************/
 // Returns true if the pulse is longer than 1.66ms
-bool pulseUpperThird(volatile uint32_t pulseWidth) {
-	return (pulseWidth > SYSCLOCK / 602) ? true : false;
+bool pulseUpperThird(volatile uint32_t pulseWidth)
+{
+	return (pulseWidth > (SYSCLOCK / 602)) ? true : false;
 }
 
 // Returns true if the pulse is shorter than 1.33ms
-bool pulseLowerThird(volatile uint32_t pulseWidth) {
-	return (pulseWidth < SYSCLOCK / 752) ? true : false;
+bool pulseLowerThird(volatile uint32_t pulseWidth)
+{
+	return (pulseWidth < (SYSCLOCK / 752)) ? true : false;
 }
 
 // Returns true if the quadrotor is in autonomous mode
-bool automomousMode(volatile uint32_t pulseWidth) {
-	return(pulseLowerThird(pulseWidth));
+bool automomousMode(volatile uint32_t pulseWidth)
+{
+	return pulseLowerThird(pulseWidth);
 }
 
 // Converts pulse ticks to miliseconds
-float pulse2ms(uint32_t pulse) {
+float pulse2ms(uint32_t pulse)
+{
 	static float one_ms = SYSCLOCK / 1000;
-	return( (float)(pulse) / one_ms);
+	return ((float)(pulse)) / one_ms;
 }
 
 // Converts miliseconds to pulse ticks
-uint32_t ms2pulse(float ms) {
+uint32_t ms2pulse(float ms)
+{
 	static float one_ms = SYSCLOCK / 1000;
-	return( (uint32_t)(ms * one_ms) );
+	return (uint32_t)(ms * one_ms);
 }
 
 // Maps x which is in the range of [fromLow, fromHigh] into the range of
 // [toLow, toHigh] and returns the result.
-float map(float x, float fromLow, float fromHigh, float toLow, float toHigh) {
-	return (x - fromLow) * (toHigh - toLow) / (fromHigh - fromLow) + toLow;
+float map(float x, float fromLow, float fromHigh, float toLow, float toHigh)
+{
+	return ((x - fromLow) * (toHigh - toLow)) / ((fromHigh - fromLow) + toLow);
 }
 
 // Calculate XY_rate pass-through from pulse width
 // (i.e. signal from RC controller modified and passed to DJI)
-float ms2XY_rate(float ms) {
+float ms2XY_rate(float ms)
+{
 	return(map(ms, 1.0, 2.0, -1.0, 1.0));
 }
 
 // Calculates height pass-through from pulse width
-float ms2height(float ms) {
+float ms2height(float ms)
+{
 	return(map(ms, 1.0, 2.0, 0.5, 1.5));
 }
 
 // Calcualtes PID XY setpoints from pulse width
-float PID_XY_2ms(float val) {
+float PID_XY_2ms(float val)
+{
 	return(map(val, -1.0, 1.0, 1.0, 2.0));
 }
 
 /**************** Utility Functions for Lighted 3-pos Switch ******************/
 // Initilializes the 3-position, lighted switch
 void initSwitch(uint32_t periph, uint32_t base, uint32_t pin,
-				SwitchData_t *sData) {
+				SwitchData_t *sData)
+{
 	sData->periph = periph;
 	sData->portBase = base;
 	sData->pinNum = pin;
@@ -96,7 +106,7 @@ void initSwitch(uint32_t periph, uint32_t base, uint32_t pin,
 	SysCtlPeripheralEnable(sData->periph);
 	GPIOPinTypeGPIOInput(sData->portBase, sData->pinNum);
 	GPIOPadConfigSet(sData->portBase, sData->pinNum, GPIO_STRENGTH_2MA,
-			GPIO_PIN_TYPE_STD_WPU);
+				GPIO_PIN_TYPE_STD_WPU);
 
 	SysCtlDelay(10); // wait a few clock cycles for the switch signal to settle.
 
@@ -112,7 +122,8 @@ void initSwitch(uint32_t periph, uint32_t base, uint32_t pin,
 }
 
 // Reads the switch position
-void readSwitch(SwitchData_t *sData) {
+void readSwitch(SwitchData_t *sData)
+{
 	GPIOPinTypeGPIOInput(sData->portBase, sData->pinNum);// Set GPIO to input
 	GPIOPadConfigSet(sData->portBase, sData->pinNum, GPIO_STRENGTH_2MA,
 			GPIO_PIN_TYPE_STD_WPU);// I may not need this
@@ -130,7 +141,8 @@ void readSwitch(SwitchData_t *sData) {
 }
 
 // Drives the switch's LED
-void driveSwitch(SwitchData_t *sData, uint8_t direction) {
+void driveSwitch(SwitchData_t *sData, uint8_t direction)
+{
 	sData->driveState = direction;
 	uint8_t mask = sData->driveState ? sData->pinNum : 0;
 	GPIOPinWrite(sData->portBase, sData->pinNum, mask);
@@ -139,7 +151,8 @@ void driveSwitch(SwitchData_t *sData, uint8_t direction) {
 }
 
 /****************** Serial Port/Kalman Debug Utility Functions ****************/
-void sendToSerialPort(kalman_t* filter, uint16_t frameCount) {
+void sendToSerialPort(kalman_t* filter, uint16_t frameCount)
+{
 	char buffer[150];
 	uint32_t len = snprintf(buffer, 150,
 			"%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%f,%f,%f,%f,%f,%f,%f,%f,%f\n",
@@ -168,44 +181,31 @@ void sendToSerialPort(kalman_t* filter, uint16_t frameCount) {
 	return;
 }
 
-//*****************************************************************************
-//
 // Configure the UART and its pins.  This must be called before UARTprintf().
-//
-//*****************************************************************************
-void ConfigureUART(void) {
-	//
+void ConfigureUART(void)
+{
 	// Enable the GPIO Peripheral used by the UART.
-	//
 	SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
 
-	//
 	// Enable UART0
-	//
 	SysCtlPeripheralEnable(SYSCTL_PERIPH_UART0);
 
-	//
 	// Configure GPIO Pins for UART mode.
-	//
 	GPIOPinConfigure(GPIO_PA0_U0RX);
 	GPIOPinConfigure(GPIO_PA1_U0TX);
 	GPIOPinTypeUART(GPIO_PORTA_BASE, GPIO_PIN_0 | GPIO_PIN_1);
 
-	//
 	// Use the internal 16MHz oscillator as the UART clock source.
-	//
 	UARTClockSourceSet(UART0_BASE, UART_CLOCK_PIOSC);
 
-	//
 	// Initialize the UART for console I/O.
-	//
 	UARTStdioConfig(0, 115200, 16000000);
-
 }
 
 /*********************** PID Gains Memory Utilities ***************************/
 // Record gains from quad_ctrl into EEPROM
-void recordGains(quad_ctrl_t *qc) {
+void recordGains(quad_ctrl_t *qc)
+{
 	uint32_t memLoc = GAINS_START_LOC;
 	EEPROMProgram((uint32_t*)(qc->xyzh[X_AXIS].rate_gains) , memLoc,
 			sizeof(qc->xyzh[X_AXIS].rate_gains));
@@ -216,7 +216,8 @@ void recordGains(quad_ctrl_t *qc) {
 }
 
 // Copy gains from EEPROM into quad_ctrl
-void copyGains(quad_ctrl_t *qc) {
+void copyGains(quad_ctrl_t *qc)
+{
 	uint32_t memLoc = GAINS_START_LOC;
 	EEPROMRead((uint32_t*)(qc->xyzh[X_AXIS].rate_gains) , memLoc,
 			sizeof(qc->xyzh[X_AXIS].rate_gains));

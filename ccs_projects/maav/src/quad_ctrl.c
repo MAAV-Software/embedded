@@ -32,7 +32,7 @@
  */
 quad_ctrl_t* qc_create()
 {
-    quad_ctrl_t *ret = (quad_ctrl_t*) malloc(sizeof(quad_ctrl_t));
+    quad_ctrl_t *ret = (quad_ctrl_t*)malloc(sizeof(quad_ctrl_t));
     	// allocate dynamic memory
     qc_init(ret); // intialize struct
     return ret;
@@ -64,6 +64,7 @@ void qc_init(quad_ctrl_t *qc)
 		{1.00, 0.00, 0.00,},	/* z */
 		{1.00, 0.00, 0.00,},	/* yaw */
 	};
+
 	float rate_gains[4][3] =
 	{
 		/* Kp,  Ki,    Kd		rate gains */

@@ -41,7 +41,8 @@
 #include "utility.h"
 
 ////////////////////////////// MAIN FUNCTION ///////////////////////////////////
-int main(void) {
+int main(void)
+{
 	/*
 	 *  Set system clock to 80Mhz.
 	 *  Note that SysCtlClockGet() has a bug for this frequency.
@@ -68,6 +69,7 @@ int main(void) {
 	servoIn_init(SYSCTL_PERIPH_TIMER4, TIMER4_BASE); // Chose timer4 until encapsulated
 	servoIn_attachPin();
 
+	// Init PX4 on I2C Ch 3 on Port D Pins 0-3
 	init_px4_i2c(SYSCTL_PERIPH_I2C3, SYSCTL_PERIPH_GPIOD, SYSCTL_PERIPH_GPIOD,
 				SYSCLOCK, I2C3_BASE, GPIO_PORTD_BASE, GPIO_PORTD_BASE,
 				GPIO_PIN_0, GPIO_PIN_1, GPIO_PD0_I2C3SCL, GPIO_PD1_I2C3SDA);
@@ -83,11 +85,10 @@ int main(void) {
 	SysCtlPeripheralEnable(SYSCTL_PERIPH_EEPROM0);
 	EEPROMInit();
 
-//    kalman_t *filter = kalman_create();
+	// Init Kalman Filter
 	kalman_t filter_data;
 	kalman_t *filter = &filter_data;
     kalman_create(filter);
-
 	uint16_t oldFrameCount = 0;
 
 	/* Create quad_ctrl and intialize it. (NOT WITH DYNAMIC MEMORY) */
@@ -124,51 +125,64 @@ int main(void) {
 	uint32_t test_PX4_time = 0;
 	uint32_t update_setPoints_time = 0;
 	uint32_t lastFreshDataTime = 0;
-	uint8_t  mode = 3;	// defalut to RC mode
-	bool px4_can_transmit = true;
+	uint8_t mode = 3;	// defalut to RC mode
+	bool px4_can_transmit = true; // flag for PX4 transmission
 
 	SysCtlDelay(SYSCLOCK);	// about 3 seconds.  Required for DJI startup
 
-	for(;;) {
+	for (;;) // master loop
+	{
 		loopTime = millis(); // get current time
 
-		if((loopTime - switchUpdateTime) > 10) {
+		// check lighted switches
+		if ((loopTime - switchUpdateTime) > 10)
+		{
 			switchUpdateTime = loopTime;
 			int i;
-			for(i = 0; i < 3; ++i) readSwitch(&sw[i]);
+			for (i = 0; i < 3; ++i) readSwitch(&sw[i]);
 //			driveSwitch(&sw[0], sw[0].readState);
 //			driveSwitch(&sw[1], sw[1].readState);
 //			driveSwitch(&sw[2], sw[2].readState);
 		}
 
-		if((loopTime - modeCheckTime) > 100) {
+		// Check controller mode from RC Kill Switch switch
+		if ((loopTime - modeCheckTime) > 100)
+		{
 			modeCheckTime = loopTime;
 
 			mode = automomousMode(servoIn_getPulse(RC_CHAN5)) ? 3 :
 					pulseUpperThird(servoIn_getPulse(KILL_CHAN5)) ? 1 : 2;
-			switch(mode) {
-				case(1):
+			switch (mode)
+			{
+				case 1:
 					GPIOPinWrite(GPIO_PORTF_BASE, RED_LED | GREEN_LED |
 							     BLUE_LED, RED_LED);
 					break;
-				case(2):
+				case 2:
 					GPIOPinWrite(GPIO_PORTF_BASE, RED_LED | GREEN_LED |
 							     BLUE_LED, BLUE_LED);
 					break;
-				case(3):
+				case 3:
 					GPIOPinWrite(GPIO_PORTF_BASE, RED_LED | GREEN_LED |
 								 BLUE_LED, GREEN_LED);
 					break;
 			}
 		}
 
-		if((loopTime - writeEepromTime) > 1000) {	// Every now and then, log the gains to EEPROM
+		// Every now and then, log the gains to EEPROM
+		if ((loopTime - writeEepromTime) > 1000)
+		{
 			writeEepromTime = loopTime;
 			recordGains(&qc);
 //			EEPROMProgram(gains.raw, 0x0, sizeof(gains.raw));
 		}
 
-		if((loopTime - gainCheckTime) > 100) {
+		/*
+		 * PID GAIN UPDATES
+		 * TODO Replace RC gain update with Tuning Program update.
+		 */
+		if ((loopTime - gainCheckTime) > 100)
+		{
 			gainCheckTime = loopTime;
 //			char buffer[100];
 //			uint32_t len = snprintf(buffer, 1000,
@@ -179,26 +193,38 @@ int main(void) {
 //					z_valueGains[Kd]);
 //			UARTwrite(buffer, len);
 
-			if(mode == 1) {
-				if(      pulseUpperThird(servoIn_getPulse(KILL_CHAN1))) xy_rateGains[Kd] *= 1.01;
-				else if( pulseLowerThird(servoIn_getPulse(KILL_CHAN1))) xy_rateGains[Kd] *= 0.99;
-				if(      pulseUpperThird(servoIn_getPulse(KILL_CHAN2))) xy_rateGains[Kp] *= 1.01;
-				else if( pulseLowerThird(servoIn_getPulse(KILL_CHAN2))) xy_rateGains[Kp] *= 0.99;
+			if (mode == 1) // XY rate mode
+			{
+				if (pulseUpperThird(servoIn_getPulse(KILL_CHAN1)))
+					xy_rateGains[Kd] *= 1.01;
+				else if (pulseLowerThird(servoIn_getPulse(KILL_CHAN1)))
+					xy_rateGains[Kd] *= 0.99;
+				if (pulseUpperThird(servoIn_getPulse(KILL_CHAN2)))
+					xy_rateGains[Kp] *= 1.01;
+				else if (pulseLowerThird(servoIn_getPulse(KILL_CHAN2)))
+					xy_rateGains[Kp] *= 0.99;
 
 				dof_set_gains(&(qc.xyzh[X_AXIS]), xy_valueGains, xy_rateGains);
 				dof_set_gains(&(qc.xyzh[Y_AXIS]), xy_valueGains, xy_rateGains);
 			}
-			else if(mode == 2) {
-				if(      pulseUpperThird(servoIn_getPulse(KILL_CHAN1))) z_valueGains[Kd] *= 1.01;
-				else if( pulseLowerThird(servoIn_getPulse(KILL_CHAN1))) z_valueGains[Kd] *= 0.99;
-				if(      pulseUpperThird(servoIn_getPulse(KILL_CHAN2))) z_valueGains[Kp] *= 1.01;
-				else if( pulseLowerThird(servoIn_getPulse(KILL_CHAN2))) z_valueGains[Kp] *= 0.99;
+			else if (mode == 2) // Z mode
+			{
+				if (pulseUpperThird(servoIn_getPulse(KILL_CHAN1)))
+					z_valueGains[Kd] *= 1.01;
+				else if (pulseLowerThird(servoIn_getPulse(KILL_CHAN1)))
+					z_valueGains[Kd] *= 0.99;
+				if (pulseUpperThird(servoIn_getPulse(KILL_CHAN2)))
+					z_valueGains[Kp] *= 1.01;
+				else if (pulseLowerThird(servoIn_getPulse(KILL_CHAN2)))
+					z_valueGains[Kp] *= 0.99;
 
 				dof_set_gains(&(qc.xyzh[Z_AXIS]), z_valueGains, z_rateGains);
 			}
 		}
 
-		if((loopTime - update_setPoints_time) > 20) {
+		// Update controller setpoints
+		if ((loopTime - update_setPoints_time) > 20)
+		{
 			update_setPoints_time = loopTime;
 
 			setpoints[5] = ms2XY_rate(pulse2ms(servoIn_getPulse(RC_CHAN1)));	// Y Rate
@@ -208,33 +234,40 @@ int main(void) {
 			setpoints[0] = setpoints[1] = setpoints[3] = setpoints[6] = setpoints[7] = 0;
 
 //			setpoints[2] = ms2height(1.5);
-			if(qc.xyzh[Z_AXIS].Uval > 0)	 	driveSwitch(&sw[0], 1);
-			else 								driveSwitch(&sw[0], 0);
-			if(qc.xyzh[Z_AXIS].setpt[0] >1.0)	driveSwitch(&sw[2], 1);
-			else								driveSwitch(&sw[2], 0);
+			if (qc.xyzh[Z_AXIS].Uval > 0) driveSwitch(&sw[0], 1);
+			else driveSwitch(&sw[0], 0);
+			if (qc.xyzh[Z_AXIS].setpt[0] >1.0) driveSwitch(&sw[2], 1);
+			else driveSwitch(&sw[2], 0);
 
 			qc_setSetpt(&qc, setpoints, timestamp_now());
 		}
 
-		if(((loopTime - update_PX4_time) > 10) && (px4_can_transmit == true)) {
+		// Initiate PX4 polled transmission
+		if (((loopTime - update_PX4_time) > 10) && (px4_can_transmit == true))
+		{
 			update_PX4_time = loopTime;
-
 			initiate_PX4_transmit();
 			px4_can_transmit = false;
 //			driveSwitch(&sw[1], 1);
 		}
 
-		if((loopTime - test_PX4_time) > 25000) {
+		// Test for I2C race condition during transmission
+		if ((loopTime - test_PX4_time) > 25000)
+		{
 			test_PX4_time = loopTime;
 
 			uint16_t frameCount = px4_i2c_get_frame_count();
-			if((loopTime - lastFreshDataTime > 50000) || (frameCount == 65535)
-					|| (frameCount == 0)) {
+
+			// I2C Failure Recovery
+			if ((loopTime - lastFreshDataTime > 50000) || (frameCount == 65535)
+					|| (frameCount == 0))
+			{
 				driveSwitch(&sw[1], 1);
 				UARTprintf("\n\nI2C_fail\n\n");
 
 				SysCtlPeripheralReset(SYSCTL_PERIPH_I2C3);
 				SysCtlDelay(100);	// wait a few clock cycles for the switch signal to settle.
+				// re-init PX4 comm
 				init_px4_i2c(SYSCTL_PERIPH_I2C3, SYSCTL_PERIPH_GPIOD, SYSCTL_PERIPH_GPIOD,
 							SYSCLOCK, I2C3_BASE, GPIO_PORTD_BASE, GPIO_PORTD_BASE,
 							GPIO_PIN_0, GPIO_PIN_1, GPIO_PD0_I2C3SCL, GPIO_PD1_I2C3SDA);
@@ -248,11 +281,16 @@ int main(void) {
 //			UARTwrite(buffer, len);
 		}
 
-        if(px4_i2c_dataFresh()) {
+		/*
+		 * Get PX4 data and feed into Kalman Filter.
+		 */
+        if (px4_i2c_dataFresh())
+        {
         	lastFreshDataTime = loopTime;
 
         	uint16_t frameCount = px4_i2c_get_frame_count();
-            if (frameCount != oldFrameCount) {
+            if (frameCount != oldFrameCount)
+            {
                 kalman_process_data(filter,
                                     px4_i2c_get_flow_comp_m_x(),
                                     px4_i2c_get_flow_comp_m_y(),
@@ -271,6 +309,11 @@ int main(void) {
             px4_can_transmit = true;
         }
 
+        /*
+         * On every iteration, do Kalman Predict and Kalman Correct steps by
+         * calling kalman_update(). Extract data into feedback and set
+         * qc state. Then run all PID with qc_runPID().
+         */
         uint64_t tempTimestamp = timestamp_now();
         kalman_update(filter, tempTimestamp);
 
@@ -286,23 +329,29 @@ int main(void) {
         qc_setState(&qc, feedback, tempTimestamp);	// Send feedback to quad control
         qc_runPID(&qc);								// Run PID
 
-		if ((loopTime - update_DJI_time) > 10) {
+        // Send updated signals to DJI
+		if ((loopTime - update_DJI_time) > 10)
+		{
 			update_DJI_time = loopTime;
 
-			if ((mode == 1) || (mode == 2)){	// autonomous mode. do something smart
+			if ((mode == 1) || (mode == 2)) // autonomous mode. do something smart
+			{
 				PPM_setPulse(0, servoIn_getPulse(RC_CHAN1));
 				PPM_setPulse(1, servoIn_getPulse(RC_CHAN2));
+
+				// convert Z Uval into PWM Pulse
 				float zPulse = PID_XY_2ms(qc.xyzh[Z_AXIS].Uval);
+
 				zPulse = zPulse > 1.2 ? zPulse : 1.2;
 				PPM_setPulse(2, ms2pulse(zPulse));	// Z control to DJI
 				PPM_setPulse(3, servoIn_getPulse(RC_CHAN4));
 			}
-			else {  	// RC passthrough.  Dump RC Data directly into the DJI
+			else // RC passthrough.  Dump RC Data directly into the DJI
+			{
 				PPM_setPulse(0, servoIn_getPulse(RC_CHAN1));	// Y Accel
 				PPM_setPulse(1, servoIn_getPulse(RC_CHAN2));	// X Accel
 				PPM_setPulse(2, servoIn_getPulse(RC_CHAN3));	// Z Accel
 				PPM_setPulse(3, servoIn_getPulse(RC_CHAN4));	// Yaw Rate
-
 			}
 		} // end DJI update
 	} // end main loop

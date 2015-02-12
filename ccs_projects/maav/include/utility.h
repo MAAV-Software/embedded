@@ -50,23 +50,27 @@
 enum PID_gains_enum {Kp, Ki, Kd};
 
 // Structs for reading and saving PID Gains
-typedef struct {
+typedef struct
+{
 	float Kp;
 	float Kd;
 } Gains_t;
 
-typedef struct {
+typedef struct
+{
 	Gains_t XY;
 	Gains_t Z;
 } PID_Gains_t;
 
-typedef union {
+typedef union
+{
 	PID_Gains_t PID;
 	uint32_t raw[sizeof(PID_Gains_t)];
 } PID_Wrapper_t;
 
 // Struct for lighted 3-position switch states
-typedef struct {
+typedef struct
+{
 	uint32_t periph;
 	uint32_t portBase;
 	uint8_t  pinNum		: 4;
@@ -105,7 +109,8 @@ float ms2height(float ms);
 float PID_XY_2ms(float val);
 
 // Initilializes the 3-position, lighted switch
-void initSwitch(uint32_t periph, uint32_t base, uint32_t pin, SwitchData_t *sData);
+void initSwitch(uint32_t periph, uint32_t base, uint32_t pin,
+				SwitchData_t *sData);
 
 // Reads the switch position
 void readSwitch(SwitchData_t *sData);
