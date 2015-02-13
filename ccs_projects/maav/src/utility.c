@@ -106,7 +106,7 @@ void initSwitch(uint32_t periph, uint32_t base, uint32_t pin,
 	SysCtlPeripheralEnable(sData->periph);
 	GPIOPinTypeGPIOInput(sData->portBase, sData->pinNum);
 	GPIOPadConfigSet(sData->portBase, sData->pinNum, GPIO_STRENGTH_2MA,
-				GPIO_PIN_TYPE_STD_WPU);
+					 GPIO_PIN_TYPE_STD_WPU);
 
 	SysCtlDelay(10); // wait a few clock cycles for the switch signal to settle.
 
@@ -126,7 +126,7 @@ void readSwitch(SwitchData_t *sData)
 {
 	GPIOPinTypeGPIOInput(sData->portBase, sData->pinNum);// Set GPIO to input
 	GPIOPadConfigSet(sData->portBase, sData->pinNum, GPIO_STRENGTH_2MA,
-			GPIO_PIN_TYPE_STD_WPU);// I may not need this
+					 GPIO_PIN_TYPE_STD_WPU);// I may not need this
 
 	SysCtlDelay(5);	// wait a few clock cycles for the switch signal to settle.
 
@@ -208,10 +208,10 @@ void recordGains(quad_ctrl_t *qc)
 {
 	uint32_t memLoc = GAINS_START_LOC;
 	EEPROMProgram((uint32_t*)(qc->xyzh[X_AXIS].rate_gains) , memLoc,
-			sizeof(qc->xyzh[X_AXIS].rate_gains));
+				  sizeof(qc->xyzh[X_AXIS].rate_gains));
 	memLoc += sizeof(qc->xyzh[X_AXIS].rate_gains);
 	EEPROMProgram((uint32_t *)(qc->xyzh[Z_AXIS].value_gains) , memLoc,
-			sizeof(qc->xyzh[Z_AXIS].value_gains));
+				  sizeof(qc->xyzh[Z_AXIS].value_gains));
 	return;
 }
 
@@ -220,9 +220,9 @@ void copyGains(quad_ctrl_t *qc)
 {
 	uint32_t memLoc = GAINS_START_LOC;
 	EEPROMRead((uint32_t*)(qc->xyzh[X_AXIS].rate_gains) , memLoc,
-			sizeof(qc->xyzh[X_AXIS].rate_gains));
+			   sizeof(qc->xyzh[X_AXIS].rate_gains));
 	memLoc += sizeof(qc->xyzh[X_AXIS].rate_gains);
 	EEPROMRead((uint32_t*)(qc->xyzh[Z_AXIS].value_gains), memLoc,
-			sizeof(qc->xyzh[Z_AXIS].value_gains));
+			   sizeof(qc->xyzh[Z_AXIS].value_gains));
 	return;
 }
