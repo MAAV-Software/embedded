@@ -38,143 +38,7 @@
 #include "px4_kalman.h"
 #include "dof.h"
 #include "quad_ctrl.h"
-<<<<<<< HEAD
-#include "messaging.h"
 
-#define SYSCLOCK 80000000
-#define RED_LED   GPIO_PIN_1
-#define GREEN_LED GPIO_PIN_3
-#define BLUE_LED  GPIO_PIN_2
-
-#define GAINS_START_LOC 0x00
-
-#define RC_CHAN1 GPIO_PORTA_BASE,2
-#define RC_CHAN2 GPIO_PORTA_BASE,3
-#define RC_CHAN3 GPIO_PORTA_BASE,4
-#define RC_CHAN4 GPIO_PORTA_BASE,5
-#define RC_CHAN5 GPIO_PORTA_BASE,6
-#define RC_CHAN6 GPIO_PORTA_BASE,7
-
-#define KILL_CHAN1 GPIO_PORTE_BASE,4
-#define KILL_CHAN2 GPIO_PORTE_BASE,5
-#define KILL_CHAN3 GPIO_PORTE_BASE,3
-#define KILL_CHAN4 GPIO_PORTE_BASE,2
-#define KILL_CHAN5 GPIO_PORTE_BASE,1
-#define KILL_CHAN6 GPIO_PORTE_BASE,0
-
-enum PID_gains_enum {Kp, Ki, Kd};
-bool px4_can_transmit = true;
-
-bool pulseUpperThird(volatile uint32_t pulseWidth) {	// Is pulse longer than 1.66ms?
-	return (pulseWidth > SYSCLOCK / 602) ? true : false;
-}
-bool pulseLowerThird(volatile uint32_t pulseWidth) {	// Is pulse shorter than 1.33ms?
-	return (pulseWidth < SYSCLOCK / 752) ? true : false;
-}
-bool automomousMode(volatile uint32_t pulseWidth) {
-	return(pulseLowerThird(pulseWidth));
-}
-float pulse2ms(uint32_t pulse) {
-	static float one_ms = SYSCLOCK / 1000;
-	return( (float)(pulse) / one_ms);
-}
-uint32_t ms2pulse(float ms) {
-	static float one_ms = SYSCLOCK / 1000;
-	return( (uint32_t)(ms * one_ms) );
-}
-float map(float x, float fromLow, float fromHigh, float toLow, float toHigh) {
-	return (x - fromLow) * (toHigh - toLow) / (fromHigh - fromLow) + toLow;
-}
-float ms2XY_rate(float ms) {
-	return(map(ms, 1.0, 2.0, -1.0, 1.0));
-}
-float ms2height(float ms) {
-	return(map(ms, 1.0, 2.0, 0.5, 1.5));
-}
-float PID_XY_2ms(float val) {
-	return(map(val, -1.0, 1.0, 1.0, 2.0));
-}
-void ConfigureUART(void);
-void sendToSerialPort(kalman_t*, uint16_t);
-
-typedef struct {
-	float Kp;
-	float Kd;
-} Gains_t;
-typedef struct {
-	Gains_t XY;
-	Gains_t Z;
-} PID_Gains_t;
-typedef union {
-	PID_Gains_t PID;
-	uint32_t raw[sizeof(PID_Gains_t)];
-} PID_Wrapper_t;
-
-typedef struct {
-	uint32_t periph;
-	uint32_t portBase;
-	uint8_t  pinNum		: 4;
-	uint8_t  readState	: 1;
-	uint8_t  driveState	: 1;
-} SwitchData_t;
-void initSwitch(uint32_t periph, uint32_t base, uint32_t pin, SwitchData_t *sData) {
-	sData->periph = periph;
-	sData->portBase = base;
-	sData->pinNum = pin;
-
-	SysCtlPeripheralEnable(sData->periph);
-	GPIOPinTypeGPIOInput(sData->portBase, sData->pinNum);
-	GPIOPadConfigSet(sData->portBase, sData->pinNum, GPIO_STRENGTH_2MA, GPIO_PIN_TYPE_STD_WPU);
-
-	SysCtlDelay(10);	// wait a few clock cycles for the switch signal to settle.
-
-	sData->readState = GPIOPinRead(sData->portBase, sData->pinNum) ? 1 : 0;	// Sample the port with mask
-	sData->driveState = sData->readState;
-	GPIOPinTypeGPIOOutput(sData->portBase, sData->pinNum);
-	uint8_t mask = sData->driveState ? sData->pinNum : 0;
-	GPIOPinWrite(sData->portBase, sData->pinNum, mask);
-	return;
-}
-void readSwitch(SwitchData_t *sData) {
-	GPIOPinTypeGPIOInput(sData->portBase, sData->pinNum);// Set the GPIO to input
-	GPIOPadConfigSet(sData->portBase, sData->pinNum, GPIO_STRENGTH_2MA, GPIO_PIN_TYPE_STD_WPU);// I may not need this
-
-	SysCtlDelay(5);	// wait a few clock cycles for the switch signal to settle.
-
-	sData->readState = GPIOPinRead(sData->portBase, sData->pinNum) ? 1 : 0;	// Sample the port with mask
-
-	GPIOPinTypeGPIOOutput(sData->portBase, sData->pinNum);
-	uint8_t mask = sData->driveState ? sData->pinNum : 0;
-	GPIOPinWrite(sData->portBase, sData->pinNum, mask);
-
-	return;
-}
-void driveSwitch(SwitchData_t *sData, uint8_t direction) {
-	sData->driveState = direction;
-	uint8_t mask = sData->driveState ? sData->pinNum : 0;
-	GPIOPinWrite(sData->portBase, sData->pinNum, mask);
-
-	return;
-}
-void recordGains(quad_ctrl_t *qc) {
-	uint32_t memLoc = GAINS_START_LOC;
-	EEPROMProgram((uint32_t*)(qc->xyzh[X_AXIS].rate_gains) , memLoc, sizeof(qc->xyzh[X_AXIS].rate_gains));
-	memLoc += sizeof(qc->xyzh[X_AXIS].rate_gains);
-	EEPROMProgram((uint32_t *)(qc->xyzh[Z_AXIS].value_gains) , memLoc, sizeof(qc->xyzh[Z_AXIS].value_gains));
-	return;
-}
-void copyGains(quad_ctrl_t *qc) {
-	uint32_t memLoc = GAINS_START_LOC;
-	EEPROMRead((uint32_t*)(qc->xyzh[X_AXIS].rate_gains) , memLoc, sizeof(qc->xyzh[X_AXIS].rate_gains));
-	memLoc += sizeof(qc->xyzh[X_AXIS].rate_gains);
-	EEPROMRead((uint32_t*)(qc->xyzh[Z_AXIS].value_gains), memLoc, sizeof(qc->xyzh[Z_AXIS].value_gains));
-	return;
-}
-int main(void) {
-	// Set system clock to 80Mhz.
-	// Note that SysCtlClockGet() has a bug for this frequency.  Use the above #defined constant "SYSCLOCK" instead.
-	SysCtlClockSet(SYSCTL_SYSDIV_2_5|SYSCTL_USE_PLL|SYSCTL_OSC_MAIN|SYSCTL_XTAL_16MHZ);
-=======
 #include "utility.h"
 
 ////////////////////////////// MAIN FUNCTION ///////////////////////////////////
@@ -187,7 +51,6 @@ int main(void)
 	 */
 	SysCtlClockSet(SYSCTL_SYSDIV_2_5 | SYSCTL_USE_PLL | SYSCTL_OSC_MAIN |
 				   SYSCTL_XTAL_16MHZ);
->>>>>>> research
 
 	// Init the LEDs on the Launchpad for debugging and init them to off
 	SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
@@ -252,47 +115,6 @@ int main(void)
 	// Initialize feedback array [x, y, z, yaw, x_dot, y_dot, z_dot, yaw_dot]
 	float feedback[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 
-<<<<<<< HEAD
-	// Initialize messaging system
-	messaging_t messages;
-	messaging_init(&messages);
-	// Load messages struct with initial values.
-	// gains
-	messages._KPX = qc.xyzh[0].value_gains[0];
-	messages._KIX = qc.xyzh[0].value_gains[1];
-	messages._KDX = qc.xyzh[0].value_gains[2];
-	messages._KPXdot = qc.xyzh[0].rate_gains[0];
-	messages._KIXdot = qc.xyzh[0].rate_gains[1];
-	messages._KDXdot = qc.xyzh[0].rate_gains[2];
-	messages._KPY = qc.xyzh[1].value_gains[0];
-	messages._KIY = qc.xyzh[1].value_gains[1];
-	messages._KDY = qc.xyzh[1].value_gains[2];
-	messages._KPYdot = qc.xyzh[1].rate_gains[0];
-	messages._KIYdot = qc.xyzh[1].rate_gains[1];
-	messages._KDYdot = qc.xyzh[1].rate_gains[2];
-	messages._KPZ = qc.xyzh[2].value_gains[0];
-	messages._KIZ = qc.xyzh[2].value_gains[1];
-	messages._KDZ = qc.xyzh[2].value_gains[2];
-	messages._KPZdot = qc.xyzh[2].rate_gains[0];
-	messages._KIZdot = qc.xyzh[2].rate_gains[1];
-	messages._KDZdot = qc.xyzh[2].rate_gains[2];
-	messages._KPH = qc.xyzh[3].value_gains[0];
-	messages._KIH = qc.xyzh[3].value_gains[1];
-	messages._KDH = qc.xyzh[3].value_gains[2];
-	// setpoints
-	messages._x = qc.xyzh[0].setpt[0];
-	messages._y = qc.xyzh[1].setpt[0];
-	messages._z = qc.xyzh[2].setpt[0];
-	messages._h = qc.xyzh[3].setpt[0];
-	messages._xdot = qc.xyzh[0].setpt[1];
-	messages._ydot = qc.xyzh[1].setpt[1];
-	messages._zdot = qc.xyzh[2].setpt[1];
-
-
-
-=======
-	// loop, event scheduling, and other variables
->>>>>>> research
 	uint32_t loopTime = 0;
 	uint32_t switchUpdateTime = 0;
 	uint32_t update_DJI_time = 0;
@@ -346,7 +168,6 @@ int main(void)
 					break;
 			}
 		}
-<<<<<<< HEAD
 		// Gains will be sent via Tuning program so we should log gains Atom side
 //		if(loopTime-writeEepromTime > 1000) {	// Every now and then, log the gains to EEPROM
 //			writeEepromTime = loopTime;
@@ -418,7 +239,6 @@ int main(void)
 			newRateGains[1] = 0;
 			newRateGains[2] = 0;
 			dof_set_gains(&qc.xyzh[3], newGains, newRateGains);
-=======
 
 		// Every now and then, log the gains to EEPROM
 		if ((loopTime - writeEepromTime) > 1000)
@@ -471,25 +291,6 @@ int main(void)
 
 				dof_set_gains(&(qc.xyzh[Z_AXIS]), z_valueGains, z_rateGains);
 			}
->>>>>>> research
-		}
-
-		// Update controller setpoints
-		if ((loopTime - update_setPoints_time) > 20)
-		{
-			update_setPoints_time = loopTime;
-			// Only get setpoints from rc if rc mode
-			if (qc.ctrl_mode == RC_CTRL)
-			{
-				setpoints[5] = ms2XY_rate(pulse2ms(servoIn_getPulse(RC_CHAN1)));// Y Rate
-				setpoints[4] = ms2XY_rate(pulse2ms(servoIn_getPulse(RC_CHAN2)));// X Rate
-				setpoints[2] = ms2height(pulse2ms(servoIn_getPulse(RC_CHAN3)));	// Z Absolute
-				//setpoints[7] = pulse2ms(servoIn_getPulse(RC_CHAN4));	// Yaw Rate	TODO Add this back in later
-				setpoints[0] = setpoints[1] = setpoints[3] = setpoints[6] =
-						setpoints[7] = 0;
-			}
-//			setpoints[2] = ms2height(1.5);
-<<<<<<< HEAD
 			if(qc.xyzh[Z_AXIS].Uval > 0)	 	driveSwitch(&sw[0], 1);
 			else 								driveSwitch(&sw[0], 0);
 			if(qc.xyzh[Z_AXIS].setpt[0] >1.0)	driveSwitch(&sw[2], 1);
@@ -556,19 +357,6 @@ int main(void)
 		}
 
 		if(loopTime-update_PX4_time > 10 && px4_can_transmit == true) {
-=======
-			if (qc.xyzh[Z_AXIS].Uval > 0) driveSwitch(&sw[0], 1);
-			else driveSwitch(&sw[0], 0);
-			if (qc.xyzh[Z_AXIS].setpt[0] >1.0) driveSwitch(&sw[2], 1);
-			else driveSwitch(&sw[2], 0);
-
-			qc_setSetpt(&qc, setpoints, timestamp_now());
-		}
-
-		// Initiate PX4 polled transmission
-		if (((loopTime - update_PX4_time) > 10) && (px4_can_transmit == true))
-		{
->>>>>>> research
 			update_PX4_time = loopTime;
 			initiate_PX4_transmit();
 			px4_can_transmit = false;
