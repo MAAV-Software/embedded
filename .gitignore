@@ -3,6 +3,9 @@
 *TMP*
 Debug
 targetConfigs
+*.map
+*.out
+
 
 # latex temporary files
 *.aux
