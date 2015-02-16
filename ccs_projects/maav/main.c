@@ -374,12 +374,11 @@ int main(void) {
 			case(3):	GPIOPinWrite(GPIO_PORTF_BASE, RED_LED | GREEN_LED | BLUE_LED, GREEN_LED);	break;
 			}
 		}
-		// Gains will be sent via Tuning program so we should log gains Atom side
-//		if(loopTime-writeEepromTime > 1000) {	// Every now and then, log the gains to EEPROM
-//			writeEepromTime = loopTime;
-//			recordGains(&qc);
-////			EEPROMProgram(gains.raw, 0x0, sizeof(gains.raw));
-//		}
+		if(loopTime-writeEepromTime > 1000) {	// Every now and then, log the gains to EEPROM
+			writeEepromTime = loopTime;
+			recordGains(&qc);
+//			EEPROMProgram(gains.raw, 0x0, sizeof(gains.raw));
+		}
 		// Gains will be sent via Tuning program so this isn't needed
 //		if(loopTime-gainCheckTime > 100) {
 //			gainCheckTime = loopTime;
