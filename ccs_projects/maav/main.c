@@ -260,13 +260,99 @@ int main(void) {
 	for(;;) {
 		loopTime = millis();
 
-		if(looptime-process_data_link_data_time > 10)
+		if(loopTime-process_data_link_data_time > 10)
 			//TODO: Determine how often we want to process newly received data
 			//There is no rush since the dumping of fifo to ring buffer is done in isr
 			//But more often processing means faster response to messages
 			//This has no effect on sending whatsoever
 		{
 			data_link_do_stuff();
+		}
+		if(msg_target->timestamp > last_target_time)
+		{
+			last_target_time = msg_target->timestamp;
+			// TODO:Handle target message
+		}
+		if(msg_tuning->timestamp > last_tuning_time)
+		{
+			last_tuning_time = msg_tuning->timestamp;
+			// TODO:Handle tuning message setpoint, rate setpoint, takeoff, land
+			// Currently done: set kpid, set ratekpid
+			if(msg_tuning->cmd & CMD_TUNING_SETPID_X)
+			{
+				// Mark as handled
+				msg_tuning->cmd &= ~CMD_TUNING_SETPID_X;
+				float new_gains[3];
+				new_gains[0] = msg_tuning->KPX;
+				new_gains[1] = msg_tuning->KIX;
+				new_gains[2] = msg_tuning->KDX;
+				dof_set_gains(&qc.xyzh[X_AXIS], new_gains, qc.xyzh[X_AXIS].rate_gains);
+			}
+			if(msg_tuning->cmd & CMD_TUNING_SETPID_Y)
+			{
+				// Mark as handled
+				msg_tuning->cmd &= ~CMD_TUNING_SETPID_Y;
+				float new_gains[3];
+				new_gains[0] = msg_tuning->KPY;
+				new_gains[1] = msg_tuning->KIY;
+				new_gains[2] = msg_tuning->KDY;
+				dof_set_gains(&qc.xyzh[Y_AXIS], new_gains, qc.xyzh[Y_AXIS].rate_gains);
+			}
+			if(msg_tuning->cmd & CMD_TUNING_SETPID_Z)
+			{
+				// Mark as handled
+				msg_tuning->cmd &= ~CMD_TUNING_SETPID_Z;
+				float new_gains[3];
+				new_gains[0] = msg_tuning->KPZ;
+				new_gains[1] = msg_tuning->KIZ;
+				new_gains[2] = msg_tuning->KDZ;
+				dof_set_gains(&qc.xyzh[Z_AXIS], new_gains, qc.xyzh[Z_AXIS].rate_gains);
+			}
+			if(msg_tuning->cmd & CMD_TUNING_SETPID_H)
+			{
+				// Mark as handled
+				msg_tuning->cmd &= ~CMD_TUNING_SETPID_H;
+				float new_gains[3];
+				new_gains[0] = msg_tuning->KPH;
+				new_gains[1] = msg_tuning->KIH;
+				new_gains[2] = msg_tuning->KDH;
+				dof_set_gains(&qc.xyzh[YAW], new_gains, qc.xyzh[YAW].rate_gains);
+			}
+			if(msg_tuning->cmd & CMD_TUNING_SETPID_XDOT)
+			{
+				// Mark as handled
+				msg_tuning->cmd &= ~CMD_TUNING_SETPID_XDOT;
+				float new_gains[3];
+				new_gains[0] = msg_tuning->KPXdot;
+				new_gains[1] = msg_tuning->KIXdot;
+				new_gains[2] = msg_tuning->KDXdot;
+				dof_set_gains(&qc.xyzh[X_AXIS], qc.xyzh[X_AXIS].value_gains, new_gains);
+			}
+			if(msg_tuning->cmd & CMD_TUNING_SETPID_YDOT)
+			{
+				// Mark as handled
+				msg_tuning->cmd &= ~CMD_TUNING_SETPID_YDOT;
+				float new_gains[3];
+				new_gains[0] = msg_tuning->KPYdot;
+				new_gains[1] = msg_tuning->KIYdot;
+				new_gains[2] = msg_tuning->KDYdot;
+				dof_set_gains(&qc.xyzh[Y_AXIS], qc.xyzh[Y_AXIS].value_gains, new_gains);
+			}
+			if(msg_tuning->cmd & CMD_TUNING_SETPID_ZDOT)
+			{
+				// Mark as handled
+				msg_tuning->cmd &= ~CMD_TUNING_SETPID_ZDOT;
+				float new_gains[3];
+				new_gains[0] = msg_tuning->KPZdot;
+				new_gains[1] = msg_tuning->KIZdot;
+				new_gains[2] = msg_tuning->KDZdot;
+				dof_set_gains(&qc.xyzh[Z_AXIS], qc.xyzh[Z_AXIS].value_gains, new_gains);
+			}
+		}
+		if(msg_position->timestamp > last_position_time)
+		{
+			last_position_time = msg_position->timestamp;
+			// TODO:Handle position message
 		}
 		if(loopTime-switchUpdateTime > 10) {
 			switchUpdateTime = loopTime;
