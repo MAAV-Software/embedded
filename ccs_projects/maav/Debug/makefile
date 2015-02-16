@@ -13,14 +13,18 @@ $(GEN_CMDS__FLAG) \
 "./uartstdio.obj" \
 "./src/PPM.obj" \
 "./src/dof.obj" \
-"./src/messaging.obj" \
-"./src/protobuf.obj" \
 "./src/px4_i2c.obj" \
 "./src/px4_kalman.obj" \
 "./src/quad_ctrl.obj" \
-"./src/ringbuf.obj" \
 "./src/servoIn.obj" \
 "./src/time_util.obj" \
+"./src/messaging/data_link.obj" \
+"./src/messaging/feedback_t.obj" \
+"./src/messaging/lcmlite.obj" \
+"./src/messaging/position_t.obj" \
+"./src/messaging/ringbuf.obj" \
+"./src/messaging/target_t.obj" \
+"./src/messaging/tuning_t.obj" \
 "C:/ti/TivaWare_C_Series-2.1.0.12573/driverlib/ccs/Debug/driverlib.lib" \
 "C:/ti/TivaWare_C_Series-2.1.0.12573/sensorlib/ccs/Debug/sensorlib.lib" \
 "../tm4c123gh6pm.cmd" \
@@ -36,8 +40,10 @@ RMDIR := RMDIR /S/Q
 -include sources.mk
 -include subdir_vars.mk
 -include src/subdir_vars.mk
+-include src/messaging/subdir_vars.mk
 -include subdir_rules.mk
 -include src/subdir_rules.mk
+-include src/messaging/subdir_rules.mk
 -include objects.mk
 
 ifneq ($(MAKECMDGOALS),clean)
@@ -144,7 +150,7 @@ all: maav.out
 maav.out: $(OBJS) $(CMD_SRCS) $(LIB_SRCS) $(GEN_CMDS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: ARM Linker'
-	"c:/ti/ccsv6/tools/compiler/arm_5.1.6/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 --abi=eabi -me -g --define=PART_TM4C1230C3PM --display_error_number --diag_warning=225 --diag_wrap=off -z -m"maav.map" --heap_size=1024 --stack_size=4096 -i"c:/ti/ccsv6/tools/compiler/arm_5.1.6/lib" -i"c:/ti/ccsv6/tools/compiler/arm_5.1.6/include" --reread_libs --warn_sections --display_error_number --diag_wrap=off --xml_link_info="maav_linkInfo.xml" --rom_model -o "maav.out" $(ORDERED_OBJS)
+	"c:/ti/ccsv6/tools/compiler/arm_5.1.6/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 --abi=eabi -me -g --define=PART_TM4C1230C3PM --display_error_number --diag_warning=225 --diag_wrap=off -z -m"maav.map" --heap_size=1536 --stack_size=8196 -i"c:/ti/ccsv6/tools/compiler/arm_5.1.6/lib" -i"c:/ti/ccsv6/tools/compiler/arm_5.1.6/include" --reread_libs --warn_sections --display_error_number --diag_wrap=off --xml_link_info="maav_linkInfo.xml" --rom_model -o "maav.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -157,8 +163,8 @@ maav.hex: $(EXE_OUTPUTS)
 # Other Targets
 clean:
 	-$(RM) $(EXE_OUTPUTS__QUOTED)$(BIN_OUTPUTS__QUOTED)
-	-$(RM) "main.pp" "tm4c123gh6pm_startup_ccs.pp" "uartstdio.pp" "src\PPM.pp" "src\dof.pp" "src\messaging.pp" "src\protobuf.pp" "src\px4_i2c.pp" "src\px4_kalman.pp" "src\quad_ctrl.pp" "src\ringbuf.pp" "src\servoIn.pp" "src\time_util.pp" 
-	-$(RM) "main.obj" "tm4c123gh6pm_startup_ccs.obj" "uartstdio.obj" "src\PPM.obj" "src\dof.obj" "src\messaging.obj" "src\protobuf.obj" "src\px4_i2c.obj" "src\px4_kalman.obj" "src\quad_ctrl.obj" "src\ringbuf.obj" "src\servoIn.obj" "src\time_util.obj" 
+	-$(RM) "main.pp" "tm4c123gh6pm_startup_ccs.pp" "uartstdio.pp" "src\PPM.pp" "src\dof.pp" "src\px4_i2c.pp" "src\px4_kalman.pp" "src\quad_ctrl.pp" "src\servoIn.pp" "src\time_util.pp" "src\messaging\data_link.pp" "src\messaging\feedback_t.pp" "src\messaging\lcmlite.pp" "src\messaging\position_t.pp" "src\messaging\ringbuf.pp" "src\messaging\target_t.pp" "src\messaging\tuning_t.pp" 
+	-$(RM) "main.obj" "tm4c123gh6pm_startup_ccs.obj" "uartstdio.obj" "src\PPM.obj" "src\dof.obj" "src\px4_i2c.obj" "src\px4_kalman.obj" "src\quad_ctrl.obj" "src\servoIn.obj" "src\time_util.obj" "src\messaging\data_link.obj" "src\messaging\feedback_t.obj" "src\messaging\lcmlite.obj" "src\messaging\position_t.obj" "src\messaging\ringbuf.obj" "src\messaging\target_t.obj" "src\messaging\tuning_t.obj" 
 	-@echo 'Finished clean'
 	-@echo ' '
 

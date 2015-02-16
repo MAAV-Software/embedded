@@ -35,8 +35,22 @@ main.obj: c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/ymath.h
 main.obj: c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/stdlib.h
 main.obj: C:/Users/Sasawat/2workspace/maav-controls/ccs_projects/maav/include/quad_ctrl.h
 main.obj: c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/math.h
-main.obj: C:/Users/Sasawat/2workspace/maav-controls/ccs_projects/maav/include/messaging.h
-main.obj: C:/Users/Sasawat/2workspace/maav-controls/ccs_projects/maav/include/protobuf.h
+main.obj: C:/Users/Sasawat/2workspace/maav-controls/ccs_projects/maav/include/messaging/data_link.h
+main.obj: C:/Users/Sasawat/2workspace/maav-controls/ccs_projects/maav/include/messaging/ringbuf.h
+main.obj: C:/Users/Sasawat/2workspace/maav-controls/ccs_projects/maav/include/messaging/feedback_t.h
+main.obj: c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/stdlib.h
+main.obj: C:/Users/Sasawat/2workspace/maav-controls/ccs_projects/maav/include/messaging/lcm/lcm_coretypes.h
+main.obj: c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/stdio.h
+main.obj: c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/string.h
+main.obj: c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/stdlib.h
+main.obj: C:/Users/Sasawat/2workspace/maav-controls/ccs_projects/maav/include/messaging/int32.h
+main.obj: C:/Users/Sasawat/2workspace/maav-controls/ccs_projects/maav/include/messaging/target_t.h
+main.obj: c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/stdlib.h
+main.obj: C:/Users/Sasawat/2workspace/maav-controls/ccs_projects/maav/include/messaging/tuning_t.h
+main.obj: c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/stdlib.h
+main.obj: C:/Users/Sasawat/2workspace/maav-controls/ccs_projects/maav/include/messaging/position_t.h
+main.obj: c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/stdlib.h
+main.obj: C:/Users/Sasawat/2workspace/maav-controls/ccs_projects/maav/include/messaging/lcmlite.h
 
 ../main.c: 
 c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/stdlib.h: 
@@ -73,5 +87,19 @@ c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/ymath.h:
 c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/stdlib.h: 
 C:/Users/Sasawat/2workspace/maav-controls/ccs_projects/maav/include/quad_ctrl.h: 
 c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/math.h: 
-C:/Users/Sasawat/2workspace/maav-controls/ccs_projects/maav/include/messaging.h: 
-C:/Users/Sasawat/2workspace/maav-controls/ccs_projects/maav/include/protobuf.h: 
+C:/Users/Sasawat/2workspace/maav-controls/ccs_projects/maav/include/messaging/data_link.h: 
+C:/Users/Sasawat/2workspace/maav-controls/ccs_projects/maav/include/messaging/ringbuf.h: 
+C:/Users/Sasawat/2workspace/maav-controls/ccs_projects/maav/include/messaging/feedback_t.h: 
+c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/stdlib.h: 
+C:/Users/Sasawat/2workspace/maav-controls/ccs_projects/maav/include/messaging/lcm/lcm_coretypes.h: 
+c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/stdio.h: 
+c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/string.h: 
+c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/stdlib.h: 
+C:/Users/Sasawat/2workspace/maav-controls/ccs_projects/maav/include/messaging/int32.h: 
+C:/Users/Sasawat/2workspace/maav-controls/ccs_projects/maav/include/messaging/target_t.h: 
+c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/stdlib.h: 
+C:/Users/Sasawat/2workspace/maav-controls/ccs_projects/maav/include/messaging/tuning_t.h: 
+c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/stdlib.h: 
+C:/Users/Sasawat/2workspace/maav-controls/ccs_projects/maav/include/messaging/position_t.h: 
+c:/ti/ccsv6/tools/compiler/arm_5.1.6/include/stdlib.h: 
+C:/Users/Sasawat/2workspace/maav-controls/ccs_projects/maav/include/messaging/lcmlite.h: 

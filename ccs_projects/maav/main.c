@@ -27,7 +27,7 @@
 #include "px4_kalman.h"
 #include "dof.h"
 #include "quad_ctrl.h"
-#include "messaging.h"
+#include "messaging/data_link.h"
 
 #define SYSCLOCK 80000000
 #define RED_LED   GPIO_PIN_1
@@ -229,41 +229,13 @@ int main(void) {
 	float feedback[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 
 	// Initialize messaging system
-	messaging_t messages;
-	messaging_init(&messages);
-	// Load messages struct with initial values.
-	// gains
-	messages._KPX = qc.xyzh[0].value_gains[0];
-	messages._KIX = qc.xyzh[0].value_gains[1];
-	messages._KDX = qc.xyzh[0].value_gains[2];
-	messages._KPXdot = qc.xyzh[0].rate_gains[0];
-	messages._KIXdot = qc.xyzh[0].rate_gains[1];
-	messages._KDXdot = qc.xyzh[0].rate_gains[2];
-	messages._KPY = qc.xyzh[1].value_gains[0];
-	messages._KIY = qc.xyzh[1].value_gains[1];
-	messages._KDY = qc.xyzh[1].value_gains[2];
-	messages._KPYdot = qc.xyzh[1].rate_gains[0];
-	messages._KIYdot = qc.xyzh[1].rate_gains[1];
-	messages._KDYdot = qc.xyzh[1].rate_gains[2];
-	messages._KPZ = qc.xyzh[2].value_gains[0];
-	messages._KIZ = qc.xyzh[2].value_gains[1];
-	messages._KDZ = qc.xyzh[2].value_gains[2];
-	messages._KPZdot = qc.xyzh[2].rate_gains[0];
-	messages._KIZdot = qc.xyzh[2].rate_gains[1];
-	messages._KDZdot = qc.xyzh[2].rate_gains[2];
-	messages._KPH = qc.xyzh[3].value_gains[0];
-	messages._KIH = qc.xyzh[3].value_gains[1];
-	messages._KDH = qc.xyzh[3].value_gains[2];
-	// setpoints
-	messages._x = qc.xyzh[0].setpt[0];
-	messages._y = qc.xyzh[1].setpt[0];
-	messages._z = qc.xyzh[2].setpt[0];
-	messages._h = qc.xyzh[3].setpt[0];
-	messages._xdot = qc.xyzh[0].setpt[1];
-	messages._ydot = qc.xyzh[1].setpt[1];
-	messages._zdot = qc.xyzh[2].setpt[1];
-
-
+	// Structs for data link
+	target_t *msg_target = (target_t*)malloc(sizeof(target_t));
+	position_t *msg_position = (position_t*)malloc(sizeof(position_t));
+	tuning_t *msg_tuning = (tuning_t*)malloc(sizeof(tuning_t));
+	feedback_t feedback_send;
+	// Call init function
+	data_link_init(msg_position, msg_target, msg_tuning);
 
 	uint32_t loopTime = 0;
 	uint32_t switchUpdateTime = 0;
@@ -337,43 +309,7 @@ int main(void) {
 //				dof_set_gains(&(qc.xyzh[Z_AXIS]), z_valueGains, z_rateGains);
 //			}
 //		}
-		// When the flag for new set point is raised, set new setpoints
-		if(messages._cmd & MESSAGING_FLAG_SET_PIDCONST)
-		{
-			// Clear the flag
-			messages._cmd &= ~MESSAGING_FLAG_SET_PIDCONST;
-			// Arrays to use dof_set_gains with
-			float newGains[3];
-			float newRateGains[3];
-			newGains[0] = messages._KPX;
-			newGains[1] = messages._KIX;
-			newGains[2] = messages._KDX;
-			newRateGains[0] = messages._KPXdot;
-			newRateGains[1] = messages._KIXdot;
-			newRateGains[2] = messages._KDXdot;
-			dof_set_gains(&qc.xyzh[0], newGains, newRateGains);
-			newGains[0] = messages._KPY;
-			newGains[1] = messages._KIY;
-			newGains[2] = messages._KDY;
-			newRateGains[0] = messages._KPYdot;
-			newRateGains[1] = messages._KIYdot;
-			newRateGains[2] = messages._KDYdot;
-			dof_set_gains(&qc.xyzh[1], newGains, newRateGains);
-			newGains[0] = messages._KPZ;
-			newGains[1] = messages._KIZ;
-			newGains[2] = messages._KDZ;
-			newRateGains[0] = messages._KPZdot;
-			newRateGains[1] = messages._KIZdot;
-			newRateGains[2] = messages._KDZdot;
-			dof_set_gains(&qc.xyzh[2], newGains, newRateGains);
-			newGains[0] = messages._KPH;
-			newGains[1] = messages._KIH;
-			newGains[2] = messages._KDH;
-			newRateGains[0] = 0;
-			newRateGains[1] = 0;
-			newRateGains[2] = 0;
-			dof_set_gains(&qc.xyzh[3], newGains, newRateGains);
-		}
+
 
 		if(loopTime-update_setPoints_time > 20) {
 			update_setPoints_time = loopTime;
@@ -394,63 +330,6 @@ int main(void) {
 			else								driveSwitch(&sw[2], 0);
 
 			qc_setSetpt(&qc, setpoints, timestamp_now());
-		}
-
-		// New setpoint from Atom
-		if(messages._cmd & MESSAGING_FLAG_NEW_SETPOINT)
-		{
-			// clear flag
-			messages._cmd &= ~MESSAGING_FLAG_NEW_SETPOINT;
-
-			// update setpoint array [x, y, z, yaw, x_dot, y_dot, z_dot, yaw_dot]
-			setpoints[0] = messages._x;
-			setpoints[1] = messages._y;
-			setpoints[2] = messages._z;
-			setpoints[3] = messages._h;
-			setpoints[4] = setpoints[5] = setpoints[6] = setpoints[7] = 0;
-
-			// navigation wants to send relative position for xyz setpoint, so reset state
-			// TODO: Make sure navigation still likes relative position for xyz and absolute h
-			qc.xyzh[0].state[0] = qc.xyzh[1].state[0] = qc.xyzh[2].state[0] = 0;
-
-			// Send to quadcontrol
-			qc_setSetpt(&qc, setpoints, timestamp_now());
-		}
-
-		// New dot setpoint from Atom
-		if (messages._cmd & MESSAGING_FLAG_SET_DOT_SETPOINT)
-		{
-			// clear flag
-			messages._cmd &= ~MESSAGING_FLAG_SET_DOT_SETPOINT;
-
-			// update setpoint array [x, y, z, yaw, x_dot, y_dot, z_dot, yaw_dot]
-			setpoints[4] = messages._xdot;
-			setpoints[5] = messages._ydot;
-			setpoints[6] = messages._zdot;
-
-			// Send to quadcontrol
-			qc_setSetpt(&qc, setpoints, timestamp_now());
-		}
-
-		// Atom says land
-		if (messages._cmd & MESSAGING_FLAG_LAND)
-		{
-			messages._cmd &= ~MESSAGING_FLAG_LAND;
-			//TODO: Implement landing
-		}
-
-		// Atom says takeoff
-		if (messages._cmd & MESSAGING_FLAG_TAKEOFF)
-		{
-			messages._cmd &= ~MESSAGING_FLAG_TAKEOFF;
-			//TODO: Implement takeoff
-		}
-
-		// Atom wants to give current location
-		if (messages._cmd & MESSAGING_FLAG_SET_LOCATION)
-		{
-			messages._cmd &= ~MESSAGING_FLAG_SET_LOCATION;
-
 		}
 
 		if(loopTime-update_PX4_time > 10 && px4_can_transmit == true) {
