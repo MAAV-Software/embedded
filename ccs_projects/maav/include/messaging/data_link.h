@@ -18,7 +18,7 @@ extern "C" {
 #define DATA_FRAME_START_DELIMITER 0x7E
 #define DATA_FRAME_ESCAPE_CHAR 0x7D
 #define DATA_FRAME_XOR 0x20
-#define DATA_LINK_UART_BASE UART0_BASE //TODO: Changed to correct UART base
+#define DATA_LINK_UART_BASE UART0_BASE //TODO: Change to correct UART base
 
 // Channel names for lcm
 #define LONGEST_CHANNEL_NAME 5

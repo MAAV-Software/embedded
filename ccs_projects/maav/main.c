@@ -233,9 +233,14 @@ int main(void) {
 	target_t *msg_target = (target_t*)malloc(sizeof(target_t));
 	position_t *msg_position = (position_t*)malloc(sizeof(position_t));
 	tuning_t *msg_tuning = (tuning_t*)malloc(sizeof(tuning_t));
+	int32_t last_target_time = 0;
+	int32_t last_position_time = 0;
+	int32_t last_tuning_time = 0;
 	feedback_t feedback_send;
 	// Call init function
 	data_link_init(msg_position, msg_target, msg_tuning);
+	//TODO: Make sure the proper UART is initialized
+	//TODO: Make sure the proper UART interrupt is initialized
 
 	uint32_t loopTime = 0;
 	uint32_t switchUpdateTime = 0;
@@ -247,6 +252,7 @@ int main(void) {
 	uint32_t test_PX4_time = 0;
 	uint32_t update_setPoints_time = 0;
 	uint32_t lastFreshDataTime = 0;
+	uint32_t process_data_link_data_time = 0;
 	uint8_t  mode = 3;	// defalut to RC mode
 
 	SysCtlDelay(SYSCLOCK);	// about 3 seconds.  Required for DJI startup
@@ -254,6 +260,14 @@ int main(void) {
 	for(;;) {
 		loopTime = millis();
 
+		if(looptime-process_data_link_data_time > 10)
+			//TODO: Determine how often we want to process newly received data
+			//There is no rush since the dumping of fifo to ring buffer is done in isr
+			//But more often processing means faster response to messages
+			//This has no effect on sending whatsoever
+		{
+			data_link_do_stuff();
+		}
 		if(loopTime-switchUpdateTime > 10) {
 			switchUpdateTime = loopTime;
 			int i;

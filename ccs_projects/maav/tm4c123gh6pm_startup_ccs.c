@@ -55,8 +55,8 @@ extern uint32_t __STACK_TOP;
 //
 //*****************************************************************************
 // To be added by user
-//TODO: Determine UART base for messaging
-extern void messaging_UARTRxIntHandler(void);
+//TODO: Determine UART base for messaging. Put this function in spot in vector table
+extern void data_link_uart_rx_isr(void);
 
 //*****************************************************************************
 //
