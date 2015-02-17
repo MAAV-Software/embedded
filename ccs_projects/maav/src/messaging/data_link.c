@@ -31,7 +31,20 @@ static lcmlite_subscription_t sub_tuning;
 char transmit_user[256];
 static lcmlite_t lcm;
 
-char* data_frame_state_names[] = { "READY", "LEN_1", "LEN_2", "LEN_1_ESCP", "LEN_2_ESCP", "READ", "READ_ESCP", "CHECKSUM", "CHECKSUM_ESCP", "DONE", "START_ERR", "CHECKSUM_ERR", "DATA_ERR" };
+char* data_frame_state_names[] = {
+		"READY",
+		"LEN_1",
+		"LEN_2",
+		"LEN_1_ESCP",
+		"LEN_2_ESCP",
+		"READ",
+		"READ_ESCP",
+		"CHECKSUM",
+		"CHECKSUM_ESCP",
+		"DONE",
+		"START_ERR",
+		"CHECKSUM_ERR",
+		"DATA_ERR" };
 char* feedback_channel_name = CHANNEL_FEEDBACK;
 char* position_channel_name = CHANNEL_POSITION;
 char* target_channel_name = CHANNEL_TARGET;
@@ -42,7 +55,8 @@ static inline void data_link_branchless_assemble_byte(uint8_t* pkt, size_t* pkt_
 
 static inline uint8_t data_link_branchless_decode_byte(uint8_t* pkt, size_t* pkt_i);
 
-data_frame_t* data_frame_create(uint16_t size) {
+data_frame_t* data_frame_create(uint16_t size)
+{
 	data_frame_t* frame = (data_frame_t*) malloc(sizeof(data_frame_t));
 	frame->buffer = (uint8_t*) malloc(sizeof(uint8_t) * size);
 	frame->size = 0;
@@ -52,7 +66,8 @@ data_frame_t* data_frame_create(uint16_t size) {
 	return frame;
 }
 
-void target_callback(lcmlite_t *from, const char *channel, const void *buf, int buf_len, void *user)
+void target_callback(lcmlite_t *from, const char *channel,
+		const void *buf, int buf_len, void *user)
 {
 	// Get target_t to decode to
 	target_t *to = (target_t*)user;
@@ -60,7 +75,8 @@ void target_callback(lcmlite_t *from, const char *channel, const void *buf, int 
 	target_t_decode(buf, 0, buf_len, to);
 
 }
-void tuning_callback(lcmlite_t *from, const char *channel, const void *buf, int buf_len, void *user)
+void tuning_callback(lcmlite_t *from, const char *channel,
+		const void *buf, int buf_len, void *user)
 {
 	// Get tuning_t to decode to
 	tuning_t *to = (tuning_t*)user;
@@ -68,7 +84,8 @@ void tuning_callback(lcmlite_t *from, const char *channel, const void *buf, int 
 	tuning_t_decode(buf, 0, buf_len, to);
 
 }
-void position_callback(lcmlite_t *from, const char *channel, const void *buf, int buf_len, void *user)
+void position_callback(lcmlite_t *from, const char *channel,
+		const void *buf, int buf_len, void *user)
 {
 	// Get position_t to decode to
 	position_t *to = (position_t*)user;
@@ -77,7 +94,8 @@ void position_callback(lcmlite_t *from, const char *channel, const void *buf, in
 
 }
 
-void data_link_lcmlite_transmit_packet_handler(const void *_buf, int buf_len, void *user)
+void data_link_lcmlite_transmit_packet_handler(const void *_buf, int buf_len,
+		void *user)
 {
 
 	/*int16_t len = data_link_assemble_packet((uint8_t*)_buf, (uint8_t*)transmit_user, buf_len);
@@ -90,11 +108,13 @@ void data_link_lcmlite_transmit_packet_handler(const void *_buf, int buf_len, vo
 	}*/// For SELF_TEST
 	//Assembly the packet
 	uint8_t *sendbuffer = (uint8_t*)user;
-	int16_t len = data_link_assemble_packet((uint8_t*)_buf, sendbuffer, buf_len);
+	int16_t len = data_link_assemble_packet(
+			(uint8_t*)_buf,
+			sendbuffer,
+			buf_len);
 	//Send the packet
 	int i = 0;
-	for(i = 0; i < len; ++i)
-	{
+	for (i = 0; i < len; ++i) {
 		unsigned char test = sendbuffer[i];
 		UARTCharPut(DATA_LINK_UART_BASE, test);
 	}
@@ -112,22 +132,22 @@ void data_link_send_feedback(feedback_t *message)
 void data_link_do_stuff()
 {
 	// Loop through and process all received data
-	while(ringbuf_unread(&ringbuf))
-	{
+	while (ringbuf_unread(&ringbuf)) {
 		// Get bytes from ring buffer and push them into messaging frame
 		uint8_t testvar = ringbuf_pop(&ringbuf);
 		data_frame_push_byte(messaging_frame, testvar);
 		// Check messaging frame if it has recieved an entire data_link packet
-		if(messaging_frame->state == DONE)
-		{
+		if (messaging_frame->state == DONE) {
 			// Forward the packet to lcmlite for handling
-			lcmlite_receive_packet(&lcm, messaging_frame->buffer, messaging_frame->size, FROM_ADDR);
+			lcmlite_receive_packet(&lcm,
+					messaging_frame->buffer,
+					messaging_frame->size,
+					FROM_ADDR);
 			// Clear the frame to prepare for next packet
 			data_frame_clear(messaging_frame);
-		}
-		// Check for errors
-		else if(messaging_frame->state == START_ERR || messaging_frame->state == DATA_ERR)
-		{
+		} else if ( // Check messaging frame for errors
+				messaging_frame->state == START_ERR ||
+				messaging_frame->state == DATA_ERR) {
 			data_frame_clear(messaging_frame);
 			//TODO: Is just dropping packets enough for error handling?
 		}
@@ -180,12 +200,14 @@ void data_link_uart_rx_isr(void)
 #endif
 }
 
-void data_frame_destroy(data_frame_t* frame) {
+void data_frame_destroy(data_frame_t* frame)
+{
 	free(frame->buffer);
 	free(frame);
 }
 
-void data_frame_clear(data_frame_t* frame) {
+void data_frame_clear(data_frame_t* frame)
+{
 	frame->size = 0;
 	frame->index = 0;
 	frame->state = READY;
@@ -194,7 +216,8 @@ void data_frame_clear(data_frame_t* frame) {
 // state machine to process bytes in the data link layer
 // TODO: try to make branchless
 // TODO: check size
-bool data_frame_push_byte(data_frame_t* frame, uint8_t byte) {
+bool data_frame_push_byte(data_frame_t* frame, uint8_t byte)
+{
 	switch (frame->state) {
 		case READY:
 			if (byte != DATA_FRAME_START_DELIMITER) {
@@ -268,7 +291,8 @@ bool data_frame_push_byte(data_frame_t* frame, uint8_t byte) {
 	return true;
 }
 
-uint16_t data_link_assemble_packet(uint8_t* msg, uint8_t* pkt, uint16_t size) {
+uint16_t data_link_assemble_packet(uint8_t* msg, uint8_t* pkt, uint16_t size)
+{
 	size_t msg_i = 0, pkt_i = 0;
 	pkt[pkt_i++] = DATA_FRAME_START_DELIMITER;
 
@@ -289,7 +313,8 @@ uint16_t data_link_assemble_packet(uint8_t* msg, uint8_t* pkt, uint16_t size) {
 	return pkt_i + 1;
 }
 
-bool data_link_decode_packet(uint8_t* msg, uint8_t* pkt, uint16_t* size) {
+bool data_link_decode_packet(uint8_t* msg, uint8_t* pkt, uint16_t* size)
+{
 	size_t msg_i = 0, pkt_i = 0;
 	if (pkt[pkt_i++] != DATA_FRAME_START_DELIMITER) {
 		return false;
@@ -312,7 +337,8 @@ bool data_link_decode_packet(uint8_t* msg, uint8_t* pkt, uint16_t* size) {
 }
 
 static inline void data_link_branchless_assemble_byte(uint8_t* pkt, size_t* pkt_i,
-	uint8_t data_byte) {
+	uint8_t data_byte)
+{
 	uint8_t is_special_char = (data_byte == DATA_FRAME_START_DELIMITER) +
 	(data_byte == DATA_FRAME_ESCAPE_CHAR);
 	uint8_t xor_val = is_special_char << 5;
@@ -321,7 +347,8 @@ static inline void data_link_branchless_assemble_byte(uint8_t* pkt, size_t* pkt_
 	*pkt_i += is_special_char;
 }
 
-static inline uint8_t data_link_branchless_decode_byte(uint8_t* pkt, size_t* pkt_i) {
+static inline uint8_t data_link_branchless_decode_byte(uint8_t* pkt, size_t* pkt_i)
+{
 	uint8_t is_delimited = (pkt[*pkt_i] == DATA_FRAME_ESCAPE_CHAR);
 	uint8_t xor_val = is_delimited << 5;
 	*pkt_i += is_delimited;
