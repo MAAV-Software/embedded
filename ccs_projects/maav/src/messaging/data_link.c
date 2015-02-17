@@ -54,19 +54,25 @@ data_frame_t* data_frame_create(uint16_t size) {
 
 void target_callback(lcmlite_t *from, const char *channel, const void *buf, int buf_len, void *user)
 {
+	// Get target_t to decode to
 	target_t *to = (target_t*)user;
+	// Decode
 	target_t_decode(buf, 0, buf_len, to);
 
 }
 void tuning_callback(lcmlite_t *from, const char *channel, const void *buf, int buf_len, void *user)
 {
+	// Get tuning_t to decode to
 	tuning_t *to = (tuning_t*)user;
+	// Decode
 	tuning_t_decode(buf, 0, buf_len, to);
 
 }
 void position_callback(lcmlite_t *from, const char *channel, const void *buf, int buf_len, void *user)
 {
+	// Get position_t to decode to
 	position_t *to = (position_t*)user;
+	// Decode
 	position_t_decode(buf, 0, buf_len, to);
 
 }
@@ -108,15 +114,22 @@ void data_link_do_stuff()
 	// Loop through and process all received data
 	while(ringbuf_unread(&ringbuf))
 	{
+		// Get bytes from ring buffer and push them into messaging frame
 		uint8_t testvar = ringbuf_pop(&ringbuf);
 		data_frame_push_byte(messaging_frame, testvar);
+		// Check messaging frame if it has recieved an entire data_link packet
 		if(messaging_frame->state == DONE)
 		{
+			// Forward the packet to lcmlite for handling
 			lcmlite_receive_packet(&lcm, messaging_frame->buffer, messaging_frame->size, FROM_ADDR);
+			// Clear the frame to prepare for next packet
 			data_frame_clear(messaging_frame);
-		}else if(messaging_frame->state == START_ERR || messaging_frame->state == DATA_ERR)
+		}
+		// Check for errors
+		else if(messaging_frame->state == START_ERR || messaging_frame->state == DATA_ERR)
 		{
 			data_frame_clear(messaging_frame);
+			//TODO: Is just dropping packets enough for error handling?
 		}
 	}
 }
@@ -160,6 +173,8 @@ void data_link_uart_rx_isr(void)
 	while (UARTCharsAvail(DATA_LINK_UART_BASE) &&
 			ringbuf_push(&ringbuf, UARTCharGet(DATA_LINK_UART_BASE)));
 
+	// Lights up the red LED when the interrupt triggers.
+	// Useful for checking whether UART/Interrupt settings are correct
 #ifdef ISR_LED
 	GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 255);
 #endif
