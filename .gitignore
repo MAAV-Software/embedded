@@ -1,0 +1,17 @@
+*.obj
+*~*
+*TMP*
+Debug
+targetConfigs
+*.map
+*.out
+
+
+# latex temporary files
+*.aux
+*.log
+*.blg
+*.bbl
+*.syntex.gz
+
+

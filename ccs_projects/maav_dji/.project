@@ -36,5 +36,9 @@
 			<name>SW01291_INCLUDE</name>
 			<value>file:/C:/sw01291/Include</value>
 		</variable>
+		<variable>
+			<name>TIVAWARE_INSTALL</name>
+			<value>file:/C:/ti/TivaWare_C_Series-2.1.0.12573</value>
+		</variable>
 	</variableList>
 </projectDescription>
