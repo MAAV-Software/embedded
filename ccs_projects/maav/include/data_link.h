@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#include "../include/ringbuf.h"
+#include "messaging/ringbuf.h"
 
 #ifdef __cplusplus
 extern "C" {

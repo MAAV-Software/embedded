@@ -40,6 +40,8 @@
 #include "quad_ctrl.h"
 #include "messaging/data_link.h"
 
+#include "utility.h"
+
 #define SYSCLOCK 80000000
 #define RED_LED   GPIO_PIN_1
 #define GREEN_LED GPIO_PIN_3
@@ -61,85 +63,7 @@
 #define KILL_CHAN5 GPIO_PORTE_BASE,1
 #define KILL_CHAN6 GPIO_PORTE_BASE,0
 
-enum PID_gains_enum {Kp, Ki, Kd};
 bool px4_can_transmit = true;
-
-bool pulseUpperThird(volatile uint32_t pulseWidth) {	// Is pulse longer than 1.66ms?
-	return (pulseWidth > SYSCLOCK / 602) ? true : false;
-}
-bool pulseLowerThird(volatile uint32_t pulseWidth) {	// Is pulse shorter than 1.33ms?
-	return (pulseWidth < SYSCLOCK / 752) ? true : false;
-}
-bool automomousMode(volatile uint32_t pulseWidth) {
-	return(pulseLowerThird(pulseWidth));
-}
-float pulse2ms(uint32_t pulse) {
-	static float one_ms = SYSCLOCK / 1000;
-	return( (float)(pulse) / one_ms);
-}
-uint32_t ms2pulse(float ms) {
-	static float one_ms = SYSCLOCK / 1000;
-	return( (uint32_t)(ms * one_ms) );
-}
-float map(float x, float fromLow, float fromHigh, float toLow, float toHigh) {
-	return (x - fromLow) * (toHigh - toLow) / (fromHigh - fromLow) + toLow;
-}
-float ms2XY_rate(float ms) {
-	return(map(ms, 1.0, 2.0, -1.0, 1.0));
-}
-float ms2height(float ms) {
-	return(map(ms, 1.0, 2.0, 0.5, 1.5));
-}
-float PID_XY_2ms(float val) {
-	return(map(val, -1.0, 1.0, 1.0, 2.0));
-}
-void ConfigureUART(void);
-void sendToSerialPort(kalman_t*, uint16_t);
-
-typedef struct {
-	float Kp;
-	float Kd;
-} Gains_t;
-typedef struct {
-	Gains_t XY;
-	Gains_t Z;
-} PID_Gains_t;
-typedef union {
-	PID_Gains_t PID;
-	uint32_t raw[sizeof(PID_Gains_t)];
-} PID_Wrapper_t;
-
-typedef struct {
-	uint32_t periph;
-	uint32_t portBase;
-	uint8_t  pinNum		: 4;
-	uint8_t  readState	: 1;
-	uint8_t  driveState	: 1;
-} SwitchData_t;
-void initSwitch(uint32_t periph, uint32_t base, uint32_t pin, SwitchData_t *sData) {
-	sData->periph = periph;
-	sData->portBase = base;
-	sData->pinNum = pin;
-
-	SysCtlPeripheralEnable(sData->periph);
-	GPIOPinTypeGPIOInput(sData->portBase, sData->pinNum);
-	GPIOPadConfigSet(sData->portBase, sData->pinNum, GPIO_STRENGTH_2MA, GPIO_PIN_TYPE_STD_WPU);
-
-	SysCtlDelay(10);	// wait a few clock cycles for the switch signal to settle.
-
-	sData->readState = GPIOPinRead(sData->portBase, sData->pinNum) ? 1 : 0;	// Sample the port with mask
-	sData->driveState = sData->readState;
-	GPIOPinTypeGPIOOutput(sData->portBase, sData->pinNum);
-	uint8_t mask = sData->driveState ? sData->pinNum : 0;
-	GPIOPinWrite(sData->portBase, sData->pinNum, mask);
-	return;
-}
-void readSwitch(SwitchData_t *sData) {
-	GPIOPinTypeGPIOInput(sData->portBase, sData->pinNum);// Set the GPIO to input
-	GPIOPadConfigSet(sData->portBase, sData->pinNum, GPIO_STRENGTH_2MA, GPIO_PIN_TYPE_STD_WPU);// I may not need this
-}
-
-#include "utility.h"
 
 ////////////////////////////// MAIN FUNCTION ///////////////////////////////////
 int main(void)
@@ -241,7 +165,6 @@ int main(void)
 	uint32_t lastFreshDataTime = 0;
 	uint32_t process_data_link_data_time = 0;
 	uint8_t  mode = 3;	// defalut to RC mode
-	uint8_t mode = 3;	// defalut to RC mode
 	bool px4_can_transmit = true; // flag for PX4 transmission
 
 	SysCtlDelay(SYSCLOCK);	// about 3 seconds.  Required for DJI startup
