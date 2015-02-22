@@ -28,6 +28,7 @@
 #include "driverlib/eeprom.h"
 #include "driverlib/uart.h"
 #include "driverlib/pin_map.h"
+#include "driverlib/interrupt.h"
 
 #include "utils/uartstdio.h"
 
@@ -103,12 +104,31 @@ int main(void)
 	FPULazyStackingEnable();
 	FPUEnable();
 
-	// Set up UART comms to computer terminal
-	ConfigureUART();
-
 	// Enable EEPROM
 	SysCtlPeripheralEnable(SYSCTL_PERIPH_EEPROM0);
 	EEPROMInit();
+
+	// Enable Interrupts
+	IntMasterEnable();
+
+	// Initialize messaging system
+	// Structs for data link
+	target_t *msg_target = (target_t*)malloc(sizeof(target_t));
+	position_t *msg_position = (position_t*)malloc(sizeof(position_t));
+	tuning_t *msg_tuning = (tuning_t*)malloc(sizeof(tuning_t));
+	int32_t last_target_time = 0;
+	int32_t last_position_time = 0;
+	int32_t last_tuning_time = 0;
+	feedback_t feedback_send;
+	// Call init function
+	data_link_init(msg_position, msg_target, msg_tuning);
+
+	// Set up UART comms to computer terminal
+	ConfigureUART();
+
+	// Enable UART Receive Timeout and Receive interrupt for UART comms to computer
+	IntEnable(INT_UART0);
+	UARTIntEnable(UART0_BASE, UART_INT_RT | UART_INT_RX);
 
 	// Init Kalman Filter
 	kalman_t filter_data;
@@ -138,20 +158,6 @@ int main(void)
 
 	// Initialize feedback array [x, y, z, yaw, x_dot, y_dot, z_dot, yaw_dot]
 	float feedback[8] = {0, 0, 0, 0, 0, 0, 0, 0};
-
-	// Initialize messaging system
-	// Structs for data link
-	target_t *msg_target = (target_t*)malloc(sizeof(target_t));
-	position_t *msg_position = (position_t*)malloc(sizeof(position_t));
-	tuning_t *msg_tuning = (tuning_t*)malloc(sizeof(tuning_t));
-	int32_t last_target_time = 0;
-	int32_t last_position_time = 0;
-	int32_t last_tuning_time = 0;
-	feedback_t feedback_send;
-	// Call init function
-	data_link_init(msg_position, msg_target, msg_tuning);
-	//TODO: Make sure the proper UART is initialized
-	//TODO: Make sure the proper UART interrupt is initialized
 
 	uint32_t loopTime = 0;
 	uint32_t switchUpdateTime = 0;
