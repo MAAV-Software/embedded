@@ -11,36 +11,45 @@
 #include "position_t.h"
 #include "lcmlite.h"
 
-#define CMD_TUNING_SETPID_X 1
-#define CMD_TUNING_SETPID_Y 2
-#define CMD_TUNING_SETPID_Z 4
-#define CMD_TUNING_SETPID_H 8
-#define CMD_TUNING_SETPID_XDOT 16
-#define CMD_TUNING_SETPID_YDOT 32
-#define CMD_TUNING_SETPID_ZDOT 64
-#define CMD_TUNING_SETPID_HDOT 128
-#define CMD_TUNING_SETPOINT_X 256
-#define CMD_TUNING_SETPOINT_Y 512
-#define CMD_TUNING_SETPOINT_Z 1024
-#define CMD_TUNING_SETPOINT_H 2048
-#define CMD_TUNING_DOTSETPOINT_X 4096
-#define CMD_TUNING_DOTSETPOINT_Y 8192
-#define CMD_TUNING_DOTSETPOINT_Z 16384
-#define CMD_TUNING_DOTSETPOINT_H 32768
-#define CMD_TUNING_LAND 65536
-#define CMD_TUNING_TAKEOFF 131072
+// Bitmask for tuning messages
+// (tuningmessage->cmd & CMD_TUNING_...) to check whether set
+// tuningmessage->cmd &= ~CMD_TUINING_... to unset
+#define CMD_TUNING_SETPID_X 		1
+#define CMD_TUNING_SETPID_Y 		2
+#define CMD_TUNING_SETPID_Z 		4
+#define CMD_TUNING_SETPID_H 		8
+#define CMD_TUNING_SETPID_XDOT 		16
+#define CMD_TUNING_SETPID_YDOT 		32
+#define CMD_TUNING_SETPID_ZDOT 		64
+#define CMD_TUNING_SETPID_HDOT 		128
+#define CMD_TUNING_SETPOINT_X 		256
+#define CMD_TUNING_SETPOINT_Y 		512
+#define CMD_TUNING_SETPOINT_Z 		1024
+#define CMD_TUNING_SETPOINT_H 		2048
+#define CMD_TUNING_DOTSETPOINT_X 	4096
+#define CMD_TUNING_DOTSETPOINT_Y 	8192
+#define CMD_TUNING_DOTSETPOINT_Z 	16384
+#define CMD_TUNING_DOTSETPOINT_H 	32768
+#define CMD_TUNING_LAND 			65536
+#define CMD_TUNING_TAKEOFF 			131072
 
-#define CMD_TARGET_SETPOINT 1
-#define CMD_TARGET_LAND 2
-#define CMD_TARGET_TAKEOFF 4
+// Bitmask for target messages
+// (targetmessage->cmd & CMD_TARGET_...) to check whether set
+// targetmessage->cmd &= ~CMD_TARGET_... to unset
+#define CMD_TARGET_SETPOINT 		1
+#define CMD_TARGET_LAND 			2
+#define CMD_TARGET_TAKEOFF 			4
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+// Data frame special values
 #define DATA_FRAME_START_DELIMITER 0x7E
 #define DATA_FRAME_ESCAPE_CHAR 0x7D
 #define DATA_FRAME_XOR 0x20
+
+// UART BASE for comms
 #define DATA_LINK_UART_BASE UART0_BASE //TODO: Change to correct UART base
 
 // Channel names for lcm
@@ -49,6 +58,7 @@ extern "C" {
 #define CHANNEL_TUNING "TUN"
 #define CHANNEL_TARGET "TGT"
 #define CHANNEL_POSITION "POS"
+
 // From address for lcm. Since we are not using udp, this is arbitrary.
 #define FROM_ADDR 9001
 
@@ -150,7 +160,7 @@ void data_link_init(position_t *position, target_t *target, tuning_t *tuning);
  * @details retrieves data from ringbuffer, starts assembling packets, if packet
  * is finished assembling, will decode into proper structs
  */
-void data_link_do_stuff();
+void data_link_process_incoming();
 
 /**
  * @brief inserts a byte into the messaging ringbuffer for testing

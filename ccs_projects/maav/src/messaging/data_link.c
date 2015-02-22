@@ -129,7 +129,7 @@ void data_link_send_feedback(feedback_t *message)
 	lcmlite_publish(&lcm, CHANNEL_FEEDBACK, encoded, len);
 }
 
-void data_link_do_stuff()
+void data_link_process_incoming()
 {
 	// Loop through and process all received data
 	while (ringbuf_unread(&ringbuf)) {

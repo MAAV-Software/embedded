@@ -173,104 +173,33 @@ int main(void)
 	{
 		loopTime = millis(); // get current time
 
-		if(loopTime-process_data_link_data_time > 10)
-			//TODO: Determine how often we want to process newly received data
-			//There is no rush since the dumping of fifo to ring buffer is done in isr
-			//But more often processing means faster response to messages
-			//This has no effect on sending whatsoever
-		{
-			data_link_do_stuff();
+		//TODO: Determine how often we want to process newly received data
+		//There is no rush since the dumping of fifo to ring buffer is done in isr
+		//But more often processing means faster response to messages
+		//This has no effect on sending whatsoever
+		if (loopTime-process_data_link_data_time > 10) {
+			data_link_process_incoming();
 		}
-		if(msg_target->timestamp > last_target_time)
-		{
+		if (msg_target->timestamp > last_target_time) {
 			last_target_time = msg_target->timestamp;
-			// TODO:Handle target message
+			// TODO:Handle target message takeoff, land
+			// Currently done: set setpoint
+			targetMessageQuadCtrlChangesHandler(&qc, msg_target);
 		}
-		if(msg_tuning->timestamp > last_tuning_time)
-		{
+		if (msg_tuning->timestamp > last_tuning_time) {
 			last_tuning_time = msg_tuning->timestamp;
-			// TODO:Handle tuning message setpoint, rate setpoint, takeoff, land
-			// Currently done: set kpid, set ratekpid
-			if(msg_tuning->cmd & CMD_TUNING_SETPID_X)
-			{
-				// Mark as handled
-				msg_tuning->cmd &= ~CMD_TUNING_SETPID_X;
-				float new_gains[3];
-				new_gains[0] = msg_tuning->KPX;
-				new_gains[1] = msg_tuning->KIX;
-				new_gains[2] = msg_tuning->KDX;
-				dof_set_gains(&qc.xyzh[X_AXIS], new_gains, qc.xyzh[X_AXIS].rate_gains);
-			}
-			if(msg_tuning->cmd & CMD_TUNING_SETPID_Y)
-			{
-				// Mark as handled
-				msg_tuning->cmd &= ~CMD_TUNING_SETPID_Y;
-				float new_gains[3];
-				new_gains[0] = msg_tuning->KPY;
-				new_gains[1] = msg_tuning->KIY;
-				new_gains[2] = msg_tuning->KDY;
-				dof_set_gains(&qc.xyzh[Y_AXIS], new_gains, qc.xyzh[Y_AXIS].rate_gains);
-			}
-			if(msg_tuning->cmd & CMD_TUNING_SETPID_Z)
-			{
-				// Mark as handled
-				msg_tuning->cmd &= ~CMD_TUNING_SETPID_Z;
-				float new_gains[3];
-				new_gains[0] = msg_tuning->KPZ;
-				new_gains[1] = msg_tuning->KIZ;
-				new_gains[2] = msg_tuning->KDZ;
-				dof_set_gains(&qc.xyzh[Z_AXIS], new_gains, qc.xyzh[Z_AXIS].rate_gains);
-			}
-			if(msg_tuning->cmd & CMD_TUNING_SETPID_H)
-			{
-				// Mark as handled
-				msg_tuning->cmd &= ~CMD_TUNING_SETPID_H;
-				float new_gains[3];
-				new_gains[0] = msg_tuning->KPH;
-				new_gains[1] = msg_tuning->KIH;
-				new_gains[2] = msg_tuning->KDH;
-				dof_set_gains(&qc.xyzh[YAW], new_gains, qc.xyzh[YAW].rate_gains);
-			}
-			if(msg_tuning->cmd & CMD_TUNING_SETPID_XDOT)
-			{
-				// Mark as handled
-				msg_tuning->cmd &= ~CMD_TUNING_SETPID_XDOT;
-				float new_gains[3];
-				new_gains[0] = msg_tuning->KPXdot;
-				new_gains[1] = msg_tuning->KIXdot;
-				new_gains[2] = msg_tuning->KDXdot;
-				dof_set_gains(&qc.xyzh[X_AXIS], qc.xyzh[X_AXIS].value_gains, new_gains);
-			}
-			if(msg_tuning->cmd & CMD_TUNING_SETPID_YDOT)
-			{
-				// Mark as handled
-				msg_tuning->cmd &= ~CMD_TUNING_SETPID_YDOT;
-				float new_gains[3];
-				new_gains[0] = msg_tuning->KPYdot;
-				new_gains[1] = msg_tuning->KIYdot;
-				new_gains[2] = msg_tuning->KDYdot;
-				dof_set_gains(&qc.xyzh[Y_AXIS], qc.xyzh[Y_AXIS].value_gains, new_gains);
-			}
-			if(msg_tuning->cmd & CMD_TUNING_SETPID_ZDOT)
-			{
-				// Mark as handled
-				msg_tuning->cmd &= ~CMD_TUNING_SETPID_ZDOT;
-				float new_gains[3];
-				new_gains[0] = msg_tuning->KPZdot;
-				new_gains[1] = msg_tuning->KIZdot;
-				new_gains[2] = msg_tuning->KDZdot;
-				dof_set_gains(&qc.xyzh[Z_AXIS], qc.xyzh[Z_AXIS].value_gains, new_gains);
-			}
+			// TODO:Handle tuning message takeoff, land
+			// Currently done: set kpid, set ratekpid, set setpoint and rate setpoint
+			// Handle the changing of gains (if any) in the tuning message
+			tuningMessageQuadCtrlChangesHandler(&qc, msg_tuning);
 		}
-		if(msg_position->timestamp > last_position_time)
-		{
+		if (msg_position->timestamp > last_position_time) {
 			last_position_time = msg_position->timestamp;
 			// TODO:Handle position message
+			// Someone that knows the insides of the filter should probably do this part
 		}
-		if(loopTime-switchUpdateTime > 10) {
 		// check lighted switches
-		if ((loopTime - switchUpdateTime) > 10)
-		{
+		if ((loopTime - switchUpdateTime) > 10) {
 			switchUpdateTime = loopTime;
 			int i;
 			for (i = 0; i < 3; ++i) readSwitch(&sw[i]);
@@ -314,14 +243,12 @@ int main(void)
 //		}
 
 		// Check controller mode from RC Kill Switch switch
-		if ((loopTime - modeCheckTime) > 100)
-		{
+		if ((loopTime - modeCheckTime) > 100) {
 			modeCheckTime = loopTime;
 
 			mode = automomousMode(servoIn_getPulse(RC_CHAN5)) ? 3 :
 					pulseUpperThird(servoIn_getPulse(KILL_CHAN5)) ? 1 : 2;
-			switch (mode)
-			{
+			switch (mode) {
 				case 1: GPIOPinWrite(GPIO_PORTF_BASE, RED_LED | GREEN_LED |
 							     	 BLUE_LED, RED_LED);
 					break;
@@ -334,17 +261,15 @@ int main(void)
 			}
 		}
 
-		if(loopTime-update_PX4_time > 10 && px4_can_transmit == true) {
+		if (loopTime-update_PX4_time > 10 && px4_can_transmit == true) {
 		// Log gains to EEPROM
-		if(loopTime-writeEepromTime > 1000)
-		{
+		if (loopTime-writeEepromTime > 1000) {
 			writeEepromTime = loopTime;
 			recordGains(&qc);
 		}
 
 		// Update Gains
-		if(loopTime-gainCheckTime > 100)
-		{
+		if (loopTime-gainCheckTime > 100) {
 			gainCheckTime = loopTime;
 
 			char buffer[100];
@@ -356,8 +281,7 @@ int main(void)
 									z_valueGains[Kd]);
 			UARTwrite(buffer, len);
 
-			if(mode == 1)
-			{
+			if (mode == 1) {
 				if(      pulseUpperThird(servoIn_getPulse(KILL_CHAN1))) xy_rateGains[Kd] *= 1.01;
 				else if( pulseLowerThird(servoIn_getPulse(KILL_CHAN1))) xy_rateGains[Kd] *= 0.99;
 				if(      pulseUpperThird(servoIn_getPulse(KILL_CHAN2))) xy_rateGains[Kp] *= 1.01;
@@ -365,8 +289,7 @@ int main(void)
 				dof_set_gains(&(qc.xyzh[X_AXIS]), xy_valueGains, xy_rateGains);
 				dof_set_gains(&(qc.xyzh[Y_AXIS]), xy_valueGains, xy_rateGains);
 			}
-			else if(mode == 2)
-			{
+			else if (mode == 2) {
 				if(      pulseUpperThird(servoIn_getPulse(KILL_CHAN1))) z_valueGains[Kd] *= 1.01;
 				else if( pulseLowerThird(servoIn_getPulse(KILL_CHAN1))) z_valueGains[Kd] *= 0.99;
 				if(      pulseUpperThird(servoIn_getPulse(KILL_CHAN2))) z_valueGains[Kp] *= 1.01;
@@ -376,8 +299,8 @@ int main(void)
 		}
 
 		// Assign Setpoints
-		if(loopTime-update_setPoints_time > 20)
-		{
+		// setpoints array [x, y, z, yaw, x_dot, y_dot, z_dot, yaw_dot]
+		if (loopTime-update_setPoints_time > 20) {
 					update_setPoints_time = loopTime;
 
 					setpoints[5] = ms2XY_rate(pulse2ms(servoIn_getPulse(RC_CHAN1)));	// Y Rate
@@ -395,8 +318,7 @@ int main(void)
 				}
 
 
-		if(loopTime-update_PX4_time > 10 && px4_can_transmit == true)
-		{
+		if (loopTime-update_PX4_time > 10 && px4_can_transmit == true) {
 			update_PX4_time = loopTime;
 			initiate_PX4_transmit();
 			px4_can_transmit = false;
@@ -404,16 +326,14 @@ int main(void)
 		}
 
 		// Test for I2C race condition during transmission
-		if ((loopTime - test_PX4_time) > 25000)
-		{
+		if ((loopTime - test_PX4_time) > 25000) {
 			test_PX4_time = loopTime;
 
 			uint16_t frameCount = px4_i2c_get_frame_count();
 
 			// I2C Failure Recovery
 			if ((loopTime - lastFreshDataTime > 50000) || (frameCount == 65535)
-				|| (frameCount == 0))
-			{
+				|| (frameCount == 0)) {
 				driveSwitch(&sw[1], 1);
 				UARTprintf("\n\nI2C_fail\n\n");
 
@@ -436,13 +356,11 @@ int main(void)
 		/*
 		 * Get PX4 data and feed into Kalman Filter.
 		 */
-        if (px4_i2c_dataFresh())
-        {
+        if (px4_i2c_dataFresh()) {
         	lastFreshDataTime = loopTime;
 
         	uint16_t frameCount = px4_i2c_get_frame_count();
-            if (frameCount != oldFrameCount)
-            {
+            if (frameCount != oldFrameCount) {
                 kalman_process_data(filter,
                                     px4_i2c_get_flow_comp_m_x(),
                                     px4_i2c_get_flow_comp_m_y(),
@@ -482,12 +400,10 @@ int main(void)
         qc_runPID(&qc);								// Run PID
 
         // Send updated signals to DJI
-		if ((loopTime - update_DJI_time) > 10)
-		{
+		if ((loopTime - update_DJI_time) > 10) {
 			update_DJI_time = loopTime;
 
-			if ((mode == 1) || (mode == 2)) // autonomous mode. do something smart
-			{
+			if ((mode == 1) || (mode == 2)) {// autonomous mode. do something smart
 				PPM_setPulse(0, servoIn_getPulse(RC_CHAN1));
 				PPM_setPulse(1, servoIn_getPulse(RC_CHAN2));
 
@@ -499,8 +415,7 @@ int main(void)
 				PPM_setPulse(2, ms2pulse(zPulse));	// Z control to DJI
 				PPM_setPulse(3, servoIn_getPulse(RC_CHAN4));
 			}
-			else // RC passthrough.  Dump RC Data directly into the DJI
-			{
+			else { // RC passthrough.  Dump RC Data directly into the DJI
 				PPM_setPulse(0, servoIn_getPulse(RC_CHAN1));	// Y Accel
 				PPM_setPulse(1, servoIn_getPulse(RC_CHAN2));	// X Accel
 				PPM_setPulse(2, servoIn_getPulse(RC_CHAN3));	// Z Accel

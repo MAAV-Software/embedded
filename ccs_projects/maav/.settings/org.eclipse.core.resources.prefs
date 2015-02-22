@@ -1,4 +1,5 @@
 eclipse.preferences.version=1
+encoding//Debug/makefile=UTF-8
 encoding//Debug/optimizerAssistant/opt_level__0/makefile=UTF-8
 encoding//Debug/optimizerAssistant/opt_level__0/objects.mk=UTF-8
 encoding//Debug/optimizerAssistant/opt_level__0/sources.mk=UTF-8
@@ -41,5 +42,10 @@ encoding//Debug/optimizerAssistant/opt_level__off/src/subdir_rules.mk=UTF-8
 encoding//Debug/optimizerAssistant/opt_level__off/src/subdir_vars.mk=UTF-8
 encoding//Debug/optimizerAssistant/opt_level__off/subdir_rules.mk=UTF-8
 encoding//Debug/optimizerAssistant/opt_level__off/subdir_vars.mk=UTF-8
+encoding//Debug/sources.mk=UTF-8
 encoding//Debug/src/messaging/subdir_rules.mk=UTF-8
 encoding//Debug/src/messaging/subdir_vars.mk=UTF-8
+encoding//Debug/src/subdir_rules.mk=UTF-8
+encoding//Debug/src/subdir_vars.mk=UTF-8
+encoding//Debug/subdir_rules.mk=UTF-8
+encoding//Debug/subdir_vars.mk=UTF-8

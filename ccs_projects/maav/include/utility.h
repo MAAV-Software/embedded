@@ -16,6 +16,11 @@
 #include <stdint.h>
 #include "px4_kalman.h"
 #include "quad_ctrl.h"
+#include "messaging/target_t.h"
+#include "messaging/tuning_t.h"
+#include "messaging/position_t.h"
+#include "messaging/feedback_t.h"
+#include "messaging/data_link.h"
 
 /************************* Utility (Global) Defines ***************************/
 // System Clock Frequency
@@ -132,5 +137,13 @@ void recordGains(quad_ctrl_t *qc);
 
 // Copy gains from EEPROM into quad_ctrl
 void copyGains(quad_ctrl_t *qc);
+
+/********************** Message Handling Utilities ****************************/
+
+// Does the requested changes to quad control struct based on tuning message
+void tuningMessageQuadCtrlChangesHandler(quad_ctrl_t *qc, tuning_t *message);
+
+// Does the requested changes to quad control struct based on target message
+void targetMessageQuadCtrlChangesHandler(quad_ctrl_t *qc, target_t *message);
 
 #endif /* UTILITY_H_ */
