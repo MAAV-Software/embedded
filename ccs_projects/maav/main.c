@@ -91,6 +91,7 @@ int main(void)
 	// Enable Interrupts
 	IntMasterEnable();
 
+	/*
 	// Initialize messaging system structs for data link
 	target_t *msg_target = (target_t*)malloc(sizeof(target_t));
 	position_t *msg_position = (position_t*)malloc(sizeof(position_t));
@@ -102,13 +103,14 @@ int main(void)
 
 	// Call init function
 	data_link_init(msg_position, msg_target, msg_tuning);
+	*/
 
 	// Set up UART comms to computer terminal
 	ConfigureUART();
 
 	// Enable UART Receive Timeout and Receive interrupt for UART comms to computer
-	IntEnable(INT_UART0);
-	UARTIntEnable(UART0_BASE, UART_INT_RT | UART_INT_RX);
+	//IntEnable(INT_UART0);
+	//UARTIntEnable(UART0_BASE, UART_INT_RT | UART_INT_RX);
 
 	// Init Kalman Filter
 	kalman_t filter_data;
@@ -149,7 +151,7 @@ int main(void)
 	uint32_t test_PX4_time = 0;
 	uint32_t update_setPoints_time = 0;
 	uint32_t lastFreshDataTime = 0;
-	uint32_t process_data_link_data_time = 0;
+	//uint32_t process_data_link_data_time = 0;
 	uint8_t  mode = 3;	// defalut to RC mode
 	bool px4_can_transmit = true; // flag for PX4 transmission
 
@@ -159,6 +161,7 @@ int main(void)
 	{
 		loopTime = millis(); // get current time
 
+		/*
 		//TODO: Determine how often we want to process newly received data
 		//There is no rush since the dumping of fifo to ring buffer is done in isr
 		//But more often processing means faster response to messages
@@ -189,6 +192,7 @@ int main(void)
 			// TODO:Handle position message
 			// Someone that knows the insides of the filter should probably do this part
 		}
+		*/
 
 		// check lighted switches
 		if ((loopTime - switchUpdateTime) > 10)
