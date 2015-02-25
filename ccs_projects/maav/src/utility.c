@@ -234,7 +234,8 @@ void copyGains(quad_ctrl_t *qc)
 void tuningMessageQuadCtrlChangesHandler(quad_ctrl_t *qc, tuning_t *message)
 {
 	// Handling of PID gain changes
-	if (message->cmd & CMD_TUNING_SETPID_X) {
+	if (message->cmd & CMD_TUNING_SETPID_X)
+	{
 		// Mark as handled
 		message->cmd &= ~CMD_TUNING_SETPID_X;
 		/*
@@ -245,7 +246,8 @@ void tuningMessageQuadCtrlChangesHandler(quad_ctrl_t *qc, tuning_t *message)
 		 */
 		dof_set_gains(&qc->xyzh[X_AXIS], (float *)(&(message->KPX)), qc->xyzh[X_AXIS].rate_gains);
 	}
-	if (message->cmd & CMD_TUNING_SETPID_Y) {
+	if (message->cmd & CMD_TUNING_SETPID_Y)
+	{
 		// Mark as handled
 		message->cmd &= ~CMD_TUNING_SETPID_Y;
 		/*
@@ -256,7 +258,8 @@ void tuningMessageQuadCtrlChangesHandler(quad_ctrl_t *qc, tuning_t *message)
 		 */
 		dof_set_gains(&qc->xyzh[Y_AXIS], (float *)(&(message->KPY)), qc->xyzh[Y_AXIS].rate_gains);
 	}
-	if (message->cmd & CMD_TUNING_SETPID_Z) {
+	if (message->cmd & CMD_TUNING_SETPID_Z)
+	{
 		// Mark as handled
 		message->cmd &= ~CMD_TUNING_SETPID_Z;
 		/*
@@ -267,7 +270,8 @@ void tuningMessageQuadCtrlChangesHandler(quad_ctrl_t *qc, tuning_t *message)
 		 */
 		dof_set_gains(&qc->xyzh[Z_AXIS], (float *)(&(message->KPZ)), qc->xyzh[Z_AXIS].rate_gains);
 	}
-	if (message->cmd & CMD_TUNING_SETPID_H) {
+	if (message->cmd & CMD_TUNING_SETPID_H)
+	{
 		// Mark as handled
 		message->cmd &= ~CMD_TUNING_SETPID_H;
 		/*
@@ -278,7 +282,8 @@ void tuningMessageQuadCtrlChangesHandler(quad_ctrl_t *qc, tuning_t *message)
 		 */
 		dof_set_gains(&qc->xyzh[YAW], (float *)(&(message->KPH)), qc->xyzh[YAW].rate_gains);
 	}
-	if (message->cmd & CMD_TUNING_SETPID_XDOT) {
+	if (message->cmd & CMD_TUNING_SETPID_XDOT)
+	{
 		// Mark as handled
 		message->cmd &= ~CMD_TUNING_SETPID_XDOT;
 		/*
@@ -289,7 +294,8 @@ void tuningMessageQuadCtrlChangesHandler(quad_ctrl_t *qc, tuning_t *message)
 		 */
 		dof_set_gains(&qc->xyzh[X_AXIS], qc->xyzh[X_AXIS].value_gains, (float *)(&(message->KPXdot)));
 	}
-	if (message->cmd & CMD_TUNING_SETPID_YDOT) {
+	if (message->cmd & CMD_TUNING_SETPID_YDOT)
+	{
 		// Mark as handled
 		message->cmd &= ~CMD_TUNING_SETPID_YDOT;
 		/*
@@ -298,9 +304,10 @@ void tuningMessageQuadCtrlChangesHandler(quad_ctrl_t *qc, tuning_t *message)
 		 * to take addr of first one, the cast to float array and all should work, assuming
 		 * the compiler doesn't do something weird with the alignment on us
 		 */
-		dof_set_gains(&qc->xyzh[Y_AXIS], qc->xyzh[Y_AXIS].value_gains, (float *)(&(message->KPYdot)));
+		dof_set_gains(&(qc->xyzh[Y_AXIS]), qc->xyzh[Y_AXIS].value_gains, (float *)(&(message->KPYdot)));
 	}
-	if (message->cmd & CMD_TUNING_SETPID_ZDOT) {
+	if (message->cmd & CMD_TUNING_SETPID_ZDOT)
+	{
 		// Mark as handled
 		message->cmd &= ~CMD_TUNING_SETPID_ZDOT;
 		/*
@@ -309,67 +316,76 @@ void tuningMessageQuadCtrlChangesHandler(quad_ctrl_t *qc, tuning_t *message)
 		 * to take addr of first one, the cast to float array and all should work, assuming
 		 * the compiler doesn't do something weird with the alignment on us
 		 */
-		dof_set_gains(&qc->xyzh[Z_AXIS], qc->xyzh[Z_AXIS].value_gains, (float *)(&(message->KPZdot)));
+		dof_set_gains(&(qc->xyzh[Z_AXIS]), qc->xyzh[Z_AXIS].value_gains, (float *)(&(message->KPZdot)));
 	}
+
 	/* Uncomment this block and comment the above block if compiler alignment
 	 * of structs makes the above way with arrays and stuff fail
-	if (message->cmd & CMD_TUNING_SETPID_X) {
-		// Mark as handled
-		message->cmd &= ~CMD_TUNING_SETPID_X;
+	 */
+	/*
+	if (message->cmd & CMD_TUNING_SETPID_X)
+	{
+		message->cmd &= ~CMD_TUNING_SETPID_X; // Mark as handled
 		float new_gains[3];
 		new_gains[0] = message->KPX;
 		new_gains[1] = message->KIX;
 		new_gains[2] = message->KDX;
 		dof_set_gains(&qc->xyzh[X_AXIS], new_gains, qc->xyzh[X_AXIS].rate_gains);
 	}
-	if (message->cmd & CMD_TUNING_SETPID_Y) {
-		// Mark as handled
-		message->cmd &= ~CMD_TUNING_SETPID_Y;
+
+	if (message->cmd & CMD_TUNING_SETPID_Y)
+	{
+		message->cmd &= ~CMD_TUNING_SETPID_Y; // Mark as handled
 		float new_gains[3];
 		new_gains[0] = message->KPY;
 		new_gains[1] = message->KIY;
 		new_gains[2] = message->KDY;
 		dof_set_gains(&qc->xyzh[Y_AXIS], new_gains, qc->xyzh[Y_AXIS].rate_gains);
 	}
-	if (message->cmd & CMD_TUNING_SETPID_Z) {
-		// Mark as handled
-		message->cmd &= ~CMD_TUNING_SETPID_Z;
+
+	if (message->cmd & CMD_TUNING_SETPID_Z)
+	{
+		message->cmd &= ~CMD_TUNING_SETPID_Z; // Mark as handled
 		float new_gains[3];
 		new_gains[0] = message->KPZ;
 		new_gains[1] = message->KIZ;
 		new_gains[2] = message->KDZ;
 		dof_set_gains(&qc->xyzh[Z_AXIS], new_gains, qc->xyzh[Z_AXIS].rate_gains);
 	}
-	if (message->cmd & CMD_TUNING_SETPID_H) {
-		// Mark as handled
-		message->cmd &= ~CMD_TUNING_SETPID_H;
+
+	if (message->cmd & CMD_TUNING_SETPID_H)
+	{
+		message->cmd &= ~CMD_TUNING_SETPID_H; // Mark as handled
 		float new_gains[3];
 		new_gains[0] = message->KPH;
 		new_gains[1] = message->KIH;
 		new_gains[2] = message->KDH;
 		dof_set_gains(&qc->xyzh[YAW], new_gains, qc->xyzh[YAW].rate_gains);
 	}
-	if (message->cmd & CMD_TUNING_SETPID_XDOT) {
-		// Mark as handled
-		message->cmd &= ~CMD_TUNING_SETPID_XDOT;
+
+	if (message->cmd & CMD_TUNING_SETPID_XDOT)
+	{
+		message->cmd &= ~CMD_TUNING_SETPID_XDOT; // Mark as handled
 		float new_gains[3];
 		new_gains[0] = message->KPXdot;
 		new_gains[1] = message->KIXdot;
 		new_gains[2] = message->KDXdot;
 		dof_set_gains(&qc->xyzh[X_AXIS], qc->xyzh[X_AXIS].value_gains, new_gains);
 	}
-	if (message->cmd & CMD_TUNING_SETPID_YDOT) {
-		// Mark as handled
-		message->cmd &= ~CMD_TUNING_SETPID_YDOT;
+
+	if (message->cmd & CMD_TUNING_SETPID_YDOT)
+	{
+		message->cmd &= ~CMD_TUNING_SETPID_YDOT; // Mark as handled
 		float new_gains[3];
 		new_gains[0] = message->KPYdot;
 		new_gains[1] = message->KIYdot;
 		new_gains[2] = message->KDYdot;
 		dof_set_gains(&qc->xyzh[Y_AXIS], qc->xyzh[Y_AXIS].value_gains, new_gains);
 	}
-	if (message->cmd & CMD_TUNING_SETPID_ZDOT) {
-		// Mark as handled
-		message->cmd &= ~CMD_TUNING_SETPID_ZDOT;
+
+	if (message->cmd & CMD_TUNING_SETPID_ZDOT)
+	{
+		message->cmd &= ~CMD_TUNING_SETPID_ZDOT; // Mark as handled
 		float new_gains[3];
 		new_gains[0] = message->KPZdot;
 		new_gains[1] = message->KIZdot;
@@ -377,6 +393,7 @@ void tuningMessageQuadCtrlChangesHandler(quad_ctrl_t *qc, tuning_t *message)
 		dof_set_gains(&qc->xyzh[Z_AXIS], qc->xyzh[Z_AXIS].value_gains, new_gains);
 	}
 	*/
+
 	// Handling of Setpoint changes
 	// Fetch old setpts into setpt array [x, y, z, yaw, x_dot, y_dot, z_dot, yaw_dot]
 	float setpts[8];
@@ -388,42 +405,50 @@ void tuningMessageQuadCtrlChangesHandler(quad_ctrl_t *qc, tuning_t *message)
 	setpts[5] = qc->xyzh[Y_AXIS].setpt[1];
 	setpts[6] = qc->xyzh[Z_AXIS].setpt[1];
 	setpts[7] = qc->xyzh[YAW].setpt[1];
+
 	// Make the requested changes to the setpoint array
 	if (message->cmd & CMD_TUNING_SETPOINT_X)
 	{
 		message->cmd &= ~CMD_TUNING_SETPOINT_X;
 		setpts[0] = message->x;
 	}
+
 	if (message->cmd & CMD_TUNING_SETPOINT_Y)
 	{
 		message->cmd &= ~CMD_TUNING_SETPOINT_Y;
 		setpts[1] = message->y;
 	}
+
 	if (message->cmd & CMD_TUNING_SETPOINT_Z)
 	{
 		message->cmd &= ~CMD_TUNING_SETPOINT_Z;
 		setpts[2] = message->z;
 	}
+
 	if (message->cmd & CMD_TUNING_SETPOINT_H)
 	{
 		message->cmd &= ~CMD_TUNING_SETPOINT_H;
 		setpts[3] = message->h;
 	}
+
 	if (message->cmd & CMD_TUNING_DOTSETPOINT_X)
 	{
 		message->cmd &= ~CMD_TUNING_DOTSETPOINT_X;
 		setpts[4] = message->xdot;
 	}
+
 	if (message->cmd & CMD_TUNING_DOTSETPOINT_Y)
 	{
 		message->cmd &= ~CMD_TUNING_DOTSETPOINT_Y;
 		setpts[5] = message->ydot;
 	}
+
 	if (message->cmd & CMD_TUNING_DOTSETPOINT_Z)
 	{
 		message->cmd &= ~CMD_TUNING_DOTSETPOINT_Z;
 		setpts[6] = message->zdot;
 	}
+
 	// Set the setpoints
 	qc_setSetpt(qc, setpts, timestamp_now());
 

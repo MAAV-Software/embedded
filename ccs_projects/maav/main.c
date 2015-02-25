@@ -5,8 +5,8 @@
  * and DJI. Executes outerlook position control of DJI (which handles inner
  * loop attitude control).
  *
- *      Author: Sajan Patel, Jonathan Kurzer
- *        Date: Dec 18, 2014
+ *      Author: Sajan Patel, Jonathan Kurzer, Sasawat Prankprakma, Clark Zhang
+ *        Date: Feb 24, 2015
  *
  */
 #include <stdlib.h>
@@ -39,30 +39,10 @@
 #include "px4_kalman.h"
 #include "dof.h"
 #include "quad_ctrl.h"
+
 #include "messaging/data_link.h"
 
 #include "utility.h"
-
-#define SYSCLOCK 80000000
-#define RED_LED   GPIO_PIN_1
-#define GREEN_LED GPIO_PIN_3
-#define BLUE_LED  GPIO_PIN_2
-
-#define GAINS_START_LOC 0x00
-
-#define RC_CHAN1 GPIO_PORTA_BASE,2
-#define RC_CHAN2 GPIO_PORTA_BASE,3
-#define RC_CHAN3 GPIO_PORTA_BASE,4
-#define RC_CHAN4 GPIO_PORTA_BASE,5
-#define RC_CHAN5 GPIO_PORTA_BASE,6
-#define RC_CHAN6 GPIO_PORTA_BASE,7
-
-#define KILL_CHAN1 GPIO_PORTE_BASE,4
-#define KILL_CHAN2 GPIO_PORTE_BASE,5
-#define KILL_CHAN3 GPIO_PORTE_BASE,3
-#define KILL_CHAN4 GPIO_PORTE_BASE,2
-#define KILL_CHAN5 GPIO_PORTE_BASE,1
-#define KILL_CHAN6 GPIO_PORTE_BASE,0
 
 bool px4_can_transmit = true;
 
@@ -111,8 +91,7 @@ int main(void)
 	// Enable Interrupts
 	IntMasterEnable();
 
-	// Initialize messaging system
-	// Structs for data link
+	// Initialize messaging system structs for data link
 	target_t *msg_target = (target_t*)malloc(sizeof(target_t));
 	position_t *msg_position = (position_t*)malloc(sizeof(position_t));
 	tuning_t *msg_tuning = (tuning_t*)malloc(sizeof(tuning_t));
@@ -120,6 +99,7 @@ int main(void)
 	int32_t last_position_time = 0;
 	int32_t last_tuning_time = 0;
 	feedback_t feedback_send;
+
 	// Call init function
 	data_link_init(msg_position, msg_target, msg_tuning);
 
@@ -183,163 +163,146 @@ int main(void)
 		//There is no rush since the dumping of fifo to ring buffer is done in isr
 		//But more often processing means faster response to messages
 		//This has no effect on sending whatsoever
-		if (loopTime-process_data_link_data_time > 10) {
+		if (loopTime-process_data_link_data_time > 10)
 			data_link_process_incoming();
-		}
-		if (msg_target->timestamp > last_target_time) {
+
+		if (msg_target->timestamp > last_target_time)
+		{
 			last_target_time = msg_target->timestamp;
 			// TODO:Handle target message takeoff, land
 			// Currently done: set setpoint
 			targetMessageQuadCtrlChangesHandler(&qc, msg_target);
 		}
-		if (msg_tuning->timestamp > last_tuning_time) {
+
+		if (msg_tuning->timestamp > last_tuning_time)
+		{
 			last_tuning_time = msg_tuning->timestamp;
 			// TODO:Handle tuning message takeoff, land
 			// Currently done: set kpid, set ratekpid, set setpoint and rate setpoint
 			// Handle the changing of gains (if any) in the tuning message
 			tuningMessageQuadCtrlChangesHandler(&qc, msg_tuning);
 		}
-		if (msg_position->timestamp > last_position_time) {
+
+		if (msg_position->timestamp > last_position_time)
+		{
 			last_position_time = msg_position->timestamp;
 			// TODO:Handle position message
 			// Someone that knows the insides of the filter should probably do this part
 		}
+
 		// check lighted switches
-		if ((loopTime - switchUpdateTime) > 10) {
+		if ((loopTime - switchUpdateTime) > 10)
+		{
 			switchUpdateTime = loopTime;
 			int i;
 			for (i = 0; i < 3; ++i) readSwitch(&sw[i]);
 			driveSwitch(&sw[0], sw[0].readState);
 			driveSwitch(&sw[1], sw[1].readState);
 			driveSwitch(&sw[2], sw[2].readState);
-		}
-		if(loopTime-writeEepromTime > 1000) {	// Every now and then, log the gains to EEPROM
-			writeEepromTime = loopTime;
-			recordGains(&qc);
-//			EEPROMProgram(gains.raw, 0x0, sizeof(gains.raw));
-		}
-		// Gains will be sent via Tuning program so this isn't needed
-//		if(loopTime-gainCheckTime > 100) {
-//			gainCheckTime = loopTime;
-//
-////			char buffer[100];
-////			uint32_t len = snprintf(buffer, 1000,
-////					"%f,\t%f,\t%f,\t%f\n",
-////					xy_rateGains[Kp],
-////					xy_rateGains[Kd],
-////					z_valueGains[Kp],
-////					z_valueGains[Kd]);
-////			UARTwrite(buffer, len);
-//
-//			if(mode == 1) {
-//				if(      pulseUpperThird(servoIn_getPulse(KILL_CHAN1))) xy_rateGains[Kd] *= 1.01;
-//				else if( pulseLowerThird(servoIn_getPulse(KILL_CHAN1))) xy_rateGains[Kd] *= 0.99;
-//				if(      pulseUpperThird(servoIn_getPulse(KILL_CHAN2))) xy_rateGains[Kp] *= 1.01;
-//				else if( pulseLowerThird(servoIn_getPulse(KILL_CHAN2))) xy_rateGains[Kp] *= 0.99;
-//				dof_set_gains(&(qc.xyzh[X_AXIS]), xy_valueGains, xy_rateGains);
-//				dof_set_gains(&(qc.xyzh[Y_AXIS]), xy_valueGains, xy_rateGains);
-//
-//			} else if(mode == 2) {
-//				if(      pulseUpperThird(servoIn_getPulse(KILL_CHAN1))) z_valueGains[Kd] *= 1.01;
-//				else if( pulseLowerThird(servoIn_getPulse(KILL_CHAN1))) z_valueGains[Kd] *= 0.99;
-//				if(      pulseUpperThird(servoIn_getPulse(KILL_CHAN2))) z_valueGains[Kp] *= 1.01;
-//				else if( pulseLowerThird(servoIn_getPulse(KILL_CHAN2))) z_valueGains[Kp] *= 0.99;
-//				dof_set_gains(&(qc.xyzh[Z_AXIS]), z_valueGains, z_rateGains);
-//			}
-//		}
+		} // end switch check
+
 
 		// Check controller mode from RC Kill Switch switch
-		if ((loopTime - modeCheckTime) > 100) {
+		if ((loopTime - modeCheckTime) > 100)
+		{
 			modeCheckTime = loopTime;
-
 			mode = automomousMode(servoIn_getPulse(RC_CHAN5)) ? 3 :
 					pulseUpperThird(servoIn_getPulse(KILL_CHAN5)) ? 1 : 2;
-			switch (mode) {
+			switch (mode)
+			{
 				case 1: GPIOPinWrite(GPIO_PORTF_BASE, RED_LED | GREEN_LED |
-							     	 BLUE_LED, RED_LED);
+									 BLUE_LED, RED_LED);
 					break;
 				case 2: GPIOPinWrite(GPIO_PORTF_BASE, RED_LED | GREEN_LED |
-							     	 BLUE_LED, BLUE_LED);
+									 BLUE_LED, BLUE_LED);
 					break;
 				case 3: GPIOPinWrite(GPIO_PORTF_BASE, RED_LED | GREEN_LED |
-								 	 BLUE_LED, GREEN_LED);
+									 BLUE_LED, GREEN_LED);
 					break;
 			}
-		}
+		} // end controller mode check
 
-		if (loopTime-update_PX4_time > 10 && px4_can_transmit == true) {
-		// Log gains to EEPROM
-		if (loopTime-writeEepromTime > 1000) {
+		// Every now and then, log the gains to EEPROM
+		if((loopTime - writeEepromTime) > 1000)
+		{
 			writeEepromTime = loopTime;
 			recordGains(&qc);
 		}
 
-		// Update Gains
-		if (loopTime-gainCheckTime > 100) {
+		// Update controller gains
+		if((loopTime - gainCheckTime) > 100)
+		{
 			gainCheckTime = loopTime;
+//			char buffer[100];
+//			uint32_t len = snprintf(buffer, 1000,
+//					"%f,\t%f,\t%f,\t%f\n",
+//					xy_rateGains[Kp],
+//					xy_rateGains[Kd],
+//					z_valueGains[Kp],
+//					z_valueGains[Kd]);
+//			UARTwrite(buffer, len);
 
-			char buffer[100];
-			uint32_t len = snprintf(buffer, 1000,
-									"%f,\t%f,\t%f,\t%f\n",
-									xy_rateGains[Kp],
-									xy_rateGains[Kd],
-									z_valueGains[Kp],
-									z_valueGains[Kd]);
-			UARTwrite(buffer, len);
+			if (mode == 1) // XY-Rate gains
+			{
+				if (      pulseUpperThird(servoIn_getPulse(KILL_CHAN1))) xy_rateGains[Kd] *= 1.01;
+				else if ( pulseLowerThird(servoIn_getPulse(KILL_CHAN1))) xy_rateGains[Kd] *= 0.99;
+				if (      pulseUpperThird(servoIn_getPulse(KILL_CHAN2))) xy_rateGains[Kp] *= 1.01;
+				else if ( pulseLowerThird(servoIn_getPulse(KILL_CHAN2))) xy_rateGains[Kp] *= 0.99;
 
-			if (mode == 1) {
-				if(      pulseUpperThird(servoIn_getPulse(KILL_CHAN1))) xy_rateGains[Kd] *= 1.01;
-				else if( pulseLowerThird(servoIn_getPulse(KILL_CHAN1))) xy_rateGains[Kd] *= 0.99;
-				if(      pulseUpperThird(servoIn_getPulse(KILL_CHAN2))) xy_rateGains[Kp] *= 1.01;
-				else if( pulseLowerThird(servoIn_getPulse(KILL_CHAN2))) xy_rateGains[Kp] *= 0.99;
 				dof_set_gains(&(qc.xyzh[X_AXIS]), xy_valueGains, xy_rateGains);
 				dof_set_gains(&(qc.xyzh[Y_AXIS]), xy_valueGains, xy_rateGains);
+
 			}
-			else if (mode == 2) {
-				if(      pulseUpperThird(servoIn_getPulse(KILL_CHAN1))) z_valueGains[Kd] *= 1.01;
-				else if( pulseLowerThird(servoIn_getPulse(KILL_CHAN1))) z_valueGains[Kd] *= 0.99;
-				if(      pulseUpperThird(servoIn_getPulse(KILL_CHAN2))) z_valueGains[Kp] *= 1.01;
-				else if( pulseLowerThird(servoIn_getPulse(KILL_CHAN2))) z_valueGains[Kp] *= 0.99;
+			else if (mode == 2) // Z-Value gains
+			{
+				if (      pulseUpperThird(servoIn_getPulse(KILL_CHAN1))) z_valueGains[Kd] *= 1.01;
+				else if ( pulseLowerThird(servoIn_getPulse(KILL_CHAN1))) z_valueGains[Kd] *= 0.99;
+				if (      pulseUpperThird(servoIn_getPulse(KILL_CHAN2))) z_valueGains[Kp] *= 1.01;
+				else if ( pulseLowerThird(servoIn_getPulse(KILL_CHAN2))) z_valueGains[Kp] *= 0.99;
+
 				dof_set_gains(&(qc.xyzh[Z_AXIS]), z_valueGains, z_rateGains);
 			}
-		}
+		} // End gains update
 
-		// Assign Setpoints
-		// setpoints array [x, y, z, yaw, x_dot, y_dot, z_dot, yaw_dot]
-		if (loopTime-update_setPoints_time > 20) {
-					update_setPoints_time = loopTime;
+		// Update Setpoints: setpoints array [x, y, z, yaw, x_dot, y_dot, z_dot, yaw_dot]
+		if (loopTime-update_setPoints_time > 20)
+		{
+			update_setPoints_time = loopTime;
 
-					setpoints[5] = ms2XY_rate(pulse2ms(servoIn_getPulse(RC_CHAN1)));	// Y Rate
-					setpoints[4] = ms2XY_rate(pulse2ms(servoIn_getPulse(RC_CHAN2)));	// X Rate
-					setpoints[2] = ms2height(pulse2ms(servoIn_getPulse(RC_CHAN3)));		// Z Absolute
-					//setpoints[7] = pulse2ms(servoIn_getPulse(RC_CHAN4));	// Yaw Rate	TODO Add this back in later
-					setpoints[0] = setpoints[1] = setpoints[3] = setpoints[6] = setpoints[7] = 0;
+			setpoints[5] = ms2XY_rate(pulse2ms(servoIn_getPulse(RC_CHAN1)));	// Y Rate
+			setpoints[4] = ms2XY_rate(pulse2ms(servoIn_getPulse(RC_CHAN2)));	// X Rate
+			setpoints[2] = ms2height(pulse2ms(servoIn_getPulse(RC_CHAN3)));		// Z Absolute
+			//setpoints[7] = pulse2ms(servoIn_getPulse(RC_CHAN4));	// Yaw Rate	TODO Add this back in later
+			setpoints[0] = setpoints[1] = setpoints[3] = setpoints[6] = setpoints[7] = 0;
 
-					if(qc.xyzh[Z_AXIS].Uval > 0)	 	driveSwitch(&sw[0], 1);
-					else 								driveSwitch(&sw[0], 0);
-					if(qc.xyzh[Z_AXIS].setpt[0] >1.0)	driveSwitch(&sw[2], 1);
-					else								driveSwitch(&sw[2], 0);
+			if (qc.xyzh[Z_AXIS].Uval > 0)	 	driveSwitch(&sw[0], 1);
+			else 								driveSwitch(&sw[0], 0);
+			if (qc.xyzh[Z_AXIS].setpt[0] >1.0)	driveSwitch(&sw[2], 1);
+			else								driveSwitch(&sw[2], 0);
 
-					qc_setSetpt(&qc, setpoints, timestamp_now());
-				}
+			qc_setSetpt(&qc, setpoints, timestamp_now());
+		} // End Setpoint Update
 
-
-		if (loopTime-update_PX4_time > 10 && px4_can_transmit == true) {
+		// Poll PX4 for new measurement
+		if (((loopTime - update_PX4_time) > 10) && (px4_can_transmit == true))
+		{
 			update_PX4_time = loopTime;
 			initiate_PX4_transmit();
 			px4_can_transmit = false;
 			driveSwitch(&sw[1], 1);
-		}
+		} // End PX4 Polling
 
 		// Test for I2C race condition during transmission
-		if ((loopTime - test_PX4_time) > 25000) {
+		if ((loopTime - test_PX4_time) > 25000)
+		{
 			test_PX4_time = loopTime;
 
 			uint16_t frameCount = px4_i2c_get_frame_count();
 
 			// I2C Failure Recovery
 			if ((loopTime - lastFreshDataTime > 50000) || (frameCount == 65535)
-				|| (frameCount == 0)) {
+				|| (frameCount == 0))
+			{
 				driveSwitch(&sw[1], 1);
 				UARTprintf("\n\nI2C_fail\n\n");
 
@@ -347,9 +310,10 @@ int main(void)
 				SysCtlDelay(100);	// wait a few clock cycles for the switch signal to settle.
 
 				// re-init PX4 comm
-				init_px4_i2c(SYSCTL_PERIPH_I2C3, SYSCTL_PERIPH_GPIOD, SYSCTL_PERIPH_GPIOD,
-							 SYSCLOCK, I2C3_BASE, GPIO_PORTD_BASE, GPIO_PORTD_BASE,
-							 GPIO_PIN_0, GPIO_PIN_1, GPIO_PD0_I2C3SCL, GPIO_PD1_I2C3SDA);
+				init_px4_i2c(SYSCTL_PERIPH_I2C3, SYSCTL_PERIPH_GPIOD,
+							 SYSCTL_PERIPH_GPIOD, SYSCLOCK, I2C3_BASE,
+							 GPIO_PORTD_BASE, GPIO_PORTD_BASE, GPIO_PIN_0,
+							 GPIO_PIN_1, GPIO_PD0_I2C3SCL, GPIO_PD1_I2C3SDA);
 			}
             else driveSwitch(&sw[1], 0);
 
@@ -357,16 +321,18 @@ int main(void)
 			uint32_t len = snprintf(buffer, 100, "%d\n",
 									px4_i2c_get_frame_count());
 			UARTwrite(buffer, len);
-		}
+		} // End PX4 race condition test
 
 		/*
 		 * Get PX4 data and feed into Kalman Filter.
 		 */
-        if (px4_i2c_dataFresh()) {
+        if (px4_i2c_dataFresh())
+        {
         	lastFreshDataTime = loopTime;
 
         	uint16_t frameCount = px4_i2c_get_frame_count();
-            if (frameCount != oldFrameCount) {
+            if (frameCount != oldFrameCount)
+            {
                 kalman_process_data(filter,
                                     px4_i2c_get_flow_comp_m_x(),
                                     px4_i2c_get_flow_comp_m_y(),
@@ -376,6 +342,7 @@ int main(void)
                                     px4_i2c_get_qual(),
                                     px4_i2c_getTimestep(),
                                     timestamp_now());
+
                 if ((frameCount != 65535) && (frameCount != 0))
                 	sendToSerialPort(filter, frameCount);
             }
@@ -383,7 +350,7 @@ int main(void)
             oldFrameCount = frameCount;
             px4_i2c_makeDataStale();
             px4_can_transmit = true;
-        }
+        } // End Kalman Process Data
 
         /*
          * On every iteration, do Kalman Predict and Kalman Correct steps by
@@ -406,10 +373,12 @@ int main(void)
         qc_runPID(&qc);								// Run PID
 
         // Send updated signals to DJI
-		if ((loopTime - update_DJI_time) > 10) {
+		if ((loopTime - update_DJI_time) > 10)
+		{
 			update_DJI_time = loopTime;
 
-			if ((mode == 1) || (mode == 2)) {// autonomous mode. do something smart
+			if ((mode == 1) || (mode == 2)) // autonomous mode. do something smart
+			{
 				PPM_setPulse(0, servoIn_getPulse(RC_CHAN1));
 				PPM_setPulse(1, servoIn_getPulse(RC_CHAN2));
 
@@ -421,7 +390,8 @@ int main(void)
 				PPM_setPulse(2, ms2pulse(zPulse));	// Z control to DJI
 				PPM_setPulse(3, servoIn_getPulse(RC_CHAN4));
 			}
-			else { // RC passthrough.  Dump RC Data directly into the DJI
+			else // RC passthrough.  Dump RC Data directly into the DJI
+			{
 				PPM_setPulse(0, servoIn_getPulse(RC_CHAN1));	// Y Accel
 				PPM_setPulse(1, servoIn_getPulse(RC_CHAN2));	// X Accel
 				PPM_setPulse(2, servoIn_getPulse(RC_CHAN3));	// Z Accel

@@ -35,8 +35,10 @@ static uint32_t stickPosScale;
 
 static void PPM_Int_Handler(void);
 
-void PPM_init(uint32_t timerPeripheral, uint32_t _sysClock, uint32_t _timerBase, uint32_t timerIntVect,
-		uint32_t _GPIO_portBase, uint32_t _GPIO_pinMask, int8_t _num_PPM_Channels) {
+void PPM_init(uint32_t timerPeripheral, uint32_t _sysClock, uint32_t _timerBase,
+		uint32_t timerIntVect, uint32_t _GPIO_portBase, uint32_t _GPIO_pinMask,
+		int8_t _num_PPM_Channels)
+{
 	// Initialize PPM variables
 	timerBase 			= _timerBase;
 	GPIO_portBase 		= _GPIO_portBase;

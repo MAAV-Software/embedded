@@ -123,6 +123,7 @@ void readSwitch(SwitchData_t *sData);
 // Drives the switch's LED
 void driveSwitch(SwitchData_t *sData, uint8_t direction);
 
+
 /****************** Serial Port/Kalman Debug Utility Functions ****************/
 // Configures UART serial port for communication to Atom
 void ConfigureUART(void);
@@ -138,8 +139,8 @@ void recordGains(quad_ctrl_t *qc);
 // Copy gains from EEPROM into quad_ctrl
 void copyGains(quad_ctrl_t *qc);
 
-/********************** Message Handling Utilities ****************************/
 
+/********************** Message Handling Utilities ****************************/
 // Does the requested changes to quad control struct based on tuning message
 void tuningMessageQuadCtrlChangesHandler(quad_ctrl_t *qc, tuning_t *message);
 

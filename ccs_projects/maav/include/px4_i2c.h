@@ -10,7 +10,8 @@
 
 #define PX4_ADDRESS		0x43
 
-typedef struct _PX4_data {
+typedef struct _PX4_data
+{
 	uint16_t frame_count;// counts created I2C frames
 	int16_t pixel_flow_x_sum;// accumulated x flow in pixels*10 since last I2C frame
 	int16_t pixel_flow_y_sum;// accumulated y flow in pixels*10 since last I2C frame
@@ -25,12 +26,14 @@ typedef struct _PX4_data {
 	int16_t ground_distance;// Ground distance in meters*1000. Positive value: distance known. Negative value: Unknown distance
 } PX4_data;
 
-typedef union _PX4_frame {
+typedef union _PX4_frame
+{
 	char raw_8[sizeof(PX4_data)];
 	PX4_data data;
 } PX4_frame;
 
-enum PX4_State_t {
+enum PX4_State_t
+{
 	UNINITIALIZED,
 	SENDING_REQ_BYTE,
 	WAITING_FOR_RESPONSE,
@@ -51,10 +54,11 @@ extern volatile bool dataFresh;
 //volatile bool dataFresh;
 
 void initiate_PX4_transmit(void);
-void init_px4_i2c(
-		uint32_t I2C_peripheral , uint32_t I2C_SCL_peripheral , uint32_t I2C_SDA_peripheral,
-		uint32_t sysClock, uint32_t _I2C_base, uint32_t SCL_portBase, uint32_t SDA_portBase,
-		uint32_t SCL_pin, uint32_t SDA_pin, uint32_t SCL_pinConfig, uint32_t SDA_pinConfig);
+void init_px4_i2c(uint32_t I2C_peripheral , uint32_t I2C_SCL_peripheral ,
+				  uint32_t I2C_SDA_peripheral, uint32_t sysClock,
+				  uint32_t _I2C_base, uint32_t SCL_portBase,
+				  uint32_t SDA_portBase, uint32_t SCL_pin, uint32_t SDA_pin,
+				  uint32_t SCL_pinConfig, uint32_t SDA_pinConfig);
 bool px4_i2c_dataFresh(void);
 //int16_t px4_i2c_getFlowX(void);
 //int16_t px4_i2c_getFlowY(void);
