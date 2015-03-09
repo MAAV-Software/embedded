@@ -58,6 +58,8 @@ extern "C" {
 #define CHANNEL_TUNING "TUN"
 #define CHANNEL_TARGET "TGT"
 #define CHANNEL_POSITION "POS"
+#define CHANNEL_DOF_FEEDBACK "DOF"
+#define CHANNEL_DJI_FEEDBACK "DJI"
 
 // From address for lcm. Since we are not using udp, this is arbitrary.
 #define FROM_ADDR 9001
@@ -183,6 +185,10 @@ void data_link_lcmlite_transmit_packet_handler(const void *_buf, int buf_len, vo
  * @param message feedback_t struct with the message to send
  */
 void data_link_send_feedback(feedback_t *message);
+
+void data_link_send_dof_feedback(dof_feedback_t *message);
+
+void data_link_send_djiout_feedback(djiout_feedback_t *message);
 
 #ifdef __cplusplus
 }

@@ -129,6 +129,24 @@ void data_link_send_feedback(feedback_t *message)
 	lcmlite_publish(&lcm, CHANNEL_FEEDBACK, encoded, len);
 }
 
+void data_link_send_dof_feedback(dof_feedback_t *message)
+{
+	//Encode
+	uint8_t encoded[256];
+	int len = dof_feedback_t_encode(encoded, 0, 256, message);
+	//Publish
+	lcmlite_publish(&lcm, CHANNEL_DOF_FEEDBACK, encoded, len);
+}
+
+void data_link_send_djiout_feedback(djiout_feedback_t *message)
+{
+	//Encode
+	uint8_t encoded[256];
+	int len = djiout_feedback_t_encode(encoded, 0, 256, message);
+	//Publish
+	lcmlite_publish(&lcm, CHANNEL_DJI_FEEDBACK, encoded, len);
+}
+
 void data_link_process_incoming()
 {
 	// Loop through and process all received data
