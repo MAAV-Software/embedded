@@ -20,6 +20,9 @@
 #include "messaging/position_t.h"
 #include "messaging/target_t.h"
 #include "messaging/tuning_t.h"
+#include "messaging/djiout_feedback_t.h"
+#include "messaging/dof_feedback_t.h"
+#include "messaging/str_log_t.h"
 
 static ringbuf_t ringbuf;
 static data_frame_t *messaging_frame;
@@ -143,6 +146,20 @@ void data_link_send_djiout_feedback(djiout_feedback_t *message)
 	//Encode
 	uint8_t encoded[256];
 	int len = djiout_feedback_t_encode(encoded, 0, 256, message);
+	//Publish
+	lcmlite_publish(&lcm, CHANNEL_DJI_FEEDBACK, encoded, len);
+}
+
+void data_link_send_string_log(char *message, int32_t time)
+{
+	//Make message
+	str_log_t strlog_message;
+	strlog_message.timestamp = time;
+	strlog_message.mess = message;
+	strlog_message.mess[120] = '\0'; // Being safe
+	//Encode
+	uint8_t encoded[256];
+	int len = str_log_t_encode(encoded, 0, 256, &strlog_message);
 	//Publish
 	lcmlite_publish(&lcm, CHANNEL_DJI_FEEDBACK, encoded, len);
 }
