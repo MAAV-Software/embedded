@@ -202,6 +202,8 @@ void data_link_send_djiout_feedback(djiout_feedback_t *message);
  */
 void data_link_send_string_log(char *message, int32_t time);
 
+void data_link_send_long_string_log(char *message, int32_t time);
+
 #ifdef __cplusplus
 }
 #endif

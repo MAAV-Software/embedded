@@ -150,18 +150,50 @@ void data_link_send_djiout_feedback(djiout_feedback_t *message)
 	lcmlite_publish(&lcm, CHANNEL_DJI_FEEDBACK, encoded, len);
 }
 
-void data_link_send_string_log(char *message, int32_t time)
+static void data_link_send_string_log_unsafe(char *message, int32_t time)
 {
 	//Make message
 	str_log_t strlog_message;
 	strlog_message.timestamp = time;
 	strlog_message.mess = message;
-	strlog_message.mess[120] = '\0'; // Being safe
 	//Encode
 	uint8_t encoded[256];
 	int len = str_log_t_encode(encoded, 0, 256, &strlog_message);
 	//Publish
-	lcmlite_publish(&lcm, CHANNEL_DJI_FEEDBACK, encoded, len);
+	lcmlite_publish(&lcm, CHANNEL_DJI_FEEDBACK, encoded, len);	
+}
+
+void data_link_send_string_log(char *message, int32_t time)
+{
+	// Be safe
+	message[120] = '\0';
+	// Send
+	data_link_send_string_log_unsafe(message, time);
+}
+
+void data_link_send_long_string_log(char *message, int32_t time)
+{
+	//Loop through, chunk the messages when appropriate
+	char *loc = message;
+	int at = 0;
+	while(loc[at])
+	{
+		//If we have a max size string, chunk it and send
+		if(at == 120)
+		{
+			//Preserve the 120th byte
+			char temp = loc[120];
+			data_link_send_string_log(loc, time);
+			//Restore the 120th byte
+			loc[120] = temp;
+			loc = loc + 120;
+			at = 0;
+		}
+		else{
+			++at;
+		}
+	}
+	data_link_send_string_log(loc, time);
 }
 
 void data_link_process_incoming()
