@@ -1,0 +1,54 @@
+Tuning Program V2
+Message
+
+Set timestamp to 0 to auto insert last 32 bits of seconds since last epoch
+> timestamp 0
+
+> cmdbit_setpid_x 0
+> cmdbit_setpid_y 0
+> cmdbit_setpid_z 0
+> cmdbit_setpid_h 0
+> cmdbit_setpid_xdot 0
+> cmdbit_setpid_ydot 0
+> cmdbit_setpid_zdot 0
+> cmdbit_setpid_hdot 0
+> cmdbit_setpt_x 0
+> cmdbit_setpt_y 0
+> cmdbit_setpt_z 0
+> cmdbit_setpt_h 0
+> cmdbit_setpt_xdot 0
+> cmdbit_setpt_ydot 0
+> cmdbit_setpt_zdot 0
+> cmdbit_setpt_hdot 0
+> cmdbit_land 0
+> cmdbit_takeoff 0
+
+> setpt_x 0
+> setpt_y 0
+> setpt_z 0
+> setpt_h 0
+> setpt_xdot 0
+> setpt_ydot 0
+> setpt_zdot 0
+
+> kp_x 0
+> ki_x 0
+> kd_x 0
+> kp_y 0
+> ki_y 0
+> kd_y 0
+> kp_z 0
+> ki_z 0
+> kd_z 0
+> kp_h 0
+> ki_h 0
+> kd_h 0
+> kp_xdot 0
+> ki_xdot 0
+> kd_xdot 0
+> kp_ydot 0
+> ki_ydot 0
+> kd_ydot 0
+> kp_zdot 0
+> ki_zdot 0
+> kd_zdot 0

@@ -20,9 +20,6 @@
 #include "messaging/position_t.h"
 #include "messaging/target_t.h"
 #include "messaging/tuning_t.h"
-#include "messaging/djiout_feedback_t.h"
-#include "messaging/dof_feedback_t.h"
-#include "messaging/str_log_t.h"
 
 static ringbuf_t ringbuf;
 static data_frame_t *messaging_frame;
@@ -130,70 +127,6 @@ void data_link_send_feedback(feedback_t *message)
 	int len = feedback_t_encode(encoded, 0, 256, message);
 	//Publish
 	lcmlite_publish(&lcm, CHANNEL_FEEDBACK, encoded, len);
-}
-
-void data_link_send_dof_feedback(dof_feedback_t *message)
-{
-	//Encode
-	uint8_t encoded[256];
-	int len = dof_feedback_t_encode(encoded, 0, 256, message);
-	//Publish
-	lcmlite_publish(&lcm, CHANNEL_DOF_FEEDBACK, encoded, len);
-}
-
-void data_link_send_djiout_feedback(djiout_feedback_t *message)
-{
-	//Encode
-	uint8_t encoded[256];
-	int len = djiout_feedback_t_encode(encoded, 0, 256, message);
-	//Publish
-	lcmlite_publish(&lcm, CHANNEL_DJI_FEEDBACK, encoded, len);
-}
-
-static void data_link_send_string_log_unsafe(char *message, int32_t time)
-{
-	//Make message
-	str_log_t strlog_message;
-	strlog_message.timestamp = time;
-	strlog_message.mess = message;
-	//Encode
-	uint8_t encoded[256];
-	int len = str_log_t_encode(encoded, 0, 256, &strlog_message);
-	//Publish
-	lcmlite_publish(&lcm, CHANNEL_DJI_FEEDBACK, encoded, len);	
-}
-
-void data_link_send_string_log(char *message, int32_t time)
-{
-	// Be safe
-	message[120] = '\0';
-	// Send
-	data_link_send_string_log_unsafe(message, time);
-}
-
-void data_link_send_long_string_log(char *message, int32_t time)
-{
-	//Loop through, chunk the messages when appropriate
-	char *loc = message;
-	int at = 0;
-	while(loc[at])
-	{
-		//If we have a max size string, chunk it and send
-		if(at == 120)
-		{
-			//Preserve the 120th byte
-			char temp = loc[120];
-			data_link_send_string_log(loc, time);
-			//Restore the 120th byte
-			loc[120] = temp;
-			loc = loc + 120;
-			at = 0;
-		}
-		else{
-			++at;
-		}
-	}
-	data_link_send_string_log(loc, time);
 }
 
 void data_link_process_incoming()

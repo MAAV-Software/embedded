@@ -109,8 +109,9 @@ int main(void)
 	ConfigureUART();
 
 	// Enable UART Receive Timeout and Receive interrupt for UART comms to computer
-	//IntEnable(INT_UART0);
-	//UARTIntEnable(UART0_BASE, UART_INT_RT | UART_INT_RX);
+	IntEnable(INT_UART0);
+	UARTIntEnable(UART0_BASE, UART_INT_RT | UART_INT_RX);
+	UARTIntRegister(UART0_BASE, data_link_uart_rx_isr);
 
 	// Init Kalman Filter
 	kalman_t filter_data;

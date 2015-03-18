@@ -9,9 +9,6 @@
 #include "target_t.h"
 #include "tuning_t.h"
 #include "position_t.h"
-#include "djiout_feedback_t.h"
-#include "dof_feedback_t.h"
-#include "str_log_t.h"
 #include "lcmlite.h"
 
 // Bitmask for tuning messages
@@ -61,9 +58,6 @@ extern "C" {
 #define CHANNEL_TUNING "TUN"
 #define CHANNEL_TARGET "TGT"
 #define CHANNEL_POSITION "POS"
-#define CHANNEL_DOF_FEEDBACK "DOF"
-#define CHANNEL_DJI_FEEDBACK "DJI"
-#define CHANNEL_STR_LOG "STR"
 
 // From address for lcm. Since we are not using udp, this is arbitrary.
 #define FROM_ADDR 9001
@@ -93,8 +87,6 @@ typedef struct data_frame {
 	uint8_t checksum;
 	data_frame_state_t state; // state determing next byte read in
 } data_frame_t;
-
-void data_link_uart_rx_isr(void);
 
 /**
  * @brief creates a data frame that can hold a message of max size
@@ -191,18 +183,6 @@ void data_link_lcmlite_transmit_packet_handler(const void *_buf, int buf_len, vo
  * @param message feedback_t struct with the message to send
  */
 void data_link_send_feedback(feedback_t *message);
-
-void data_link_send_dof_feedback(dof_feedback_t *message);
-
-void data_link_send_djiout_feedback(djiout_feedback_t *message);
-
-/**
- * @brief logs the string to Atom
- * @param message string to log. MUST BE UNDER 120 CHAR! MUST BE NULL TERMINATED!
- */
-void data_link_send_string_log(char *message, int32_t time);
-
-void data_link_send_long_string_log(char *message, int32_t time);
 
 #ifdef __cplusplus
 }

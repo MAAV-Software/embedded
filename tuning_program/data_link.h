@@ -4,70 +4,46 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#include "ringbuf.h"
-#include "feedback_t.h"
-#include "target_t.h"
-#include "tuning_t.h"
-#include "position_t.h"
-#include "djiout_feedback_t.h"
-#include "dof_feedback_t.h"
-#include "str_log_t.h"
-#include "lcmlite.h"
-
-// Bitmask for tuning messages
-// (tuningmessage->cmd & CMD_TUNING_...) to check whether set
-// tuningmessage->cmd &= ~CMD_TUINING_... to unset
-#define CMD_TUNING_SETPID_X 		1
-#define CMD_TUNING_SETPID_Y 		2
-#define CMD_TUNING_SETPID_Z 		4
-#define CMD_TUNING_SETPID_H 		8
-#define CMD_TUNING_SETPID_XDOT 		16
-#define CMD_TUNING_SETPID_YDOT 		32
-#define CMD_TUNING_SETPID_ZDOT 		64
-#define CMD_TUNING_SETPID_HDOT 		128
-#define CMD_TUNING_SETPOINT_X 		256
-#define CMD_TUNING_SETPOINT_Y 		512
-#define CMD_TUNING_SETPOINT_Z 		1024
-#define CMD_TUNING_SETPOINT_H 		2048
-#define CMD_TUNING_DOTSETPOINT_X 	4096
-#define CMD_TUNING_DOTSETPOINT_Y 	8192
-#define CMD_TUNING_DOTSETPOINT_Z 	16384
-#define CMD_TUNING_DOTSETPOINT_H 	32768
-#define CMD_TUNING_LAND 			65536
-#define CMD_TUNING_TAKEOFF 			131072
-
-// Bitmask for target messages
-// (targetmessage->cmd & CMD_TARGET_...) to check whether set
-// targetmessage->cmd &= ~CMD_TARGET_... to unset
-#define CMD_TARGET_SETPOINT 		1
-#define CMD_TARGET_LAND 			2
-#define CMD_TARGET_TAKEOFF 			4
-
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-// Data frame special values
+#define CMD_TUNING_SETPID_X 1
+#define CMD_TUNING_SETPID_Y 2
+#define CMD_TUNING_SETPID_Z 4
+#define CMD_TUNING_SETPID_H 8
+#define CMD_TUNING_SETPID_XDOT 16
+#define CMD_TUNING_SETPID_YDOT 32
+#define CMD_TUNING_SETPID_ZDOT 64
+#define CMD_TUNING_SETPID_HDOT 128
+#define CMD_TUNING_SETPOINT_X 256
+#define CMD_TUNING_SETPOINT_Y 512
+#define CMD_TUNING_SETPOINT_Z 1024
+#define CMD_TUNING_SETPOINT_H 2048
+#define CMD_TUNING_DOTSETPOINT_X 4096
+#define CMD_TUNING_DOTSETPOINT_Y 8192
+#define CMD_TUNING_DOTSETPOINT_Z 16384
+#define CMD_TUNING_DOTSETPOINT_H 32768
+#define CMD_TUNING_LAND 65536
+#define CMD_TUNING_TAKEOFF 131072
+
+#define CMD_TARGET_SETPOINT 1
+#define CMD_TARGET_LAND 2
+#define CMD_TARGET_TAKEOFF 4
+
 #define DATA_FRAME_START_DELIMITER 0x7E
 #define DATA_FRAME_ESCAPE_CHAR 0x7D
 #define DATA_FRAME_XOR 0x20
+#define DATA_LINK_UART_BASE UART0_BASE //TODO: Changed to correct UART base
 
-// UART BASE for comms
-#define DATA_LINK_UART_BASE UART0_BASE
-
-// Channel names for lcm
-#define LONGEST_CHANNEL_NAME 5
-#define CHANNEL_FEEDBACK "FBK"
-#define CHANNEL_TUNING "TUN"
 #define CHANNEL_TARGET "TGT"
+#define CHANNEL_TUNING "TUN"
 #define CHANNEL_POSITION "POS"
+#define CHANNEL_FEEDBACK "FBK"
 #define CHANNEL_DOF_FEEDBACK "DOF"
 #define CHANNEL_DJI_FEEDBACK "DJI"
 #define CHANNEL_STR_LOG "STR"
-
-// From address for lcm. Since we are not using udp, this is arbitrary.
-#define FROM_ADDR 9001
-
+#define FROM_ADDR 9002
 
 /*
 A Data link layer packet will look at like
@@ -93,8 +69,6 @@ typedef struct data_frame {
 	uint8_t checksum;
 	data_frame_state_t state; // state determing next byte read in
 } data_frame_t;
-
-void data_link_uart_rx_isr(void);
 
 /**
  * @brief creates a data frame that can hold a message of max size
@@ -155,54 +129,6 @@ uint16_t data_link_assemble_packet(uint8_t* msg, uint8_t* pkt, uint16_t size);
  * @return true if successfully decoded
  */
 bool data_link_decode_packet(uint8_t* msg, uint8_t* pkt, uint16_t* size);
-
-/**
- * @brief initializes data link
- * @details does not initialized UART or interrupts. Those MUST be enabled
- * separately after calling this function
- */
-void data_link_init(position_t *position, target_t *target, tuning_t *tuning);
-
-/**
- * @brief please call in main loop often
- * @details retrieves data from ringbuffer, starts assembling packets, if packet
- * is finished assembling, will decode into proper structs
- */
-void data_link_process_incoming();
-
-/**
- * @brief inserts a byte into the messaging ringbuffer for testing
- * @param byte byte to insert
- */
-void data_link_test_insert_ringbuf(uint8_t byte);
-
-/**
- * @brief transmission handler for lcmlite
- * @details lcmlite requires the implementation of our own transmit packet function.
- * This should be passed to lcmlite_init in the "transmit_function" parameter. This
- * is done internally be data_link, but is left accessible to outside functions for
- * testing purposes only.
- */
-void data_link_lcmlite_transmit_packet_handler(const void *_buf, int buf_len, void *user);
-
-/**
- * @brief sends a feedback packet
- * @details will encode, publish, and transmit a feedback message
- * @param message feedback_t struct with the message to send
- */
-void data_link_send_feedback(feedback_t *message);
-
-void data_link_send_dof_feedback(dof_feedback_t *message);
-
-void data_link_send_djiout_feedback(djiout_feedback_t *message);
-
-/**
- * @brief logs the string to Atom
- * @param message string to log. MUST BE UNDER 120 CHAR! MUST BE NULL TERMINATED!
- */
-void data_link_send_string_log(char *message, int32_t time);
-
-void data_link_send_long_string_log(char *message, int32_t time);
 
 #ifdef __cplusplus
 }
