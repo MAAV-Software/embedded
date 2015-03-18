@@ -270,7 +270,7 @@ int main(void)
 		} // End gains update
 
 		// Update Setpoints: setpoints array [x, y, z, yaw, x_dot, y_dot, z_dot, yaw_dot]
-		if (loopTime-update_setPoints_time > 20)
+		if ((loopTime - update_setPoints_time) > 20)
 		{
 			update_setPoints_time = loopTime;
 
