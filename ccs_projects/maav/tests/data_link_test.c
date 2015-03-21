@@ -1,5 +1,5 @@
-#include "../include/data_link.h"
-#include "../include/test_definitions.h"
+#include "messaging/data_link.h"
+#include "test_definitions.h"
 #include <stdio.h>
 #include <stdint.h>
 
@@ -45,4 +45,6 @@ int data_link_test() {
 	printBuffer(frame->buffer, frame->size);
 
 	data_frame_destroy(frame);
+
+	return 1;
 }

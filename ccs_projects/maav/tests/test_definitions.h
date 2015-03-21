@@ -4,3 +4,5 @@
 int gimbal_test(void);
 
 int data_link_test(void);
+
+int rc_test(void);

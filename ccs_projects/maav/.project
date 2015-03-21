@@ -28,7 +28,7 @@
 		<link>
 			<name>driverlib.lib</name>
 			<type>1</type>
-			<locationURI>copy_PARENT/ti/TivaWare_C_Series-2.1.0.12573/driverlib/ccs/Debug/driverlib.lib</locationURI>
+			<locationURI>PARENT-4-PROJECT_LOC/TivaWare/driverlib/ccs/Debug/driverlib.lib</locationURI>
 		</link>
 		<link>
 			<name>sensorlib.lib</name>
@@ -44,15 +44,7 @@
 	<variableList>
 		<variable>
 			<name>TIVAWARE_INSTALL</name>
-			<value>file:/C:/ti/TivaWare_C_Series-2.1.0.12573</value>
-		</variable>
-		<variable>
-			<name>TIVA_LOC</name>
-			<value>file:/C:/ti/TivaWare_C_Series-2.1.0.12573</value>
-		</variable>
-		<variable>
-			<name>copy_PARENT</name>
-			<value>$%7BPARENT-2-CCS_INSTALL_ROOT%7D</value>
+			<value>file:/home/clark/Documents/TivaWare</value>
 		</variable>
 	</variableList>
 </projectDescription>
