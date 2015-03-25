@@ -12,6 +12,21 @@
 #define BLUE_LED GPIO_PIN_2
 #define GREEN_LED GPIO_PIN_3
 
+#include <stdbool.h>
+#include <stdint.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <math.h>
+#include "inc/hw_ints.h"
+#include "inc/hw_memmap.h"
+#include "inc/hw_types.h"
+#include "driverlib/gpio.h"
+//#include "driverlib/pwm.h"
+#include "driverlib/interrupt.h"
+#include "driverlib/pin_map.h"
+#include "driverlib/sysctl.h"
+#include "driverlib/uart.h"
+
 typedef struct _IMU_data {
 	float AccX;
 	float AccY;

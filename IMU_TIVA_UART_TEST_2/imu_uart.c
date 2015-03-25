@@ -6,24 +6,10 @@
  */
 
 
-#include <stdbool.h>
-#include <stdint.h>
-#include <stdlib.h>
-#include <math.h>
-#include "inc/hw_ints.h"
-#include "inc/hw_memmap.h"
-#include "inc/hw_types.h"
-#include "driverlib/gpio.h"
-#include "driverlib/interrupt.h"
-#include "driverlib/pin_map.h"
-#include "driverlib/sysctl.h"
-#include "driverlib/uart.h"
-
 #include "imu_uart.h"
 
-
 volatile unsigned char g_IMU_Data_Received[79];
-volatile const unsigned char g_IMU_Address_Sent[] = {0xC2, 0xCE, 0xE9, 0xEA, 2, 0xD7, 0xC1, 0x29, 0, 0, 0, 0, 0, 0xCC};
+volatile const unsigned char g_IMU_Address_Sent[] = {0xCC};
 volatile uint8_t g_IMU_Index = 0;
 volatile uint8_t g_IMU_DataLength = 79;
 volatile uint32_t g_one_sec = 0;
@@ -34,7 +20,6 @@ void imu_uart_config_sys_clock(void)
 {
     // Set the clocking to run from the PLL at 50MHz
     SysCtlClockSet(SYSCTL_SYSDIV_4 | SYSCTL_USE_PLL | SYSCTL_OSC_MAIN | SYSCTL_XTAL_16MHZ);
-
 //    SysCtlPeripheralClockGating(true);
 }
 
@@ -63,47 +48,47 @@ void imu_uart_toggle_LED(uint32_t led, uint32_t time)
 }
 
 //****************************************************************************************
-void imu_uart_config_SW(void)
-{
-	SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
-	GPIOPinTypeGPIOInput(GPIO_PORTF_BASE, GPIO_PIN_4);
-	GPIOPadConfigSet(GPIO_PORTF_BASE, GPIO_PIN_4, GPIO_STRENGTH_2MA , GPIO_PIN_TYPE_STD_WPU);
-	GPIOIntTypeSet(GPIO_PORTF_BASE, GPIO_PIN_4, GPIO_RISING_EDGE);
+//void imu_uart_config_SW(void)
+//{
+//	SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
+//	GPIOPinTypeGPIOInput(GPIO_PORTF_BASE, GPIO_PIN_4);
+//	GPIOPadConfigSet(GPIO_PORTF_BASE, GPIO_PIN_4, GPIO_STRENGTH_2MA , GPIO_PIN_TYPE_STD_WPU);
+//	GPIOIntTypeSet(GPIO_PORTF_BASE, GPIO_PIN_4, GPIO_RISING_EDGE);
+//
+//	// Register and Enable GPIO Interrupt Handler
+//	GPIOIntRegister(GPIO_PORTF_BASE, imu_uart_SW_int_handler);
+//	IntEnable(INT_GPIOF);
+//	GPIOIntEnable(GPIO_PORTF_BASE, GPIO_PIN_4);
+//	// IntMasterEnable();
+//}
 
-	// Register and Enable GPIO Interrupt Handler
-	GPIOIntRegister(GPIO_PORTF_BASE, imu_uart_SW_int_handler);
-	IntEnable(INT_GPIOF);
-	GPIOIntEnable(GPIO_PORTF_BASE, GPIO_PIN_4);
-	// IntMasterEnable();
-}
-
-void imu_uart_SW_int_handler(void)
-{
-	uint32_t ui32Status = GPIOIntStatus(GPIO_PORTF_BASE, true);
-	GPIOIntClear(GPIO_PORTF_BASE, ui32Status);
-
-	if (ui32Status == GPIO_PIN_4)
-	{
-		g_IMU_Status = 1;
-
-		GPIOPinWrite(GPIO_PORTF_BASE, RED_LED | BLUE_LED | GREEN_LED, 0);
-		// Toggle GREEN LED, stop signal
-		imu_uart_toggle_LED(GREEN_LED, g_one_sec);
-	}
-
-}
+//void imu_uart_SW_int_handler(void)
+//{
+//	uint32_t ui32Status = GPIOIntStatus(GPIO_PORTF_BASE, true);
+//	GPIOIntClear(GPIO_PORTF_BASE, ui32Status);
+//
+//	if (ui32Status == GPIO_PIN_4)
+//	{
+//		g_IMU_Status = 1;
+//
+//		GPIOPinWrite(GPIO_PORTF_BASE, RED_LED | BLUE_LED | GREEN_LED, 0);
+//		// Toggle GREEN LED, stop signal
+//		imu_uart_toggle_LED(GREEN_LED, g_one_sec);
+//	}
+//
+//}
 
 //****************************************************************************************
 void imu_uart_config_uart(void)
 {
     // Enable the GPIO Peripheral used by the UART1 on PC. UART0 on PA.
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOC);
-    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
+//    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
 
     // Enable UART1 and UART0.
     SysCtlPeripheralEnable(SYSCTL_PERIPH_UART1);
 //    SysCtlPeripheralSleepEnable(SYSCTL_PERIPH_UART1);
-    SysCtlPeripheralEnable(SYSCTL_PERIPH_UART0);
+//    SysCtlPeripheralEnable(SYSCTL_PERIPH_UART0);
 //    SysCtlPeripheralSleepEnable(SYSCTL_PERIPH_UART0);
 
     // Configure GPIO Pins for UART mode.
@@ -111,17 +96,17 @@ void imu_uart_config_uart(void)
     GPIOPinConfigure(GPIO_PC5_U1TX);
     GPIOPinTypeUART(GPIO_PORTC_BASE, GPIO_PIN_4 | GPIO_PIN_5);
 
-    GPIOPinConfigure(GPIO_PA0_U0RX);
-	GPIOPinConfigure(GPIO_PA1_U0TX);
-	GPIOPinTypeUART(GPIO_PORTA_BASE, GPIO_PIN_0 | GPIO_PIN_1);
+//    GPIOPinConfigure(GPIO_PA0_U0RX);
+//	GPIOPinConfigure(GPIO_PA1_U0TX);
+//	GPIOPinTypeUART(GPIO_PORTA_BASE, GPIO_PIN_0 | GPIO_PIN_1);
 
 	// Configure UART Clock.
 	UARTClockSourceSet(UART1_BASE, UART_CLOCK_SYSTEM);
-	UARTClockSourceSet(UART0_BASE, UART_CLOCK_SYSTEM);
+//	UARTClockSourceSet(UART0_BASE, UART_CLOCK_SYSTEM);
 
 	//Configure UART for operation in the specified data format.
     UARTConfigSetExpClk(UART1_BASE, SysCtlClockGet(), 115200, (UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE | UART_CONFIG_PAR_NONE));
-    UARTConfigSetExpClk(UART0_BASE, SysCtlClockGet(), 115200, (UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE | UART_CONFIG_PAR_NONE));
+//    UARTConfigSetExpClk(UART0_BASE, SysCtlClockGet(), 115200, (UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE | UART_CONFIG_PAR_NONE));
 
     // Register and Enable UART1 RX Interrupt.
     UARTIntRegister(UART1_BASE, imu_uart_int_handler);
@@ -213,19 +198,10 @@ void imu_uart_parseData(unsigned char * data)
 	new_data.M33 = Bytes2Float(data, 69);
 	new_data.Timer = Bytes2Int(data, 73);
 
-	char output[20];
+//	imu_uart_toggle_LED(RED_LED, g_one_sec/1000*(atan2(new_data.M23, new_data.M33)+3.15));
+//	imu_uart_toggle_LED(RED_LED, g_one_sec/1000*(asin(-new_data.M13)+3.15));
+//	imu_uart_toggle_LED(RED_LED, g_one_sec/1000*(atan2(new_data.M12, new_data.M11)+3.15));
 
-	// Debug and test
-	// Print out Timmer
-	int out_length = snprintf(output, 20, "Timer:%u \n\r", imu_uart_getTimer());
-
-	// Print out Roll data
-//	int out_length = ltoa((int)(imu_uart_getRoll()*1000), output);
-
-	imu_uart_send(UART0_BASE, output, out_length);
-//	imu_uart_send(UART0_BASE, "\r\n", 2);
-
-	imu_uart_toggle_LED(RED_LED, g_one_sec/1000);
 
 	return;
 }
