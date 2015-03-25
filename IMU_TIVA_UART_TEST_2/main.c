@@ -3,31 +3,19 @@
 //Build: Variable: Directory: TIVAWARE_INSTALL
 //Build->Include Option: Path: ${TIVAWARE_INSTALL}
 
-#include <stdbool.h>
-#include <stdint.h>
-#include <math.h>
-#include "inc/hw_ints.h"
-#include "inc/hw_memmap.h"
-#include "inc/hw_types.h"
-#include "driverlib/gpio.h"
-#include "driverlib/interrupt.h"
-#include "driverlib/pin_map.h"
-#include "driverlib/sysctl.h"
-#include "driverlib/uart.h"
-
 #include "imu_uart.h"
-
 
 //****************************************************************************************
 int main(void)
 {
 	g_IMU_Status = 1;
 	
+	// Might not be callled if it has already been called somewhere else
 	imu_uart_config_sys_clock();
 
     imu_uart_config_LED();
 
-    imu_uart_config_SW();
+//    imu_uart_config_SW();
 
     imu_uart_config_uart();
 
@@ -48,10 +36,22 @@ int main(void)
     	{
 
 			// Toggle BLUE LED, reading data
-			imu_uart_toggle_LED(BLUE_LED, g_one_sec/1000);
+//			imu_uart_toggle_LED(BLUE_LED, g_one_sec/10000);
 
 			// ACC&AngRate Command
-			imu_uart_send(UART1_BASE, (uint8_t *)g_IMU_Address_Sent+13, 1);
+			imu_uart_send(UART1_BASE, (uint8_t *)g_IMU_Address_Sent, 1);
+
+			char output[20];
+
+			// Debug and test
+			// Print out Timmer
+			int out_length = snprintf(output, 20, "Timer:%u \n\r", imu_uart_getTimer());
+
+			// Print out Roll data
+		//	int out_length = ltoa((int)(imu_uart_getRoll()*1000), output);
+
+//			imu_uart_send(UART0_BASE, (uint8_t*)output, out_length);
+		//	imu_uart_send(UART0_BASE, "\r\n", 2);
 
     	}
     	else
