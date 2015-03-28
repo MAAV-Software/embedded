@@ -191,6 +191,7 @@ int main(void)
 			switchUpdateTime = loopTime;
 			switchesUpdate(sw);
 		} // end switch check
+		//TODO: Now in OptSwitchRunnables
 
 		// Check flight mode
 		if ((loopTime - modeCheckTime) > 100)
