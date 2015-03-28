@@ -146,57 +146,66 @@ int main(void)
 	//uint32_t aquisition_time = 0;
 	uint32_t error = 0;
 
-	//UARTprintf("Welcome to the Pulsed Light lidar test program!\n\r");
+	UARTprintf("Welcome to the Pulsed Light lidar test program!\n\r");
 	UARTprintf("Welcome to the PX4 test program!\n\r");
-	I2CMasterSlaveAddrSet(I2C3_BASE, 0x45, false); // i2c write
-	I2CMasterDataPut(I2C3_BASE, 0x00); // write to 0x0
-	I2CMasterControl(I2C3_BASE, I2C_MASTER_CMD_SINGLE_SEND);
-	while (I2CMasterBusy(I2C3_BASE));
+//	I2CMasterSlaveAddrSet(I2C3_BASE, 0x46, false); // i2c write
+//	I2CMasterDataPut(I2C3_BASE, 0x00); // write to 0x0
+//	I2CMasterControl(I2C3_BASE, I2C_MASTER_CMD_SINGLE_SEND);
+//	while (I2CMasterBusy(I2C3_BASE));
 
-	I2CMasterBurstLengthSet(I2C3_BASE, 22);
-	I2CMasterSlaveAddrSet(I2C3_BASE, 0x45, true); // i2c write
-	uint8_t idx = 0;
+//	I2CMasterBurstLengthSet(I2C3_BASE, 22);
+//	I2CMasterSlaveAddrSet(I2C3_BASE, 0x46, true); // i2c write
+//	uint8_t idx = 0;
+//
+//	for (idx = 0; idx < 22; ++idx)
+//	{
+//		if (idx ==  0) I2CMasterControl(I2C3_BASE, I2C_MASTER_CMD_BURST_RECEIVE_START);
+//		if (idx == 21) I2CMasterControl(I2C3_BASE, I2C_MASTER_CMD_BURST_RECEIVE_FINISH);
+//		else		   I2CMasterControl(I2C3_BASE, I2C_MASTER_CMD_BURST_RECEIVE_CONT);
+//
+//		while(I2CMasterBusy(I2C3_BASE));
+//		error = I2CMasterErr(I2C3_BASE);
+//		if (error != I2C_MASTER_ERR_NONE) UARTprintf("Error: %x\n\r", error);
+//		px4_buffer.raw_8[idx] = I2CMasterDataGet(I2C3_BASE);
+//	}
+//
+//	UARTprintf("\n\rSonar Dist: %d\n\r", px4_buffer.data.ground_dist);
 
-	for (idx = 0; idx < 22; ++idx)
-	{
-		if (idx ==  0) I2CMasterControl(I2C3_BASE, I2C_MASTER_CMD_BURST_RECEIVE_START);
-		if (idx == 21) I2CMasterControl(I2C3_BASE, I2C_MASTER_CMD_BURST_RECEIVE_FINISH);
-		else		   I2CMasterControl(I2C3_BASE, I2C_MASTER_CMD_BURST_RECEIVE_CONT);
+	SysCtlDelay(SYSCLOCK/3000);
 
-		while(I2CMasterBusy(I2C3_BASE));
-		error = I2CMasterErr(I2C3_BASE);
-		if (error != I2C_MASTER_ERR_NONE) UARTprintf("Error: %x\n\r", error);
-		px4_buffer.raw_8[idx] = I2CMasterDataGet(I2C3_BASE);
-	}
+	I2CMasterSlaveAddrSet(I2C3_BASE, LIDAR_ADDR, false); // i2c write
+//	I2CMasterDataPut(I2C3_BASE, 0x00); // write to control register 0 (0x0)
+//	I2CMasterControl(I2C3_BASE, I2C_MASTER_CMD_BURST_SEND_START);
+////	while(I2CMasterErr(I2C3_BASE) != I2C_MASTER_ERR_NONE);
+////	while(I2CMasterBusy(I2C3_BASE));
+////	error = I2CMasterErr(I2C3_BASE);
+////	if (error != I2C_MASTER_ERR_NONE) UARTprintf("Error: %x\n\r", error);
+//	I2CMasterDataPut(I2C3_BASE, 0x04); // write data of 0x4 for measurement aquisition
+//	I2CMasterControl(I2C3_BASE, I2C_MASTER_CMD_BURST_SEND_FINISH);
+////	while(I2CMasterBusy(I2C3_BASE)); // Wait until the slave has received and acknowledged the data.
+////	error = I2CMasterErr(I2C3_BASE);
+////	if (error != I2C_MASTER_ERR_NONE) UARTprintf("Error: %x\n\r", error);
+//	UARTprintf("Sent 0xC4, 0x00, 0x04\n\r");
 
-	UARTprintf("\n\rSonar Dist: %d\n\r", px4_buffer.data.ground_dist);
+
+
+
+//	I2CMasterDataPut(I2C3_BASE, 0x8F); // write 0x8F to get 2-byte data in upcomming read
+//	I2CMasterControl(I2C3_BASE, I2C_MASTER_CMD_SINGLE_SEND);
+//	while(I2CMasterBusy(I2C3_BASE));
+//	error = I2CMasterErr(I2C3_BASE);
+//	if (error != I2C_MASTER_ERR_NONE) UARTprintf("Error: %x\n\r", error);
+//	UARTprintf("Sent 0xC4, 0x8F to set up the read\n\r");
+//	UARTprintf("Initiating 2-byte read (0xC5)\n\r");
+
 	while (1)
 	{
-
+		I2CMasterDataPut(I2C3_BASE, 0x8F); // write 0x8F to get 2-byte data in upcomming read
+		I2CMasterControl(I2C3_BASE, I2C_MASTER_CMD_SINGLE_SEND);
+		while(I2CMasterBusy(I2C3_BASE));
 	}
-	/*
-	I2CMasterSlaveAddrSet(I2C3_BASE, LIDAR_ADDR, false); // i2c write
-	I2CMasterDataPut(I2C3_BASE, 0x00); // write to control register 0 (0x0)
-	I2CMasterControl(I2C3_BASE, I2C_MASTER_CMD_BURST_SEND_START);
-	while(I2CMasterErr(I2C3_BASE) != I2C_MASTER_ERR_NONE);
-	while(I2CMasterBusy(I2C3_BASE));
-	error = I2CMasterErr(I2C3_BASE);
-	if (error != I2C_MASTER_ERR_NONE) UARTprintf("Error: %x\n\r", error);
-	I2CMasterDataPut(I2C3_BASE, 0x04); // write data of 0x4 for measurement aquisition
-	I2CMasterControl(I2C3_BASE, I2C_MASTER_CMD_BURST_SEND_FINISH);
-	while(I2CMasterBusy(I2C3_BASE)); // Wait until the slave has received and acknowledged the data.
-	error = I2CMasterErr(I2C3_BASE);
-	if (error != I2C_MASTER_ERR_NONE) UARTprintf("Error: %x\n\r", error);
-	UARTprintf("Sent 0xC4, 0x00, 0x04\n\r");
 
-	I2CMasterDataPut(I2C3_BASE, 0x8F); // write 0x8F to get 2-byte data in upcomming read
-	I2CMasterControl(I2C3_BASE, I2C_MASTER_CMD_SINGLE_SEND);
-	while(I2CMasterBusy(I2C3_BASE));
-	error = I2CMasterErr(I2C3_BASE);
-	if (error != I2C_MASTER_ERR_NONE) UARTprintf("Error: %x\n\r", error);
-	UARTprintf("Sent 0xC4, 0x8F to set up the read\n\r");
-	UARTprintf("Initiating 2-byte read (0xC5)\n\r");
-
+/*
 	I2CMasterSlaveAddrSet(I2C3_BASE, LIDAR_ADDR, true); // i2c read
 	I2CMasterControl(I2C3_BASE, I2C_MASTER_CMD_BURST_RECEIVE_START);
 	while(I2CMasterBusy(I2C3_BASE));
@@ -251,23 +260,22 @@ int main(void)
 }
 
 
-void i2c_nack_int_handler(void)
-{
-	I2CMasterIntClearEx(I2C3_BASE, I2C_MASTER_INT_NACK);
-
-	UARTprintf("\n\rNack Interrupt\n\r");
-	uint32_t error = I2CMasterErr(I2C3_BASE);
-	UARTprintf("error = %x", error);
-	//while ((error == I2C_MASTER_ERR_AWQDDR_ACK) || (error == I2C_MASTER_ERR_DATA_ACK))
-	while (error != I2C_MASTER_ERR_NONE)
-	{
-		error = I2CMasterErr(I2C3_BASE);
-		UARTprintf("Waiting for ACK\n\r");
-	}
-	UARTprintf("ACK recieved\n\r");
-	return;
-}
-
+//void i2c_nack_int_handler(void)
+//{
+//	I2CMasterIntClearEx(I2C3_BASE, I2C_MASTER_INT_NACK);
+//
+//	UARTprintf("\n\rNack Interrupt\n\r");
+//	uint32_t error = I2CMasterErr(I2C3_BASE);
+//	UARTprintf("error = %x", error);
+//	//while ((error == I2C_MASTER_ERR_AWQDDR_ACK) || (error == I2C_MASTER_ERR_DATA_ACK))
+//	while (error != I2C_MASTER_ERR_NONE)
+//	{
+//		error = I2CMasterErr(I2C3_BASE);
+//		UARTprintf("Waiting for ACK\n\r");
+//	}
+//	UARTprintf("ACK recieved\n\r");
+//	return;
+//}
 
 
 /*
