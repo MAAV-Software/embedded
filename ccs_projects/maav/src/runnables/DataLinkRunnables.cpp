@@ -40,6 +40,6 @@ void TuningMessageHandlerRunnable::run() {
 TuningMessageHandlerRunnable::TuningMessageHandlerRunnable(tuning_t *tuning, quad_ctrl_t *quad)
 {
 	qc = quad;
-	message = tunin;
+	message = tuning;
 	last = 0;
 }

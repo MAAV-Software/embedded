@@ -8,7 +8,9 @@
 #ifndef DATALINKPROCESSDATARUNNABLE_HPP_
 #define DATALINKPROCESSDATARUNNABLE_HPP_
 
+#include "Runnable.hpp"
 #include "messaging/data_link.h"
+#include "quad_ctrl.h"
 
 class ProcessReceivedDataRunnable : public Runnable {
 public:
@@ -34,7 +36,7 @@ private:
 public:
 	void run();
 	
-	TargetMessageHandlerRunnable(tuning_t *tuning, quad_ctrl_t *qc);
+	TuningMessageHandlerRunnable(tuning_t *tuning, quad_ctrl_t *qc);
 };
 
 
