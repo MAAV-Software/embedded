@@ -13,6 +13,15 @@ targetConfigs
 .project
 .settings
 
+Debug
+targetConfigs
+
+.launches
+.settings
+.project
+.cproject
+.ccsproject
+
 # latex temporary files
 *.aux
 *.log
