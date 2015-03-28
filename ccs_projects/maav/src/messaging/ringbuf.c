@@ -1,162 +1,131 @@
 /*
- * ringbuf.c
+ * Simple Ringbuffer.
+ * 
  *
- *  Created on: Oct 27, 2014
  *      Author: Sasawat
  */
 
+#include "messaging/ringbuf.h"
 #include <stdint.h>
 #include <stdbool.h>
 #include <stdlib.h>
-#include "messaging/ringbuf.h"
 
-int32_t ringbuf_push(ringbuf_t *ringbuffer, uint8_t datum)
+bool ringbuf_push(ringbuf_t *ringbuffer, uint8_t to_push)
 {
-	// Check if there is space left
-	int32_t left = ringbuf_spaceLeft(ringbuffer);
-	if (!left) {
-		return 0;
-	}
-
-	// Write the data to the writer
-	ringbuffer->writer[0] = datum;
-	// Advance the writer
-	ringbuffer->writer++;
-	// Check for writer at end
-	if(ringbuffer->writer == ringbuffer->end)
+	// Enabling or disabling overwrite on push. If overwrite on push is enabled
+	// things will be faster since pushing will be like branchless
+#ifdef RINGBUF_NO_OVERWRITE
+	if(!ringbuf_spaceLeft(ringbuffer))
 	{
-		ringbuffer->writer = ringbuffer->buffer;
+		return false;
 	}
+#endif
 
-	// Return remaining space
-	return --left;
+	// Push the byte in
+	ringbuffer->data[ringbuffer->writer] = to_push;
+
+	// Advance the write head
+	ringbuffer->writer++;
+
+	// Warparound the write head
+	ringbuffer->writer = ringbuffer->writer & ringbuffer->mask;
+
+	// Success!
+	return true;
 }
 
-int32_t ringbuf_pushMany(ringbuf_t *ringbuffer, uint8_t *data, int32_t len)
+bool ringbuf_pushMany(ringbuf_t *ringbuffer, uint8_t *to_push, uint32_t len)
 {
-	int32_t at = 0;
-	int32_t left = ringbuf_spaceLeft(ringbuffer);
-	// Loop through while space remains
-	while (left--) {
-		ringbuffer->writer[0] = data[at];
-		ringbuffer->writer++;
-		at++;
-		// Check for writer at end
-		if(ringbuffer->writer == ringbuffer->end) {
-			ringbuffer->writer = ringbuffer->buffer;
-		}
-		// Check for done
-		if(at == len) {
-			return left;
-		}
+	uint32_t at = 0;
 
-	}
-	return 0;
+	// Push bytes into the ringbuffer
+	while (at < len && ringbuf_push(ringbuffer, to_push[at++]));
 
+	return at == len;
 }
 
 uint8_t ringbuf_pop(ringbuf_t *ringbuffer)
 {
-	// Is there stuff to read?
-	if (ringbuffer->reader == ringbuffer->writer) {
+	// Check that we can read
+	if(ringbuffer->reader == ringbuffer->writer)
+	{
 		return 0;
 	}
-	// Read
-	uint8_t ui8Ret = ringbuffer->reader[0];
-	// Advanced read head
+
+	// Read the data
+	uint8_t ret = ringbuffer->data[ringbuffer->reader];
+
+	// Advance the read head
 	ringbuffer->reader++;
-	// Check for read head at end
-	if (ringbuffer->reader == ringbuffer->end) {
-		ringbuffer->reader = ringbuffer->buffer;
-	}
-	// Return read byte
-	return ui8Ret;
+
+	// Warp around the read head
+	ringbuffer->reader = ringbuffer->reader & ringbuffer->mask;
+
+	// Return the read data
+	return ret;
 }
 
-int32_t ringbuf_popMany(uint8_t *popTo, ringbuf_t *ringbuffer, int32_t len)
+void ringbuf_popMany(ringbuf_t *ringbuffer, uint8_t * to, uint32_t len)
 {
-	// Check we have enough bytes to read
-	int32_t at = 0;
-	if (ringbuf_unread(ringbuffer) < len) {
-		return 0;
-	}
-	// Read
-	while (ringbuffer->reader != ringbuffer->writer) {
-		// Read from reader and write to destination
-		popTo[at] = ringbuffer->reader[0];
-		// Advance write position on destination
+	uint32_t at = 0;
+
+	// Loop around reading
+	while(ringbuffer->reader != ringbuffer->writer)
+	{
+		// Write to output buffer
+		to[at] = ringbuffer->data[ringbuffer->reader];
+		// Advance the output buffer write head
 		at++;
-		// Advanced reader
+		// Advance the read head
 		ringbuffer->reader++;
-		// Check for reader at end
-		if (ringbuffer->reader == ringbuffer->end) {
-			ringbuffer->reader = ringbuffer->buffer;
-		}
-		// Have we read the bytes requested?
-		if (at == len) {
-			return ringbuf_unread(ringbuffer);
-		}
-	}
-	return 0;
-}
+		// Wrapround the read head
+		ringbuffer->reader = ringbuffer->reader % ringbuffer->mask;
 
-void ringbuf_peek(uint8_t *pui8PeekTo, ringbuf_t *ringbuffer, int32_t len)
-{
-	// Check for enough bytes unread
-	if (len > ringbuf_unread(ringbuffer)) {
-		return;
-	}
-	// Temporary reader
-	uint8_t *pui8Temp = ringbuffer->reader;
-	int32_t at = 0;
-	// Loop through peeking
-	while (pui8Temp != ringbuffer->writer) {
-		pui8PeekTo[at] = pui8Temp[0];
-		at++;
-		pui8Temp++;
-		if (pui8Temp == ringbuffer->end) {
-			pui8Temp = ringbuffer->buffer;
-		}
-		if (at == len) {
+		// We done?
+		if (at == len)
+		{
+			// We done! Return
 			return;
 		}
+		// We not done, go on
 	}
-	return;
 }
 
-int32_t ringbuf_spaceLeft(ringbuf_t *ringbuffer)
+int32_t ringbuf_spaceLeft(const ringbuf_t *ringbuffer)
 {
-	int32_t i32Ret = ringbuffer->reader - ringbuffer->writer - 1;
-	if (i32Ret >= 0) {
-		return i32Ret;
-	}
-	return i32Ret + RINGBUF_MAX_SIZE;
+	uint32_t ret = ringbuffer->reader - ringbuffer->writer - 1;
+	return (ret + ringbuffer->mask + 1) % (ringbuffer->mask + 1);
 }
 
-int32_t ringbuf_unread(ringbuf_t *ringbuffer)
+int32_t ringbuf_unread(const ringbuf_t *ringbuffer)
 {
-	int32_t i32Ret = ringbuffer->writer - ringbuffer->reader;
-	if (i32Ret >= 0) {
-		return i32Ret;
-	}
-	return i32Ret + RINGBUF_MAX_SIZE;
+	uint32_t ret = ringbuffer->writer - ringbuffer->reader;
+	return (ret + ringbuffer-> mask + 1) % (ringbuffer->mask + 1);
 }
 
 void ringbuf_clear(ringbuf_t *ringbuffer)
 {
-	ringbuffer->reader = ringbuffer->buffer;
-	ringbuffer->writer = ringbuffer->buffer;
+	ringbuffer->reader = 0;
+	ringbuffer->writer = 0;
 }
 
-void ringbuf_init(ringbuf_t *ringbuffer)
+void ringbuf_init_dynamic(ringbuf_t *ringbuffer, uint32_t size)
 {
-	ringbuffer->buffer = malloc(RINGBUF_MAX_SIZE);
-	ringbuffer->end = ringbuffer->buffer+RINGBUF_MAX_SIZE;
-	ringbuffer->reader = ringbuffer->buffer;
-	ringbuffer->writer = ringbuffer->buffer;
+	ringbuffer->data = (uint8_t *)malloc(size);
+	ringbuffer->reader = 0;
+	ringbuffer->writer = 0;
+	ringbuffer->mask = size - 1;
 }
 
-void ringbuf_destroy(ringbuf_t *ringbuffer)
+void ringbuf_destroy_dynamic(ringbuf_t *ringbuffer)
 {
-	free(ringbuffer->buffer);
+	free(ringbuffer->data);
+}
+
+void ringbuf_init_static(ringbuf_t *ringbuffer, uint8_t *arr, uint32_t size)
+{
+	ringbuffer->data = arr;
+	ringbuffer->reader = 0;
+	ringbuffer->writer = 0;
+	ringbuffer->mask = size - 1;
 }

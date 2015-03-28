@@ -44,7 +44,7 @@
 	<variableList>
 		<variable>
 			<name>TIVAWARE_INSTALL</name>
-			<value>file:/home/clark/Documents/TivaWare</value>
+			<value>file:/C:/ti/TivaWare_C_Series-2.1.0.12573</value>
 		</variable>
 	</variableList>
 </projectDescription>

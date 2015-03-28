@@ -8,47 +8,57 @@
 #ifndef RINGBUF_H_
 #define RINGBUF_H_
 
+#define RINGBUF_NO_OVERWRITE
+
 #include <stdint.h>
 #include <stdbool.h>
 
-//TODO: Determine optimal ringbuffer size for messaging
-#define RINGBUF_MAX_SIZE 300
-
 typedef struct ringbuf
 {
-	uint8_t *buffer;
-	uint8_t *end;
-	uint8_t *reader;
-	uint8_t *writer;
-}ringbuf_t;
+	uint8_t *data;
+	uint32_t writer;
+	uint32_t reader;
+	uint32_t mask;
+} ringbuf_t;
 
-/// Write datum to the end of the ringbuffer.
-/// Returns remaining space
-extern int32_t ringbuf_push(ringbuf_t *ringbuffer, uint8_t datum);
+// Pushes a byte into a ringbuffer
+// MODIFIES: ringbuffer
+extern bool ringbuf_push(ringbuf_t *ringbuffer, uint8_t to_push);
 
-/// Writes len number of bytes in data to ringbuffer
-/// Returns remaining space
-extern int32_t ringbuf_pushMany(ringbuf_t *ringbuffer, uint8_t *data, int32_t len);
+// Pushes len number of bytes into a ringbuffer
+// MODIFIES: ringbuffer
+extern bool ringbuf_pushMany(ringbuf_t *ringbuffer, uint8_t *to_push, uint32_t len);
 
-/// Reads one byte from ringbuffer, advancing the reading head
+// Pops a byte out of the ringbuffer and returns it
+// MODIFIES: ringbuffer
 extern uint8_t ringbuf_pop(ringbuf_t *ringbuffer);
 
-/// Reads len bytes to popTo from ringbuffer, advancing the reading head
-extern int32_t ringbuf_popMany(uint8_t *popTo, ringbuf_t *ringbuffer, int32_t len);
+// Pops len number of bytes out of the ringbuffer into to
+// MODIFIES ringbuffer, to
+extern void ringbuf_popMany(ringbuf_t *ringbuffer, uint8_t * to, uint32_t len);
 
-/// Reads len bytes to peekTo from ringbuffer, without advancing the reading head
-extern void ringbuf_peek(uint8_t *peekTo, ringbuf_t *ringbuffer, int32_t len);
+// Returns the amount of space left in the ringbuffer
+extern int32_t ringbuf_spaceLeft(const ringbuf_t *ringbuffer);
 
-/// Returns the space left in ringbuffer to write to
-extern int32_t ringbuf_spaceLeft(ringbuf_t *ringbuffer);
+// Returns the number of unread space in the ringbuffer
+extern int32_t ringbuf_unread(const ringbuf_t *ringbuffer);
 
-/// Returns the number of unread bytes in ringbuffer to read
-extern int32_t ringbuf_unread(ringbuf_t *ringbuffer);
-
-/// Clears ringbuffer
+// Resets the ringbuffer to empty
 extern void ringbuf_clear(ringbuf_t *ringbuffer);
 
-/// Initializes ringbuffer
-extern void ringbuf_init(ringbuf_t *ringbuffer);
+// Initializes a ringbuffer of size size with dynamic memory internal buffer
+// MODIFIES: ringbuffer
+// NOTE: SIZE MUST BE A POWER OF TWO, 218, 512, etc.
+extern void ringbuf_init_dynamic(ringbuf_t *ringbuffer, uint32_t size);
+
+// Destroys a dynamically initialized ringbuffer
+// MODIFIES: ringbuffer
+// REQUIRES: ringbuffer was initialized with dynamic memory
+extern void ringbuf_destroy_dynamic(ringbuf_t *ringbuffer);
+
+// Initializes a ringbuffer of size size with the internal buffer of arr
+// MODIFIES: ringbuffer
+// REQUIRES: arr has size of at least size
+extern void ringbuf_init_static(ringbuf_t *ringbuffer, uint8_t *arr, uint32_t size);
 
 #endif /* RINGBUF_H_ */
