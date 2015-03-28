@@ -19,9 +19,9 @@ public:
 
 class TargetMessageHandlerRunnable : public Runnable {
 private:
-	target_t *message;
-	int32_t last;
-	quad_ctrl_t *qc;
+	target_t *_message;
+	int32_t _last;
+	quad_ctrl_t *_qc;
 public:
 	void run();
 	
@@ -30,9 +30,9 @@ public:
 
 class TuningMessageHandlerRunnable : public Runnable {
 private:
-	tuning_t *message;
-	int32_t last;
-	quad_ctrl_t *qc;
+	tuning_t *_message;
+	int32_t _last;
+	quad_ctrl_t *_qc;
 public:
 	void run();
 	

@@ -1,9 +1,9 @@
-#include "Runabble.hpp"
+#include "Runnable.hpp"
 #include "switch.h"
 
 class SwitchUpdateRunnable : public Runnable {
 private:
-	SwitchData_t *sw;
+	SwitchData_t *_sw;
 public:
 	void run();
 	

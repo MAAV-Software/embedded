@@ -14,32 +14,24 @@ void ProcessReceivedDataRunnable::run() {
 }
 
 void TargetMessageHandlerRunnable::run() {
-	if(message->timestamp > last)
+	if(_message->timestamp > _last)
 	{
-		last = message->timestamp;
-		targetMessageQuadCtrlChangesHandler(qc, message);
+		_last = _message->timestamp;
+		targetMessageQuadCtrlChangesHandler(_qc, _message);
 	}
 }
 
 TargetMessageHandlerRunnable::TargetMessageHandlerRunnable(target_t *target, quad_ctrl_t *quad)
-{
-	qc = quad;
-	message = target;
-	last = 0;
-}
+	: _qc(quad), _message(target), _last(0) { }
 
 
 void TuningMessageHandlerRunnable::run() {
-	if(message->timestamp > last)
+	if(_message->timestamp > _last)
 	{
-		last = message->timestamp;
-		tuningMessageQuadCtrlChangesHandler(qc, message);
+		_last = _message->timestamp;
+		tuningMessageQuadCtrlChangesHandler(_qc, _message);
 	}
 }
 
 TuningMessageHandlerRunnable::TuningMessageHandlerRunnable(tuning_t *tuning, quad_ctrl_t *quad)
-{
-	qc = quad;
-	message = tuning;
-	last = 0;
-}
+	: _qc(quad), _message(tuning), _last(0) { }
