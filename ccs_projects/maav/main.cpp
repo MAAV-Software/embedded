@@ -156,6 +156,7 @@ int main(void)
 		//This has no effect on sending whatsoever
 		if (loopTime-process_data_link_data_time > 10)
 			data_link_process_incoming();
+		//TODO: Now in DataLinkRunnables/ProcessReceivedDataRunnable
 
 		if (msg_target->timestamp > last_target_time)
 		{
@@ -164,6 +165,7 @@ int main(void)
 			// Currently done: set setpoint
 			targetMessageQuadCtrlChangesHandler(&qc, msg_target);
 		}
+		//TODO: Now in DataLinkRunnables/TargetMessageHandlerRunnable
 
 		if (msg_tuning->timestamp > last_tuning_time)
 		{
@@ -173,6 +175,7 @@ int main(void)
 			// Handle the changing of gains (if any) in the tuning message
 			tuningMessageQuadCtrlChangesHandler(&qc, msg_tuning);
 		}
+		//TODO: Now in DataLinkRunnables/TuningMessageHandlerRunnable
 
 		if (msg_position->timestamp > last_position_time)
 		{
