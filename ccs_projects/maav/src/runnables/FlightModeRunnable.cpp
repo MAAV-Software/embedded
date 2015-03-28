@@ -9,17 +9,19 @@ FlightModeRunnable::~FlightModeRunnable() { }
 void FlightModeRunnable::run() {
 	_state->mode = flightModeGet();
 	switch (_state->mode) {
-		case 1:
+		case ASSISTED:
 			GPIOPinWrite(GPIO_PORTF_BASE, RED_LED | GREEN_LED |
 					BLUE_LED, RED_LED);
 			break;
-		case 2:
+		case AUTONOMOUS:
 			GPIOPinWrite(GPIO_PORTF_BASE, RED_LED | GREEN_LED |
 					BLUE_LED, BLUE_LED);
 			break;
-		case 3:
+		case MANUAL:
 			GPIOPinWrite(GPIO_PORTF_BASE, RED_LED | GREEN_LED |
 					BLUE_LED, GREEN_LED);
+			break;
+		default:
 			break;
 	}
 }

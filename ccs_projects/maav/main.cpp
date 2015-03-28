@@ -43,7 +43,7 @@
 #include "rc.h"
 #include "led.h"
 #include "flight_mode.h"
-#include "loop.hpp"
+#include "Loop.hpp"
 #include "tests/test_definitions.h"
 
 #include "messaging/data_link.h"
@@ -55,6 +55,7 @@ bool px4_can_transmit = true;
 ////////////////////////////// MAIN FUNCTION ///////////////////////////////////
 int main(void)
 {
+	runnable_test();
 //	rc_test();
 
 	/*
