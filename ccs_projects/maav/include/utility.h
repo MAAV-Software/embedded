@@ -10,6 +10,10 @@
 #ifndef UTILITY_H_
 #define UTILITY_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
@@ -77,5 +81,9 @@ void tuningMessageQuadCtrlChangesHandler(quad_ctrl_t *qc, tuning_t *message);
 
 // Does the requested changes to quad control struct based on target message
 void targetMessageQuadCtrlChangesHandler(quad_ctrl_t *qc, target_t *message);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* UTILITY_H_ */

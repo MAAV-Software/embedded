@@ -43,6 +43,7 @@
 #include "rc.h"
 #include "led.h"
 #include "flight_mode.h"
+#include "loop.hpp"
 #include "tests/test_definitions.h"
 
 #include "messaging/data_link.h"
@@ -54,7 +55,8 @@ bool px4_can_transmit = true;
 ////////////////////////////// MAIN FUNCTION ///////////////////////////////////
 int main(void)
 {
-	rc_test();
+//	rc_test();
+
 	/*
 	 *  Set system clock to 80Mhz.
 	 *  Note that SysCtlClockGet() has a bug for this frequency.

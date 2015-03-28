@@ -1,6 +1,10 @@
 #ifndef SWITCH_H_
 #define SWITCH_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // Contains functions that handle the switches
 
 #include "general.h"
@@ -31,5 +35,9 @@ void readSwitch(SwitchData_t *sData);
 
 // Drives the switch's LED
 void driveSwitch(SwitchData_t *sData, uint8_t direction);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* SWITCH_H_ */

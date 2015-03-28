@@ -1,6 +1,10 @@
 #ifndef GENERAL_H_
 #define GENERAL_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
@@ -34,6 +38,10 @@
 #define PX4_SDA_PIN GPIO_PIN_1
 #define PX4_SCL_PIN_CONFIG GPIO_PD0_I2C3SCL
 #define PX4_SDA_PIN_CONFIG GPIO_PD1_I2C3SDA
+
+#ifdef __cplusplus
+}
+#endif
 
 
 #endif /* GENERAL_H_ */

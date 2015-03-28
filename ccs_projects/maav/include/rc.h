@@ -1,6 +1,10 @@
 #ifndef RC_H_
 #define RC_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // STUFF FOR RADIO CONTROL
 
 
@@ -49,5 +53,8 @@ float ms2height(float ms);
 // Calcualtes PID XY setpoints from pulse width
 float PID_XY_2ms(float val);
 
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* RC_H_ */

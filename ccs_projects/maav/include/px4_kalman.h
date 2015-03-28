@@ -1,6 +1,10 @@
 #ifndef PX4_KALMAN_H_
 #define PX4_KALMAN_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // These are what you tune. This is your system noise model.
 // It is a measure of confidence in your prediction
 // I sometimes like to do this based on time.
@@ -63,5 +67,9 @@ void      kalman_correct_z(kalman_t *k, double Rz);
 void      kalman_print_graph(FILE *fp, kalman_t *k, long utime);
 
 void      kalman_destroy(kalman_t *filter);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* PX4_KALMAN_H_ */

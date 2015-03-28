@@ -13,11 +13,19 @@
 #ifndef TIME_UTIL_H_
 #define TIME_UTIL_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stdbool.h>
 #include <stdint.h>
 
 void time_init(uint32_t ui32Peripheral, uint32_t sysClock, uint32_t ui32Base, uint32_t ui32Interrupt);
 uint64_t timestamp_now();
 uint32_t millis();
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* TIME_UTIL_H_ */

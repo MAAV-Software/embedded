@@ -12,6 +12,10 @@
 #ifndef QUAD_CTRL_H_
 #define QUAD_CTRL_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stdint.h>
 #include <stdbool.h>
 #include <math.h>
@@ -78,5 +82,9 @@ void qc_setDJIValues(quad_ctrl_t *qc);
 
 // Cleans up the dynamic memory used to create the quad_ctrl_t struct qc.
 void qc_destroy(quad_ctrl_t *qc);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* QUAD_CTRL_H_ */

@@ -8,6 +8,10 @@
 #ifndef PPM_H_
 #define PPM_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stdint.h>
 #include <stdbool.h>
 
@@ -21,7 +25,8 @@ void PPM_setPulse(uint8_t chNum, uint32_t pulseWidth);
 void PPM_setStickPos(uint8_t chNum, int16_t pos);
 uint32_t MinMaxPulseThresh(uint32_t dataIn);
 
-
-
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* PPM_H_ */
