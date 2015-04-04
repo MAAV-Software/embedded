@@ -161,7 +161,7 @@ static void data_link_send_string_log_unsafe(char *message, int32_t time)
 	uint8_t encoded[256];
 	int len = str_log_t_encode(encoded, 0, 256, &strlog_message);
 	//Publish
-	lcmlite_publish(&lcm, CHANNEL_DJI_FEEDBACK, encoded, len);	
+	lcmlite_publish(&lcm, CHANNEL_STR_LOG, encoded, len);	
 }
 
 void data_link_send_string_log(char *message, int32_t time)
