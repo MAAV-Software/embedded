@@ -15,6 +15,8 @@
 class ProcessReceivedDataRunnable : public Runnable {
 public:
 	void run();
+
+	~ProcessReceivedDataRunnable();
 };
 
 class TargetMessageHandlerRunnable : public Runnable {
@@ -26,6 +28,8 @@ public:
 	void run();
 	
 	TargetMessageHandlerRunnable(target_t *target, quad_ctrl_t *qc);
+
+	~TargetMessageHandlerRunnable();
 };
 
 class TuningMessageHandlerRunnable : public Runnable {
@@ -37,6 +41,8 @@ public:
 	void run();
 	
 	TuningMessageHandlerRunnable(tuning_t *tuning, quad_ctrl_t *qc);
+
+	~TuningMessageHandlerRunnable();
 };
 
 

@@ -13,6 +13,8 @@ void ProcessReceivedDataRunnable::run() {
 	data_link_process_incoming();
 }
 
+ProcessReceivedDataRunnable::~ProcessReceivedDataRunnable() {}
+
 void TargetMessageHandlerRunnable::run() {
 	if(_message->timestamp > _last)
 	{
@@ -23,6 +25,8 @@ void TargetMessageHandlerRunnable::run() {
 
 TargetMessageHandlerRunnable::TargetMessageHandlerRunnable(target_t *target, quad_ctrl_t *quad)
 	: _qc(quad), _message(target), _last(0) { }
+
+TargetMessageHandlerRunnable::~TargetMessageHandlerRunnable() {}
 
 
 void TuningMessageHandlerRunnable::run() {
@@ -35,3 +39,5 @@ void TuningMessageHandlerRunnable::run() {
 
 TuningMessageHandlerRunnable::TuningMessageHandlerRunnable(tuning_t *tuning, quad_ctrl_t *quad)
 	: _qc(quad), _message(tuning), _last(0) { }
+
+TuningMessageHandlerRunnable::~TuningMessageHandlerRunnable() {}

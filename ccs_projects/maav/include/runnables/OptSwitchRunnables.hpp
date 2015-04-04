@@ -8,4 +8,6 @@ public:
 	void run();
 	
 	SwitchUpdateRunnable(SwitchData_t *sw);
+
+	~SwitchUpdateRunnable();
 };

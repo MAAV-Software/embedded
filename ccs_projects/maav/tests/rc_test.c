@@ -39,4 +39,5 @@ int rc_test(void) {
 		}
 		//SysCtlDelay(SYSCLOCK / 10);
 	}
+	return 0;
 }

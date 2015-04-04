@@ -10,6 +10,7 @@ extern "C" {
 // state of the vehicle
 struct VehicleState {
 	FLIGHT_MODE mode;
+	float height; // in meters
 };
 
 #ifdef __cplusplus

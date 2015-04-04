@@ -6,3 +6,5 @@ void SwitchUpdateRunnable::run(){
 
 SwitchUpdateRunnable::SwitchUpdateRunnable(SwitchData_t *switches)
 	: _sw(switches) { }
+
+SwitchUpdateRunnable::~SwitchUpdateRunnable() {}

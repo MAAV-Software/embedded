@@ -23,12 +23,12 @@ void DjiRunnable::run() {
 //			PPM_setPulse(3, servoIn_getPulse(RC_CHAN4));
 			break;
 		case MANUAL:
-			break;
-		default:
 			PPM_setPulse(0, servoIn_getPulse(RC_CHAN1));	// Y Accel
 			PPM_setPulse(1, servoIn_getPulse(RC_CHAN2));	// X Accel
 			PPM_setPulse(2, servoIn_getPulse(RC_CHAN3));	// Z Accel
 			PPM_setPulse(3, servoIn_getPulse(RC_CHAN4));	// Yaw Rate
+			break;
+		default:
 			break;
 	}
 }
