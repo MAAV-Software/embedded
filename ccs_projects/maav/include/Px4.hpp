@@ -1,6 +1,8 @@
 #ifndef PX4_HPP_
 #define PX4_HPP_
 
+#include <stdint.h>
+
 class Px4 {
 private:
 	uint16_t _frameCount;
