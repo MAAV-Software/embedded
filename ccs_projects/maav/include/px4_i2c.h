@@ -70,7 +70,6 @@ int16_t px4_i2c_getHeight(void);
 uint8_t px4_i2c_getTimestep(void);
 void px4_i2c_makeDataStale(void);
 
-
 uint16_t px4_i2c_get_frame_count();
 int16_t  px4_i2c_get_pixel_flow_x_sum();
 int16_t  px4_i2c_get_pixel_flow_y_sum();
