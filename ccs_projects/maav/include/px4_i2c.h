@@ -8,6 +8,10 @@
 #ifndef PX4_I2C_H_
 #define PX4_I2C_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #define PX4_ADDRESS		0x43
 
 typedef struct _PX4_data
@@ -66,7 +70,6 @@ int16_t px4_i2c_getHeight(void);
 uint8_t px4_i2c_getTimestep(void);
 void px4_i2c_makeDataStale(void);
 
-
 uint16_t px4_i2c_get_frame_count();
 int16_t  px4_i2c_get_pixel_flow_x_sum();
 int16_t  px4_i2c_get_pixel_flow_y_sum();
@@ -78,6 +81,8 @@ int16_t  px4_i2c_get_gyro_y_rate();
 int16_t  px4_i2c_get_gyro_z_rate();
 uint8_t  px4_i2c_get_gyro_range();
 
-
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* PX4_I2C_H_ */

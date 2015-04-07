@@ -1,11 +1,26 @@
+# output files
 *.obj
 *~*
 *TMP*
-Debug
-targetConfigs
 *.map
 *.out
 
+# folders
+Debug
+targetConfigs
+.cproject
+.launches
+.project
+.settings
+
+Debug
+targetConfigs
+
+.launches
+.settings
+.project
+.cproject
+.ccsproject
 
 # latex temporary files
 *.aux

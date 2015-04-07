@@ -31,6 +31,7 @@ static lcmlite_subscription_t sub_position;
 static lcmlite_subscription_t sub_target;
 static lcmlite_subscription_t sub_tuning;
 // for lcmlite transmit handler function
+uint8_t ringbuf_internal_buffer[256];
 char transmit_user[256];
 static lcmlite_t lcm;
 
@@ -160,7 +161,7 @@ static void data_link_send_string_log_unsafe(char *message, int32_t time)
 	uint8_t encoded[256];
 	int len = str_log_t_encode(encoded, 0, 256, &strlog_message);
 	//Publish
-	lcmlite_publish(&lcm, CHANNEL_DJI_FEEDBACK, encoded, len);	
+	lcmlite_publish(&lcm, CHANNEL_STR_LOG, encoded, len);	
 }
 
 void data_link_send_string_log(char *message, int32_t time)
@@ -224,7 +225,7 @@ void data_link_process_incoming()
 void data_link_init(position_t *position, target_t *target, tuning_t *tuning)
 {
 	//Init ringbuffer and message frame
-	ringbuf_init(&ringbuf);
+	ringbuf_init_static(&ringbuf, ringbuf_internal_buffer, 256);
 	messaging_frame = data_frame_create(256);
 
 	//Init LCM

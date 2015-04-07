@@ -40,7 +40,7 @@
 // Logging buffers
 float all_states[MAXSIZE][8];
 float all_setpts[MAXSIZE][8];
-
+/*
 int main(void)
 {
 	int i, j;
@@ -71,4 +71,4 @@ int main(void)
 
 	}
 }
-
+*/
