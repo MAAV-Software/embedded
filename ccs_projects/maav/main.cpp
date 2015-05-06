@@ -63,6 +63,9 @@ int main(void)
 	GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE, GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3);
 	GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3, 0);
 
+	ConfigureUART();
+	UARTprintf("Testing Uart Connection.\n\rHAPPY BIRTHDAY ZHENGJIE!\n\r");
+
 	time_init(SYSCTL_PERIPH_TIMER1, SYSCLOCK, TIMER1_BASE, INT_TIMER1A);	// Chose any open timer
 	PPM_init(SYSCTL_PERIPH_TIMER2, SYSCLOCK, TIMER2_BASE, INT_TIMER2A,		// Chose any open timer
 			GPIO_PORTB_BASE, GPIO_PIN_6, 4);								// Chose any open port/pin
