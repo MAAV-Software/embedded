@@ -1,5 +1,5 @@
-#ifndef DOF_HPP
-#define DOF_HPP
+#ifndef DOF_HPP_
+#define DOF_HPP_
 
 /** \file dof.h
     \brief Declaration of the DOF structure and supporting functions
@@ -13,12 +13,11 @@
 
     \see dof.c
 */
-#include <stdio.h>
+//#include <stdio.h>
 #include <stdint.h>
-#include <stdbool.h>
+//#include <stdbool.h>
 #include <math.h>
-#include <stdlib.h>
-
+//#include <stdlib.h>
 
 // Defines for bitfields
 #define DISC_RATE 		0x1
@@ -72,43 +71,7 @@ enum DofStateEnum {val, rate, accel, time};
 
     \see \link dof_t_methods dof_t supporting functions \endlink
 */
-class Dof
-{
-private:
-	/// \name flags, options, and limits
-	/// \{
-	float 	_stateBound;      	///< positive limit on value state, 0 for none
-	float 	_rateSetLimit;   	///< positive limit on rate setpoint, 0 for none
-	float 	_UvalUpLimit;		///< upper limit on U value, no limit if = to lw
-	float 	_UvalLwLimit;  		///< lower limit on U value, no limit if = to up
-	uint8_t _flags; ///< bit 0 for discrete rate, bit 1 for discrete accel, bit 2 for wraparound
-
-	/// \}
-
-    /// \name controller values
-    /// \{
-    float _valueGains[3];  		///< [Kp, Ki, Kd] for the value -> desired rate PID
-    float _rateGains[3];   		///< [Kp, Ki, Kd] for the rate -> U value PID
-    float _ctrlDt;         		///< time since controller last ran
-    float _ctrlError[4];   		///< setpoint - state, with a timestamp
-    float _ctrlPrevErr[4];		///< previous error values
-    float _ctrlDerrDt[3];  		///< discrete derivative of the error [x, dx, d2x]
-    float _ctrlIntegral[3];		///< integral of setpoint - state [x, dx, d2x]
-    float _lowpassCoeff[3]; 	///< low pass filter coeffiicients on error deriv
-    /// \}
-
-    /// Calculates the discrete derivative of the state value (to get rate)
-    void discreteDxDt();
-
-    /// Calculates the discrete derivative of the state rate (to get accel)
-    void discreteD2xDt2();
-
-    /// Sets the internal dt from time of last control loop, stores in ctrl_dt
-    void calcCtrlDt();
-
-    /// Sets the internal ctrl_error, prev_error, ctrl_derr_dt, and ctrl_integral
-    void calcError(const uint8_t idx, const uint8_t integrate);
-
+class Dof {
 public:
     /// \name dof state values (all with timestamps)
     /// \{
@@ -121,6 +84,7 @@ public:
     /// \}
 
     // Constructor
+    Dof();
     Dof(const float x, const float DxDt, const float D2xDt2,
     	const float t, const float inertia, const float stateBound,
 		const float rateSetLimit, const float UvalUpLimit,
@@ -156,7 +120,7 @@ public:
     void setState(const float x, const float DxDt, const float D2xDt2,
     				const float t);
 
-    /// Sets the internal setpt buffer
+    /// Sets the i		dof_calc_ctrl_dt(&(qc->xyzh[i]));nternal setpt buffer
     void setSetpt(const float x, const float DxDt, const float D2xDt2,
     				const float t);
     /// \}
@@ -168,7 +132,41 @@ public:
 
     /// Calculates the U value from the rate PID
     void ratePID(const uint8_t useDerrDt);
+
+    /// Sets the internal dt from time of last control loop, stores in ctrl_dt
+    void calcCtrlDt();
+
+    /// Sets the internal ctrl_error, prev_error, ctrl_derr_dt, and ctrl_integral
+    void calcError(const uint8_t idx, const uint8_t integrate);
     /// \}
+
+private:
+	/// \name flags, options, and limits
+	/// \{
+	float 	_stateBound;      	///< positive limit on value state, 0 for none
+	float 	_rateSetLimit;   	///< positive limit on rate setpoint, 0 for none
+	float 	_UvalUpLimit;		///< upper limit on U value, no limit if = to lw
+	float 	_UvalLwLimit;  		///< lower limit on U value, no limit if = to up
+	uint8_t _flags; ///< bit 0 for discrete rate, bit 1 for discrete accel, bit 2 for wraparound
+	/// \}
+
+    /// \name controller values
+    /// \{
+    float _valueGains[3];  		///< [Kp, Ki, Kd] for the value -> desired rate PID
+    float _rateGains[3];   		///< [Kp, Ki, Kd] for the rate -> U value PID
+    float _ctrlDt;         		///< time since controller last ran
+    float _ctrlError[4];   		///< setpoint - state, with a timestamp
+    float _ctrlPrevErr[4];		///< previous error values
+    float _ctrlDerrDt[3];  		///< discrete derivative of the error [x, dx, d2x]
+    float _ctrlIntegral[3];		///< integral of setpoint - state [x, dx, d2x]
+    float _lowpassCoeff[3]; 	///< low pass filter coeffiicients on error deriv
+    /// \}
+
+    /// Calculates the discrete derivative of the state value (to get rate)
+    void discreteDxDt();
+
+    /// Calculates the discrete derivative of the state rate (to get accel)
+    void discreteD2xDt2();
 };
 
 #endif // DOF_HPP

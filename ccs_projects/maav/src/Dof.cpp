@@ -33,7 +33,37 @@ Dof::Dof(const float x, const float DxDt, const float D2xDt2,
 	initLowpass(lowpassCoeff);
 }
 
+Dof::Dof()
+{
+	inertia = 0;
+	Uval = 0;
+	velocity = 0;
+	_stateBound = 0;
+	_rateSetLimit = 0;   	///< positive limit on rate setpoint, 0 for none
+	_UvalUpLimit = 0;		///< upper limit on U value, no limit if = to lw
+	_UvalLwLimit = 0;  		///< lower limit on U value, no limit if = to up
+	_flags = 0; ///< bit 0 for discrete rate, bit 1 for discrete accel, bit 2 for wraparound
+	/// \}
 
+	_ctrlDt = 0;         		///< time since controller last ran
+    /// \name controller values
+    /// \{
+	for (uint8_t i = 0; i < 3; ++i)
+	{
+		_valueGains[i] = 0;  		///< [Kp, Ki, Kd] for the value -> desired rate PID
+		_rateGains[i] = 0;   		///< [Kp, Ki, Kd] for the rate -> U value PID
+		_ctrlDerrDt[i] = 0;  		///< discrete derivative of the error [x, dx, d2x]
+		_ctrlIntegral[i] = 0;		///< integral of setpoint - state [x, dx, d2x]
+		_lowpassCoeff[i] = 0; 	///< low pass filter coeffiicients on error deriv
+	}
+	for (uint8_t i = 0; i < 4; ++i)
+	{
+		_ctrlError[i] = 0;   		///< setpoint - state, with a timestamp
+		_ctrlPrevErr[i] = 0;		///< previous error values
+	}
+}
+
+Dof::~Dof() {}
 
 /** Sets up the internal state and other data in the struct so that first loop
     runs properly by using the initial state of the vehicle to seed the state

@@ -24,10 +24,10 @@
 QuadCtrl::QuadCtrl()
 {
 	// 0 for all lowpass coeffs turns off lowpass filter in DOF
-	float lowpass_coeff[4] = {0.0, 0.0, 0.0};
+	float lpCoeff[3] = {0.0, 0.0, 0.0};
 
 	// value and rate PID gains
-	float value_gains[4][3] =
+	float valueGains[4][3] =
 	{
 		/* Kp,  Ki,    Kd 		value gains */
 		{1.00, 0.00, 0.00,},	/* x */
@@ -35,8 +35,7 @@ QuadCtrl::QuadCtrl()
 		{1.00, 0.00, 0.00,},	/* z */
 		{1.00, 0.00, 0.00,},	/* yaw */
 	};
-
-	float rate_gains[4][3] =
+	float rateGains[4][3] =
 	{
 		/* Kp,  Ki,    Kd		rate gains */
 		{1.00, 0.00, 0.00,},	/* x */
@@ -63,29 +62,48 @@ QuadCtrl::QuadCtrl()
  	// Hardcode intertial properties, mode, and limits
 	mode = RC_CTRL;
 	mass = 1.0;
-	_rpLimits[ROLL] = 10.0;
+	_rpLimits[ROLL]  = 10.0;
 	_rpLimits[PITCH] = 10.0;
 	_preYawSin = 0.0;
 	_preYawCos = 1.0;
-
-	djiRoll = 0.0;
-	djiPitch = 0.0;
+	djiRoll   = 0.0;
+	djiPitch  = 0.0;
 	djiYawDot = 0.0;
 	djiForceZ = 0.0;
 
 	for (uint8_t i = 0; i < 4; ++i) // loop through and initialize dofs
 	{
-		//TODO: FIGURE THIS OUT
-		_xyzh[i].Dof(); // does this work here ?????????
-		// call dof init funcitons
-		/*
-		dof_init_struct(&(qc->xyzh[i]), 0, 0, 0, 0, qc->mass);
-		dof_set_gains(&(qc->xyzh[i]), value_gains[i], rate_gains[i]);
-		dof_init_limits(&(qc->xyzh[i]), state_bounds[i], vel_caps[i],
-						Uval_posThresh[i], Uval_negThresh[i]);
-		dof_init_flags(&(qc->xyzh[i]), wraparounds[i], take_disc_deriv[i]);
-		dof_init_lowpass(&(qc->xyzh[i]), lowpass_coeff);
-		*/
+		_xyzh[i] = Dof(0, 0, 0, 0, mass, stateBounds[i], velCaps[i],
+					   UvalPosThresh[i], UvalNegThresh[i], flags[i], lpCoeff);
+		_xyzh[i].setGains(valueGains[i], rateGains[i]);
+	}
+}
+
+QuadCtrl::QuadCtrl(float valueGains[4][3], float rateGains[4][3],
+		  	  	  	 float stateBounds[4], float velCaps[4], float rpCaps[2],
+					 float UvalPosThresh[4], float UvalNegThresh[4],
+					 uint8_t flags[4], ctrlMode modeInit, float massInit)
+{
+	// 0 for all lowpass coeffs turns off lowpass filter in DOF
+	float lpCoeff[3] = {0.0, 0.0, 0.0};
+
+ 	// Hardcode intertial properties, mode, and limits
+	mode = modeInit;
+	mass = massInit;
+	_rpLimits[ROLL]  = rpCaps[ROLL];
+	_rpLimits[PITCH] = rpCaps[PITCH];
+	_preYawSin = 0.0;
+	_preYawCos = 1.0;
+	djiRoll   = 0.0;
+	djiPitch  = 0.0;
+	djiYawDot = 0.0;
+	djiForceZ = 0.0;
+
+	for (uint8_t i = 0; i < 4; ++i) // loop through and initialize dofs
+	{
+		_xyzh[i] = Dof(0, 0, 0, 0, mass, stateBounds[i], velCaps[i],
+					   UvalPosThresh[i], UvalNegThresh[i], flags[i], lpCoeff);
+		_xyzh[i].setGains(valueGains[i], rateGains[i]);
 	}
 }
 
@@ -106,14 +124,14 @@ QuadCtrl::QuadCtrl()
  * 			enter a 0 in their place.
  * \post	PID control can be executed
  */
-void qc_setState(quad_ctrl_t *qc, float state[], float t) {
-	uint8_t i;
-	for (i = 0; i < 4; ++i)
-		dof_set_state(&(qc->xyzh[i]), state[i], state[i + 4], 0, t);
+void QuadCtrl::setQuadState(float state[], float t)
+{
+	for (uint8_t i = 0; i < 4; ++i)
+		_xyzh[i].setState(state[i], state[i + 4], 0, t);
 
-	// calculate sin(yaw) and cos(yaw) for later (yaw is state[3])
-//	qc->pre_yaw_sin = sinf(state[3]);
-//	qc->pre_yaw_cos = cosf(state[3]);	//TODO add these back (ask Sajan why)
+	// calculate sin(yaw) and cos(yaw) for later
+	_preYawSin = sinf(state[YAW]);
+	_preYawCos = cosf(state[YAW]);
 }
 
 /*
@@ -137,11 +155,10 @@ void qc_setState(quad_ctrl_t *qc, float state[], float t) {
  * 			the setpt array.
  * \post	Setpoints are ready to be acted upon in PID control.
  */
-void qc_setSetpt(quad_ctrl_t *qc, float setpt[], float t)
+void QuadCtrl::setQuadSetpt(float setpt[], float t)
 {
-	uint8_t i;
-	for (i = 0; i < 4; ++i)
-		dof_set_setpt(&(qc->xyzh[i]), setpt[i], setpt[i + 4], 0, t);
+	for (uint8_t i = 0; i < 4; ++i)
+		_xyzh[i].setSetpt(setpt[i], setpt[i + 4], 0, t);
 }
 
 /* qc_runPID
@@ -153,15 +170,13 @@ void qc_setSetpt(quad_ctrl_t *qc, float setpt[], float t)
  * \pre		setpoints and state are valid and qc_init has been called
  * \post	qc_setDJIValues
  */
-void qc_runPID(quad_ctrl_t *qc)
+void QuadCtrl::runPID()
 {
-	uint8_t i;
-
-	for (i = 0; i < 4; ++i) dof_calc_ctrl_dt(&(qc->xyzh[i]));
+	for (uint8_t i = 0; i < 4; ++i) _xyzh[i].calcCtrlDt();
 	// get change in time for all DOFs
 
-	qc_runValuePID(qc); // run position->velocity PID (accounts for ctrl mode)
-	qc_runRatePID(qc); // run velocity->force PID
+	runValuePID(); // run position->velocity PID (accounts for ctrl mode)
+	runRatePID(); // run velocity->force PID
 }
 
 
@@ -178,24 +193,23 @@ void qc_runPID(quad_ctrl_t *qc)
  * \post	Call qc_runRatePID or access the velocity member of each DOF within
  * 			qc.
  */
-void qc_runValuePID(quad_ctrl_t *qc)
+void QuadCtrl::runValuePID()
 {
-	uint8_t i;
-
-	if (qc->ctrl_mode == AUTON_CTRL) // only do X, Y value PID if in auton mode
+	if (mode == AUTON_CTRL) // only do X, Y value PID if in auton mode
 	{
-		for (i = 0; i < 2; ++i) // loop through x, y DOFs
+		for (uint8_t i = 0; i < 2; ++i) // loop through x, y DOFs
 		{
-			dof_calc_error(&(qc->xyzh[i]), 0, 1); // calculate errors
-			dof_value_PID(&(qc->xyzh[i]), 0);
+			_xyzh[i].calcError(val, 1);
+			_xyzh[i].valuePID(0);
 		}
 	}
 
 	// always do Z and Yaw value PID
-//	for (i = 2; i < 4; ++i) { // loop through Z and Yaw DOFs //TODO Add yaw back.  Removed (no yaw value PID needed for comp)
-		dof_calc_error(&(qc->xyzh[Z_AXIS]), 0, 1); // calculate errors
-		dof_value_PID(&(qc->xyzh[Z_AXIS]), 0);
-//	}
+	for (uint8_t i = 2; i < 4; ++i)
+	{
+		_xyzh[i].calcError(val, 1);
+		_xyzh[i].valuePID(0);
+	}
 }
 
 /*
@@ -210,15 +224,13 @@ void qc_runValuePID(quad_ctrl_t *qc)
  * 			qc_runValuePID
  * \post	Uvals are ready for each DOF
  */
-void qc_runRatePID(quad_ctrl_t *qc)
+void QuadCtrl::runRatePID()
 {
-	uint8_t i;
-
-	for (i = 0; i < 3; ++i) // only run through X, Y, Z rate PIDs
+	for (uint8_t i = 0; i < 3; ++i) // only run through X, Y, Z rate PIDs
 	{
-		dof_calc_error(&(qc->xyzh[i]), 1, 1); // calculate rate and accel error
-		dof_calc_error(&(qc->xyzh[i]), 2, 1); // (accel probably not needed)
-		dof_rate_PID(&(qc->xyzh[i]), 1); // run rate PID with d(rate_error)/dt
+		_xyzh[i].calcError(rate, 1); // calculate rate and accel error
+		_xyzh[i].calcError(accel, 1);// (accel probably not needed)
+		_xyzh[i].ratePID(1); // run rate PID with d(rate_error)/dt
 	}
 }
 
@@ -239,50 +251,45 @@ void qc_runRatePID(quad_ctrl_t *qc)
  * \post	dji_roll, dji_pitch, dji_forceZ, and dji_yawDot from the qc struct
  * 			are valid and can be used
  */
-void qc_setDJIValues(quad_ctrl_t *qc)
+void QuadCtrl::calcDJIValues()
 {
-	float force_ve[3];      // vehicle force in the earth frame
-	float force_vy[3];      // vehicle force in the yaw frame
-	float force_mag = 0;    // magnitude of the vehicle force
+	float forceVe[3];      // vehicle force in the earth frame
+	float forceVy[3];      // vehicle force in the yaw frame
+	float forceMag = 0;    // magnitude of the vehicle force
 	float angle[2];       // roll and pitch setpoint
-	uint8_t i;
 
 	// get earth frame vehicle forces
-	for (i = 0; i < 3; ++i) force_ve[i] = qc->xyzh[i].Uval;
-
-	force_ve[Z_AXIS] += qc->mass * GRAVITY;
+	for (uint8_t i = 0; i < 3; ++i) forceVe[i] = _xyzh[i].Uval;
+	forceVe[Z_AXIS] += mass * GRAVITY;
 
 	// Convert earth frame forces to body frame, adding trim (which is already
 	// in the body frame)
-	force_vy[X_AXIS] = (qc->pre_yaw_cos * force_ve[X_AXIS])
-					   + (qc->pre_yaw_sin * force_ve[Y_AXIS]);
-	force_vy[Y_AXIS] = -(qc->pre_yaw_sin * force_ve[X_AXIS])
-					   + (qc->pre_yaw_cos * force_ve[Y_AXIS]);
-	force_vy[Z_AXIS] = force_ve[Z_AXIS];
+	forceVy[X_AXIS] =  (_preYawCos * forceVe[X_AXIS]) + (_preYawSin * forceVe[Y_AXIS]);
+	forceVy[Y_AXIS] = -(_preYawSin * forceVe[X_AXIS]) + (_preYawCos * forceVe[Y_AXIS]);
+	forceVy[Z_AXIS] = forceVe[Z_AXIS];
 
 	// calculate ||F|| = sqrt(Fx^2 + Fy^2 + Fz^2)
-	for (i = 0; i < 3; ++i) force_mag += force_vy[i] * force_vy[i];
-
-	force_mag = sqrtf(force_mag);
+	for (uint8_t i = 0; i < 3; ++i) forceMag += forceVy[i] * forceVy[i];
+	forceMag = sqrtf(forceMag);
 
 	// Calculate roll and pitch
-	angle[ROLL]  = -asinf(force_vy[Y_AXIS] / force_mag);
-	angle[PITCH] = asinf(force_vy[X_AXIS] / sqrtf((force_mag * force_mag)
-	            		 - (force_vy[Y_AXIS] * force_vy[Y_AXIS])));
+	angle[ROLL]  = -asinf(forceVy[Y_AXIS] / forceMag);
+	angle[PITCH] =  asinf(forceVy[X_AXIS] / sqrtf((forceMag * forceMag)
+	            		   - (forceVy[Y_AXIS] * forceVy[Y_AXIS])));
 
 	// cap roll and pitch
-	if (angle[ROLL] > qc->rp_cap[ROLL]) angle[ROLL] = qc->rp_cap[ROLL];
-	if (angle[ROLL] < -qc->rp_cap[ROLL]) angle[ROLL] = -qc->rp_cap[ROLL];
-	if (angle[PITCH] > qc->rp_cap[PITCH]) angle[PITCH] = qc->rp_cap[PITCH];
-	if (angle[PITCH] < -qc->rp_cap[PITCH]) angle[PITCH] = -qc->rp_cap[PITCH];
+	if (angle[ROLL]  >  _rpLimits[ROLL]) 	angle[ROLL]  =  _rpLimits[ROLL];
+	if (angle[ROLL]  < -_rpLimits[ROLL]) 	angle[ROLL]  = -_rpLimits[ROLL];
+	if (angle[PITCH] >  _rpLimits[PITCH]) 	angle[PITCH] =  _rpLimits[PITCH];
+	if (angle[PITCH] < -_rpLimits[PITCH]) 	angle[PITCH] = -_rpLimits[PITCH];
 
 	// assign DJI values
-	qc->dji_roll = angle[ROLL];
-	qc->dji_pitch = angle[PITCH];
-	qc->dji_forceZ = qc->xyzh[Z_AXIS].Uval;
+	djiRoll   = angle[ROLL];
+	djiPitch  = angle[PITCH];
+	djiForceZ = _xyzh[Z_AXIS].Uval;
 
-	if (qc->ctrl_mode == AUTON_CTRL) qc->dji_yawDot = qc->xyzh[YAW].velocity;
-	else qc->dji_yawDot = qc->xyzh[YAW].setpt[1];
+	if (mode == AUTON_CTRL)	djiYawDot = _xyzh[YAW].velocity;
+	else 					djiYawDot = _xyzh[YAW].setpt[1];
 }
 
 // End of File
