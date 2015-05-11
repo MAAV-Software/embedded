@@ -24,13 +24,11 @@
 Dof::Dof(const float x, const float DxDt, const float D2xDt2,
 		  const float t, const float inertia, const float stateBound,
 		  const float rateSetLimit, const float UvalUpLimit,
-		  const float UvalLwLimit, const uint8_t flags,
-		  const float lowpassCoeff[3])
+		  const float UvalLwLimit, const uint8_t flags)
 {
 	initState(x, DxDt, D2xDt2, t, inertia);
 	initLimits(stateBound, rateSetLimit, UvalUpLimit, UvalLwLimit);
 	initFlags(flags);
-	initLowpass(lowpassCoeff);
 }
 
 Dof::Dof()
@@ -38,28 +36,27 @@ Dof::Dof()
 	inertia = 0;
 	Uval = 0;
 	velocity = 0;
-	_stateBound = 0;
-	_rateSetLimit = 0;   	///< positive limit on rate setpoint, 0 for none
-	_UvalUpLimit = 0;		///< upper limit on U value, no limit if = to lw
-	_UvalLwLimit = 0;  		///< lower limit on U value, no limit if = to up
-	_flags = 0; ///< bit 0 for discrete rate, bit 1 for discrete accel, bit 2 for wraparound
+	stateBound = 0;
+	rateSetLimit = 0;   	///< positive limit on rate setpoint, 0 for none
+	UvalUpLimit = 0;		///< upper limit on U value, no limit if = to lw
+	UvalLwLimit = 0;  		///< lower limit on U value, no limit if = to up
+	flags = 0; ///< bit 0 for discrete rate, bit 1 for discrete accel, bit 2 for wraparound
 	/// \}
 
-	_ctrlDt = 0;         		///< time since controller last ran
+	ctrlDt = 0;         		///< time since controller last ran
     /// \name controller values
     /// \{
 	for (uint8_t i = 0; i < 3; ++i)
 	{
-		_valueGains[i] = 0;  		///< [Kp, Ki, Kd] for the value -> desired rate PID
-		_rateGains[i] = 0;   		///< [Kp, Ki, Kd] for the rate -> U value PID
-		_ctrlDerrDt[i] = 0;  		///< discrete derivative of the error [x, dx, d2x]
-		_ctrlIntegral[i] = 0;		///< integral of setpoint - state [x, dx, d2x]
-		_lowpassCoeff[i] = 0; 	///< low pass filter coeffiicients on error deriv
+		valueGains[i] = 0;  		///< [Kp, Ki, Kd] for the value -> desired rate PID
+		rateGains[i] = 0;   		///< [Kp, Ki, Kd] for the rate -> U value PID
+		ctrlDerrDt[i] = 0;  		///< discrete derivative of the error [x, dx, d2x]
+		ctrlIntegral[i] = 0;		///< integral of setpoint - state [x, dx, d2x]
 	}
 	for (uint8_t i = 0; i < 4; ++i)
 	{
-		_ctrlError[i] = 0;   		///< setpoint - state, with a timestamp
-		_ctrlPrevErr[i] = 0;		///< previous error values
+		ctrlError[i] = 0;   		///< setpoint - state, with a timestamp
+		ctrlPrevErr[i] = 0;		///< previous error values
 	}
 }
 
@@ -86,27 +83,27 @@ void Dof::initState(const float x, const float DxDt, const float D2xDt2,
 {
 	for (uint8_t i = 0; i < 4; ++i) // init state vals to 0
 	{
-		state[i] = 0.0;
-		setpt[i] = 0.0;
-		_ctrlPrevErr[i] = 0.0;
-		_ctrlError[i] = 0.0;
+		state[i]       = 0.0;
+		setpt[i]       = 0.0;
+		ctrlPrevErr[i] = 0.0;
+		ctrlError[i]   = 0.0;
 	}
 
 	for (uint8_t i = 0; i < 3; ++i)	// init error deriv and error integral to 0
 	{
-		_ctrlDerrDt[i] = 0.0;
-		_ctrlIntegral[i] = 0.0;
+		ctrlDerrDt[i]   = 0.0;
+		ctrlIntegral[i] = 0.0;
 	}
 
 	// assign user-defined intial state
-	state[val] = x;
-	state[rate] = DxDt;
-	state[accel] = D2xDt2;
-	state[time] = t;
-	_ctrlError[time] = t;
-	inertia = mass;
-	velocity = 0.0; // init veloctiy to 0
-	Uval = 0.0;	// init force to 0
+	state[VAL]      = x;
+	state[RATE]     = DxDt;
+	state[ACCEL]    = D2xDt2;
+	state[TIME]     = t;
+	ctrlError[TIME] = t;
+	inertia         = mass;
+	velocity        = 0.0; // init veloctiy to 0
+	Uval            = 0.0;	// init force to 0
 }
 
 /** Assigns the PID gains in the structure so that it can properly control
@@ -124,26 +121,26 @@ void Dof::initState(const float x, const float DxDt, const float D2xDt2,
 
     \ingroup dof_t_methods
 */
-void Dof::setGains(float valueGains[3], float rateGains[3])
+void Dof::setGains(float _valueGains[3], float _rateGains[3])
 {
 	// Reset integral if integral gain changes
-	if (_valueGains[Ki] != valueGains[Ki])
+	if (valueGains[KI] != _valueGains[KI])
 	{
-		if (valueGains[Ki] != 0.0)	_ctrlIntegral[val] *= _valueGains[Ki] / valueGains[Ki];
-		else						_ctrlIntegral[val] = 0.0;
+		if (_valueGains[KI] != 0.0)	ctrlIntegral[VAL] *= valueGains[KI] / _valueGains[KI];
+		else						ctrlIntegral[VAL]  = 0.0;
 	}
 
 	// Do the same for rate integral
-	if (_rateGains[Ki] != rateGains[Ki])
+	if (rateGains[KI] != _rateGains[KI])
 	{
-		if (rateGains[Ki] != 0.0) 	_ctrlIntegral[rate] *= _rateGains[Ki] / rateGains[Ki];
-		else						_ctrlIntegral[rate] = 0.0;
+		if (_rateGains[KI] != 0.0) 	ctrlIntegral[RATE] *= rateGains[KI] / _rateGains[KI];
+		else						ctrlIntegral[RATE]  = 0.0;
 	}
 
 	for (uint8_t i = 0; i < 3; ++i) // assign new gains
 	{
-		_valueGains[i] = valueGains[i];
-		_rateGains[i] = rateGains[i];
+		valueGains[i] = _valueGains[i];
+		rateGains[i]  = _rateGains[i];
 	}
 }
 
@@ -161,13 +158,13 @@ void Dof::setGains(float valueGains[3], float rateGains[3])
 
     \ingroup dof_t_methods
 */
-void Dof::initLimits(const float stateBound, const float rateSetLimit,
-		  	  	  	   const float UvalUpLimit, const float UvalLwLimit)
+void Dof::initLimits(const float _stateBound, const float _rateSetLimit,
+		  	  	  	 const float _UvalUpLimit, const float _UvalLwLimit)
 {
-	_stateBound = stateBound;
-	_rateSetLimit = rateSetLimit;
-	_UvalUpLimit = UvalUpLimit;
-	_UvalLwLimit = UvalLwLimit;
+	stateBound   = _stateBound;
+	rateSetLimit = _rateSetLimit;
+	UvalUpLimit  = _UvalUpLimit;
+	UvalLwLimit  = _UvalLwLimit;
 }
 
 /** Determines internal function of the control loop by enabling or disabling
@@ -178,23 +175,11 @@ void Dof::initLimits(const float stateBound, const float rateSetLimit,
 
     \ingroup dof_t_methods
 */
-void Dof::initFlags(const uint8_t flags)
+void Dof::initFlags(const uint8_t _flags)
 {
-	_flags = flags;
+	flags = _flags;
 }
 
-
-/**	Initializes the lowpass coefficients for filtering discrete derivative
- 	calculations.
-
- 	\param dof				pointer to calling structure
- 	\param lowpass_coeff[]	array of lowpass coefficients [x, x_dot, x_ddot]
-
- */
-void Dof::initLowpass(const float lowpassCoeff[3])
-{
-    for (uint8_t i = 0; i < 3; ++i) _lowpassCoeff[i] = lowpassCoeff[i];
-}
 
 /** Stores the input into the structure's internal state. If there are limits on
     the state, this will bound it to the proper values (wraparound style not
@@ -211,28 +196,27 @@ void Dof::initLowpass(const float lowpassCoeff[3])
 
     \ingroup dof_t_methods
 */
-void Dof::setState(const float x, const float DxDt, const float D2xDt2,
-					 const float t)
+void Dof::setState(const float x, const float DxDt, const float D2xDt2, const float t)
 {
 	for (uint8_t i = 0; i < 4; ++i) prevState[i] = state[i];
 
 	// set new state
-	state[val] = x;
-	state[rate] = DxDt;
-	state[accel] = D2xDt2;
-	state[time] = t;
+	state[VAL]   = x;
+	state[RATE]  = DxDt;
+	state[ACCEL] = D2xDt2;
+	state[TIME]  = t;
 
-	if (_stateBound > 0.000001) // small tolerance for float precision
+	if (stateBound > 0.000001) // small tolerance for float precision
 	{
-		while (state[val] >   _stateBound) state[val] -= 2 * _stateBound;
-		while (state[val] <= -_stateBound) state[val] += 2 * _stateBound;
+		while (state[VAL] >   stateBound) state[VAL] -= 2 * stateBound;
+		while (state[VAL] <= -stateBound) state[VAL] += 2 * stateBound;
 		//assert(state[0] <=  _stateBound);
 		//assert(state[0] >= -_stateBound);
 	}
 
 	// calculate discrete derivatives for state if necessary
-	if (_flags & DISC_RATE)  discreteDxDt();
-	if (_flags & DISC_ACCEL) discreteD2xDt2();
+	if (flags & DISC_RATE)  discreteDxDt();
+	if (flags & DISC_ACCEL) discreteD2xDt2();
 }
 
 /** Stores the input into the structure's internal setpoint buffer that is not
@@ -255,18 +239,17 @@ void Dof::setState(const float x, const float DxDt, const float D2xDt2,
 
     \ingroup dof_t_methods
 */
-void Dof::setSetpt(const float x, const float DxDt, const float D2xDt2,
-					 const float t)
+void Dof::setSetpt(const float x, const float DxDt, const float D2xDt2, const float t)
 {
-	setpt[val] = x;
-	setpt[rate] = DxDt;
-	setpt[accel] = D2xDt2;
-	setpt[time] = t;
+	setpt[VAL]   = x;
+	setpt[RATE]  = DxDt;
+	setpt[ACCEL] = D2xDt2;
+	setpt[TIME]  = t;
 
-	if (_stateBound > 0.000001) // small tolerance for float precision
+	if (stateBound > 0.000001) // small tolerance for float precision
 	{
-		while (setpt[val] >  _stateBound) setpt[val] -= 2 * _stateBound;
-		while (setpt[val] < -_stateBound) setpt[val] += 2 * _stateBound;
+		while (setpt[VAL] >  stateBound) setpt[VAL] -= 2 * stateBound;
+		while (setpt[VAL] < -stateBound) setpt[VAL] += 2 * stateBound;
 		//assert(setpt[0] <=  _stateBound);
 		//assert(setpt[0] >= -_stateBound);
 	}
@@ -284,31 +267,20 @@ void Dof::setSetpt(const float x, const float DxDt, const float D2xDt2,
 */
 void Dof::discreteDxDt()
 {
-	static float filterState = 0.0;
-	float dt = state[time] - prevState[time];
+	float dt = state[TIME] - prevState[TIME];
 	if (dt <= 0.001) // don't calculate since time step is too small
 	{
 		return;
 	}
 
-	float diff = state[val] - prevState[val];
-	if (_stateBound > 0.000001) // wraparound correct
+	float diff = state[VAL] - prevState[VAL];
+	if (stateBound > 0.000001) // wraparound correct
 	{
-		if (diff >  _stateBound) diff -= 2 * _stateBound;
-		if (diff < -_stateBound) diff += 2 * _stateBound;
+		if (diff >  stateBound) diff -= 2 * stateBound;
+		if (diff < -stateBound) diff += 2 * stateBound;
 	}
 
-	// Calculate discrete derivative
-	float rawDeriv = diff / dt;
-	// Use lowpass filter on derivative if enabled
-	if ((_lowpassCoeff[1] > 0.0) && (_lowpassCoeff[1] < 1.0))
-	{
-		state[rate] = _lowpassCoeff[1] * rawDeriv
-					+ (1.0 - _lowpassCoeff[1]) * filterState;
-	}
-	else state[rate] = rawDeriv;
-
-	filterState = state[rate];
+	state[RATE] = diff / dt; 	// Calculate discrete derivative
 }
 
 /** Uses the current and previous state value derivatives with the time step to
@@ -326,24 +298,12 @@ void Dof::discreteDxDt()
 */
 void Dof::discreteD2xDt2()
 {
-	static float filterState = 0.0;
-
-	float dt = state[time] - prevState[time];
+	float dt = state[TIME] - prevState[TIME];
 	if (dt <= 0.001)	// don't calculate if dt is too small
 	{
 		return;
 	}
-
-	// Use lowpass filter on derivative if enabled
-	float rawDeriv = (state[rate] - prevState[rate]) / dt;
-	if ((_lowpassCoeff[2] > 0.0) && (_lowpassCoeff[2] < 1.0))
-	{
-		state[accel] = _lowpassCoeff[2] * rawDeriv
-				        + (1.0 - _lowpassCoeff[2]) * filterState;
-	}
-	else state[accel] = rawDeriv;
-
-	filterState = state[accel];
+	state[ACCEL] = (state[RATE] - prevState[RATE]) / dt; // calc disc accel
 }
 
 /** Calculates the time step since the last operation of the control loop by
@@ -361,12 +321,12 @@ void Dof::discreteD2xDt2()
 */
 void Dof::calcCtrlDt()
 {
-	_ctrlPrevErr[time] = _ctrlError[time];
+	ctrlPrevErr[TIME] = ctrlError[TIME];
 
-	if (state[time] >= setpt[time]) _ctrlError[time] = state[time];
-	else _ctrlError[time] = setpt[time];
+	if (state[TIME] >= setpt[TIME]) ctrlError[TIME] = state[TIME];
+	else 							ctrlError[TIME] = setpt[TIME];
 
-	_ctrlDt = _ctrlError[time] - _ctrlPrevErr[time];
+	ctrlDt = ctrlError[TIME] - ctrlPrevErr[TIME];
 }
 
 /** Calculates the control error by taking the difference between the setpoint
@@ -389,42 +349,32 @@ void Dof::calcCtrlDt()
 
     \ingroup dof_t_methods
 */
-void Dof::calcError(const uint8_t idx, const uint8_t integrate)
+void Dof::calcError(const uint8_t idx, const bool integrate)
 {
 	//assert(i < 3);
 
 	// dt is too small
-	if (_ctrlDt <= 0.001)
+	if (ctrlDt <= 0.001)
 	{
 		return;
 	}
 
 	// set previous and current controller errors
-	_ctrlPrevErr[idx] = _ctrlError[idx];
-	_ctrlError[idx] = setpt[idx] - state[idx];
+	ctrlPrevErr[idx] = ctrlError[idx];
+	ctrlError[idx] = setpt[idx] - state[idx];
 
 	// wraparound error for the main value
-	if ((idx == 0) && (_flags & WRAP_AROUND) && (_stateBound > 0.000001))
+	if ((idx == 0) && (flags & WRAP_AROUND) && (stateBound > 0.000001))
 	{
-		if (_ctrlError[idx] >  _stateBound) _ctrlError[idx] -= 2 * _stateBound;
-		if (_ctrlError[idx] < -_stateBound) _ctrlError[idx] += 2 * _stateBound;
+		if (ctrlError[idx] >  stateBound) ctrlError[idx] -= 2 * stateBound;
+		if (ctrlError[idx] < -stateBound) ctrlError[idx] += 2 * stateBound;
 	}
 
 	// Calculate discrete derivative
-	float rawDeriv = (_ctrlError[idx] - _ctrlPrevErr[idx]) / _ctrlDt;
-	// lowpass filter if enabled; otherwise, use raw discrete derivative
-	if ((_lowpassCoeff[idx] > 0.0) && (_lowpassCoeff[idx] < 1.0))
-	{
-		_ctrlDerrDt[idx] = _lowpassCoeff[idx] * rawDeriv
-							+ (1.0 - _lowpassCoeff[idx]) * _ctrlDerrDt[idx];
-	}
-	else _ctrlDerrDt[idx] = rawDeriv;
+	ctrlDerrDt[idx] = (ctrlError[idx] - ctrlPrevErr[idx]) / ctrlDt;
 
 	if (integrate)
-	{
-		_ctrlIntegral[idx] += 0.5 * _ctrlDt
-								* (_ctrlError[idx] + _ctrlPrevErr[idx]);
-	}
+		ctrlIntegral[idx] += 0.5 * ctrlDt * (ctrlError[idx] + ctrlPrevErr[idx]);
 }
 
 /** Calculates the derivative setpoint of the dof by using a standard PID.
@@ -445,25 +395,24 @@ void Dof::calcError(const uint8_t idx, const uint8_t integrate)
 
     \ingroup dof_t_methods
 */
-void Dof::valuePID(const uint8_t useDerrDt)
+void Dof::valuePID(const bool useDerrDt)
 {
 	// calculate PI output of value PI and assign it as the rate setpoint
-	setpt[rate] = (_valueGains[Kp] * _ctrlError[val])
-					+ (_valueGains[Ki] * _ctrlIntegral[val]);
+	setpt[RATE] = (valueGains[KP] * ctrlError[VAL]) + (valueGains[KI] * ctrlIntegral[VAL]);
 
 	// Calculate the D of PID output and add it to the rate setpoint. This is
 	// done in 1 of 2 ways: 1) by discrete derivative if useDerrDt is 1, or
 	// 2) using the filtered rate
-	if (useDerrDt)	setpt[rate] += _valueGains[Kd] * _ctrlDerrDt[val];
-	else 			setpt[rate] += _valueGains[Kd] * -state[rate];
+	if (useDerrDt)	setpt[RATE] += valueGains[KD] * ctrlDerrDt[VAL];
+	else 			setpt[RATE] += valueGains[KD] * -state[RATE];
 
-	if (_rateSetLimit > 0.000001) // saturate at limits
+	if (rateSetLimit > 0.000001) // saturate at limits
 	{
-		if (setpt[rate] >  _rateSetLimit) setpt[rate] =  _rateSetLimit;
-		if (setpt[rate] < -_rateSetLimit) setpt[rate] = -_rateSetLimit;
+		if (setpt[RATE] >  rateSetLimit) setpt[RATE] =  rateSetLimit;
+		if (setpt[RATE] < -rateSetLimit) setpt[RATE] = -rateSetLimit;
 	}
 
-	velocity = setpt[rate]; // update output velocity member var
+	velocity = setpt[RATE]; // update output velocity member var
 }
 
 /** Calculates the Uval of the dof by using a standard PID on the derivative.
@@ -493,22 +442,21 @@ void Dof::valuePID(const uint8_t useDerrDt)
 
     \ingroup dof_t_methods
 */
-void Dof::ratePID(const uint8_t useDerrDt)
+void Dof::ratePID(const bool useDerrDt)
 {
 	// Calculate the PI of PID output for the Uval
-	Uval = inertia * ((_rateGains[Kp] * _ctrlError[rate])
-				 	 	 + (_rateGains[Ki] * _ctrlIntegral[rate]));
+	Uval = inertia * ((rateGains[KP] * ctrlError[RATE]) + (rateGains[KI] * ctrlIntegral[RATE]));
 
 	// Calculate the D of PID output and add it to the rate setpoint. This is
 	// done in 1 of 2 ways: 1) by discrete derivative if useDerrDt is 1, or
 	// 2) using the filtered acceleration
-	if (useDerrDt)	Uval += inertia * (_rateGains[Kd] * _ctrlDerrDt[rate]);
-	else			Uval += inertia * (_rateGains[Kd] * - state[accel]);
+	if (useDerrDt)	Uval += inertia * (rateGains[KD] * ctrlDerrDt[RATE]);
+	else			Uval += inertia * (rateGains[KD] * - state[ACCEL]);
 
-	if (_UvalUpLimit > (_UvalLwLimit + 0.000001)) // saturate at limits
+	if (UvalUpLimit > (UvalLwLimit + 0.000001)) // saturate at limits
 	{
-		if (Uval > _UvalUpLimit) Uval = _UvalUpLimit;
-		if (Uval < _UvalLwLimit) Uval = _UvalLwLimit;
+		if (Uval > UvalUpLimit) Uval = UvalUpLimit;
+		if (Uval < UvalLwLimit) Uval = UvalLwLimit;
 	}
 }
 

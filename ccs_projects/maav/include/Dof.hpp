@@ -25,8 +25,8 @@
 #define WRAP_AROUND		0x4
 
 // Enum for gain indeces in data structures
-enum PIDGainsEnum {Kp, Ki, Kd};
-enum DofStateEnum {val, rate, accel, time};
+enum PIDGainsEnum {KP, KI, KD};
+enum DofStateEnum {VAL, RATE, ACCEL, TIME};
 
 /// Class containing all necessary ctrl vales for a single degree of freedom
 /**
@@ -83,13 +83,12 @@ public:
     float velocity;		  ///< Velocity output of value PID for this DOF
     /// \}
 
-    // Constructor
+    // Constructors
     Dof();
     Dof(const float x, const float DxDt, const float D2xDt2,
     	const float t, const float inertia, const float stateBound,
 		const float rateSetLimit, const float UvalUpLimit,
-		const float UvalLwLimit, const uint8_t flags,
-		const float lowpassCoeff[3]);
+		const float UvalLwLimit, const uint8_t flags);
 
     // Destructor
     ~Dof();
@@ -98,68 +97,64 @@ public:
     /// \{
     /// Initializes dynamic values given the first state
     void initState(const float x, const float DxDt, const float D2xDt2,
-    		   	   	 const float t, const float mass);
+    		   	   const float t, const float mass);
 
     /// Sets the PID gains
     void setGains(float valueGains[3], float rateGains[3]);
 
     /// Initializes the PID output limits
     void initLimits(const float stateBound, const float rateSetLimit,
-    				  const float UvalUpLimit, const float UvalLwLimit);
+    				const float UvalUpLimit, const float UvalLwLimit);
 
     /// Initializes the operational flags
     void initFlags(const uint8_t flags);
 
-    /// Initializes the lowpass coefficients
-    void initLowpass(const float lowpassCoeff[3]);
-    /// \}
 
     /// \name State, setpoint, and error calculation
     /// \{
     /// Sets the internal state buffer
     void setState(const float x, const float DxDt, const float D2xDt2,
-    				const float t);
+    			  const float t);
 
     /// Sets the i		dof_calc_ctrl_dt(&(qc->xyzh[i]));nternal setpt buffer
     void setSetpt(const float x, const float DxDt, const float D2xDt2,
-    				const float t);
+    			  const float t);
     /// \}
 
     /// \name Execute controls
     /// \{
     /// Calculates the rate setpoint from the value PID
-    void valuePID(const uint8_t useDerrDt);
+    void valuePID(const bool useDerrDt);
 
     /// Calculates the U value from the rate PID
-    void ratePID(const uint8_t useDerrDt);
+    void ratePID(const bool useDerrDt);
 
     /// Sets the internal dt from time of last control loop, stores in ctrl_dt
     void calcCtrlDt();
 
     /// Sets the internal ctrl_error, prev_error, ctrl_derr_dt, and ctrl_integral
-    void calcError(const uint8_t idx, const uint8_t integrate);
+    void calcError(const uint8_t idx, const bool integrate);
     /// \}
 
 private:
 	/// \name flags, options, and limits
 	/// \{
-	float 	_stateBound;      	///< positive limit on value state, 0 for none
-	float 	_rateSetLimit;   	///< positive limit on rate setpoint, 0 for none
-	float 	_UvalUpLimit;		///< upper limit on U value, no limit if = to lw
-	float 	_UvalLwLimit;  		///< lower limit on U value, no limit if = to up
-	uint8_t _flags; ///< bit 0 for discrete rate, bit 1 for discrete accel, bit 2 for wraparound
+	float 	stateBound;      	///< positive limit on value state, 0 for none
+	float 	rateSetLimit;   	///< positive limit on rate setpoint, 0 for none
+	float 	UvalUpLimit;		///< upper limit on U value, no limit if = to lw
+	float 	UvalLwLimit;  		///< lower limit on U value, no limit if = to up
+	uint8_t flags; 				///< bit 0 for discrete rate, bit 1 for discrete accel, bit 2 for wraparound
 	/// \}
 
     /// \name controller values
     /// \{
-    float _valueGains[3];  		///< [Kp, Ki, Kd] for the value -> desired rate PID
-    float _rateGains[3];   		///< [Kp, Ki, Kd] for the rate -> U value PID
-    float _ctrlDt;         		///< time since controller last ran
-    float _ctrlError[4];   		///< setpoint - state, with a timestamp
-    float _ctrlPrevErr[4];		///< previous error values
-    float _ctrlDerrDt[3];  		///< discrete derivative of the error [x, dx, d2x]
-    float _ctrlIntegral[3];		///< integral of setpoint - state [x, dx, d2x]
-    float _lowpassCoeff[3]; 	///< low pass filter coeffiicients on error deriv
+    float valueGains[3];  		///< [Kp, Ki, Kd] for the value -> desired rate PID
+    float rateGains[3];   		///< [Kp, Ki, Kd] for the rate -> U value PID
+    float ctrlDt;         		///< time since controller last ran
+    float ctrlError[4];   		///< setpoint - state, with a timestamp
+    float ctrlPrevErr[4];		///< previous error values
+    float ctrlDerrDt[3];  		///< discrete derivative of the error [x, dx, d2x]
+    float ctrlIntegral[3];		///< integral of setpoint - state [x, dx, d2x]
     /// \}
 
     /// Calculates the discrete derivative of the state value (to get rate)

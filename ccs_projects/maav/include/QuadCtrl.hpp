@@ -12,9 +12,6 @@
  *      Author: Sajan Patel, Matt Karashin
  */
 
-#include <stdint.h>
-#include <stdbool.h>
-#include <math.h>
 #include "Dof.hpp"
 
 // Enums for control mode
@@ -41,9 +38,9 @@ public:
 
 	// Constructor with intial arguments
 	QuadCtrl(float valueGains[4][3], float rateGains[4][3],
-			  float stateBounds[4], float velCaps[4], float rpCaps[2],
-			  float UvalPosThresh[4], float UvalNegThresh[4],
-			  uint8_t flags[4], ctrlMode modeInit, float massInit);
+			 float stateBounds[4], float velCaps[4], float rpCaps[2],
+			 float UvalPosThresh[4], float UvalNegThresh[4],
+			 uint8_t flags[4], ctrlMode modeInit, float massInit);
 
 	// Destructor
 	~QuadCtrl() {}
@@ -61,14 +58,14 @@ public:
 	void calcDJIValues();
 
 private:
-	float _rateLimits[4]; // max rate limits for X, Y, Z, and Yaw
-	float _rpLimits[2];   // max roll and pitch limits
+	float rateLimits[4]; // max rate limits for X, Y, Z, and Yaw
+	float rpLimits[2];   // max roll and pitch limits
 	// pre-calculated trig values for YAW for one execution loop
 	// (so we don't have to recalculate across many different functions
 	// that are executed per iteration of the control loop)
-	float _preYawSin;
-	float _preYawCos;
-	Dof _xyzh[4]; // DOF classes for
+	float preYawSin;
+	float preYawCos;
+	Dof xyzh[4]; // DOF classes for
 
 	// private member functions
 	// Executes position->velocity PID control and related functions
