@@ -13,11 +13,6 @@
 
     \see dof.c
 */
-//#include <stdio.h>
-#include <stdint.h>
-//#include <stdbool.h>
-#include <math.h>
-//#include <stdlib.h>
 
 // Defines for bitfields
 #define DISC_RATE 		0x1

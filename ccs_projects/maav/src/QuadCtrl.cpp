@@ -9,9 +9,7 @@
  *      Author: Sajan Patel, Matt Karashin
  */
 #include <stdint.h>
-#include <stdbool.h>
 #include <math.h>
-#include "Dof.hpp"
 #include "QuadCtrl.hpp"
 
 // define PI just in case
@@ -57,16 +55,16 @@ QuadCtrl::QuadCtrl()
  	float UvalNegThresh[4]	= {-100.0, -100.0, -150.0, -1.0};
 
  	// Hardcode intertial properties, mode, and limits
-	mode = RC_CTRL;
-	mass = 1.0;
+	mode 			= RC_CTRL;
+	mass 			= 1.0;
 	rpLimits[ROLL]  = 10.0;
 	rpLimits[PITCH] = 10.0;
-	preYawSin = 0.0;
-	preYawCos = 1.0;
-	djiRoll   = 0.0;
-	djiPitch  = 0.0;
-	djiYawDot = 0.0;
-	djiForceZ = 0.0;
+	preYawSin 		= 0.0;
+	preYawCos 		= 1.0;
+	djiRoll   		= 0.0;
+	djiPitch  		= 0.0;
+	djiYawDot 		= 0.0;
+	djiForceZ 		= 0.0;
 
 	for (uint8_t i = 0; i < 4; ++i) // loop through and initialize dofs
 	{
@@ -81,16 +79,16 @@ QuadCtrl::QuadCtrl(float valueGains[4][3], float rateGains[4][3],
 					 float UvalPosThresh[4], float UvalNegThresh[4],
 					 uint8_t flags[4], ctrlMode modeInit, float massInit)
 {
-	mode = modeInit;
-	mass = massInit;
+	mode 			= modeInit;
+	mass 			= massInit;
 	rpLimits[ROLL]  = rpCaps[ROLL];
 	rpLimits[PITCH] = rpCaps[PITCH];
-	preYawSin = 0.0;
-	preYawCos = 1.0;
-	djiRoll   = 0.0;
-	djiPitch  = 0.0;
-	djiYawDot = 0.0;
-	djiForceZ = 0.0;
+	preYawSin 		= 0.0;
+	preYawCos 		= 1.0;
+	djiRoll   		= 0.0;
+	djiPitch  		= 0.0;
+	djiYawDot 		= 0.0;
+	djiForceZ 		= 0.0;
 
 	for (uint8_t i = 0; i < 4; ++i) // loop through and initialize dofs
 	{
@@ -117,7 +115,7 @@ QuadCtrl::QuadCtrl(float valueGains[4][3], float rateGains[4][3],
  * 			enter a 0 in their place.
  * \post	PID control can be executed
  */
-void QuadCtrl::setQuadState(float state[], float t)
+void QuadCtrl::setQuadState(float state[4], float t)
 {
 	for (uint8_t i = 0; i < 4; ++i) xyzh[i].setState(state[i], state[i+4], 0, t);
 

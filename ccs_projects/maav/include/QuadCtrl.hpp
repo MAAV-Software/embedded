@@ -46,10 +46,10 @@ public:
 	~QuadCtrl() {}
 
 	// Assigns state feedback to the individual DOF structs within quad_ctrl
-	void setQuadState(float state[], float t);
+	void setQuadState(float* state, float t);
 
 	// Assigns setpoints based on the controller mode
-	void setQuadSetpt(float setpt[], float t);
+	void setQuadSetpt(float* setpt, float t);
 
 	// Executes all PID control for all DOFs in qc based on ctrl_mode
 	void runPID();
@@ -58,7 +58,6 @@ public:
 	void calcDJIValues();
 
 private:
-	float rateLimits[4]; // max rate limits for X, Y, Z, and Yaw
 	float rpLimits[2];   // max roll and pitch limits
 	// pre-calculated trig values for YAW for one execution loop
 	// (so we don't have to recalculate across many different functions

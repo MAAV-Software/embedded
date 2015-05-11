@@ -10,15 +10,9 @@
 
     \see dof.h
 */
-
-#include <Dof.hpp>
-#include <cassert>
-#include <cstdio>
-#include <cstdlib>
-#include <cmath>
 #include <stdint.h>
-#include <stdbool.h>
-
+#include <math.h>
+#include <Dof.hpp>
 
 /** Constructor for Dof class ***/
 Dof::Dof(const float x, const float DxDt, const float D2xDt2,
@@ -40,12 +34,8 @@ Dof::Dof()
 	rateSetLimit = 0;   	///< positive limit on rate setpoint, 0 for none
 	UvalUpLimit = 0;		///< upper limit on U value, no limit if = to lw
 	UvalLwLimit = 0;  		///< lower limit on U value, no limit if = to up
-	flags = 0; ///< bit 0 for discrete rate, bit 1 for discrete accel, bit 2 for wraparound
-	/// \}
-
+	flags = 0;
 	ctrlDt = 0;         		///< time since controller last ran
-    /// \name controller values
-    /// \{
 	for (uint8_t i = 0; i < 3; ++i)
 	{
 		valueGains[i] = 0;  		///< [Kp, Ki, Kd] for the value -> desired rate PID
@@ -79,7 +69,7 @@ Dof::~Dof() {}
     \ingroup dof_t_methods
 */
 void Dof::initState(const float x, const float DxDt, const float D2xDt2,
-  	   	 	 	 	   const float t, const float mass)
+  	   	 	 	 	const float t, const float mass)
 {
 	for (uint8_t i = 0; i < 4; ++i) // init state vals to 0
 	{
@@ -210,8 +200,6 @@ void Dof::setState(const float x, const float DxDt, const float D2xDt2, const fl
 	{
 		while (state[VAL] >   stateBound) state[VAL] -= 2 * stateBound;
 		while (state[VAL] <= -stateBound) state[VAL] += 2 * stateBound;
-		//assert(state[0] <=  _stateBound);
-		//assert(state[0] >= -_stateBound);
 	}
 
 	// calculate discrete derivatives for state if necessary
@@ -250,8 +238,6 @@ void Dof::setSetpt(const float x, const float DxDt, const float D2xDt2, const fl
 	{
 		while (setpt[VAL] >  stateBound) setpt[VAL] -= 2 * stateBound;
 		while (setpt[VAL] < -stateBound) setpt[VAL] += 2 * stateBound;
-		//assert(setpt[0] <=  _stateBound);
-		//assert(setpt[0] >= -_stateBound);
 	}
 }
 
@@ -351,8 +337,6 @@ void Dof::calcCtrlDt()
 */
 void Dof::calcError(const uint8_t idx, const bool integrate)
 {
-	//assert(i < 3);
-
 	// dt is too small
 	if (ctrlDt <= 0.001)
 	{
