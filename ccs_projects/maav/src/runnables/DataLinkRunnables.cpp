@@ -9,6 +9,7 @@
  *      Author: Sasawat
  */
 
+/*
 void ProcessReceivedDataRunnable::run() {
 	data_link_process_incoming();
 }
@@ -41,3 +42,4 @@ TuningMessageHandlerRunnable::TuningMessageHandlerRunnable(tuning_t *tuning, qua
 	: _qc(quad), _message(tuning), _last(0) { }
 
 TuningMessageHandlerRunnable::~TuningMessageHandlerRunnable() {}
+*/

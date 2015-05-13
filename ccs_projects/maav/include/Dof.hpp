@@ -13,6 +13,7 @@
 
     \see dof.c
 */
+#include <stdint.h>
 
 // Defines for bitfields
 #define DISC_RATE 		0x1
@@ -95,7 +96,7 @@ public:
     		   	   const float t, const float mass);
 
     /// Sets the PID gains
-    void setGains(float valueGains[3], float rateGains[3]);
+    void setGains(const float valueGains[3], const float rateGains[3]);
 
     /// Initializes the PID output limits
     void initLimits(const float stateBound, const float rateSetLimit,

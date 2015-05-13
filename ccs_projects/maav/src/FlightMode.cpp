@@ -1,7 +1,6 @@
-#include "flight_mode.h"
-#include "servoIn.h"
-//#include "general.h"
-#include "rc.h"
+#include "FlightMode.hpp"
+#include "rc.hpp"
+#include "servoIn.hpp"
 #include "inc/hw_i2c.h"
 #include "inc/hw_memmap.h"
 #include "inc/hw_types.h"
@@ -14,13 +13,13 @@
 #include "driverlib/sysctl.h"
 
 
-FLIGHT_MODE flightModeGet()
+FlightMode flightModeGet()
 {
-	if (pulseUpperThird(servoIn_getPulse(GPIO_PORTA_BASE,6))) // was RC_CHAN5
+	if (pulseUpperThird(servoIn_getPulse(RC_CHAN5))) // was RC_CHAN5
 	{
 		return MANUAL;
 	}
-	if (pulseUpperThird(servoIn_getPulse(GPIO_PORTE_BASE,1))) // was KILL_CHAN5
+	if (pulseUpperThird(servoIn_getPulse(KILL_CHAN5))) // was KILL_CHAN5
 	{
 		return ASSISTED;
 	}

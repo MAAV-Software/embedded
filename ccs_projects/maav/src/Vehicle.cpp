@@ -1,8 +1,9 @@
 #include <stdint.h>
 #include <stdlib.h>
-#include <cmath>
+#include <math.h>
 #include "Vehicle.hpp"
 #include "Dof.hpp"
+#include "FlightMode.hpp"
 
 // define PI just in case
 #ifndef M_PI
@@ -67,10 +68,11 @@ Vehicle::Vehicle()
 }
 
 
-Vehicle::Vehicle(float valueGains[4][3], float rateGains[4][3],
-		  	  	 float stateBounds[4], float velCaps[4], float rpCaps[2],
-				 float UvalPosThresh[4], float UvalNegThresh[4],
-				 uint8_t flags[4], FlightMode modeInit, float massInit)
+Vehicle::Vehicle(const float valueGains[4][3], const float rateGains[4][3],
+				 const float stateBounds[4], const float velCaps[4],
+				 const float rpCaps[2], const float UvalPosThresh[4],
+				 const float UvalNegThresh[4], const uint8_t flags[4],
+				 const FlightMode modeInit, const float massInit)
 {
 	mode 			= modeInit;
 	mass 			= massInit;
@@ -93,13 +95,13 @@ Vehicle::Vehicle(float valueGains[4][3], float rateGains[4][3],
 
 Vehicle::~Vehicle() {}
 
-void Vehicle::setSetpt(float setpt[], float t)
+void Vehicle::setSetpt(const float setpt[], const float t)
 {
 	for (uint8_t i = 0; i < 4; ++i) xyzh[i].setSetpt(setpt[i], setpt[i+4], 0, t);
 }
 
 
-void Vehicle::setGains(float valueGains[4][3], float rateGains[4][3])
+void Vehicle::setGains(const float valueGains[4][3], const float rateGains[4][3])
 {
 	for (uint8_t i = 0; i < 4; ++i)
 	{
@@ -164,11 +166,11 @@ void Vehicle::calcDJIValues()
 
 	// calculate ||F|| = sqrt(Fx^2 + Fy^2 + Fz^2)
 	for (uint8_t i = 0; i < 3; ++i) forceMag += forceVy[i] * forceVy[i];
-	forceMag = sqrtf(forceMag);
+	forceMag = sqrt(forceMag);
 
 	// Calculate roll and pitch
-	angle[ROLL]  = -asinf(forceVy[Y_AXIS] / forceMag);
-	angle[PITCH] =  asinf(forceVy[X_AXIS] / sqrtf((forceMag * forceMag)
+	angle[ROLL]  = -asin(forceVy[Y_AXIS] / forceMag);
+	angle[PITCH] =  asin(forceVy[X_AXIS] / sqrt((forceMag * forceMag)
 	            		   - (forceVy[Y_AXIS] * forceVy[Y_AXIS])));
 
 	// cap roll and pitch
@@ -182,8 +184,43 @@ void Vehicle::calcDJIValues()
 	djiPitch  = angle[PITCH];
 	djiForceZ = xyzh[Z_AXIS].Uval;
 
-	if (mode == AUTON_CTRL)	djiYawDot = xyzh[YAW].velocity;
+	if (mode == AUTONOMOUS)	djiYawDot = xyzh[YAW].velocity;
 	else 					djiYawDot = xyzh[YAW].setpt[RATE];
+}
+
+void Vehicle::setFlightMode(const FlightMode modeIn)
+{
+	mode = modeIn;
+}
+
+FlightMode Vehicle::getFlightMode() const
+{
+	return mode;
+}
+
+float Vehicle::getDjiRoll() const
+{
+	return djiRoll;
+}
+
+float Vehicle::getDjiPitch() const
+{
+	return djiPitch;
+}
+
+float Vehicle::getDjiYawDot() const
+{
+	return djiYawDot;
+}
+
+float Vehicle::getDjiForceZ() const
+{
+	return djiForceZ;
+}
+
+const Dof* Vehicle::getDofs() const
+{
+	return xyzh;
 }
 
 // End of File

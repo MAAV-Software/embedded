@@ -7,10 +7,10 @@
 class Px4Runnable : public Runnable
 {
 private:
-	VehicleState* _state;
+	Vehicle* vehicle;
 
 public:
-	Px4Runnable(VehicleState* state);
+	Px4Runnable(Vehicle* v);
 
 	~Px4Runnable();
 

@@ -5,10 +5,10 @@
  *      Author: Leonard
  */
 
+#include "../include/servoIn.hpp"
+
 #include <stdint.h>
 #include <stdbool.h>
-
-#include "servoIn.h"
 
 #include "inc/hw_memmap.h"
 

@@ -111,7 +111,7 @@ void Dof::initState(const float x, const float DxDt, const float D2xDt2,
 
     \ingroup dof_t_methods
 */
-void Dof::setGains(float _valueGains[3], float _rateGains[3])
+void Dof::setGains(const float _valueGains[3], const float _rateGains[3])
 {
 	// Reset integral if integral gain changes
 	if (valueGains[KI] != _valueGains[KI])

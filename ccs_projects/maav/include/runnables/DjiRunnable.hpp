@@ -6,9 +6,9 @@
 
 class DjiRunnable : public Runnable {
 private:
-	VehicleState* _state;
+	Vehicle* vehicle;
 public:
-	DjiRunnable(VehicleState* state);
+	DjiRunnable(Vehicle* v);
 
 	~DjiRunnable();
 

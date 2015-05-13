@@ -1,14 +1,23 @@
 #include "runnables/DjiRunnable.hpp"
 #include "PPM.h"
-#include "servoIn.h"
+#include "servoIn.hpp"
+#include "rc.hpp"
 
-DjiRunnable::DjiRunnable(VehicleState* state)
-	: _state(state) { }
+#include "inc/hw_memmap.h"
+#include "inc/hw_types.h"
+#include "inc/tm4c123gh6pm.h"
+#include "driverlib/gpio.h"
+#include "driverlib/pin_map.h"
+#include "driverlib/sysctl.h"
+#include "driverlib/pin_map.h"
+
+DjiRunnable::DjiRunnable(Vehicle* v)
+	: vehicle(v) { }
 
 DjiRunnable::~DjiRunnable() { }
 
 void DjiRunnable::run() {
-	switch (_state->mode) {
+	switch (vehicle->getFlightMode()) {
 		case AUTONOMOUS:
 		case ASSISTED:
 //			PPM_setPulse(0, servoIn_getPulse(RC_CHAN1));

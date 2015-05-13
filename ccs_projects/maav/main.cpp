@@ -9,6 +9,7 @@
  *        Date: Feb 24, 2015
  *
  */
+#include <servoIn.hpp>
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
@@ -32,16 +33,17 @@
 
 #include "PPM.h"
 //#include "px4_i2c.h"
-#include "servoIn.h"
 #include "time_util.h"
+
 //#include "px4_kalman.h"
 //#include "Dof.hpp"
 //#include "QuadCtrl.hpp"
 //#include "switch.h"
-//#include "rc.h"
+#include "rc.hpp"
 //#include "led.h"
 //#include "flight_mode.h"
 #include "Loop.hpp"
+#include "Vehicle.hpp"
 //#include "tests/test_definitions.h"
 #include "runnables/DjiRunnable.hpp"
 #include "runnables/FlightModeRunnable.hpp"
@@ -76,9 +78,9 @@ int main(void)
 	servoIn_init(SYSCTL_PERIPH_TIMER4, TIMER4_BASE); // Chose timer4 until encapsulated
 	servoIn_attachPin();
 
-	VehicleState state;
-	FlightModeRunnable flightModeRunnable(&state);
-	DjiRunnable djiRunnable(&state);
+	Vehicle vehicle;
+	FlightModeRunnable flightModeRunnable(&vehicle);
+	DjiRunnable djiRunnable(&vehicle);
 	Loop mainLoop;
 	mainLoop.addEvent(&flightModeRunnable, 10);
 	mainLoop.addEvent(&djiRunnable, 10);

@@ -5,8 +5,10 @@
  *      Author: Jonathan Kurzer
  */
 
-#ifndef SERVOIN_H_
-#define SERVOIN_H_
+#ifndef SERVOIN_HPP_
+#define SERVOIN_HPP_
+
+#include <stdint.h>
 
 void servoIn_init(uint32_t ui32Peripheral, uint32_t ui32Base);
 void servoIn_attachPin(void);

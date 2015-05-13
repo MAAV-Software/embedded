@@ -1,5 +1,5 @@
-#include "rc.h"
-
+#include "rc.hpp"
+#include "time_util.h"
 
 // Returns true if the pulse is longer than 1.66ms
 bool pulseUpperThird(volatile uint32_t pulseWidth)

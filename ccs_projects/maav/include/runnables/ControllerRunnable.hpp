@@ -6,10 +6,10 @@
 
 class ControllerRunnable : public Runnable {
 private:
-	VehicleState* _state;
+	Vehicle* vehicle;
 
 public:
-	ControllerRunnable(VehicleState* state);
+	ControllerRunnable(Vehicle* v);
 
 	~ControllerRunnable();
 
