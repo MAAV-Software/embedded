@@ -1,7 +1,7 @@
 #ifndef FLIGHTMODERUNNABLE_HPP_
 #define FLIGHTMODERUNNABLE_HPP_
 
-#include "VehicleState.hpp"
+#include "../Vehicle.hpp"
 #include "runnables/Runnable.hpp"
 
 class FlightModeRunnable : public Runnable {

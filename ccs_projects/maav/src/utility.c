@@ -11,20 +11,15 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-#include "inc/hw_i2c.h"
 #include "inc/hw_memmap.h"
 #include "inc/hw_types.h"
 #include "inc/tm4c123gh6pm.h"
 
 #include "driverlib/gpio.h"
 #include "driverlib/fpu.h"
-#include "driverlib/i2c.h"
 #include "driverlib/pin_map.h"
 #include "driverlib/sysctl.h"
 #include "driverlib/uart.h"
-#include "driverlib/eeprom.h"
-#include "driverlib/uart.h"
-#include "driverlib/pin_map.h"
 
 #include "utils/uartstdio.h"
 
@@ -34,7 +29,7 @@
 //#include "QuadCtrl.hpp"
 #include "px4_i2c.h"
 #include "utility.h"
-#include "messaging/data_link.h"
+//#include "messaging/data_link.h"
 #include "time_util.h"
 
 /***************** Utility Functions for RC Controller ************************/

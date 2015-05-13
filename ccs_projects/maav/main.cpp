@@ -55,6 +55,9 @@ bool px4_can_transmit = true;
 ////////////////////////////// MAIN FUNCTION ///////////////////////////////////
 int main(void)
 {
+	// TODO: PUT THESE CONFIGURATIONS FOR CLOCK AND GPIO INTO APPROPRIATE
+	// CONFIG FUNCTIONS!!!! EVERYONE IS FORGETTING TO TURN THE DAMN FPU ON!!!
+	// IT'S THE *ONLY* REASON WE'RE USING THE TIVA IN THE FIRST PLACE!!!!
 	FPULazyStackingEnable();
 	FPUEnable();
 

@@ -83,7 +83,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="src/dof.c|src/runnables/DataLinkRunnables.cpp|tm4c123gh6pm_startup_ccs_gcc.c|tm4c123gh6pm.lds|src/quad_ctrl.c|tests" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="src/QuadCtrl.cpp|src/dof.c|src/runnables/DataLinkRunnables.cpp|tm4c123gh6pm_startup_ccs_gcc.c|tm4c123gh6pm.lds|src/quad_ctrl.c|tests" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>

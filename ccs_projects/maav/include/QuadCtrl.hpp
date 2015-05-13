@@ -32,7 +32,8 @@ public:
 	float djiYawDot;			// Yaw Rate (DJI input R)
 	float djiForceZ;			// Z Force/Thrust (DJI input T)
 
-	//public member functions
+
+
 	// Default Constructor
 	QuadCtrl();
 

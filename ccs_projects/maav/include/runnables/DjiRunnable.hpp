@@ -1,8 +1,8 @@
 #ifndef DJIRUNNABLE_HPP_
 #define DJIRUNNABLE_HPP_
 
+#include "../Vehicle.hpp"
 #include "runnables/Runnable.hpp"
-#include "VehicleState.hpp"
 
 class DjiRunnable : public Runnable {
 private:

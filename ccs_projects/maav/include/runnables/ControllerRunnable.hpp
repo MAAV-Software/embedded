@@ -1,8 +1,8 @@
 #ifndef CONTROLLERRUNNABLE_HPP_
 #define CONTROLLERRUNNABLE_HPP_
 
+#include "../Vehicle.hpp"
 #include "Runnable.hpp"
-#include "VehicleState.hpp"
 
 class ControllerRunnable : public Runnable {
 private:
