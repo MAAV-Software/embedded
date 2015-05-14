@@ -29,21 +29,20 @@ Dof::Dof()
 {
 	inertia = 0;
 	Uval = 0;
-	velocity = 0;
 	stateBound = 0;
 	rateSetLimit = 0;   	///< positive limit on rate setpoint, 0 for none
 	UvalUpLimit = 0;		///< upper limit on U value, no limit if = to lw
 	UvalLwLimit = 0;  		///< lower limit on U value, no limit if = to up
 	flags = 0;
 	ctrlDt = 0;         		///< time since controller last ran
-	for (uint8_t i = 0; i < 3; ++i)
+	for (uint8_t i = 0; i < NUM_GAINS; ++i)
 	{
 		valueGains[i] = 0;  		///< [Kp, Ki, Kd] for the value -> desired rate PID
 		rateGains[i] = 0;   		///< [Kp, Ki, Kd] for the rate -> U value PID
 		ctrlDerrDt[i] = 0;  		///< discrete derivative of the error [x, dx, d2x]
 		ctrlIntegral[i] = 0;		///< integral of setpoint - state [x, dx, d2x]
 	}
-	for (uint8_t i = 0; i < 4; ++i)
+	for (uint8_t i = 0; i < NUM_STATES; ++i)
 	{
 		ctrlError[i] = 0;   		///< setpoint - state, with a timestamp
 		ctrlPrevErr[i] = 0;		///< previous error values
@@ -71,7 +70,7 @@ Dof::~Dof() {}
 void Dof::initState(const float x, const float DxDt, const float D2xDt2,
   	   	 	 	 	const float t, const float mass)
 {
-	for (uint8_t i = 0; i < 4; ++i) // init state vals to 0
+	for (uint8_t i = 0; i < NUM_STATES; ++i) // init state vals to 0
 	{
 		state[i]       = 0.0;
 		setpt[i]       = 0.0;
@@ -79,7 +78,7 @@ void Dof::initState(const float x, const float DxDt, const float D2xDt2,
 		ctrlError[i]   = 0.0;
 	}
 
-	for (uint8_t i = 0; i < 3; ++i)	// init error deriv and error integral to 0
+	for (uint8_t i = 0; i < NUM_GAINS; ++i)	// init error deriv and error integral to 0
 	{
 		ctrlDerrDt[i]   = 0.0;
 		ctrlIntegral[i] = 0.0;
@@ -92,7 +91,6 @@ void Dof::initState(const float x, const float DxDt, const float D2xDt2,
 	state[TIME]     = t;
 	ctrlError[TIME] = t;
 	inertia         = mass;
-	velocity        = 0.0; // init veloctiy to 0
 	Uval            = 0.0;	// init force to 0
 }
 
@@ -127,7 +125,7 @@ void Dof::setGains(const float _valueGains[3], const float _rateGains[3])
 		else						ctrlIntegral[RATE]  = 0.0;
 	}
 
-	for (uint8_t i = 0; i < 3; ++i) // assign new gains
+	for (uint8_t i = 0; i < NUM_GAINS; ++i) // assign new gains
 	{
 		valueGains[i] = _valueGains[i];
 		rateGains[i]  = _rateGains[i];
@@ -188,7 +186,7 @@ void Dof::initFlags(const uint8_t _flags)
 */
 void Dof::setState(const float x, const float DxDt, const float D2xDt2, const float t)
 {
-	for (uint8_t i = 0; i < 4; ++i) prevState[i] = state[i];
+	for (uint8_t i = 0; i < NUM_STATES; ++i) prevState[i] = state[i];
 
 	// set new state
 	state[VAL]   = x;
@@ -335,7 +333,7 @@ void Dof::calcCtrlDt()
 
     \ingroup dof_t_methods
 */
-void Dof::calcError(const uint8_t idx, const bool integrate)
+void Dof::calcError(const unsigned int idx, const bool integrate)
 {
 	// dt is too small
 	if (ctrlDt <= 0.001)
@@ -395,8 +393,6 @@ void Dof::valuePID(const bool useDerrDt)
 		if (setpt[RATE] >  rateSetLimit) setpt[RATE] =  rateSetLimit;
 		if (setpt[RATE] < -rateSetLimit) setpt[RATE] = -rateSetLimit;
 	}
-
-	velocity = setpt[RATE]; // update output velocity member var
 }
 
 /** Calculates the Uval of the dof by using a standard PID on the derivative.
@@ -443,5 +439,28 @@ void Dof::ratePID(const bool useDerrDt)
 		if (Uval < UvalLwLimit) Uval = UvalLwLimit;
 	}
 }
+
+float Dof::getUval() const
+{
+	return Uval;
+}
+
+float Dof::getVelocity() const
+{
+	return setpt[RATE];
+}
+
+
+const float* Dof::getState() const
+{
+	return state;
+}
+
+const float* Dof::getSetpoint() const
+{
+	return setpt;
+}
+
+
 
 // End of File

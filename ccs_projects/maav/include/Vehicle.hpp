@@ -4,12 +4,14 @@
 #include "Dof.hpp"
 #include "FlightMode.hpp"
 
-// Enums for array indecies
-enum xyzhEnum {X_AXIS, Y_AXIS, Z_AXIS, YAW};
-enum rpEnum {ROLL, PITCH};
 
-// enum for Flight Mode
-//typedef enum { AUTONOMOUS, MANUAL, ASSISTED } FlightMode;
+// Defines for array sizes
+#define NUM_DOFS	4
+#define NUM_ANGLES	2
+
+// Enums for array indecies
+enum xyzhEnum {X_AXIS = 0, Y_AXIS, Z_AXIS, YAW};
+enum rpEnum {ROLL = 0, PITCH};
 
 class Vehicle
 {
@@ -17,11 +19,16 @@ public:
 	// Constructors
 	Vehicle();
 
-	Vehicle(const float valueGains[4][3], const float rateGains[4][3],
-			const float stateBounds[4], const float velCaps[4],
-			const float rpCaps[2], const float UvalPosThresh[4],
-			const float UvalNegThresh[4], const uint8_t flags[4],
-			const FlightMode modeInit, const float massInit);
+	Vehicle(const float valueGains[NUM_DOFS][NUM_GAINS],
+			const float rateGains[NUM_DOFS][NUM_GAINS],
+			const float stateBounds[NUM_DOFS],
+			const float velCaps[NUM_DOFS],
+			const float rpCaps[NUM_ANGLES],
+			const float UvalPosThresh[NUM_DOFS],
+			const float UvalNegThresh[NUM_DOFS],
+			const uint8_t flags[NUM_DOFS],
+			const FlightMode modeInit,
+			const float massInit);
 
 	// Destructor
 	~Vehicle();
@@ -33,7 +40,8 @@ public:
 	void setSetpt(const float setpt[], const float t);
 
 	// Assigns gains to the DOFs within this Vehicle
-	void setGains(const float gains[4][3], const float rateGains[4][3]);
+	void setGains(const float gains[NUM_DOFS][NUM_GAINS],
+				  const float rateGains[NUM_DOFS][NUM_GAINS]);
 
 	// Executes all PID control for all DOFs in qc based on ctrl_mode
 	void runPID();
@@ -74,7 +82,7 @@ private:
 	FlightMode mode;
 
 	/// Controller Specific Members
-	Dof xyzh[4]; 		// DOF classes for xyzh
+	Dof xyzh[NUM_DOFS]; 		// DOF classes for xyzh
 
 	float djiRoll;		// Roll for DJI
 	float djiPitch;		// Pitch for DJI
@@ -83,7 +91,7 @@ private:
 	float mass;			// Mass of the Vehicle
 
 	// private controller variables
-	float rpLimits[2];   // max roll and pitch limit
+	float rpLimits[NUM_ANGLES];   // max roll and pitch limit
 
 	// pre-calculated trig values for YAW for one execution loop
 	// (so we don't have to recalculate across many different functions

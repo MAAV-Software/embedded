@@ -20,9 +20,14 @@
 #define DISC_ACCEL	 	0x2
 #define WRAP_AROUND		0x4
 
+// Defines for max lengths of arrays in this class
+// (I don't want vectors in these classes becuase of memory overhead)
+#define NUM_GAINS		3
+#define NUM_STATES		4
+
 // Enum for gain indeces in data structures
-enum PIDGainsEnum {KP, KI, KD};
-enum DofStateEnum {VAL, RATE, ACCEL, TIME};
+enum PIDGainsEnum {KP = 0, KI, KD};
+enum DofStateEnum {VAL = 0, RATE, ACCEL, TIME};
 
 /// Class containing all necessary ctrl vales for a single degree of freedom
 /**
@@ -69,16 +74,6 @@ enum DofStateEnum {VAL, RATE, ACCEL, TIME};
 */
 class Dof {
 public:
-    /// \name dof state values (all with timestamps)
-    /// \{
-    float state[4];         ///< [x, dx/dt, d^2x/dt^2, t] for this DOF
-    float setpt[4];         ///< [x, dx/dt, d^2x/dt^2, t] desired for this DOF
-    float prevState[4];    ///< [x, dx/dt, d^2x/dt^2, t] of last time step
-    float Uval;           ///< U value output for the DOF
-    float inertia;        ///< Mass or moment of inertia for the DOF
-    float velocity;		  ///< Velocity output of value PID for this DOF
-    /// \}
-
     // Constructors
     Dof();
     Dof(const float x, const float DxDt, const float D2xDt2,
@@ -129,10 +124,25 @@ public:
     void calcCtrlDt();
 
     /// Sets the internal ctrl_error, prev_error, ctrl_derr_dt, and ctrl_integral
-    void calcError(const uint8_t idx, const bool integrate);
+    void calcError(const unsigned int idx, const bool integrate);
     /// \}
 
+    // The following functions return state and setpoint values
+    float getUval() const; // return Uval
+    float getVelocity() const; // returns setpt[RATE] since that's the desired velocity output
+    const float* getState() const;
+    const float* getSetpoint() const;
+
 private:
+    /// \name dof state values (all with timestamps)
+    /// \{
+    float state[NUM_STATES];         ///< [x, dx/dt, d^2x/dt^2, t] for this DOF
+    float prevState[NUM_STATES];    ///< [x, dx/dt, d^2x/dt^2, t] of last time step
+    float setpt[NUM_STATES];         ///< [x, dx/dt, d^2x/dt^2, t] desired for this DOF
+    float inertia;        ///< Mass or moment of inertia for the DOF
+    float Uval;           ///< U value output for the DOF
+    /// \}
+
 	/// \name flags, options, and limits
 	/// \{
 	float 	stateBound;      	///< positive limit on value state, 0 for none
@@ -144,13 +154,13 @@ private:
 
     /// \name controller values
     /// \{
-    float valueGains[3];  		///< [Kp, Ki, Kd] for the value -> desired rate PID
-    float rateGains[3];   		///< [Kp, Ki, Kd] for the rate -> U value PID
+    float valueGains[NUM_GAINS];  		///< [Kp, Ki, Kd] for the value -> desired rate PID
+    float rateGains[NUM_GAINS];   		///< [Kp, Ki, Kd] for the rate -> U value PID
     float ctrlDt;         		///< time since controller last ran
-    float ctrlError[4];   		///< setpoint - state, with a timestamp
-    float ctrlPrevErr[4];		///< previous error values
-    float ctrlDerrDt[3];  		///< discrete derivative of the error [x, dx, d2x]
-    float ctrlIntegral[3];		///< integral of setpoint - state [x, dx, d2x]
+    float ctrlError[NUM_STATES];   		///< setpoint - state, with a timestamp
+    float ctrlPrevErr[NUM_STATES];		///< previous error values
+    float ctrlDerrDt[NUM_STATES - 1];  		///< discrete derivative of the error [x, dx, d2x]
+    float ctrlIntegral[NUM_STATES - 1];		///< integral of setpoint - state [x, dx, d2x]
     /// \}
 
     /// Calculates the discrete derivative of the state value (to get rate)

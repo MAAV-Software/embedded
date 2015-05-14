@@ -15,7 +15,7 @@
 Vehicle::Vehicle()
 {
 	// value and rate PID gains
-	float valueGains[4][3] =
+	float valueGains[NUM_DOFS][NUM_GAINS] =
 	{
 		/* Kp,  Ki,    Kd 		value gains */
 		{1.00, 0.00, 0.00,},	/* x */
@@ -23,7 +23,7 @@ Vehicle::Vehicle()
 		{1.00, 0.00, 0.00,},	/* z */
 		{1.00, 0.00, 0.00,},	/* yaw */
 	};
-	float rateGains[4][3] =
+	float rateGains[NUM_DOFS][NUM_GAINS] =
 	{
 		/* Kp,  Ki,    Kd		rate gains */
 		{1.00, 0.00, 0.00,},	/* x */
@@ -33,7 +33,7 @@ Vehicle::Vehicle()
 	};
 
 	// flags for taking discrete derivatives of state variables
-	uint8_t flags[4] =
+	uint8_t flags[NUM_DOFS] =
 	{
 		DISC_ACCEL,	/* x */
 		DISC_ACCEL,	/* y */
@@ -42,10 +42,10 @@ Vehicle::Vehicle()
 	};
 
 	// index order used by the following: [X, Y, Z, Yaw]
-	float stateBounds[4]	= {0, 0, 0, M_PI};
-	float velCaps[4]		= {1.0, 1.0, 1.0, 1.0};
-	float UvalPosThresh[4]	= {100.0, 100.0, 150.0, 1.0};
-	float UvalNegThresh[4]	= {-100.0, -100.0, -150.0, -1.0};
+	float stateBounds[NUM_DOFS]		= {0, 0, 0, M_PI};
+	float velCaps[NUM_DOFS]			= {1.0, 1.0, 1.0, 1.0};
+	float UvalPosThresh[NUM_DOFS]	= {100.0, 100.0, 150.0, 1.0};
+	float UvalNegThresh[NUM_DOFS]	= {-100.0, -100.0, -150.0, -1.0};
 
 	// Vehicle Members
 	mode            = MANUAL;
@@ -59,7 +59,7 @@ Vehicle::Vehicle()
 	preYawSin       = 0.0;
 	preYawCos       = 0.0;
 
-	for (uint8_t i = 0; i < 4; ++i) // loop through and initialize dofs
+	for (uint8_t i = 0; i < NUM_DOFS; ++i) // loop through and initialize dofs
 	{
 		xyzh[i] = Dof(0, 0, 0, 0, mass, stateBounds[i], velCaps[i],
 					  UvalPosThresh[i], UvalNegThresh[i], flags[i]);
@@ -68,11 +68,16 @@ Vehicle::Vehicle()
 }
 
 
-Vehicle::Vehicle(const float valueGains[4][3], const float rateGains[4][3],
-				 const float stateBounds[4], const float velCaps[4],
-				 const float rpCaps[2], const float UvalPosThresh[4],
-				 const float UvalNegThresh[4], const uint8_t flags[4],
-				 const FlightMode modeInit, const float massInit)
+Vehicle::Vehicle(const float valueGains[NUM_DOFS][NUM_GAINS],
+				 const float rateGains[NUM_DOFS][NUM_GAINS],
+				 const float stateBounds[NUM_DOFS],
+				 const float velCaps[NUM_DOFS],
+				 const float rpCaps[NUM_ANGLES],
+				 const float UvalPosThresh[NUM_DOFS],
+				 const float UvalNegThresh[NUM_DOFS],
+				 const uint8_t flags[NUM_DOFS],
+				 const FlightMode modeInit,
+				 const float massInit)
 {
 	mode 			= modeInit;
 	mass 			= massInit;
@@ -85,7 +90,7 @@ Vehicle::Vehicle(const float valueGains[4][3], const float rateGains[4][3],
 	djiYawDot 		= 0.0;
 	djiForceZ 		= 0.0;
 
-	for (uint8_t i = 0; i < 4; ++i) // loop through and initialize dofs
+	for (uint8_t i = 0; i < NUM_DOFS; ++i) // loop through and initialize dofs
 	{
 		xyzh[i] = Dof(0, 0, 0, 0, mass, stateBounds[i], velCaps[i],
 		     		  UvalPosThresh[i], UvalNegThresh[i], flags[i]);
@@ -97,21 +102,19 @@ Vehicle::~Vehicle() {}
 
 void Vehicle::setSetpt(const float setpt[], const float t)
 {
-	for (uint8_t i = 0; i < 4; ++i) xyzh[i].setSetpt(setpt[i], setpt[i+4], 0, t);
+	for (uint8_t i = 0; i < NUM_DOFS; ++i) xyzh[i].setSetpt(setpt[i], setpt[i+4], 0, t);
 }
 
 
-void Vehicle::setGains(const float valueGains[4][3], const float rateGains[4][3])
+void Vehicle::setGains(const float valueGains[NUM_DOFS][NUM_GAINS],
+					   const float rateGains[NUM_DOFS][NUM_GAINS])
 {
-	for (uint8_t i = 0; i < 4; ++i)
-	{
-		xyzh[i].setGains(valueGains[i], rateGains[i]);
-	}
+	for (uint8_t i = 0; i < NUM_DOFS; ++i) xyzh[i].setGains(valueGains[i], rateGains[i]);
 }
 
 void Vehicle::runPID()
 {
-	for (uint8_t i = 0; i < 4; ++i) xyzh[i].calcCtrlDt();
+	for (uint8_t i = 0; i < NUM_DOFS; ++i) xyzh[i].calcCtrlDt();
 	// get change in time for all DOFs
 
 	runValuePID(); // run position->velocity PID (accounts for ctrl mode)
@@ -149,13 +152,13 @@ void Vehicle::runRatePID()
 
 void Vehicle::calcDJIValues()
 {
-	float forceVe[3];      // vehicle force in the earth frame
-	float forceVy[3];      // vehicle force in the yaw frame
+	float forceVe[3];      // vehicle force in the earth frame (in R^3)
+	float forceVy[3];      // vehicle force in the yaw frame (in R^3)
 	float forceMag = 0;    // magnitude of the vehicle force
-	float angle[2];       // roll and pitch setpoint
+	float angle[NUM_ANGLES];       // roll and pitch setpoint
 
 	// get earth frame vehicle forces
-	for (uint8_t i = 0; i < 3; ++i) forceVe[i] = xyzh[i].Uval;
+	for (uint8_t i = 0; i < 3; ++i) forceVe[i] = xyzh[i].getUval();
 	forceVe[Z_AXIS] += mass * GRAVITY;
 
 	// Convert earth frame forces to body frame, adding trim (which is already
@@ -182,10 +185,8 @@ void Vehicle::calcDJIValues()
 	// assign DJI values
 	djiRoll   = angle[ROLL];
 	djiPitch  = angle[PITCH];
-	djiForceZ = xyzh[Z_AXIS].Uval;
-
-	if (mode == AUTONOMOUS)	djiYawDot = xyzh[YAW].velocity;
-	else 					djiYawDot = xyzh[YAW].setpt[RATE];
+	djiForceZ = xyzh[Z_AXIS].getUval();
+	djiYawDot = xyzh[YAW].getVelocity();
 }
 
 void Vehicle::setFlightMode(const FlightMode modeIn)
