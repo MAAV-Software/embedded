@@ -16,36 +16,29 @@
 
 /** Constructor for Dof class ***/
 Dof::Dof(const float x, const float DxDt, const float D2xDt2,
-		  const float t, const float inertia, const float stateBound,
-		  const float rateSetLimit, const float UvalUpLimit,
-		  const float UvalLwLimit, const uint8_t flags)
+		 const float t, const float inertia, const float stateBound,
+		 const float rateSetLimit, const float UvalUpLimit,
+		 const float UvalLwLimit, const uint8_t flags)
 {
 	initState(x, DxDt, D2xDt2, t, inertia);
-	initLimits(stateBound, rateSetLimit, UvalUpLimit, UvalLwLimit);
-	initFlags(flags);
+	setLimits(stateBound, rateSetLimit, UvalUpLimit, UvalLwLimit);
+	setFlags(flags);
+	for (int i = 0; i < NUM_GAINS; ++i)
+	{
+		valueGains[i] = 0;  		///< [Kp, Ki, Kd] for the value -> desired rate PID
+		rateGains[i] = 0;   		///< [Kp, Ki, Kd] for the rate -> U value PID
+	}
 }
 
 Dof::Dof()
 {
-	inertia = 0;
-	Uval = 0;
-	stateBound = 0;
-	rateSetLimit = 0;   	///< positive limit on rate setpoint, 0 for none
-	UvalUpLimit = 0;		///< upper limit on U value, no limit if = to lw
-	UvalLwLimit = 0;  		///< lower limit on U value, no limit if = to up
-	flags = 0;
-	ctrlDt = 0;         		///< time since controller last ran
-	for (uint8_t i = 0; i < NUM_GAINS; ++i)
+	initState(0, 0, 0, 0, 0);
+	setLimits(0, 0, 0, 0);
+	setFlags(0);
+	for (int i = 0; i < NUM_GAINS; ++i)
 	{
 		valueGains[i] = 0;  		///< [Kp, Ki, Kd] for the value -> desired rate PID
 		rateGains[i] = 0;   		///< [Kp, Ki, Kd] for the rate -> U value PID
-		ctrlDerrDt[i] = 0;  		///< discrete derivative of the error [x, dx, d2x]
-		ctrlIntegral[i] = 0;		///< integral of setpoint - state [x, dx, d2x]
-	}
-	for (uint8_t i = 0; i < NUM_STATES; ++i)
-	{
-		ctrlError[i] = 0;   		///< setpoint - state, with a timestamp
-		ctrlPrevErr[i] = 0;		///< previous error values
 	}
 }
 
@@ -70,15 +63,15 @@ Dof::~Dof() {}
 void Dof::initState(const float x, const float DxDt, const float D2xDt2,
   	   	 	 	 	const float t, const float mass)
 {
-	for (uint8_t i = 0; i < NUM_STATES; ++i) // init state vals to 0
+	for (int i = 0; i < NUM_STATES; ++i) // init state vals to 0
 	{
-		state[i]       = 0.0;
-		setpt[i]       = 0.0;
-		ctrlPrevErr[i] = 0.0;
-		ctrlError[i]   = 0.0;
+		state[i]         = 0.0;
+		setpt[i]         = 0.0;
+		ctrlPrevError[i] = 0.0;
+		ctrlError[i]     = 0.0;
 	}
 
-	for (uint8_t i = 0; i < NUM_GAINS; ++i)	// init error deriv and error integral to 0
+	for (int i = 0; i < NUM_GAINS; ++i)	// init error deriv and error integral to 0
 	{
 		ctrlDerrDt[i]   = 0.0;
 		ctrlIntegral[i] = 0.0;
@@ -125,7 +118,7 @@ void Dof::setGains(const float _valueGains[3], const float _rateGains[3])
 		else						ctrlIntegral[RATE]  = 0.0;
 	}
 
-	for (uint8_t i = 0; i < NUM_GAINS; ++i) // assign new gains
+	for (int i = 0; i < NUM_GAINS; ++i) // assign new gains
 	{
 		valueGains[i] = _valueGains[i];
 		rateGains[i]  = _rateGains[i];
@@ -146,7 +139,7 @@ void Dof::setGains(const float _valueGains[3], const float _rateGains[3])
 
     \ingroup dof_t_methods
 */
-void Dof::initLimits(const float _stateBound, const float _rateSetLimit,
+void Dof::setLimits(const float _stateBound, const float _rateSetLimit,
 		  	  	  	 const float _UvalUpLimit, const float _UvalLwLimit)
 {
 	stateBound   = _stateBound;
@@ -163,11 +156,15 @@ void Dof::initLimits(const float _stateBound, const float _rateSetLimit,
 
     \ingroup dof_t_methods
 */
-void Dof::initFlags(const uint8_t _flags)
+void Dof::setFlags(const uint8_t _flags)
 {
 	flags = _flags;
 }
 
+void Dof::setInertia(const float _inertia)
+{
+	inertia = _inertia;
+}
 
 /** Stores the input into the structure's internal state. If there are limits on
     the state, this will bound it to the proper values (wraparound style not
@@ -186,7 +183,7 @@ void Dof::initFlags(const uint8_t _flags)
 */
 void Dof::setState(const float x, const float DxDt, const float D2xDt2, const float t)
 {
-	for (uint8_t i = 0; i < NUM_STATES; ++i) prevState[i] = state[i];
+	for (int i = 0; i < NUM_STATES; ++i) prevState[i] = state[i];
 
 	// set new state
 	state[VAL]   = x;
@@ -305,12 +302,12 @@ void Dof::discreteD2xDt2()
 */
 void Dof::calcCtrlDt()
 {
-	ctrlPrevErr[TIME] = ctrlError[TIME];
+	ctrlPrevError[TIME] = ctrlError[TIME];
 
 	if (state[TIME] >= setpt[TIME]) ctrlError[TIME] = state[TIME];
 	else 							ctrlError[TIME] = setpt[TIME];
 
-	ctrlDt = ctrlError[TIME] - ctrlPrevErr[TIME];
+	ctrlDt = ctrlError[TIME] - ctrlPrevError[TIME];
 }
 
 /** Calculates the control error by taking the difference between the setpoint
@@ -342,7 +339,7 @@ void Dof::calcError(const unsigned int idx, const bool integrate)
 	}
 
 	// set previous and current controller errors
-	ctrlPrevErr[idx] = ctrlError[idx];
+	ctrlPrevError[idx] = ctrlError[idx];
 	ctrlError[idx] = setpt[idx] - state[idx];
 
 	// wraparound error for the main value
@@ -353,10 +350,10 @@ void Dof::calcError(const unsigned int idx, const bool integrate)
 	}
 
 	// Calculate discrete derivative
-	ctrlDerrDt[idx] = (ctrlError[idx] - ctrlPrevErr[idx]) / ctrlDt;
+	ctrlDerrDt[idx] = (ctrlError[idx] - ctrlPrevError[idx]) / ctrlDt;
 
 	if (integrate)
-		ctrlIntegral[idx] += 0.5 * ctrlDt * (ctrlError[idx] + ctrlPrevErr[idx]);
+		ctrlIntegral[idx] += 0.5 * ctrlDt * (ctrlError[idx] + ctrlPrevError[idx]);
 }
 
 /** Calculates the derivative setpoint of the dof by using a standard PID.
@@ -451,16 +448,64 @@ float Dof::getVelocity() const
 }
 
 
-const float* Dof::getState() const
+const float* Dof::getState(bool useCurr) const
 {
-	return state;
+	if (useCurr) return state;
+	else return prevState;
 }
 
-const float* Dof::getSetpoint() const
+const float* Dof::getSetpt() const
 {
 	return setpt;
 }
 
+float Dof::getInertia() const
+{
+	return inertia;
+}
 
+float Dof::getBounds(bool useVal) const
+{
+	if (useVal) return stateBound;
+	else return rateSetLimit;
+}
+
+float Dof::getUvalLimit(bool useUpper) const
+{
+	if (useUpper) return UvalUpLimit;
+	else return UvalLwLimit;
+}
+
+uint8_t Dof::getFlags() const
+{
+	return flags;
+}
+
+const float* Dof::getGains(bool useVal) const
+{
+	if (useVal) return valueGains;
+	else return rateGains;
+}
+
+float Dof::getCtrlDt() const
+{
+	return ctrlDt;
+}
+
+const float* Dof::getCtrlError(bool useCurr) const
+{
+	if (useCurr) return ctrlError;
+	else return ctrlPrevError;
+}
+
+const float* Dof::getCtrlDerrDt() const
+{
+	return ctrlDerrDt;
+}
+
+const float* Dof::getCtrlIntegral() const
+{
+	return ctrlIntegral;
+}
 
 // End of File

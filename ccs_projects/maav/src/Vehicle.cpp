@@ -1,5 +1,5 @@
 #include <stdint.h>
-#include <stdlib.h>
+#include <cstdlib>
 #include <math.h>
 #include "Vehicle.hpp"
 #include "Dof.hpp"
@@ -59,7 +59,7 @@ Vehicle::Vehicle()
 	preYawSin       = 0.0;
 	preYawCos       = 0.0;
 
-	for (uint8_t i = 0; i < NUM_DOFS; ++i) // loop through and initialize dofs
+	for (int i = 0; i < NUM_DOFS; ++i) // loop through and initialize dofs
 	{
 		xyzh[i] = Dof(0, 0, 0, 0, mass, stateBounds[i], velCaps[i],
 					  UvalPosThresh[i], UvalNegThresh[i], flags[i]);
@@ -90,7 +90,7 @@ Vehicle::Vehicle(const float valueGains[NUM_DOFS][NUM_GAINS],
 	djiYawDot 		= 0.0;
 	djiForceZ 		= 0.0;
 
-	for (uint8_t i = 0; i < NUM_DOFS; ++i) // loop through and initialize dofs
+	for (int i = 0; i < NUM_DOFS; ++i) // loop through and initialize dofs
 	{
 		xyzh[i] = Dof(0, 0, 0, 0, mass, stateBounds[i], velCaps[i],
 		     		  UvalPosThresh[i], UvalNegThresh[i], flags[i]);
@@ -102,19 +102,19 @@ Vehicle::~Vehicle() {}
 
 void Vehicle::setSetpt(const float setpt[], const float t)
 {
-	for (uint8_t i = 0; i < NUM_DOFS; ++i) xyzh[i].setSetpt(setpt[i], setpt[i+4], 0, t);
+	for (int i = 0; i < NUM_DOFS; ++i) xyzh[i].setSetpt(setpt[i], setpt[i+4], 0, t);
 }
 
 
 void Vehicle::setGains(const float valueGains[NUM_DOFS][NUM_GAINS],
 					   const float rateGains[NUM_DOFS][NUM_GAINS])
 {
-	for (uint8_t i = 0; i < NUM_DOFS; ++i) xyzh[i].setGains(valueGains[i], rateGains[i]);
+	for (int i = 0; i < NUM_DOFS; ++i) xyzh[i].setGains(valueGains[i], rateGains[i]);
 }
 
 void Vehicle::runPID()
 {
-	for (uint8_t i = 0; i < NUM_DOFS; ++i) xyzh[i].calcCtrlDt();
+	for (int i = 0; i < NUM_DOFS; ++i) xyzh[i].calcCtrlDt();
 	// get change in time for all DOFs
 
 	runValuePID(); // run position->velocity PID (accounts for ctrl mode)
@@ -125,7 +125,7 @@ void Vehicle::runValuePID()
 {
 	if (mode == AUTONOMOUS) // only do X, Y value PID if in auton mode
 	{
-		for (uint8_t i = 0; i < 2; ++i) // loop through x, y DOFs
+		for (int i = 0; i < 2; ++i) // loop through x, y DOFs
 		{
 			xyzh[i].calcError(VAL, true);
 			xyzh[i].valuePID(false);
@@ -133,7 +133,7 @@ void Vehicle::runValuePID()
 	}
 
 	// always do Z and Yaw value PID
-	for (uint8_t i = 2; i < 4; ++i)
+	for (int i = 2; i < 4; ++i)
 	{
 		xyzh[i].calcError(VAL, true);
 		xyzh[i].valuePID(false);
@@ -142,7 +142,7 @@ void Vehicle::runValuePID()
 
 void Vehicle::runRatePID()
 {
-	for (uint8_t i = 0; i < 3; ++i) // only run through X, Y, Z rate PIDs
+	for (int i = 0; i < 3; ++i) // only run through X, Y, Z rate PIDs
 	{
 		xyzh[i].calcError(RATE, true); // calculate rate and accel error
 		xyzh[i].calcError(ACCEL, true);// (accel probably not needed)
@@ -158,7 +158,7 @@ void Vehicle::calcDJIValues()
 	float angle[NUM_ANGLES];       // roll and pitch setpoint
 
 	// get earth frame vehicle forces
-	for (uint8_t i = 0; i < 3; ++i) forceVe[i] = xyzh[i].getUval();
+	for (int i = 0; i < 3; ++i) forceVe[i] = xyzh[i].getUval();
 	forceVe[Z_AXIS] += mass * GRAVITY;
 
 	// Convert earth frame forces to body frame, adding trim (which is already
@@ -177,10 +177,10 @@ void Vehicle::calcDJIValues()
 	            		   - (forceVy[Y_AXIS] * forceVy[Y_AXIS])));
 
 	// cap roll and pitch
-	if (angle[ROLL]  >  rpLimits[ROLL]) 	angle[ROLL]  =  rpLimits[ROLL];
-	if (angle[ROLL]  < -rpLimits[ROLL]) 	angle[ROLL]  = -rpLimits[ROLL];
-	if (angle[PITCH] >  rpLimits[PITCH]) 	angle[PITCH] =  rpLimits[PITCH];
-	if (angle[PITCH] < -rpLimits[PITCH]) 	angle[PITCH] = -rpLimits[PITCH];
+	if (angle[ROLL]  >  rpLimits[ROLL])  angle[ROLL]  =  rpLimits[ROLL];
+	if (angle[ROLL]  < -rpLimits[ROLL])  angle[ROLL]  = -rpLimits[ROLL];
+	if (angle[PITCH] >  rpLimits[PITCH]) angle[PITCH] =  rpLimits[PITCH];
+	if (angle[PITCH] < -rpLimits[PITCH]) angle[PITCH] = -rpLimits[PITCH];
 
 	// assign DJI values
 	djiRoll   = angle[ROLL];

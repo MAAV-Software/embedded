@@ -15,19 +15,21 @@
 */
 #include <stdint.h>
 
-// Defines for bitfields
-#define DISC_RATE 		0x1
-#define DISC_ACCEL	 	0x2
-#define WRAP_AROUND		0x4
+// Global constants for bitfields
+#define DISC_RATE	0x01
+#define DISC_ACCEL	0x02
+#define WRAP_AROUND	0x04
 
-// Defines for max lengths of arrays in this class
+
+// Global constants for max lengths of arrays in this class
 // (I don't want vectors in these classes becuase of memory overhead)
 #define NUM_GAINS		3
 #define NUM_STATES		4
+#define NUM_DERIVATIVES	3 // always NUM_STATES - 1
 
 // Enum for gain indeces in data structures
-enum PIDGainsEnum {KP = 0, KI, KD};
-enum DofStateEnum {VAL = 0, RATE, ACCEL, TIME};
+enum PIDGainsEnum {KP, KI, KD};
+enum DofStateEnum {VAL, RATE, ACCEL, TIME};
 
 /// Class containing all necessary ctrl vales for a single degree of freedom
 /**
@@ -84,21 +86,21 @@ public:
     // Destructor
     ~Dof();
 
-    /// \name Initialization and Updates
-    /// \{
-    /// Initializes dynamic values given the first state
-    void initState(const float x, const float DxDt, const float D2xDt2,
-    		   	   const float t, const float mass);
-
+    /// \name Updates
     /// Sets the PID gains
+    void initState(const float x, const float DxDt, const float D2xDt2,
+    		       const float t, const float mass);
+
+    void setInertia(const float _inertia);
+
     void setGains(const float valueGains[3], const float rateGains[3]);
 
     /// Initializes the PID output limits
-    void initLimits(const float stateBound, const float rateSetLimit,
-    				const float UvalUpLimit, const float UvalLwLimit);
+    void setLimits(const float stateBound, const float rateSetLimit,
+    			   const float UvalUpLimit, const float UvalLwLimit);
 
     /// Initializes the operational flags
-    void initFlags(const uint8_t flags);
+    void setFlags(const uint8_t flags);
 
 
     /// \name State, setpoint, and error calculation
@@ -127,11 +129,32 @@ public:
     void calcError(const unsigned int idx, const bool integrate);
     /// \}
 
-    // The following functions return state and setpoint values
+    // The following functions return private member values
     float getUval() const; // return Uval
+
     float getVelocity() const; // returns setpt[RATE] since that's the desired velocity output
-    const float* getState() const;
-    const float* getSetpoint() const;
+
+    const float* getState(bool useCurr) const;
+
+    const float* getSetpt() const;
+
+    float getInertia() const;
+
+    float getBounds(bool useVal) const; 
+
+    float getUvalLimit(bool useUpper) const;
+
+    uint8_t getFlags() const;
+
+    const float* getGains(bool useVal) const;
+
+    float getCtrlDt() const;
+
+    const float* getCtrlError(bool useCurr) const;
+
+    const float* getCtrlDerrDt() const;
+
+    const float* getCtrlIntegral() const;
 
 private:
     /// \name dof state values (all with timestamps)
@@ -158,9 +181,9 @@ private:
     float rateGains[NUM_GAINS];   		///< [Kp, Ki, Kd] for the rate -> U value PID
     float ctrlDt;         		///< time since controller last ran
     float ctrlError[NUM_STATES];   		///< setpoint - state, with a timestamp
-    float ctrlPrevErr[NUM_STATES];		///< previous error values
-    float ctrlDerrDt[NUM_STATES - 1];  		///< discrete derivative of the error [x, dx, d2x]
-    float ctrlIntegral[NUM_STATES - 1];		///< integral of setpoint - state [x, dx, d2x]
+    float ctrlPrevError[NUM_STATES];		///< previous error values
+    float ctrlDerrDt[NUM_DERIVATIVES];  		///< discrete derivative of the error [x, dx, d2x]
+    float ctrlIntegral[NUM_DERIVATIVES];		///< integral of setpoint - state [x, dx, d2x]
     /// \}
 
     /// Calculates the discrete derivative of the state value (to get rate)
