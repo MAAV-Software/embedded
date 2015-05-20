@@ -25,8 +25,8 @@ Dof::Dof(const float x, const float DxDt, const float D2xDt2,
 	setFlags(flags);
 	for (int i = 0; i < NUM_GAINS; ++i)
 	{
-		valueGains[i] = 0;  		///< [Kp, Ki, Kd] for the value -> desired rate PID
-		rateGains[i] = 0;   		///< [Kp, Ki, Kd] for the rate -> U value PID
+		valueGains[i] = 0;	///< [Kp, Ki, Kd] for the value -> desired rate PID
+		rateGains[i]  = 0;	///< [Kp, Ki, Kd] for the rate -> U value PID
 	}
 }
 
@@ -37,8 +37,8 @@ Dof::Dof()
 	setFlags(0);
 	for (int i = 0; i < NUM_GAINS; ++i)
 	{
-		valueGains[i] = 0;  		///< [Kp, Ki, Kd] for the value -> desired rate PID
-		rateGains[i] = 0;   		///< [Kp, Ki, Kd] for the rate -> U value PID
+		valueGains[i] = 0;	///< [Kp, Ki, Kd] for the value -> desired rate PID
+		rateGains[i]  = 0;  ///< [Kp, Ki, Kd] for the rate -> U value PID
 	}
 }
 
@@ -102,7 +102,7 @@ void Dof::initState(const float x, const float DxDt, const float D2xDt2,
 
     \ingroup dof_t_methods
 */
-void Dof::setGains(const float _valueGains[3], const float _rateGains[3])
+void Dof::updateGains(const float _valueGains[3], const float _rateGains[3])
 {
 	// Reset integral if integral gain changes
 	if (valueGains[KI] != _valueGains[KI])
@@ -181,7 +181,7 @@ void Dof::setInertia(const float _inertia)
 
     \ingroup dof_t_methods
 */
-void Dof::setState(const float x, const float DxDt, const float D2xDt2, const float t)
+void Dof::updateState(const float x, const float DxDt, const float D2xDt2, const float t)
 {
 	for (int i = 0; i < NUM_STATES; ++i) prevState[i] = state[i];
 
@@ -222,7 +222,7 @@ void Dof::setState(const float x, const float DxDt, const float D2xDt2, const fl
 
     \ingroup dof_t_methods
 */
-void Dof::setSetpt(const float x, const float DxDt, const float D2xDt2, const float t)
+void Dof::updateSetpt(const float x, const float DxDt, const float D2xDt2, const float t)
 {
 	setpt[VAL]   = x;
 	setpt[RATE]  = DxDt;
@@ -447,7 +447,7 @@ float Dof::getVelocity() const
 	return setpt[RATE];
 }
 
-
+/*
 const float* Dof::getState(bool useCurr) const
 {
 	if (useCurr) return state;
@@ -458,6 +458,7 @@ const float* Dof::getSetpt() const
 {
 	return setpt;
 }
+*/
 
 float Dof::getInertia() const
 {
@@ -475,7 +476,7 @@ float Dof::getUvalLimit(bool useUpper) const
 	if (useUpper) return UvalUpLimit;
 	else return UvalLwLimit;
 }
-
+/*
 uint8_t Dof::getFlags() const
 {
 	return flags;
@@ -486,7 +487,7 @@ const float* Dof::getGains(bool useVal) const
 	if (useVal) return valueGains;
 	else return rateGains;
 }
-
+*/
 float Dof::getCtrlDt() const
 {
 	return ctrlDt;

@@ -76,7 +76,24 @@ enum DofStateEnum {VAL, RATE, ACCEL, TIME};
 */
 class Dof {
 public:
-    // Constructors
+    /// \name dof state values (all with timestamps)
+    /// \{
+    float state[NUM_STATES];         ///< [x, dx/dt, d^2x/dt^2, t] for this DOF
+    float setpt[NUM_STATES];         ///< [x, dx/dt, d^2x/dt^2, t] desired for this DOF
+    /// \}
+
+	/// \name flags, options, and limits
+	/// \{
+	uint8_t flags; 				///< bit 0 for discrete rate, bit 1 for discrete accel, bit 2 for wraparound
+	/// \}
+
+    /// \name controller values
+    /// \{
+    float valueGains[NUM_GAINS];  		///< [Kp, Ki, Kd] for the value -> desired rate PID
+    float rateGains[NUM_GAINS];   		///< [Kp, Ki, Kd] for the rate -> U value PID
+    /// \}
+	
+	// Constructors
     Dof();
     Dof(const float x, const float DxDt, const float D2xDt2,
     	const float t, const float inertia, const float stateBound,
@@ -87,32 +104,19 @@ public:
     ~Dof();
 
     /// \name Updates
-    /// Sets the PID gains
-    void initState(const float x, const float DxDt, const float D2xDt2,
-    		       const float t, const float mass);
-
-    void setInertia(const float _inertia);
-
-    void setGains(const float valueGains[3], const float rateGains[3]);
-
-    /// Initializes the PID output limits
-    void setLimits(const float stateBound, const float rateSetLimit,
-    			   const float UvalUpLimit, const float UvalLwLimit);
-
-    /// Initializes the operational flags
-    void setFlags(const uint8_t flags);
-
-
     /// \name State, setpoint, and error calculation
     /// \{
     /// Sets the internal state buffer
-    void setState(const float x, const float DxDt, const float D2xDt2,
+    void updateState(const float x, const float DxDt, const float D2xDt2,
     			  const float t);
 
     /// Sets the i		dof_calc_ctrl_dt(&(qc->xyzh[i]));nternal setpt buffer
-    void setSetpt(const float x, const float DxDt, const float D2xDt2,
+    void updateSetpt(const float x, const float DxDt, const float D2xDt2,
     			  const float t);
-    /// \}
+    
+	/// Sets the PID gains
+    void updateGains(const float valueGains[3], const float rateGains[3]);
+	/// \}
 
     /// \name Execute controls
     /// \{
@@ -134,51 +138,44 @@ public:
 
     float getVelocity() const; // returns setpt[RATE] since that's the desired velocity output
 
-    const float* getState(bool useCurr) const;
-
-    const float* getSetpt() const;
+    //const float* getState(bool useCurr) const;
+    //const float* getSetpt() const;
 
     float getInertia() const;
-
     float getBounds(bool useVal) const; 
-
     float getUvalLimit(bool useUpper) const;
 
-    uint8_t getFlags() const;
-
-    const float* getGains(bool useVal) const;
+    //uint8_t getFlags() const;
+    //const float* getGains(bool useVal) const;
 
     float getCtrlDt() const;
-
     const float* getCtrlError(bool useCurr) const;
-
     const float* getCtrlDerrDt() const;
-
     const float* getCtrlIntegral() const;
 
 private:
     /// \name dof state values (all with timestamps)
     /// \{
-    float state[NUM_STATES];         ///< [x, dx/dt, d^2x/dt^2, t] for this DOF
+    //float state[NUM_STATES];         ///< [x, dx/dt, d^2x/dt^2, t] for this DOF
     float prevState[NUM_STATES];    ///< [x, dx/dt, d^2x/dt^2, t] of last time step
-    float setpt[NUM_STATES];         ///< [x, dx/dt, d^2x/dt^2, t] desired for this DOF
+    //float setpt[NUM_STATES];         ///< [x, dx/dt, d^2x/dt^2, t] desired for this DOF
     float inertia;        ///< Mass or moment of inertia for the DOF
     float Uval;           ///< U value output for the DOF
     /// \}
 
 	/// \name flags, options, and limits
 	/// \{
-	float 	stateBound;      	///< positive limit on value state, 0 for none
-	float 	rateSetLimit;   	///< positive limit on rate setpoint, 0 for none
-	float 	UvalUpLimit;		///< upper limit on U value, no limit if = to lw
-	float 	UvalLwLimit;  		///< lower limit on U value, no limit if = to up
-	uint8_t flags; 				///< bit 0 for discrete rate, bit 1 for discrete accel, bit 2 for wraparound
+	float stateBound;      	///< positive limit on value state, 0 for none
+	float rateSetLimit;   	///< positive limit on rate setpoint, 0 for none
+	float UvalUpLimit;		///< upper limit on U value, no limit if = to lw
+	float UvalLwLimit;  		///< lower limit on U value, no limit if = to up
+	//uint8_t flags; 				///< bit 0 for discrete rate, bit 1 for discrete accel, bit 2 for wraparound
 	/// \}
 
     /// \name controller values
     /// \{
-    float valueGains[NUM_GAINS];  		///< [Kp, Ki, Kd] for the value -> desired rate PID
-    float rateGains[NUM_GAINS];   		///< [Kp, Ki, Kd] for the rate -> U value PID
+    //float valueGains[NUM_GAINS];  		///< [Kp, Ki, Kd] for the value -> desired rate PID
+    //float rateGains[NUM_GAINS];   		///< [Kp, Ki, Kd] for the rate -> U value PID
     float ctrlDt;         		///< time since controller last ran
     float ctrlError[NUM_STATES];   		///< setpoint - state, with a timestamp
     float ctrlPrevError[NUM_STATES];		///< previous error values
@@ -191,6 +188,24 @@ private:
 
     /// Calculates the discrete derivative of the state rate (to get accel)
     void discreteD2xDt2();
+    
+
+	/*** these were originally public, but I may not need them to be now.
+	  * While I'm figuring this out, keep them here since they're used in the
+	  * constructors.
+	  */
+	/// Sets the PID gains
+    void initState(const float x, const float DxDt, const float D2xDt2,
+    		       const float t, const float mass);
+
+    void setInertia(const float _inertia);
+
+    /// Initializes the PID output limits
+	void setLimits(const float stateBound, const float rateSetLimit,
+    			   const float UvalUpLimit, const float UvalLwLimit);
+
+    /// Initializes the operational flags
+    void setFlags(const uint8_t flags);
 };
 
 #endif // DOF_HPP
