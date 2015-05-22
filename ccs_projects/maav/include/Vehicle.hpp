@@ -10,8 +10,8 @@
 #define NUM_ANGLES	2
 
 // Enums for array indecies
-enum xyzhEnum {X_AXIS = 0, Y_AXIS, Z_AXIS, YAW};
-enum rpEnum {ROLL = 0, PITCH};
+enum xyzhEnum {X_AXIS, Y_AXIS, Z_AXIS, YAW};
+enum rpEnum {ROLL, PITCH};
 
 class Vehicle
 {
