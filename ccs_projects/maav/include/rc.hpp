@@ -1,20 +1,24 @@
-#ifndef RC_H_
-#define RC_H_
+#ifndef RC_HPP_
+#define RC_HPP_
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include <stdbool.h>
+#include <stdint.h>
+
+#include "inc/hw_memmap.h"
+#include "inc/hw_types.h"
+#include "inc/tm4c123gh6pm.h"
+#include "driverlib/gpio.h"
+#include "driverlib/pin_map.h"
+#include "driverlib/sysctl.h"
+#include "driverlib/pin_map.h"
 
 // STUFF FOR RADIO CONTROL
-
-
-#include "general.h"
 
 // GPIO Port Basses for pilot RC controller
 #define RC_CHAN1 GPIO_PORTA_BASE,2
 #define RC_CHAN2 GPIO_PORTA_BASE,3
 #define RC_CHAN3 GPIO_PORTA_BASE,4
-#define RC_CHAN4 GPIO_PORTA_BASE,5
+#define RC_CHAN4 GPIO_PORTA_BASE,6
 #define RC_CHAN5 GPIO_PORTA_BASE,6 // shoulder button
 #define RC_CHAN6 GPIO_PORTA_BASE,7
 
@@ -52,9 +56,5 @@ float ms2height(float ms);
 
 // Calcualtes PID XY setpoints from pulse width
 float PID_XY_2ms(float val);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* RC_H_ */

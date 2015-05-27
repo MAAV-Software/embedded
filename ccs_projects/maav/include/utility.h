@@ -19,7 +19,7 @@ extern "C" {
 #include <stdbool.h>
 #include <stdint.h>
 #include "px4_kalman.h"
-#include "quad_ctrl.h"
+//#include "QuadCtrl.hpp"
 #include "messaging/target_t.h"
 #include "messaging/tuning_t.h"
 #include "messaging/position_t.h"
@@ -34,7 +34,7 @@ extern "C" {
 
 /********************** Utility Data Structures *******************************/
 // Enum for gain indeces in data structures
-enum PID_gains_enum {Kp, Ki, Kd};
+//enum PID_gains_enum {Kp, Ki, Kd};
 
 // Structs for reading and saving PID Gains
 typedef struct
@@ -69,18 +69,18 @@ void sendToSerialPort(kalman_t*, uint16_t);
 
 /*********************** PID Gains Memory Utilities ***************************/
 // Record gains from quad_ctrl into EEPROM
-void recordGains(quad_ctrl_t *qc);
+//void recordGains(quad_ctrl_t *qc);
 
 // Copy gains from EEPROM into quad_ctrl
-void copyGains(quad_ctrl_t *qc);
+//void copyGains(quad_ctrl_t *qc);
 
 
 /********************** Message Handling Utilities ****************************/
 // Does the requested changes to quad control struct based on tuning message
-void tuningMessageQuadCtrlChangesHandler(quad_ctrl_t *qc, tuning_t *message);
+//void tuningMessageQuadCtrlChangesHandler(quad_ctrl_t *qc, tuning_t *message);
 
 // Does the requested changes to quad control struct based on target message
-void targetMessageQuadCtrlChangesHandler(quad_ctrl_t *qc, target_t *message);
+//void targetMessageQuadCtrlChangesHandler(quad_ctrl_t *qc, target_t *message);
 
 #ifdef __cplusplus
 }

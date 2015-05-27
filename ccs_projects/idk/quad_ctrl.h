@@ -25,7 +25,7 @@ extern "C" {
 typedef enum ctrl_mode_enum {AUTON_CTRL, RC_CTRL} ctrl_mode_t;
 
 // Enums for array indecies
-enum xyhz_enum {X_AXIS, Y_AXIS, Z_AXIS, YAW};
+enum xyzh_enum {X_AXIS, Y_AXIS, Z_AXIS, YAW};
 enum rp_enum {ROLL, PITCH};
 /*
  * quad_ctrl_t Struct representing a quadrotor, it's controllable degrees of

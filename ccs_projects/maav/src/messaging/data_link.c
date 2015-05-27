@@ -26,7 +26,7 @@
 
 static ringbuf_t ringbuf;
 static data_frame_t *messaging_frame;
-static lcmlite_subscription_t sub_feedback;
+//static lcmlite_subscription_t sub_feedback;
 static lcmlite_subscription_t sub_position;
 static lcmlite_subscription_t sub_target;
 static lcmlite_subscription_t sub_tuning;

@@ -5,12 +5,10 @@
  *      Author: clark
  */
 
-#include "Loop.hpp"
-
-#include "time_util.h"
-
 #include <stdlib.h>
-
+#include "Loop.hpp"
+#include "time_util.h"
+#include <vector>
 
 Loop::Loop() { }
 
@@ -22,16 +20,30 @@ void Loop::addEvent(Runnable* task, int32_t periodMs) {
 	_events.push_back(event);
 }
 
-void Loop::run() {
+void Loop::run()
+{
 	int32_t loopTime;
-
-	while (1) {
+	for (;;)
+	{
 		loopTime = millis();
-		for (size_t i = 0; i < _events.size(); ++i) {
-			if ((loopTime - _events[i].lastTime) > _events[i].period) {
+		for (size_t i = 0; i < _events.size(); ++i)
+		{
+			//TODO: FIGURE OUT WHY THIS WORKS BUT NOT THE COMMENTED OUT PART!!!!
+			Event tmp = _events[i];
+			if ((loopTime - tmp.lastTime) > tmp.period)
+			{
+				tmp.lastTime = loopTime;
+				tmp.task->run();
+			}
+			_events[i] = tmp;
+
+			/*
+			if ((loopTime - _events[i].lastTime) > _events[i].period)
+			{
 				_events[i].lastTime = loopTime;
 				_events[i].task->run();
 			}
+			*/
 		}
 	}
 }

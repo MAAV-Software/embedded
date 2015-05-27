@@ -20,6 +20,11 @@ extern "C" {
 #include <stdbool.h>
 #include <stdint.h>
 
+
+// System Clock Frequency
+#define SYSCLOCK 80000000
+
+
 void time_init(uint32_t ui32Peripheral, uint32_t sysClock, uint32_t ui32Base, uint32_t ui32Interrupt);
 uint64_t timestamp_now();
 uint32_t millis();

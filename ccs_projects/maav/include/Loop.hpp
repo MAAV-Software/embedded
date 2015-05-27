@@ -10,14 +10,6 @@
  * @brief Class to handle timing events in a loop
  */
 class Loop {
-private:
-	struct Event {
-		Runnable* task;
-		int32_t lastTime;
-		int32_t period;
-	};
-
-	std::vector<Event> _events;
 public:
 	Loop();
 
@@ -34,6 +26,16 @@ public:
 	 * will not return
 	 */
 	void run();
+
+private:
+	struct Event
+	{
+		Runnable* task;
+		int32_t lastTime;
+		int32_t period;
+	};
+
+	std::vector<Event> _events;
 };
 
 #endif /* LOOP_HPP_ */

@@ -11,30 +11,25 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-#include "inc/hw_i2c.h"
 #include "inc/hw_memmap.h"
 #include "inc/hw_types.h"
 #include "inc/tm4c123gh6pm.h"
 
 #include "driverlib/gpio.h"
 #include "driverlib/fpu.h"
-#include "driverlib/i2c.h"
 #include "driverlib/pin_map.h"
 #include "driverlib/sysctl.h"
 #include "driverlib/uart.h"
-#include "driverlib/eeprom.h"
-#include "driverlib/uart.h"
-#include "driverlib/pin_map.h"
 
 #include "utils/uartstdio.h"
 
 #include "px4_kalman.h"
 #include "PPM.h"
-#include "dof.h"
-#include "quad_ctrl.h"
+//#include "Dof.hpp"
+//#include "QuadCtrl.hpp"
 #include "px4_i2c.h"
 #include "utility.h"
-#include "messaging/data_link.h"
+//#include "messaging/data_link.h"
 #include "time_util.h"
 
 /***************** Utility Functions for RC Controller ************************/
@@ -93,7 +88,7 @@ void ConfigureUART(void)
 	UARTStdioConfig(0, 115200, 16000000);
 }
 
-/*********************** PID Gains Memory Utilities ***************************/
+/*********************** PID Gains Memory Utilities ***************************
 // Record gains from quad_ctrl into EEPROM
 void recordGains(quad_ctrl_t *qc)
 {
@@ -117,9 +112,9 @@ void copyGains(quad_ctrl_t *qc)
 			   sizeof(qc->xyzh[Z_AXIS].value_gains));
 	return;
 }
-
+*/
 /********************** Message Handling Utilities ****************************/
-
+/*
 void tuningMessageQuadCtrlChangesHandler(quad_ctrl_t *qc, tuning_t *message)
 {
 	// Handling of PID gain changes
@@ -127,88 +122,88 @@ void tuningMessageQuadCtrlChangesHandler(quad_ctrl_t *qc, tuning_t *message)
 	{
 		// Mark as handled
 		message->cmd &= ~CMD_TUNING_SETPID_X;
-		/*
+
 		 * Set the gains. This relies on the fact that the struct is arranged so that
 		 * KP is immediately followed by KI then KD for all gains so it should be possible
 		 * to take addr of first one, the cast to float array and all should work, assuming
 		 * the compiler doesn't do something weird with the alignment on us
-		 */
+		 *
 		dof_set_gains(&qc->xyzh[X_AXIS], (float *)(&(message->KPX)), qc->xyzh[X_AXIS].rate_gains);
 	}
 	if (message->cmd & CMD_TUNING_SETPID_Y)
 	{
 		// Mark as handled
 		message->cmd &= ~CMD_TUNING_SETPID_Y;
-		/*
+
 		 * Set the gains. This relies on the fact that the struct is arranged so that
 		 * KP is immediately followed by KI then KD for all gains so it should be possible
 		 * to take addr of first one, the cast to float array and all should work, assuming
 		 * the compiler doesn't do something weird with the alignment on us
-		 */
+		 *
 		dof_set_gains(&qc->xyzh[Y_AXIS], (float *)(&(message->KPY)), qc->xyzh[Y_AXIS].rate_gains);
 	}
 	if (message->cmd & CMD_TUNING_SETPID_Z)
 	{
 		// Mark as handled
 		message->cmd &= ~CMD_TUNING_SETPID_Z;
-		/*
+
 		 * Set the gains. This relies on the fact that the struct is arranged so that
 		 * KP is immediately followed by KI then KD for all gains so it should be possible
 		 * to take addr of first one, the cast to float array and all should work, assuming
 		 * the compiler doesn't do something weird with the alignment on us
-		 */
+		 *
 		dof_set_gains(&qc->xyzh[Z_AXIS], (float *)(&(message->KPZ)), qc->xyzh[Z_AXIS].rate_gains);
 	}
 	if (message->cmd & CMD_TUNING_SETPID_H)
 	{
 		// Mark as handled
 		message->cmd &= ~CMD_TUNING_SETPID_H;
-		/*
+
 		 * Set the gains. This relies on the fact that the struct is arranged so that
 		 * KP is immediately followed by KI then KD for all gains so it should be possible
 		 * to take addr of first one, the cast to float array and all should work, assuming
 		 * the compiler doesn't do something weird with the alignment on us
-		 */
+		 *
 		dof_set_gains(&qc->xyzh[YAW], (float *)(&(message->KPH)), qc->xyzh[YAW].rate_gains);
 	}
 	if (message->cmd & CMD_TUNING_SETPID_XDOT)
 	{
 		// Mark as handled
 		message->cmd &= ~CMD_TUNING_SETPID_XDOT;
-		/*
+
 		 * Set the gains. This relies on the fact that the struct is arranged so that
 		 * KP is immediately followed by KI then KD for all gains so it should be possible
 		 * to take addr of first one, the cast to float array and all should work, assuming
 		 * the compiler doesn't do something weird with the alignment on us
-		 */
+		 *
 		dof_set_gains(&qc->xyzh[X_AXIS], qc->xyzh[X_AXIS].value_gains, (float *)(&(message->KPXdot)));
 	}
 	if (message->cmd & CMD_TUNING_SETPID_YDOT)
 	{
 		// Mark as handled
 		message->cmd &= ~CMD_TUNING_SETPID_YDOT;
-		/*
+
 		 * Set the gains. This relies on the fact that the struct is arranged so that
 		 * KP is immediately followed by KI then KD for all gains so it should be possible
 		 * to take addr of first one, the cast to float array and all should work, assuming
 		 * the compiler doesn't do something weird with the alignment on us
-		 */
+		 *
 		dof_set_gains(&(qc->xyzh[Y_AXIS]), qc->xyzh[Y_AXIS].value_gains, (float *)(&(message->KPYdot)));
 	}
 	if (message->cmd & CMD_TUNING_SETPID_ZDOT)
 	{
 		// Mark as handled
 		message->cmd &= ~CMD_TUNING_SETPID_ZDOT;
-		/*
+
 		 * Set the gains. This relies on the fact that the struct is arranged so that
 		 * KP is immediately followed by KI then KD for all gains so it should be possible
 		 * to take addr of first one, the cast to float array and all should work, assuming
 		 * the compiler doesn't do something weird with the alignment on us
-		 */
+		 *
 		dof_set_gains(&(qc->xyzh[Z_AXIS]), qc->xyzh[Z_AXIS].value_gains, (float *)(&(message->KPZdot)));
 	}
 
-	/* Uncomment this block and comment the above block if compiler alignment
+	 Uncomment this block and comment the above block if compiler alignment
 	 * of structs makes the above way with arrays and stuff fail
 	 */
 	/*
@@ -285,6 +280,8 @@ void tuningMessageQuadCtrlChangesHandler(quad_ctrl_t *qc, tuning_t *message)
 
 	// Handling of Setpoint changes
 	// Fetch old setpts into setpt array [x, y, z, yaw, x_dot, y_dot, z_dot, yaw_dot]
+
+/*
 	float setpts[8];
 	setpts[0] = qc->xyzh[X_AXIS].setpt[0];
 	setpts[1] = qc->xyzh[Y_AXIS].setpt[0];
@@ -371,3 +368,4 @@ void targetMessageQuadCtrlChangesHandler(quad_ctrl_t *qc, target_t *message)
 	qc_setSetpt(qc, setpts, timestamp_now());
 
 }
+*/

@@ -53,7 +53,7 @@ void qc_init(quad_ctrl_t *qc)
 	uint8_t i;
 
 	// 0 for all lowpass coeffs turns off lowpass filter in DOF
-	float lowpass_coeff[4] = {0.0, 0.0, 0.0};
+	float lowpass_coeff[3] = {0.0, 0.0, 0.0};
 
 	// value and rate PID gains
 	float value_gains[4][3] =

@@ -1,21 +1,31 @@
 #include "runnables/ControllerRunnable.hpp"
+#include "servoIn.hpp"
 #include "PPM.h"
-#include "servoIn.h"
+#include "rc.hpp"
+#include "inc/hw_memmap.h"
+#include "inc/hw_types.h"
+#include "inc/tm4c123gh6pm.h"
+#include "driverlib/gpio.h"
+#include "driverlib/pin_map.h"
+#include "driverlib/sysctl.h"
+#include "driverlib/pin_map.h"
 
-ControllerRunnable::ControllerRunnable(VehicleState* state)
-: _state(state) {}
+ControllerRunnable::ControllerRunnable(Vehicle* v)
+	: vehicle(v) {}
 
 ControllerRunnable::~ControllerRunnable() { }
 
-void ControllerRunnable::run() {
+void ControllerRunnable::run()
+{
 	uint32_t yChannel;
 	uint32_t xChannel;
 	uint32_t zChannel;
 	uint32_t yawChannel;
-	switch (_state->mode) {
+	switch (vehicle->getFlightMode())
+	{
 		case AUTONOMOUS:
+			break;
 		case ASSISTED:
-//			float height = _state.height;
 			yChannel = servoIn_getPulse(RC_CHAN1);
 			xChannel = servoIn_getPulse(RC_CHAN2);
 			yawChannel = servoIn_getPulse(RC_CHAN4);

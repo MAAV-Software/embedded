@@ -1,17 +1,17 @@
 #ifndef FLIGHTMODERUNNABLE_HPP_
 #define FLIGHTMODERUNNABLE_HPP_
 
-#include "VehicleState.hpp"
+#include "../Vehicle.hpp"
 #include "runnables/Runnable.hpp"
 
 class FlightModeRunnable : public Runnable {
 private:
 	// pointer to vehicle state, it is probably shared
 	// between multiple classes
-	VehicleState* _state;
+	Vehicle* vehicle;
 
 public:
-	FlightModeRunnable(VehicleState* state);
+	FlightModeRunnable(Vehicle* v);
 
 	~FlightModeRunnable();
 

@@ -1,16 +1,16 @@
 #ifndef PX4RUNNABLE_HPP_
 #define PX4RUNNABLE_HPP_
 
-#include "VehicleState.hpp"
+#include "../Vehicle.hpp"
 #include "Runnable.hpp"
 
 class Px4Runnable : public Runnable
 {
 private:
-	VehicleState* _state;
+	Vehicle* vehicle;
 
 public:
-	Px4Runnable(VehicleState* state);
+	Px4Runnable(Vehicle* v);
 
 	~Px4Runnable();
 
