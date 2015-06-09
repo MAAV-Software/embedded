@@ -1,0 +1,2195 @@
+ount: 2316  Distance: 138
+Count: 2317  Distance: 139
+Count: 2318  Distance: 139
+Count: 2319  Distance: 139
+Count: 2320  Distance: 139
+Count: 2321  Distance: 139
+Count: 2322  Distance: 138
+Count: 2323  Distance: 138
+Count: 2324  Distance: Count: 29898  Distance: 96
+Count: 29899  Distance: 95
+Count: 29900  Distance: 96
+Count: 29901  Distance: 95
+Count: 29902  Distance: 96
+Count: 29903  Distance: 95
+Count: 29904  Distance: 96
+Count: 29905  Distance: 94
+Count: 29906  Distance: 96
+Count: 29907  Distance: 96
+Count: 29908  Distance: 96
+Count: 29909  Distance: 96
+Count: 29910  Distance: 96
+Count: 29911  Distance: 95
+Count: 29912  Distance: 96
+Count: 29913  Distance: 94
+Count: 29914  Distance: 95
+Count: 29915  Distance: 94
+Count: 29916  Distance: 95
+Count: 29917  Distance: 94
+Count: 29918  Distance: 94
+Count: 29919  Distance: 94
+Count: 29920  Distance: 95
+Count: 29921  Distance: 95
+Count: 29922  Distance: 96
+Count: 29923  Distance: 95
+Count: 29924  Distance: 95
+Count: 29925  Distance: 95
+Count: 29926  Distance: 96
+Count: 29927  Distance: 96
+Count: 29928  Distance: 95
+Count: 29929  Distance: 95
+Count: 29930  Distance: 95
+Count: 29931  Distance: 95
+Count: 29932  Distance: 94
+Count: 29933  Distance: 95
+Count: 29934  Distance: 95
+Count: 29935  Distance: 95
+Count: 29936  Distance: 95
+Count: 29937  Distance: 95
+Count: 29938  Distance: 96
+Count: 29939  Distance: 96
+Count: 29940  Distance: 96
+Count: 29941  Distance: 95
+Count: 29942  Distance: 96
+Count: 29943  Distance: 95
+Count: 29944  Distance: 96
+Count: 29945  Distance: 96
+Count: 29946  Distance: 96
+Count: 29947  Distance: 96
+Count: 29948  Distance: 96
+Count: 29949  Distance: 96
+Count: 29950  Distance: 96
+Count: 29951  Distance: 96
+Count: 29952  Distance: 96
+Count: 29953  Distance: 96
+Count: 29954  Distance: 96
+Count: 29955  Distance: 96
+Count: 29956  Distance: 96
+Count: 29957  Distance: 96
+Count: 29958  Distance: 95
+Count: 29959  Distance: 96
+Count: 29960  Distance: 96
+Count: 29961  Distance: 96
+Count: 29962  Distance: 96
+Count: 29963  Distance: 96
+Count: 29964  Distance: 96
+Welcome to the Pulsed Light lidar test program!
+Count: 1  Distance: 96
+Count: 2  Distance: 96
+Count: 3  Distance: 96
+Count: 4  Distance: 96
+Count: 5  Distance: 95
+Count: 6  Distance: 95
+Count: 7  Distance: 96
+Count: 8  Distance: 94
+Count: 9  Distance: 95
+Count: 10  Distance: 94
+Count: 11  Distance: 94
+Count: 12  Distance: 95
+Count: 13  Distance: 94
+Count: 14  Distance: 95
+Count: 15  Distance: 95
+Count: 16  Distance: 94
+Count: 17  Distance: 96
+Count: 18  Distance: 95
+Count: 19  Distance: 96
+Count: 20  Distance: 96
+Count: 21  Distance: 96
+Count: 22  Distance: 96
+Count: 23  Distance: 95
+Count: 24  Distance: 96
+Count: 25  Distance: 96
+Count: 26  Distance: 96
+Count: 27  Distance: 96
+Count: 28  Distance: 96
+Count: 29  Distance: 96
+Count: 30  Distance: 94
+Count: 31  Distance: 95
+Count: 32  Distance: 95
+Count: 33  Distance: 96
+Count: 34  Distance: 95
+Count: 35  Distance: 94
+Count: 36  Distance: 95
+Count: 37  Distance: 95
+Count: 38  Distance: 95
+Count: 39  Distance: 94
+Count: 40  Distance: 94
+Count: 41  Distance: 95
+Count: 42  Distance: 94
+Count: 43  Distance: 95
+Count: 44  Distance: 95
+Count: 45  Distance: 96
+Count: 46  Distance: 94
+Count: 47  Distance: 95
+Count: 48  Distance: 95
+Count: 49  Distance: 95
+Count: 50  Distance: 94
+Count: 51  Distance: 96
+Count: 52  Distance: 96
+Count: 53  Distance: 95
+Count: 54  Distance: 95
+Count: 55  Distance: 96
+Count: 56  Distance: 95
+Count: 57  Distance: 96
+Count: 58  Distance: 95
+Count: 59  Distance: 96
+Count: 60  Distance: 96
+Count: 61  Distance: 95
+Count: 62  Distance: 95
+Count: 63  Distance: 95
+Count: 64  Distance: 94
+Count: 65  Distance: 96
+Count: 66  Distance: 95
+Count: 67  Distance: 96
+Count: 68  Distance: 96
+Count: 69  Distance: 96
+Count: 70  Distance: 95
+Count: 71  Distance: 96
+Count: 72  Distance: 96
+Count: 73  Distance: 96
+Count: 74  Distance: 96
+Count: 75  Distance: 96
+Count: 76  Distance: 96
+Count: 77  Distance: 96
+Count: 78  Distance: 96
+Count: 79  Distance: 96
+Count: 80  Distance: 96
+Count: 81  Distance: 96
+Count: 82  Distance: 96
+Count: 83  Distance: 95
+Count: 84  Distance: 96
+Count: 85  Distance: 96
+Count: 86  Distance: 95
+Count: 87  Distance: 95
+Count: 88  Distance: 95
+Count: 89  Distance: 96
+Count: 90  Distance: 94
+Count: 91  Distance: 95
+Count: 92  Distance: 95
+Count: 93  Distance: 96
+Count: 94  Distance: 95
+Count: 95  Distance: 96
+Count: 96  Distance: 94
+Count: 97  Distance: 96
+Count: 98  Distance: 94
+Count: 99  Distance: 96
+Count: 100  Distance: 95
+Count: 101  Distance: 94
+Count: 102  Distance: 94
+Count: 103  Distance: 94
+Count: 104  Distance: 95
+Count: 105  Distance: 95
+Count: 106  Distance: 95
+Count: 107  Distance: 95
+Count: 108  Distance: 94
+Count: 109  Distance: 95
+Count: 110  Distance: 94
+Count: 111  Distance: 94
+Count: 112  Distance: 94
+Count: 113  Distance: 94
+Count: 114  Distance: 95
+Count: 115  Distance: 95
+Count: 116  Distance: 94
+Count: 117  Distance: 95
+Count: 118  Distance: 94
+Count: 119  Distance: 95
+Count: 120  Distance: 95
+Count: 121  Distance: 95
+Count: 122  Distance: 95
+Count: 123  Distance: 95
+Count: 124  Distance: 95
+Count: 125  Distance: 95
+Count: 126  Distance: 94
+Count: 127  Distance: 96
+Count: 128  Distance: 96
+Count: 129  Distance: 96
+Count: 130  Distance: 96
+Count: 131  Distance: 96
+Count: 132  Distance: 96
+Count: 133  Distance: 96
+Count: 134  Distance: 95
+Count: 135  Distance: 96
+Count: 136  Distance: 96
+Count: 137  Distance: 96
+Count: 138  Distance: 96
+Count: 139  Distance: 96
+Count: 140  Distance: 94
+Count: 141  Distance: 95
+Count: 142  Distance: 95
+Count: 143  Distance: 95
+Count: 144  Distance: 96
+Count: 145  Distance: 96
+Count: 146  Distance: 95
+Count: 147  Distance: 96
+Count: 148  Distance: 95
+Count: 149  Distance: 96
+Count: 150  Distance: 96
+Count: 151  Distance: 95
+Count: 152  Distance: 96
+Count: 153  Distance: 96
+Count: 154  Distance: 96
+Count: 155  Distance: 96
+Count: 156  Distance: 96
+Count: 157  Distance: 96
+Count: 158  Distance: 95
+Count: 159  Distance: 96
+Count: 160  Distance: 94
+Count: 161  Distance: 96
+Count: 162  Distance: 95
+Count: 163  Distance: 96
+Count: 164  Distance: 95
+Count: 165  Distance: 96
+Count: 166  Distance: 96
+Count: 167  Distance: 96
+Count: 168  Distance: 96
+Count: 169  Distance: 95
+Count: 170  Distance: 96
+Count: 171  Distance: 96
+Count: 172  Distance: 96
+Count: 173  Distance: 95
+Count: 174  Distance: 94
+Count: 175  Distance: 95
+Count: 176  Distance: 95
+Count: 177  Distance: 96
+Count: 178  Distance: 95
+Count: 179  Distance: 96
+Count: 180  Distance: 94
+Count: 181  Distance: 94
+Count: 182  Distance: 94
+Count: 183  Distance: 94
+Count: 184  Distance: 95
+Count: 185  Distance: 95
+Count: 186  Distance: 95
+Count: 187  Distance: 96
+Count: 188  Distance: 95
+Count: 189  Distance: 96
+Count: 190  Distance: 96
+Count: 191  Distance: 95
+Count: 192  Distance: 95
+Count: 193  Distance: 96
+Count: 194  Distance: 95
+Count: 195  Distance: 96
+Count: 196  Distance: 95
+Count: 197  Distance: 95
+Count: 198  Distance: 95
+Count: 199  Distance: 96
+Count: 200  Distance: 95
+Count: 201  Distance: 95
+Count: 202  Distance: 95
+Count: 203  Distance: 96
+Count: 204  Distance: 95
+Count: 205  Distance: 94
+Count: 206  Distance: 95
+Count: 207  Distance: 96
+Count: 208  Distance: 95
+Count: 209  Distance: 96
+Count: 210  Distance: 95
+Count: 211  Distance: 95
+Count: 212  Distance: 94
+Count: 213  Distance: 96
+Count: 214  Distance: 94
+Count: 215  Distance: 96
+Count: 216  Distance: 95
+Count: 217  Distance: 96
+Count: 218  Distance: 94
+Count: 219  Distance: 95
+Count: 220  Distance: 95
+Count: 221  Distance: 95
+Count: 222  Distance: 94
+Count: 223  Distance: 94
+Count: 224  Distance: 94
+Count: 225  Distance: 95
+Count: 226  Distance: 94
+Count: 227  Distance: 95
+Count: 228  Distance: 95
+Count: 229  Distance: 96
+Count: 230  Distance: 95
+Count: 231  Distance: 95
+Count: 232  Distance: 95
+Count: 233  Distance: 95
+Count: 234  Distance: 95
+Count: 235  Distance: 94
+Count: 236  Distance: 94
+Count: 237  Distance: 96
+Count: 238  Distance: 94
+Count: 239  Distance: 95
+Count: 240  Distance: 94
+Count: 241  Distance: 95
+Count: 242  Distance: 95
+Count: 243  Distance: 96
+Count: 244  Distance: 96
+Count: 245  Distance: 96
+Count: 246  Distance: 96
+Count: 247  Distance: 96
+Count: 248  Distance: 96
+Count: 249  Distance: 96
+Count: 250  Distance: 96
+Count: 251  Distance: 96
+Count: 252  Distance: 96
+Count: 253  Distance: 96
+Count: 254  Distance: 96
+Count: 255  Distance: 96
+Count: 256  Distance: 96
+Count: 257  Distance: 95
+Count: 258  Distance: 96
+Count: 259  Distance: 96
+Count: 260  Distance: 94
+Count: 261  Distance: 96
+Count: 262  Distance: 96
+Count: 263  Distance: 96
+Count: 264  Distance: 96
+Count: 265  Distance: 95
+Count: 266  Distance: 95
+Count: 267  Distance: 96
+Count: 268  Distance: 95
+Count: 269  Distance: 96
+Count: 270  Distance: 95
+Count: 271  Distance: 96
+Count: 272  Distance: 95
+Count: 273  Distance: 96
+Count: 274  Distance: 94
+Count: 275  Distance: 95
+Count: 276  Distance: 95
+Count: 277  Distance: 96
+Count: 278  Distance: 94
+Count: 279  Distance: 94
+Count: 280  Distance: 95
+Count: 281  Distance: 94
+Count: 282  Distance: 95
+Count: 283  Distance: 95
+Count: 284  Distance: 94
+Count: 285  Distance: 95
+Count: 286  Distance: 94
+Count: 287  Distance: 94
+Count: 288  Distance: 95
+Count: 289  Distance: 96
+Count: 290  Distance: 95
+Count: 291  Distance: 95
+Count: 292  Distance: 96
+Count: 293  Distance: 95
+Count: 294  Distance: 94
+Count: 295  Distance: 95
+Count: 296  Distance: 94
+Count: 297  Distance: 96
+Count: 298  Distance: 95
+Count: 299  Distance: 96
+Count: 300  Distance: 95
+Count: 301  Distance: 95
+Count: 302  Distance: 94
+Count: 303  Distance: 96
+Count: 304  Distance: 96
+Count: 305  Distance: 95
+Count: 306  Distance: 95
+Count: 307  Distance: 95
+Count: 308  Distance: 95
+Count: 309  Distance: 96
+Count: 310  Distance: 94
+Count: 311  Distance: 95
+Count: 312  Distance: 96
+Count: 313  Distance: 95
+Count: 314  Distance: 94
+Count: 315  Distance: 95
+Count: 316  Distance: 95
+Count: 317  Distance: 96
+Count: 318  Distance: 95
+Count: 319  Distance: 96
+Count: 320  Distance: 94
+Count: 321  Distance: 95
+Count: 322  Distance: 95
+Count: 323  Distance: 95
+Count: 324  Distance: 94
+Count: 325  Distance: 95
+Count: 326  Distance: 95
+Count: 327  Distance: 95
+Count: 328  Distance: 94
+Count: 329  Distance: 95
+Count: 330  Distance: 95
+Count: 331  Distance: 96
+Count: 332  Distance: 95
+Count: 333  Distance: 95
+Count: 334  Distance: 94
+Count: 335  Distance: 95
+Count: 336  Distance: 95
+Count: 337  Distance: 94
+Count: 338  Distance: 94
+Count: 339  Distance: 95
+Count: 340  Distance: 94
+Count: 341  Distance: 95
+Count: 342  Distance: 94
+Count: 343  Distance: 94
+Count: 344  Distance: 95
+Count: 345  Distance: 95
+Count: 346  Distance: 95
+Count: 347  Distance: 96
+Count: 348  Distance: 94
+Count: 349  Distance: 95
+Count: 350  Distance: 94
+Count: 351  Distance: 95
+Count: 352  Distance: 94
+Count: 353  Distance: 94
+Count: 354  Distance: 95
+Count: 355  Distance: 94
+Count: 356  Distance: 94
+Count: 357  Distance: 95
+Count: 358  Distance: 95
+Count: 359  Distance: 95
+Count: 360  Distance: 94
+Count: 361  Distance: 94
+Count: 362  Distance: 95
+Count: 363  Distance: 95
+Count: 364  Distance: 95
+Count: 365  Distance: 95
+Count: 366  Distance: 95
+Count: 367  Distance: 95
+Count: 368  Distance: 94
+Count: 369  Distance: 95
+Count: 370  Distance: 96
+Count: 371  Distance: 95
+Count: 372  Distance: 94
+Count: 373  Distance: 94
+Count: 374  Distance: 94
+Count: 375  Distance: 95
+Count: 376  Distance: 94
+Count: 377  Distance: 95
+Count: 378  Distance: 95
+Count: 379  Distance: 95
+Count: 380  Distance: 96
+Count: 381  Distance: 96
+Count: 382  Distance: 96
+Count: 383  Distance: 95
+Count: 384  Distance: 95
+Count: 385  Distance: 95
+Count: 386  Distance: 95
+Count: 387  Distance: 95
+Count: 388  Distance: 96
+Count: 389  Distance: 96
+Count: 390  Distance: 96
+Count: 391  Distance: 95
+Count: 392  Distance: 95
+Count: 393  Distance: 96
+Count: 394  Distance: 95
+Count: 395  Distance: 96
+Count: 396  Distance: 96
+Count: 397  Distance: 96
+Count: 398  Distance: 96
+Count: 399  Distance: 96
+Count: 400  Distance: 96
+Count: 401  Distance: 96
+Count: 402  Distance: 95
+Count: 403  Distance: 95
+Count: 404  Distance: 95
+Count: 405  Distance: 96
+Count: 406  Distance: 95
+Count: 407  Distance: 94
+Count: 408  Distance: 95
+Count: 409  Distance: 96
+Count: 410  Distance: 95
+Count: 411  Distance: 95
+Count: 412  Distance: 95
+Count: 413  Distance: 96
+Count: 414  Distance: 95
+Count: 415  Distance: 96
+Count: 416  Distance: 95
+Count: 417  Distance: 96
+Count: 418  Distance: 96
+Count: 419  Distance: 96
+Count: 420  Distance: 96
+Count: 421  Distance: 96
+Count: 422  Distance: 95
+Count: 423  Distance: 95
+Count: 424  Distance: 94
+Count: 425  Distance: 95
+Count: 426  Distance: 95
+Count: 427  Distance: 95
+Count: 428  Distance: 94
+Count: 429  Distance: 96
+Count: 430  Distance: 94
+Count: 431  Distance: 96
+Count: 432  Distance: 95
+Count: 433  Distance: 94
+Count: 434  Distance: 95
+Count: 435  Distance: 95
+Count: 436  Distance: 94
+Count: 437  Distance: 94
+Count: 438  Distance: 94
+Count: 439  Distance: 96
+Count: 440  Distance: 94
+Count: 441  Distance: 95
+Count: 442  Distance: 94
+Count: 443  Distance: 95
+Count: 444  Distance: 95
+Count: 445  Distance: 95
+Count: 446  Distance: 96
+Count: 447  Distance: 96
+Count: 448  Distance: 95
+Count: 449  Distance: 96
+Count: 450  Distance: 95
+Count: 451  Distance: 95
+Count: 452  Distance: 96
+Count: 453  Distance: 96
+Count: 454  Distance: 95
+Count: 455  Distance: 94
+Count: 456  Distance: 95
+Count: 457  Distance: 96
+Count: 458  Distance: 96
+Count: 459  Distance: 96
+Count: 460  Distance: 94
+Count: 461  Distance: 96
+Count: 462  Distance: 95
+Count: 463  Distance: 96
+Count: 464  Distance: 96
+Count: 465  Distance: 95
+Count: 466  Distance: 95
+Count: 467  Distance: 96
+Count: 468  Distance: 95
+Count: 469  Distance: 95
+Count: 470  Distance: 95
+Count: 471  Distance: 96
+Count: 472  Distance: 95
+Count: 473  Distance: 95
+Count: 474  Distance: 94
+Count: 475  Distance: 96
+Count: 476  Distance: 95
+Count: 477  Distance: 95
+Count: 478  Distance: 95
+Count: 479  Distance: 95
+Count: 480  Distance: 95
+Count: 481  Distance: 95
+Count: 482  Distance: 95
+Count: 483  Distance: 96
+Count: 484  Distance: 96
+Count: 485  Distance: 96
+Count: 486  Distance: 95
+Count: 487  Distance: 96
+Count: 488  Distance: 95
+Count: 489  Distance: 96
+Count: 490  Distance: 94
+Count: 491  Distance: 96
+Count: 492  Distance: 95
+Count: 493  Distance: 96
+Count: 494  Distance: 96
+Count: 495  Distance: 96
+Count: 496  Distance: 95
+Count: 497  Distance: 95
+Count: 498  Distance: 95
+Count: 499  Distance: 96
+Count: 500  Distance: 95
+Count: 501  Distance: 94
+Count: 502  Distance: 94
+Count: 503  Distance: 94
+Count: 504  Distance: 95
+Count: 505  Distance: 95
+Count: 506  Distance: 94
+Count: 507  Distance: 95
+Count: 508  Distance: 94
+Count: 509  Distance: 94
+Count: 510  Distance: 94
+Count: 511  Distance: 94
+Count: 512  Distance: 95
+Count: 513  Distance: 96
+Count: 514  Distance: 96
+Count: 515  Distance: 95
+Count: 516  Distance: 95
+Count: 517  Distance: 96
+Count: 518  Distance: 95
+Count: 519  Distance: 95
+Count: 520  Distance: 94
+Count: 521  Distance: 95
+Count: 522  Distance: 96
+Count: 523  Distance: 95
+Count: 524  Distance: 95
+Count: 525  Distance: 95
+Count: 526  Distance: 94
+Count: 527  Distance: 95
+Count: 528  Distance: 95
+Count: 529  Distance: 95
+Count: 530  Distance: 94
+Count: 531  Distance: 95
+Count: 532  Distance: 95
+Count: 533  Distance: 95
+Count: 534  Distance: 94
+Count: 535  Distance: 94
+Count: 536  Distance: 95
+Count: 537  Distance: 96
+Count: 538  Distance: 95
+Count: 539  Distance: 95
+Count: 540  Distance: 95
+Count: 541  Distance: 96
+Count: 542  Distance: 94
+Count: 543  Distance: 96
+Count: 544  Distance: 95
+Count: 545  Distance: 95
+Count: 546  Distance: 94
+Count: 547  Distance: 94
+Count: 548  Distance: 94
+Count: 549  Distance: 96
+Count: 550  Distance: 94
+Count: 551  Distance: 96
+Count: 552  Distance: 94
+Count: 553  Distance: 96
+Count: 554  Distance: 96
+Count: 555  Distance: 96
+Count: 556  Distance: 95
+Count: 557  Distance: 96
+Count: 558  Distance: 95
+Count: 559  Distance: 96
+Count: 560  Distance: 95
+Count: 561  Distance: 95
+Count: 562  Distance: 95
+Count: 563  Distance: 96
+Count: 564  Distance: 95
+Count: 565  Distance: 95
+Count: 566  Distance: 94
+Count: 567  Distance: 96
+Count: 568  Distance: 96
+Count: 569  Distance: 96
+Count: 570  Distance: 95
+Count: 571  Distance: 95
+Count: 572  Distance: 95
+Count: 573  Distance: 96
+Count: 574  Distance: 95
+Count: 575  Distance: 96
+Count: 576  Distance: 94
+Count: 577  Distance: 96
+Count: 578  Distance: 95
+Count: 579  Distance: 95
+Count: 580  Distance: 95
+Count: 581  Distance: 95
+Count: 582  Distance: 95
+Count: 583  Distance: 95
+Count: 584  Distance: 94
+Count: 585  Distance: 95
+Count: 586  Distance: 95
+Count: 587  Distance: 95
+Count: 588  Distance: 94
+Count: 589  Distance: 96
+Count: 590  Distance: 96
+Count: 591  Distance: 95
+Count: 592  Distance: 96
+Count: 593  Distance: 95
+Count: 594  Distance: 96
+Count: 595  Distance: 95
+Count: 596  Distance: 95
+Count: 597  Distance: 96
+Count: 598  Distance: 94
+Count: 599  Distance: 95
+Count: 600  Distance: 96
+Count: 601  Distance: 96
+Count: 602  Distance: 95
+Count: 603  Distance: 95
+Count: 604  Distance: 95
+Count: 605  Distance: 95
+Count: 606  Distance: 94
+Count: 607  Distance: 95
+Count: 608  Distance: 94
+Count: 609  Distance: 94
+Count: 610  Distance: 95
+Count: 611  Distance: 94
+Count: 612  Distance: 95
+Count: 613  Distance: 95
+Count: 614  Distance: 95
+Count: 615  Distance: 94
+Count: 616  Distance: 95
+Count: 617  Distance: 96
+Count: 618  Distance: 94
+Count: 619  Distance: 96
+Count: 620  Distance: 95
+Count: 621  Distance: 96
+Count: 622  Distance: 94
+Count: 623  Distance: 95
+Count: 624  Distance: 95
+Count: 625  Distance: 94
+Count: 626  Distance: 94
+Count: 627  Distance: 95
+Count: 628  Distance: 95
+Count: 629  Distance: 95
+Count: 630  Distance: 95
+Count: 631  Distance: 95
+Count: 632  Distance: 95
+Count: 633  Distance: 95
+Count: 634  Distance: 95
+Count: 635  Distance: 95
+Count: 636  Distance: 95
+Count: 637  Distance: 96
+Count: 638  Distance: 96
+Count: 639  Distance: 95
+Count: 640  Distance: 95
+Count: 641  Distance: 95
+Count: 642  Distance: 95
+Count: 643  Distance: 95
+Count: 644  Distance: 95
+Count: 645  Distance: 96
+Count: 646  Distance: 94
+Count: 647  Distance: 95
+Count: 648  Distance: 94
+Count: 649  Distance: 96
+Count: 650  Distance: 94
+Count: 651  Distance: 96
+Count: 652  Distance: 96
+Count: 653  Distance: 96
+Count: 654  Distance: 95
+Count: 655  Distance: 95
+Count: 656  Distance: 94
+Count: 657  Distance: 95
+Count: 658  Distance: 95
+Count: 659  Distance: 95
+Count: 660  Distance: 94
+Count: 661  Distance: 95
+Count: 662  Distance: 95
+Count: 663  Distance: 95
+Count: 664  Distance: 95
+Count: 665  Distance: 95
+Count: 666  Distance: 96
+Count: 667  Distance: 95
+Count: 668  Distance: 95
+Count: 669  Distance: 96
+Count: 670  Distance: 95
+Count: 671  Distance: 95
+Count: 672  Distance: 95
+Count: 673  Distance: 95
+Count: 674  Distance: 94
+Count: 675  Distance: 94
+Count: 676  Distance: 94
+Count: 677  Distance: 94
+Count: 678  Distance: 95
+Count: 679  Distance: 96
+Count: 680  Distance: 95
+Count: 681  Distance: 96
+Count: 682  Distance: 94
+Count: 683  Distance: 96
+Count: 684  Distance: 95
+Count: 685  Distance: 95
+Count: 686  Distance: 95
+Count: 687  Distance: 96
+Count: 688  Distance: 96
+Count: 689  Distance: 95
+Count: 690  Distance: 95
+Count: 691  Distance: 95
+Count: 692  Distance: 95
+Count: 693  Distance: 95
+Count: 694  Distance: 96
+Count: 695  Distance: 95
+Count: 696  Distance: 94
+Count: 697  Distance: 96
+Count: 698  Distance: 95
+Count: 699  Distance: 95
+Count: 700  Distance: 95
+Count: 701  Distance: 95
+Count: 702  Distance: 95
+Count: 703  Distance: 95
+Count: 704  Distance: 94
+Count: 705  Distance: 95
+Count: 706  Distance: 94
+Count: 707  Distance: 95
+Count: 708  Distance: 95
+Count: 709  Distance: 96
+Count: 710  Distance: 96
+Count: 711  Distance: 95
+Count: 712  Distance: 94
+Count: 713  Distance: 95
+Count: 714  Distance: 95
+Count: 715  Distance: 95
+Count: 716  Distance: 94
+Count: 717  Distance: 95
+Count: 718  Distance: 96
+Count: 719  Distance: 95
+Count: 720  Distance: 95
+Count: 721  Distance: 95
+Count: 722  Distance: 95
+Count: 723  Distance: 95
+Count: 724  Distance: 95
+Count: 725  Distance: 95
+Count: 726  Distance: 94
+Count: 727  Distance: 96
+Count: 728  Distance: 96
+Count: 729  Distance: 96
+Count: 730  Distance: 95
+Count: 731  Distance: 95
+Count: 732  Distance: 96
+Count: 733  Distance: 95
+Count: 734  Distance: 95
+Count: 735  Distance: 95
+Count: 736  Distance: 95
+Count: 737  Distance: 95
+Count: 738  Distance: 94
+Count: 739  Distance: 95
+Count: 740  Distance: 94
+Count: 741  Distance: 94
+Count: 742  Distance: 94
+Count: 743  Distance: 94
+Count: 744  Distance: 95
+Count: 745  Distance: 94
+Count: 746  Distance: 95
+Count: 747  Distance: 95
+Count: 748  Distance: 94
+Count: 749  Distance: 96
+Count: 750  Distance: 96
+Count: 751  Distance: 95
+Count: 752  Distance: 96
+Count: 753  Distance: 95
+Count: 754  Distance: 95
+Count: 755  Distance: 95
+Count: 756  Distance: 95
+Count: 757  Distance: 95
+Count: 758  Distance: 95
+Count: 759  Distance: 95
+Count: 760  Distance: 95
+Count: 761  Distance: 95
+Count: 762  Distance: 96
+Count: 763  Distance: 96
+Count: 764  Distance: 96
+Count: 765  Distance: 95
+Count: 766  Distance: 95
+Count: 767  Distance: 95
+Count: 768  Distance: 95
+Count: 769  Distance: 95
+Count: 770  Distance: 94
+Count: 771  Distance: 95
+Count: 772  Distance: 94
+Count: 773  Distance: 95
+Count: 774  Distance: 94
+Count: 775  Distance: 95
+Count: 776  Distance: 94
+Count: 777  Distance: 95
+Count: 778  Distance: 95
+Count: 779  Distance: 95
+Count: 780  Distance: 95
+Count: 781  Distance: 95
+Count: 782  Distance: 94
+Count: 783  Distance: 94
+Count: 784  Distance: 94
+Count: 785  Distance: 95
+Count: 786  Distance: 94
+Count: 787  Distance: 95
+Count: 788  Distance: 94
+Count: 789  Distance: 94
+Count: 790  Distance: 94
+Count: 791  Distance: 96
+Count: 792  Distance: 96
+Count: 793  Distance: 95
+Count: 794  Distance: 94
+Count: 795  Distance: 96
+Count: 796  Distance: 95
+Count: 797  Distance: 96
+Count: 798  Distance: 94
+Count: 799  Distance: 96
+Count: 800  Distance: 95
+Count: 801  Distance: 96
+Count: 802  Distance: 95
+Count: 803  Distance: 96
+Count: 804  Distance: 94
+Count: 805  Distance: 96
+Count: 806  Distance: 96
+Count: 807  Distance: 96
+Count: 808  Distance: 94
+Count: 809  Distance: 95
+Count: 810  Distance: 95
+Count: 811  Distance: 95
+Count: 812  Distance: 94
+Count: 813  Distance: 94
+Count: 814  Distance: 95
+Count: 815  Distance: 94
+Count: 816  Distance: 95
+Count: 817  Distance: 95
+Count: 818  Distance: 94
+Count: 819  Distance: 96
+Count: 820  Distance: 95
+Count: 821  Distance: 95
+Count: 822  Distance: 95
+Count: 823  Distance: 95
+Count: 824  Distance: 95
+Count: 825  Distance: 95
+Count: 826  Distance: 95
+Count: 827  Distance: 95
+Count: 828  Distance: 94
+Count: 829  Distance: 96
+Count: 830  Distance: 94
+Count: 831  Distance: 94
+Count: 832  Distance: 94
+Count: 833  Distance: 95
+Count: 834  Distance: 94
+Count: 835  Distance: 95
+Count: 836  Distance: 94
+Count: 837  Distance: 95
+Count: 838  Distance: 94
+Count: 839  Distance: 94
+Count: 840  Distance: 95
+Count: 841  Distance: 94
+Count: 842  Distance: 95
+Count: 843  Distance: 94
+Count: 844  Distance: 94
+Count: 845  Distance: 95
+Count: 846  Distance: 94
+Count: 847  Distance: 96
+Count: 848  Distance: 95
+Count: 849  Distance: 96
+Count: 850  Distance: 95
+Count: 851  Distance: 95
+Count: 852  Distance: 96
+Count: 853  Distance: 95
+Count: 854  Distance: 96
+Count: 855  Distance: 95
+Count: 856  Distance: 94
+Count: 857  Distance: 96
+Count: 858  Distance: 94
+Count: 859  Distance: 94
+Count: 860  Distance: 94
+Count: 861  Distance: 95
+Count: 862  Distance: 94
+Count: 863  Distance: 94
+Count: 864  Distance: 95
+Count: 865  Distance: 96
+Count: 866  Distance: 95
+Count: 867  Distance: 96
+Count: 868  Distance: 95
+Count: 869  Distance: 96
+Count: 870  Distance: 95
+Count: 871  Distance: 95
+Count: 872  Distance: 96
+Count: 873  Distance: 95
+Count: 874  Distance: 95
+Count: 875  Distance: 95
+Count: 876  Distance: 94
+Count: 877  Distance: 95
+Count: 878  Distance: 94
+Count: 879  Distance: 96
+Count: 880  Distance: 94
+Count: 881  Distance: 95
+Count: 882  Distance: 95
+Count: 883  Distance: 96
+Count: 884  Distance: 95
+Count: 885  Distance: 95
+Count: 886  Distance: 95
+Count: 887  Distance: 96
+Count: 888  Distance: 94
+Count: 889  Distance: 95
+Count: 890  Distance: 95
+Count: 891  Distance: 95
+Count: 892  Distance: 95
+Count: 893  Distance: 95
+Count: 894  Distance: 95
+Count: 895  Distance: 94
+Count: 896  Distance: 94
+Count: 897  Distance: 96
+Count: 898  Distance: 94
+Count: 899  Distance: 96
+Count: 900  Distance: 94
+Count: 901  Distance: 95
+Count: 902  Distance: 95
+Count: 903  Distance: 96
+Count: 904  Distance: 95
+Count: 905  Distance: 95
+Count: 906  Distance: 96
+Count: 907  Distance: 95
+Count: 908  Distance: 94
+Count: 909  Distance: 96
+Count: 910  Distance: 95
+Count: 911  Distance: 96
+Count: 912  Distance: 95
+Count: 913  Distance: 96
+Count: 914  Distance: 95
+Count: 915  Distance: 95
+Count: 916  Distance: 96
+Count: 917  Distance: 96
+Count: 918  Distance: 96
+Count: 919  Distance: 95
+Count: 920  Distance: 95
+Count: 921  Distance: 95
+Count: 922  Distance: 96
+Count: 923  Distance: 96
+Count: 924  Distance: 96
+Count: 925  Distance: 95
+Count: 926  Distance: 95
+Count: 927  Distance: 96
+Count: 928  Distance: 95
+Count: 929  Distance: 96
+Count: 930  Distance: 95
+Count: 931  Distance: 95
+Count: 932  Distance: 94
+Count: 933  Distance: 95
+Count: 934  Distance: 95
+Count: 935  Distance: 95
+Count: 936  Distance: 95
+Count: 937  Distance: 96
+Count: 938  Distance: 95
+Count: 939  Distance: 96
+Count: 940  Distance: 96
+Count: 941  Distance: 95
+Count: 942  Distance: 95
+Count: 943  Distance: 95
+Count: 944  Distance: 94
+Count: 945  Distance: 95
+Count: 946  Distance: 96
+Count: 947  Distance: 96
+Count: 948  Distance: 96
+Count: 949  Distance: 96
+Count: 950  Distance: 95
+Count: 951  Distance: 95
+Count: 952  Distance: 96
+Count: 953  Distance: 96
+Count: 954  Distance: 95
+Count: 955  Distance: 96
+Count: 956  Distance: 95
+Count: 957  Distance: 95
+Count: 958  Distance: 95
+Count: 959  Distance: 96
+Count: 960  Distance: 95
+Count: 961  Distance: 96
+Count: 962  Distance: 95
+Count: 963  Distance: 95
+Count: 964  Distance: 95
+Count: 965  Distance: 95
+Count: 966  Distance: 95
+Count: 967  Distance: 95
+Count: 968  Distance: 95
+Count: 969  Distance: 96
+Count: 970  Distance: 96
+Count: 971  Distance: 95
+Count: 972  Distance: 96
+Count: 973  Distance: 95
+Count: 974  Distance: 96
+Count: 975  Distance: 95
+Count: 976  Distance: 96
+Count: 977  Distance: 95
+Count: 978  Distance: 96
+Count: 979  Distance: 96
+Count: 980  Distance: 95
+Count: 981  Distance: 95
+Count: 982  Distance: 96
+Count: 983  Distance: 95
+Count: 984  Distance: 96
+Count: 985  Distance: 95
+Count: 986  Distance: 95
+Count: 987  Distance: 96
+Count: 988  Distance: 95
+Count: 989  Distance: 96
+Count: 990  Distance: 96
+Count: 991  Distance: 95
+Count: 992  Distance: 94
+Count: 993  Distance: 95
+Count: 994  Distance: 95
+Count: 995  Distance: 96
+Count: 996  Distance: 94
+Count: 997  Distance: 95
+Count: 998  Distance: 95
+Count: 999  Distance: 96
+Count: 1000  Distance: 95
+Count: 1001  Distance: 94
+Count: 1002  Distance: 94
+Count: 1003  Distance: 95
+Count: 1004  Distance: 94
+Count: 1005  Distance: 94
+Count: 1006  Distance: 94
+Count: 1007  Distance: 94
+Count: 1008  Distance: 94
+Count: 1009  Distance: 94
+Count: 1010  Distance: 94
+Count: 1011  Distance: 94
+Count: 1012  Distance: 95
+Count: 1013  Distance: 95
+Count: 1014  Distance: 94
+Count: 1015  Distance: 94
+Count: 1016  Distance: 94
+Count: 1017  Distance: 96
+Count: 1018  Distance: 94
+Count: 1019  Distance: 96
+Count: 1020  Distance: 95
+Count: 1021  Distance: 95
+Count: 1022  Distance: 94
+Count: 1023  Distance: 96
+Count: 1024  Distance: 95
+Count: 1025  Distance: 94
+Count: 1026  Distance: 94
+Count: 1027  Distance: 95
+Count: 1028  Distance: 95
+Count: 1029  Distance: 95
+Count: 1030  Distance: 96
+Count: 1031  Distance: 95
+Count: 1032  Distance: 95
+Count: 1033  Distance: 95
+Count: 1034  Distance: 95
+Count: 1035  Distance: 94
+Count: 1036  Distance: 94
+Count: 1037  Distance: 96
+Count: 1038  Distance: 94
+Count: 1039  Distance: 96
+Count: 1040  Distance: 95
+Count: 1041  Distance: 95
+Count: 1042  Distance: 94
+Count: 1043  Distance: 94
+Count: 1044  Distance: 95
+Count: 1045  Distance: 96
+Count: 1046  Distance: 95
+Count: 1047  Distance: 96
+Count: 1048  Distance: 95
+Count: 1049  Distance: 96
+Count: 1050  Distance: 94
+Count: 1051  Distance: 95
+Count: 1052  Distance: 95
+Count: 1053  Distance: 95
+Count: 1054  Distance: 95
+Count: 1055  Distance: 95
+Count: 1056  Distance: 95
+Count: 1057  Distance: 95
+Count: 1058  Distance: 95
+Count: 1059  Distance: 94
+Count: 1060  Distance: 95
+Count: 1061  Distance: 95
+Count: 1062  Distance: 95
+Count: 1063  Distance: 96
+Count: 1064  Distance: 95
+Count: 1065  Distance: 96
+Count: 1066  Distance: 95
+Count: 1067  Distance: 96
+Count: 1068  Distance: 96
+Count: 1069  Distance: 96
+Count: 1070  Distance: 95
+Count: 1071  Distance: 96
+Count: 1072  Distance: 96
+Count: 1073  Distance: 96
+Count: 1074  Distance: 96
+Count: 1075  Distance: 95
+Count: 1076  Distance: 96
+Count: 1077  Distance: 96
+Count: 1078  Distance: 95
+Count: 1079  Distance: 95
+Count: 1080  Distance: 95
+Count: 1081  Distance: 94
+Count: 1082  Distance: 94
+Count: 1083  Distance: 95
+Count: 1084  Distance: 94
+Count: 1085  Distance: 95
+Count: 1086  Distance: 94
+Count: 1087  Distance: 96
+Count: 1088  Distance: 96
+Count: 1089  Distance: 96
+Count: 1090  Distance: 94
+Count: 1091  Distance: 95
+Count: 1092  Distance: 96
+Count: 1093  Distance: 96
+Count: 1094  Distance: 96
+Count: 1095  Distance: 96
+Count: 1096  Distance: 95
+Count: 1097  Distance: 96
+Count: 1098  Distance: 94
+Count: 1099  Distance: 95
+Count: 1100  Distance: 95
+Count: 1101  Distance: 96
+Count: 1102  Distance: 94
+Count: 1103  Distance: 95
+Count: 1104  Distance: 95
+Count: 1105  Distance: 96
+Count: 1106  Distance: 96
+Count: 1107  Distance: 96
+Count: 1108  Distance: 95
+Count: 1109  Distance: 96
+Count: 1110  Distance: 95
+Count: 1111  Distance: 95
+Count: 1112  Distance: 96
+Count: 1113  Distance: 96
+Count: 1114  Distance: 96
+Count: 1115  Distance: 96
+Count: 1116  Distance: 95
+Count: 1117  Distance: 96
+Count: 1118  Distance: 95
+Count: 1119  Distance: 95
+Count: 1120  Distance: 95
+Count: 1121  Distance: 95
+Count: 1122  Distance: 95
+Count: 1123  Distance: 95
+Count: 1124  Distance: 95
+Count: 1125  Distance: 95
+Count: 1126  Distance: 94
+Count: 1127  Distance: 95
+Count: 1128  Distance: 95
+Count: 1129  Distance: 95
+Count: 1130  Distance: 95
+Count: 1131  Distance: 94
+Count: 1132  Distance: 95
+Count: 1133  Distance: 95
+Count: 1134  Distance: 95
+Count: 1135  Distance: 94
+Count: 1136  Distance: 95
+Count: 1137  Distance: 96
+Count: 1138  Distance: 96
+Count: 1139  Distance: 95
+Count: 1140  Distance: 96
+Count: 1141  Distance: 95
+Count: 1142  Distance: 96
+Count: 1143  Distance: 95
+Count: 1144  Distance: 96
+Count: 1145  Distance: 96
+Count: 1146  Distance: 94
+Count: 1147  Distance: 96
+Count: 1148  Distance: 95
+Count: 1149  Distance: 95
+Count: 1150  Distance: 94
+Count: 1151  Distance: 96
+Count: 1152  Distance: 95
+Count: 1153  Distance: 96
+Count: 1154  Distance: 96
+Count: 1155  Distance: 96
+Count: 1156  Distance: 96
+Count: 1157  Distance: 96
+Count: 1158  Distance: 95
+Count: 1159  Distance: 96
+Count: 1160  Distance: 95
+Count: 1161  Distance: 96
+Count: 1162  Distance: 96
+Count: 1163  Distance: 96
+Count: 1164  Distance: 96
+Count: 1165  Distance: 96
+Count: 1166  Distance: 96
+Count: 1167  Distance: 96
+Count: 1168  Distance: 95
+Count: 1169  Distance: 95
+Count: 1170  Distance: 96
+Count: 1171  Distance: 96
+Count: 1172  Distance: 95
+Count: 1173  Distance: 95
+Count: 1174  Distance: 95
+Count: 1175  Distance: 96
+Count: 1176  Distance: 95
+Count: 1177  Distance: 95
+Count: 1178  Distance: 95
+Count: 1179  Distance: 96
+Count: 1180  Distance: 95
+Count: 1181  Distance: 95
+Count: 1182  Distance: 95
+Count: 1183  Distance: 95
+Count: 1184  Distance: 95
+Count: 1185  Distance: 94
+Count: 1186  Distance: 95
+Count: 1187  Distance: 96
+Count: 1188  Distance: 95
+Count: 1189  Distance: 96
+Count: 1190  Distance: 94
+Count: 1191  Distance: 95
+Count: 1192  Distance: 95
+Count: 1193  Distance: 96
+Count: 1194  Distance: 95
+Count: 1195  Distance: 96
+Count: 1196  Distance: 94
+Count: 1197  Distance: 96
+Count: 1198  Distance: 94
+Count: 1199  Distance: 94
+Count: 1200  Distance: 95
+Count: 1201  Distance: 96
+Count: 1202  Distance: 94
+Count: 1203  Distance: 95
+Count: 1204  Distance: 94
+Count: 1205  Distance: 96
+Count: 1206  Distance: 95
+Count: 1207  Distance: 96
+Count: 1208  Distance: 95
+Count: 1209  Distance: 95
+Count: 1210  Distance: 94
+Count: 1211  Distance: 95
+Count: 1212  Distance: 95
+Count: 1213  Distance: 94
+Count: 1214  Distance: 95
+Count: 1215  Distance: 95
+Count: 1216  Distance: 95
+Count: 1217  Distance: 95
+Count: 1218  Distance: 95
+Count: 1219  Distance: 96
+Count: 1220  Distance: 94
+Count: 1221  Distance: 95
+Count: 1222  Distance: 95
+Count: 1223  Distance: 95
+Count: 1224  Distance: 95
+Count: 1225  Distance: 96
+Count: 1226  Distance: 96
+Count: 1227  Distance: 96
+Count: 1228  Distance: 96
+Count: 1229  Distance: 95
+Count: 1230  Distance: 95
+Count: 1231  Distance: 95
+Count: 1232  Distance: 96
+Count: 1233  Distance: 96
+Count: 1234  Distance: 96
+Count: 1235  Distance: 96
+Count: 1236  Distance: 95
+Count: 1237  Distance: 96
+Count: 1238  Distance: 95
+Count: 1239  Distance: 95
+Count: 1240  Distance: 95
+Count: 1241  Distance: 96
+Count: 1242  Distance: 95
+Count: 1243  Distance: 96
+Count: 1244  Distance: 94
+Count: 1245  Distance: 95
+Count: 1246  Distance: 95
+Count: 1247  Distance: 95
+Count: 1248  Distance: 94
+Count: 1249  Distance: 96
+Count: 1250  Distance: 95
+Count: 1251  Distance: 94
+Count: 1252  Distance: 95
+Count: 1253  Distance: 96
+Count: 1254  Distance: 95
+Count: 1255  Distance: 95
+Count: 1256  Distance: 94
+Count: 1257  Distance: 96
+Count: 1258  Distance: 96
+Count: 1259  Distance: 95
+Count: 1260  Distance: 95
+Count: 1261  Distance: 96
+Count: 1262  Distance: 96
+Count: 1263  Distance: 96
+Count: 1264  Distance: 96
+Count: 1265  Distance: 95
+Count: 1266  Distance: 96
+Count: 1267  Distance: 96
+Count: 1268  Distance: 96
+Count: 1269  Distance: 96
+Count: 1270  Distance: 96
+Count: 1271  Distance: 96
+Count: 1272  Distance: 95
+Count: 1273  Distance: 95
+Count: 1274  Distance: 95
+Count: 1275  Distance: 95
+Count: 1276  Distance: 96
+Count: 1277  Distance: 96
+Count: 1278  Distance: 96
+Count: 1279  Distance: 96
+Count: 1280  Distance: 96
+Count: 1281  Distance: 96
+Count: 1282  Distance: 96
+Count: 1283  Distance: 95
+Count: 1284  Distance: 95
+Count: 1285  Distance: 95
+Count: 1286  Distance: 96
+Count: 1287  Distance: 96
+Count: 1288  Distance: 95
+Count: 1289  Distance: 96
+Count: 1290  Distance: 94
+Count: 1291  Distance: 96
+Count: 1292  Distance: 95
+Count: 1293  Distance: 95
+Count: 1294  Distance: 95
+Count: 1295  Distance: 96
+Count: 1296  Distance: 95
+Count: 1297  Distance: 96
+Count: 1298  Distance: 96
+Count: 1299  Distance: 96
+Count: 1300  Distance: 96
+Count: 1301  Distance: 95
+Count: 1302  Distance: 96
+Count: 1303  Distance: 96
+Count: 1304  Distance: 96
+Count: 1305  Distance: 96
+Count: 1306  Distance: 95
+Count: 1307  Distance: 96
+Count: 1308  Distance: 96
+Count: 1309  Distance: 95
+Count: 1310  Distance: 96
+Count: 1311  Distance: 95
+Count: 1312  Distance: 94
+Count: 1313  Distance: 96
+Count: 1314  Distance: 94
+Count: 1315  Distance: 95
+Count: 1316  Distance: 94
+Count: 1317  Distance: 96
+Count: 1318  Distance: 95
+Count: 1319  Distance: 96
+Count: 1320  Distance: 95
+Count: 1321  Distance: 96
+Count: 1322  Distance: 95
+Count: 1323  Distance: 95
+Count: 1324  Distance: 94
+Count: 1325  Distance: 96
+Count: 1326  Distance: 95
+Count: 1327  Distance: 96
+Count: 1328  Distance: 95
+Count: 1329  Distance: 95
+Count: 1330  Distance: 95
+Count: 1331  Distance: 96
+Count: 1332  Distance: 96
+Count: 1333  Distance: 96
+Count: 1334  Distance: 95
+Count: 1335  Distance: 96
+Count: 1336  Distance: 95
+Count: 1337  Distance: 96
+Count: 1338  Distance: 95
+Count: 1339  Distance: 96
+Count: 1340  Distance: 95
+Count: 1341  Distance: 94
+Count: 1342  Distance: 94
+Count: 1343  Distance: 94
+Count: 1344  Distance: 95
+Count: 1345  Distance: 96
+Count: 1346  Distance: 96
+Count: 1347  Distance: 96
+Count: 1348  Distance: 94
+Count: 1349  Distance: 96
+Count: 1350  Distance: 96
+Count: 1351  Distance: 96
+Count: 1352  Distance: 95
+Count: 1353  Distance: 95
+Count: 1354  Distance: 95
+Count: 1355  Distance: 96
+Count: 1356  Distance: 96
+Count: 1357  Distance: 96
+Count: 1358  Distance: 96
+Count: 1359  Distance: 96
+Count: 1360  Distance: 95
+Count: 1361  Distance: 96
+Count: 1362  Distance: 95
+Count: 1363  Distance: 95
+Count: 1364  Distance: 95
+Count: 1365  Distance: 95
+Count: 1366  Distance: 95
+Count: 1367  Distance: 95
+Count: 1368  Distance: 95
+Count: 1369  Distance: 95
+Count: 1370  Distance: 95
+Count: 1371  Distance: 95
+Count: 1372  Distance: 95
+Count: 1373  Distance: 95
+Count: 1374  Distance: 95
+Count: 1375  Distance: 95
+Count: 1376  Distance: 94
+Count: 1377  Distance: 94
+Count: 1378  Distance: 94
+Count: 1379  Distance: 95
+Count: 1380  Distance: 95
+Count: 1381  Distance: 95
+Count: 1382  Distance: 95
+Count: 1383  Distance: 95
+Count: 1384  Distance: 94
+Count: 1385  Distance: 95
+Count: 1386  Distance: 94
+Count: 1387  Distance: 95
+Count: 1388  Distance: 94
+Count: 1389  Distance: 95
+Count: 1390  Distance: 94
+Count: 1391  Distance: 95
+Count: 1392  Distance: 94
+Count: 1393  Distance: 96
+Count: 1394  Distance: 94
+Count: 1395  Distance: 95
+Count: 1396  Distance: 95
+Count: 1397  Distance: 96
+Count: 1398  Distance: 94
+Count: 1399  Distance: 95
+Count: 1400  Distance: 95
+Count: 1401  Distance: 94
+Count: 1402  Distance: 95
+Count: 1403  Distance: 95
+Count: 1404  Distance: 94
+Count: 1405  Distance: 96
+Count: 1406  Distance: 95
+Count: 1407  Distance: 96
+Count: 1408  Distance: 94
+Count: 1409  Distance: 95
+Count: 1410  Distance: 95
+Count: 1411  Distance: 96
+Count: 1412  Distance: 95
+Count: 1413  Distance: 96
+Count: 1414  Distance: 95
+Count: 1415  Distance: 96
+Count: 1416  Distance: 94
+Count: 1417  Distance: 96
+Count: 1418  Distance: 94
+Count: 1419  Distance: 94
+Count: 1420  Distance: 94
+Count: 1421  Distance: 94
+Count: 1422  Distance: 95
+Count: 1423  Distance: 96
+Count: 1424  Distance: 94
+Count: 1425  Distance: 94
+Count: 1426  Distance: 94
+Count: 1427  Distance: 95
+Count: 1428  Distance: 96
+Count: 1429  Distance: 95
+Count: 1430  Distance: 95
+Count: 1431  Distance: 96
+Count: 1432  Distance: 95
+Count: 1433  Distance: 95
+Count: 1434  Distance: 95
+Count: 1435  Distance: 96
+Count: 1436  Distance: 95
+Count: 1437  Distance: 96
+Count: 1438  Distance: 95
+Count: 1439  Distance: 95
+Count: 1440  Distance: 95
+Count: 1441  Distance: 95
+Count: 1442  Distance: 95
+Count: 1443  Distance: 96
+Count: 1444  Distance: 95
+Count: 1445  Distance: 95
+Count: 1446  Distance: 96
+Count: 1447  Distance: 95
+Count: 1448  Distance: 96
+Count: 1449  Distance: 96
+Count: 1450  Distance: 95
+Count: 1451  Distance: 95
+Count: 1452  Distance: 95
+Count: 1453  Distance: 95
+Count: 1454  Distance: 95
+Count: 1455  Distance: 95
+Count: 1456  Distance: 94
+Count: 1457  Distance: 96
+Count: 1458  Distance: 95
+Count: 1459  Distance: 96
+Count: 1460  Distance: 95
+Count: 1461  Distance: 95
+Count: 1462  Distance: 95
+Count: 1463  Distance: 95
+Count: 1464  Distance: 95
+Count: 1465  Distance: 95
+Count: 1466  Distance: 95
+Count: 1467  Distance: 96
+Count: 1468  Distance: 96
+Count: 1469  Distance: 95
+Count: 1470  Distance: 95
+Count: 1471  Distance: 96
+Count: 1472  Distance: 95
+Count: 1473  Distance: 96
+Count: 1474  Distance: 95
+Count: 1475  Distance: 96
+Count: 1476  Distance: 95
+Count: 1477  Distance: 96
+Count: 1478  Distance: 95
+Count: 1479  Distance: 96
+Count: 1480  Distance: 96
+Count: 1481  Distance: 96
+Count: 1482  Distance: 95
+Count: 1483  Distance: 95
+Count: 1484  Distance: 95
+Count: 1485  Distance: 96
+Count: 1486  Distance: 95
+Count: 1487  Distance: 96
+Count: 1488  Distance: 96
+Count: 1489  Distance: 96
+Count: 1490  Distance: 94
+Count: 1491  Distance: 95
+Count: 1492  Distance: 95
+Count: 1493  Distance: 96
+Count: 1494  Distance: 95
+Count: 1495  Distance: 95
+Count: 1496  Distance: 94
+Count: 1497  Distance: 94
+Count: 1498  Distance: 94
+Count: 1499  Distance: 95
+Count: 1500  Distance: 95
+Count: 1501  Distance: 95
+Count: 1502  Distance: 95
+Count: 1503  Distance: 95
+Count: 1504  Distance: 95
+Count: 1505  Distance: 95
+Count: 1506  Distance: 94
+Count: 1507  Distance: 96
+Count: 1508  Distance: 96
+Count: 1509  Distance: 96
+Count: 1510  Distance: 95
+Count: 1511  Distance: 96
+Count: 1512  Distance: 95
+Count: 1513  Distance: 96
+Count: 1514  Distance: 95
+Count: 1515  Distance: 96
+Count: 1516  Distance: 94
+Count: 1517  Distance: 95
+Count: 1518  Distance: 95
+Count: 1519  Distance: 95
+Count: 1520  Distance: 95
+Count: 1521  Distance: 95
+Count: 1522  Distance: 95
+Count: 1523  Distance: 96
+Count: 1524  Distance: 95
+Count: 1525  Distance: 95
+Count: 1526  Distance: 96
+Count: 1527  Distance: 96
+Count: 1528  Distance: 95
+Count: 1529  Distance: 96
+Count: 1530  Distance: 96
+Count: 1531  Distance: 96
+Count: 1532  Distance: 96
+Count: 1533  Distance: 96
+Count: 1534  Distance: 96
+Count: 1535  Distance: 96
+Count: 1536  Distance: 95
+Count: 1537  Distance: 96
+Count: 1538  Distance: 96
+Count: 1539  Distance: 96
+Count: 1540  Distance: 96
+Count: 1541  Distance: 96
+Count: 1542  Distance: 96
+Count: 1543  Distance: 95
+Count: 1544  Distance: 95
+Count: 1545  Distance: 96
+Count: 1546  Distance: 95
+Count: 1547  Distance: 96
+Count: 1548  Distance: 95
+Count: 1549  Distance: 96
+Count: 1550  Distance: 95
+Count: 1551  Distance: 95
+Count: 1552  Distance: 96
+Count: 1553  Distance: 96
+Count: 1554  Distance: 95
+Count: 1555  Distance: 96
+Count: 1556  Distance: 96
+Count: 1557  Distance: 96
+Count: 1558  Distance: 95
+Count: 1559  Distance: 96
+Count: 1560  Distance: 96
+Count: 1561  Distance: 96
+Count: 1562  Distance: 95
+Count: 1563  Distance: 96
+Count: 1564  Distance: 95
+Count: 1565  Distance: 94
+Count: 1566  Distance: 95
+Count: 1567  Distance: 95
+Count: 1568  Distance: 95
+Count: 1569  Distance: 95
+Count: 1570  Distance: 96
+Count: 1571  Distance: 95
+Count: 1572  Distance: 95
+Count: 1573  Distance: 96
+Count: 1574  Distance: 94
+Count: 1575  Distance: 96
+Count: 1576  Distance: 94
+Count: 1577  Distance: 94
+Count: 1578  Distance: 94
+Count: 1579  Distance: 94
+Count: 1580  Distance: 95
+Count: 1581  Distance: 96
+Count: 1582  Distance: 95
+Count: 1583  Distance: 95
+Count: 1584  Distance: 94
+Count: 1585  Distance: 95
+Count: 1586  Distance: 94
+Count: 1587  Distance: 95
+Count: 1588  Distance: 94
+Count: 1589  Distance: 94
+Count: 1590  Distance: 94
+Count: 1591  Distance: 95
+Count: 1592  Distance: 95
+Count: 1593  Distance: 96
+Count: 1594  Distance: 95
+Count: 1595  Distance: 95
+Count: 1596  Distance: 94
+Count: 1597  Distance: 96
+Count: 1598  Distance: 94
+Count: 1599  Distance: 95
+Count: 1600  Distance: 95
+Count: 1601  Distance: 95
+Count: 1602  Distance: 95
+Count: 1603  Distance: 96
+Count: 1604  Distance: 96
+Count: 1605  Distance: 95
+Count: 1606  Distance: 95
+Count: 1607  Distance: 96
+Count: 1608  Distance: 95
+Count: 1609  Distance: 96
+Count: 1610  Distance: 96
+Count: 1611  Distance: 96
+Count: 1612  Distance: 95
+Count: 1613  Distance: 95
+Count: 1614  Distance: 95
+Count: 1615  Distance: 94
+Count: 1616  Distance: 94
+Count: 1617  Distance: 95
+Count: 1618  Distance: 94
+Count: 1619  Distance: 94
+Count: 1620  Distance: 94
+Count: 1621  Distance: 95
+Count: 1622  Distance: 95
+Count: 1623  Distance: 96
+Count: 1624  Distance: 95
+Count: 1625  Distance: 96
+Count: 1626  Distance: 96
+Count: 1627  Distance: 96
+Count: 1628  Distance: 95
+Count: 1629  Distance: 96
+Count: 1630  Distance: 95
+Count: 1631  Distance: 95
+Count: 1632  Distance: 95
+Count: 1633  Distance: 95
+Count: 1634  Distance: 95
+Count: 1635  Distance: 96
+Count: 1636  Distance: 95
+Count: 1637  Distance: 95
+Count: 1638  Distance: 95
+Count: 1639  Distance: 95
+Count: 1640  Distance: 95
+Count: 1641  Distance: 95
+Count: 1642  Distance: 96
+Count: 1643  Distance: 95
+Count: 1644  Distance: 96
+Count: 1645  Distance: 95
+Count: 1646  Distance: 95
+Count: 1647  Distance: 96
+Count: 1648  Distance: 94
+Count: 1649  Distance: 94
+Count: 1650  Distance: 94
+Count: 1651  Distance: 94
+Count: 1652  Distance: 94
+Count: 1653  Distance: 95
+Count: 1654  Distance: 94
+Count: 1655  Distance: 95
+Count: 1656  Distance: 94
+Count: 1657  Distance: 95
+Count: 1658  Distance: 94
+Count: 1659  Distance: 94
+Count: 1660  Distance: 94
+Count: 1661  Distance: 94
+Count: 1662  Distance: 95
+Count: 1663  Distance: 95
+Count: 1664  Distance: 95
+Count: 1665  Distance: 96
+Count: 1666  Distance: 94
+Count: 1667  Distance: 96
+Count: 1668  Distance: 95
+Count: 1669  Distance: 95
+Count: 1670  Distance: 95
+Count: 1671  Distance: 95
+Count: 1672  Distance: 96
+Count: 1673  Distance: 95
+Count: 1674  Distance: 95
+Count: 1675  Distance: 95
+Count: 1676  Distance: 94
+Count: 1677  Distance: 95
+Count: 1678  Distance: 95
+Count: 1679  Distance: 96
+Count: 1680  Distance: 95
+Count: 1681  Distance: 95
+Count: 1682  Distance: 96
+Count: 1683  Distance: 95
+Count: 1684  Distance: 95
+Count: 1685  Distance: 95
+Count: 1686  Distance: 95
+Count: 1687  Distance: 95
+Count: 1688  Distance: 94
+Count: 1689  Distance: 95
+Count: 1690  Distance: 94
+Count: 1691  Distance: 95
+Count: 1692  Distance: 94
+Count: 1693  Distance: 95
+Count: 1694  Distance: 94
+Count: 1695  Distance: 95
+Count: 1696  Distance: 94
+Count: 1697  Distance: 96
+Count: 1698  Distance: 94
+Count: 1699  Distance: 95
+Count: 1700  Distance: 94
+Count: 1701  Distance: 95
+Count: 1702  Distance: 96
+Count: 1703  Distance: 95
+Count: 1704  Distance: 94
+Count: 1705  Distance: 95
+Count: 1706  Distance: 94
+Count: 1707  Distance: 95
+Count: 1708  Distance: 94
+Count: 1709  Distance: 96
+Count: 1710  Distance: 94
+Count: 1711  Distance: 95
+Count: 1712  Distance: 94
+Count: 1713  Distance: 95
+Count: 1714  Distance: 95
+Count: 1715  Distance: 95
+Count: 1716  Distance: 96
+Count: 1717  Distance: 96
+Count: 1718  Distance: 96
+Count: 1719  Distance: 95
+Count: 1720  Distance: 96
+Count: 1721  Distance: 95
+Count: 1722  Distance: 95
+Count: 1723  Distance: 94
+Count: 1724  Distance: 94
+Count: 1725  Distance: 95
+Count: 1726  Distance: 94
+Count: 1727  Distance: 94
+Count: 1728  Distance: 94
+Count: 1729  Distance: 95
+Count: 1730  Distance: 96
+Count: 1731  Distance: 95
+Count: 1732  Distance: 94
+Count: 1733  Distance: 95
+Count: 1734  Distance: 94
+Count: 1735  Distance: 95
+Count: 1736  Distance: 94
+Count: 1737  Distance: 95
+Count: 1738  Distance: 95
+Count: 1739  Distance: 95
+Count: 1740  Distance: 95
+Count: 1741  Distance: 95
+Count: 1742  Distance: 95
+Count: 1743  Distance: 95
+Count: 1744  Distance: 96
+Count: 1745  Distance: 96
+Count: 1746  Distance: 95
+Count: 1747  Distance: 94
+Count: 1748  Distance: 94
+Count: 1749  Distance: 95
+Count: 1750  Distance: 94
+Count: 1751  Distance: 96
+Count: 1752  Distance: 94
+Count: 1753  Distance: 94
+Count: 1754  Distance: 94
+Count: 1755  Distance: 94
+Count: 1756  Distance: 94
+Count: 1757  Distance: 95
+Count: 1758  Distance: 95
+Count: 1759  Distance: 96
+Count: 1760  Distance: 95
+Count: 1761  Distance: 96
+Count: 1762  Distance: 96
+Count: 1763  Distance: 95
+Count: 1764  Distance: 95
+Count: 1765  Distance: 96
+Count: 1766  Distance: 94
+Count: 1767  Distance: 96
+Count: 1768  Distance: 94
+Count: 1769  Distance: 94
+Count: 1770  Distance: 94
+Count: 1771  Distance: 95
+Count: 1772  Distance: 95
+Count: 1773  Distance: 95
+Count: 1774  Distance: 95
+Count: 1775  Distance: 95
+Count: 1776  Distance: 95
+Count: 1777  Distance: 94
+Count: 1778  Distance: 95
+Count: 1779  Distance: 95
+Count: 1780  Distance: 94
+Count: 1781  Distance: 94
+Count: 1782  Distance: 95
+Count: 1783  Distance: 94
+Count: 1784  Distance: 94
+Count: 1785  Distance: 94
+Count: 1786  Distance: 94
+Count: 1787  Distance: 95
+Count: 1788  Distance: 95
+Count: 1789  Distance: 95
+Count: 1790  Distance: 96
+Count: 1791  Distance: 95
+Count: 1792  Distance: 95
+Count: 1793  Distance: 95
+Count: 1794  Distance: 95
+Count: 1795  Distance: 95
+Count: 1796  Distance: 95
+Count: 1797  Distance: 96
+Count: 1798  Distance: 94
+Count: 1799  Distance: 95
+Count: 1800  Distance: 94
+Count: 1801  Distance: 95
+Count: 1802  Distance: 95
+Count: 1803  Distance: 96
+Count: 1804  Distance: 94
+Count: 1805  Distance: 96
+Count: 1806  Distance: 95
+Count: 1807  Distance: 96
+Count: 1808  Distance: 95
+Count: 1809  Distance: 95
+Count: 1810  Distance: 96
+Count: 1811  Distance: 96
+Count: 1812  Distance: 96
+Count: 1813  Distance: 95
+Count: 1814  Distance: 96
+Count: 1815  Distance: 96
+Count: 1816  Distance: 95
+Count: 1817  Distance: 96
+Count: 1818  Distance: 95
+Count: 1819  Distance: 95
+Count: 1820  Distance: 95
+Count: 1821  Distance: 95
+Count: 1822  Distance: 95
+Count: 1823  Distance: 95
+Count: 1824  Distance: 95
+Count: 1825  Distance: 94
+Count: 1826  Distance: 94
+Count: 1827  Distance: 95
+Count: 1828  Distance: 94
+Count: 1829  Distance: 96
+Count: 1830  Distance: 94
+Count: 1831  Distance: 95
+Count: 1832  Distance: 95
+Count: 1833  Distance: 96
+Count: 1834  Distance: 94
+Count: 1835  Distance: 96
+Count: 1836  Distance: 95
+Count: 1837  Distance: 95
+Count: 1838  Distance: 95
+Count: 1839  Distance: 94
+Count: 1840  Distance: 94
+Count: 1841  Distance: 94
+Count: 1842  Distance: 95
+Count: 1843  Distance: 95
+Count: 1844  Distance: 94
+Count: 1845  Distance: 94
+Count: 1846  Distance: 94
+Count: 1847  Distance: 96
+Count: 1848  Distance: 96
+Count: 1849  Distance: 96
+Count: 1850  Distance: 94
+Count: 1851  Distance: 95
+Count: 1852  Distance: 94
+Count: 1853  Distance: 95
+Count: 1854  Distance: 95
+Count: 1855  Distance: 95
+Count: 1856  Distance: 96
+Count: 1857  Distance: 96
+Count: 1858  Distance: 95
+Count: 1859  Distance: 96
+Count: 1860  Distance: 94
+Count: 1861  Distance: 95
+Count: 1862  Distance: 95
+Count: 1863  Distance: 94
+Count: 1864  Distance: 94
+Count: 1865  Distance: 94
+Count: 1866  Distance: 95
+Count: 1867  Distance: 95
+Count: 1868  Distance: 95
+Count: 1869  Distance: 95
+Count: 1870  Distance: 95
+Count: 1871  Distance: 96
+Count: 1872  Distance: 96
+Count: 1873  Distance: 96
+Count: 1874  Distance: 95
+Count: 1875  Distance: 94
+Count: 1876  Distance: 94
+Count: 1877  Distance: 95
+Count: 1878  Distance: 94
+Count: 1879  Distance: 95
+Count: 1880  Distance: 94
+Count: 1881  Distance: 95
+Count: 1882  Distance: 95
+Count: 1883  Distance: 96
+Count: 1884  Distance: 96
+Count: 1885  Distance: 95
+Count: 1886  Distance: 94
+Count: 1887  Distance: 96
+Count: 1888  Distance: 95
+Count: 1889  Distance: 96
+Count: 1890  Distance: 95
+Count: 1891  Distance: 96
+Count: 1892  Distance: 96
+Count: 1893  Distance: 96
+Count: 1894  Distance: 95
+Count: 1895  Distance: 96
+Count: 1896  Distance: 96
+Count: 1897  Distance: 95
+Count: 1898  Distance: 95
+Count: 1899  Distance: 95
+Count: 1900  Distance: 95
+Count: 1901  Distance: 95
+Count: 1902  Distance: 95
+Count: 1903  Distance: 96
+Count: 1904  Distance: 95
+Count: 1905  Distance: 95
+Count: 1906  Distance: 95
+Count: 1907  Distance: 96
+Count: 1908  Distance: 95
+Count: 1909  Distance: 95
+Count: 1910  Distance: 95
+Count: 1911  Distance: 94
+Count: 1912  Distance: 95
+Count: 1913  Distance: 95
+Count: 1914  Distance: 95
+Count: 1915  Distance: 94
+Count: 1916  Distance: 94
+Count: 1917  Distance: 95
+Count: 1918  Distance: 94
+Count: 1919  Distance: 94
+Count: 1920  Distance: 94
+Count: 1921  Distance: 95
+Count: 1922  Distance: 95
+Count: 1923  Distance: 96
+Count: 1924  Distance: 94
+Count: 1925  Distance: 95
+Count: 1926  Distance: 95
+Count: 1927  Distance: 95
+Count: 1928  Distance: 94
+Count: 1929  Distance: 94
+Count: 1930  Distance: 94
+Count: 1931  Distance: 94
+Count: 1932  Distance: 95
+Count: 1933  Distance: 94
+Count: 1934  Distance: 94
+Count: 1935  Distance: 95
+Count: 1936  Distance: 95
+Count: 1937  Distance: 95
+Count: 1938  Distance: 95
+Count: 1939  Distance: 95
+Count: 1940  Distance: 95
+Count: 1941  Distance: 96
+Count: 1942  Distance: 95
+Count: 1943  Distance: 96
+Count: 1944  Distance: 95
+Count: 1945  Distance: 94
+Count: 1946  Distance: 94
+Count: 1947  Distance: 96
+Count: 1948  Distance: 94
+Count: 1949  Distance: 96
+Count: 1950  Distance: 94
+Count: 1951  Distance: 95
+Count: 1952  Distance: 95
+Count: 1953  Distance: 95
+Count: 1954  Distance: 95
+Count: 1955  Distance: 95
+Count: 1956  Distance: 95
+Count: 1957  Distance: 96
+Count: 1958  Distance: 96
+Count: 1959  Distance: 96
+Count: 1960  Distance: 95
+Count: 1961  Distance: 95
+Count: 1962  Distance: 96
+Count: 1963  Distance: 96
+Count: 1964  Distance: 95
+Count: 1965  Distance: 96
+Count: 1966  Distance: 94
+Count: 1967  Distance: 96
+Count: 1968  Distance: 95
+Count: 1969  Distance: 94
+Count: 1970  Distance: 95
+Count: 1971  Distance: 96
+Count: 1972  Distance: 95
+Count: 1973  Distance: 95
+Count: 1974  Distance: 95
+Count: 1975  Distance: 96
+Count: 1976  Distance: 95
+Count: 1977  Distance: 96
+Count: 1978  Distance: 94
+Count: 1979  Distance: 95
+Count: 1980  Distance: 95
+Count: 1981  Distance: 95
+Count: 1982  Distance: 96
+Count: 1983  Distance: 95
+Count: 1984  Distance: 96
+Count: 1985  Distance: 96
+Count: 1986  Distance: 96
+Count: 1987  Distance: 95
+Count: 1988  Distance: 96
+Count: 1989  Distance: 96
+Count: 1990  Distance: 95
+Count: 1991  Distance: 95
+Count: 1992  Distance: 95
+Count: 1993  Distance: 95
+Count: 1994  Distance: 94
+Count: 1995  Distance: 95
+Count: 1996  Distance: 94
+Count: 1997  Distance: 95
+Count: 1998  Distance: 94
+Count: 1999  Distance: 96
+Count: 2000  Distance: 94
+Count: 2001  Distance: 94
+Count: 2002  Distance: 94
+Count: 2003  Distance: 95
+Count: 2004  Distance: 94
+Count: 2005  Distance: 94
+Count: 2006  Distance: 94
+Count: 2007  Distance: 95
+Count: 2008  Distance: 94
+Count: 2009  Distance: 96
+Count: 2010  Distance: 94
+Count: 2011  Distance: 95
+Count: 2012  Distance: 96
+Count: 2013  Distance: 95
+Count: 2014  Distance: 94
+Count: 2015  Distance: 94
+Count: 2016  Distance: 95
+Count: 2017  Distance: 96
+Count: 2018  Distance: 95
+Count: 2019  Distance: 95
+Count: 2020  Distance: 95
+Count: 2021  Distance: 95
+Count: 2022  Distance: 96
+Count: 2023  Distance: 95
+Count: 2024  Distance: 95
+Count: 2025  Distance: 96
+Count: 2026  Distance: 95
+Count: 2027  Distance: 96
+Count: 2028  Distance: 94
+Count: 2029  Distance: 95
+Count: 2030  Distance: 95
+Count: 2031  Distance: 95
+Count: 2032  Distance: 94
+Count: 2033  Distance: 96
+Count: 2034  Distance: 94
+Count: 2035  Distance: 95
+Count: 2036  Distance: 94
+Count: 2037  Distance: 95
+Count: 2038  Distance: 96
+Count: 2039  Distance: 96
+Count: 2040  Distance: 95
+Count: 2041  Distance: 95
+Count: 2042  Distance: 95
+Count: 2043  Distance: 95
+Count: 2044  Distance: 96
+Count: 2045  Distance: 96
+Count: 2046  Distance: 95
+Count: 2047  Distance: 96
+Count: 2048  Distance: 95
+Count: 2049  Distance: 96
+Count: 2050  Distance: 94
+Count: 2051  Distance: 94
+Count: 2052  Distance: 95
+Count: 2053  Distance: 95
+Count: 2054  Distance: 94
+Count: 2055  Distance: 94
+Count: 2056  Distance: 95
+Count: 2057  Distance: 95
+Count: 2058  Distance: 94
+Count: 2059  Distance: 94
+Count: 2060  Distance: 94
+Count: 2061  Distance: 95
+Count: 2062  Distance: 95
+Count: 2063  Distance: 95
+Count: 2064  Distance: 95
+Count: 2065  Distance: 95
+Count: 2066  Distance: 94
+Count: 2067  Distance: 95
+Count: 2068  Distance: 95
+Count: 2069  Distance: 96
+Count: 2070  Distance: 93
+Count: 2071  Distance: 95
+Count: 2072  Distance: 94
+Count: 2073  Distance: 95
+Count: 2074  Distance: 95
+Count: 2075  Distance: 95
+Count: 2076  Distance: 95
+Count: 2077  Distance: 95
+Count: 2078  Distance: 95
+Count: 2079  Distance: 96
+Count: 2080  Distance: 95
+Count: 2081  Distance: 95
+Count: 2082  Distance: 95
+Count: 2083  Distance: 96
+Count: 2084  Distance: 95
+Count: 2085  Distance: 95
+Count: 2086  Distance: 94
+Count: 2087  Distance: 95
+Count: 2088  Distance: 94
+Count: 2089  Distance: 95
+Count: 2090  Distance: 94
+Count: 2091  Distance: 95
+Count: 2092  Distance: 95
+Count: 2093  Distance: 95
+Count: 2094  Distance: 95
+Count: 2095  Distance: 94
+Count: 2096  Distance: 94
+Count: 2097  Distance: 94
+Count: 2098  Distance: 94
+Count: 2099  Distance: 96
+Count: 2100  Distance: 94
+Count: 2101  Distance: 95
+Count: 2102  Distance: 94
+Count: 2103  Distance: 95
+Count: 2104  Distance: 96
+Count: 2105  Distance: 95
+Count: 2106  Distance: 94
+Count: 2107  Distance: 96
+Count: 2108  Distance: 95
+Count: 2109  Distance: 95
+Count: 2110  Distance: 95
+Count: 2111  Distance: 94
+Count: 2112  Distance: 94
+Count: 2113  Distance: 95
+Count: 2114  Distance: 95
+Count: 2115  Distance: 96
+Count: 2116  Distance: 96
+Count: 2117  Distance: 96
+Count: 2118  Distance: 96
+

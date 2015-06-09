@@ -1,0 +1,2287 @@
+Count: 2183  Distance: 96
+Count: 2184  Distance: 94
+Count: 2185  Distance: 94
+Count: 2186  Distance: 94
+Count: 2187  Distance: 95
+Count: 2188  Distance: 94
+Count: 2189  Distance: 95
+Count: 2190  Distance: 95
+Count: 2191  Distance: 95
+CouCount: 4160  Distance: 50
+Count: 4161  Distance: 51
+Count: 4162  Distance: 50
+Count: 4163  Distance: 51
+Count: 4164  Distance: 51
+Count: 4165  Distance: 51
+Count: 4166  Distance: 51
+Count: 4167  Distance: 51
+Count: 4168  Distance: 51
+Count: 4169  Distance: 51
+Count: 4170  Distance: 51
+Count: 4171  Distance: 51
+Count: 4172  Distance: 51
+Count: 4173  Distance: 52
+Count: 4174  Distance: 51
+Count: 4175  Distance: 52
+Count: 4176  Distance: 51
+Count: 4177  Distance: 52
+Count: 4178  Distance: 51
+Count: 4179  Distance: 52
+Count: 4180  Distance: 51
+Count: 4181  Distance: 52
+Count: 4182  Distance: 52
+Count: 4183  Distance: 52
+Count: 4184  Distance: 51
+Count: 4185  Distance: 53
+Count: 4186  Distance: 52
+Count: 4187  Distance: 52
+Count: 4188  Distance: 51
+Count: 4189  Distance: 52
+Count: 4190  Distance: 50
+Count: 4191  Distance: 52
+Count: 4192  Distance: 51
+Count: 4193  Distance: 50
+Count: 4194  Distance: 51
+Count: 4195  Distance: 50
+Count: 4196  Distance: 52
+Count: 4197  Distance: 51
+Count: 4198  Distance: 51
+Count: 4199  Distance: 52
+Count: 4200  Distance: 51
+Count: 4201  Distance: 52
+Count: 4202  Distance: 52
+Count: 4203  Distance: 52
+Count: 4204  Distance: 51
+Count: 4205  Distance: 52
+Count: 4206  Distance: 51
+Count: 4207  Distance: 52
+Count: 4208  Distance: 50
+Count: 4209  Distance: 52
+Count: 4210  Distance: 51
+Count: 4211  Distance: 51
+Count: 4212  Distance: 52
+Count: 4213  Distance: 51
+Count: 4214  Distance: 51
+Count: 4215  Distance: 51
+Count: 4216  Distance: 51
+Count: 4217  Distance: 51
+Count: 4218  Distance: 51
+Count: 4219  Distance: 51
+Count: 4220  Distance: 51
+Count: 4221  Distance: 51
+Count: 4222  Distance: 51
+Count: 4223  Distance: 51
+Count: 4224  Distance: 51
+Count: 4225  Distance: 51
+Count: 4226  Distance: 51
+Count: 4227  Distance: 52
+Count: 4228  Distance: 51
+Count: 4229  Distance: 51
+Count: 4230  Distance: 51
+Count: 4231  Distance: 51
+Count: 4232  Distance: 51
+Count: 4233  Distance: 51
+Count: 4234  Distance: 51
+Count: 4235  Distance: 51
+Count: 4236  Distance: 51
+Count: 4237  Distance: 51
+Count: 4238  Distance: 51
+Count: 4239  Distance: 51
+Count: 4240  Distance: 51
+Count: 4241  Distance: 51
+Count: 4242  Distance: 51
+Count: 4243  Distance: 51
+Count: 4244  Distance: 51
+Count: 4245  Distance: 53
+Count: 4246  Distance: 51
+Count: 4247  Distance: 51
+Count: 4248  Distance: 51
+Count: 4249  Distance: 52
+Count: 4250  Distance: 53
+Count: 4251  Distance: 52
+Count: 4252  Distance: 53
+Count: 4253  Distance: 53
+Count: 4254  Distance: 51
+Count: 4255  Distance: 53
+Count: 4256  Distance: 51
+Count: 4257  Distance: 52
+Count: 4258  Distance: 53
+Count: 4259  Distance: 52
+Count: 4260  Distance: 51
+Count: 4261  Distance: 51
+Count: 4262  Distance: 51
+Count: 4263  Distance: 51
+Count: 4264  Distance: 51
+Count: 4265  Distance: 51
+Count: 4266  Distance: 51
+Count: 4267  Distance: 51
+Welcome to the Pulsed Light lidar test program!
+Count: 1  Distance: 52
+Count: 2  Distance: 50
+Count: 3  Distance: 52
+Count: 4  Distance: 51
+Count: 5  Distance: 52
+Count: 6  Distance: 51
+Count: 7  Distance: 51
+Count: 8  Distance: 51
+Count: 9  Distance: 51
+Count: 10  Distance: 50
+Count: 11  Distance: 51
+Count: 12  Distance: 51
+Count: 13  Distance: 51
+Count: 14  Distance: 51
+Count: 15  Distance: 51
+Count: 16  Distance: 51
+Count: 17  Distance: 51
+Count: 18  Distance: 51
+Count: 19  Distance: 51
+Count: 20  Distance: 51
+Count: 21  Distance: 52
+Count: 22  Distance: 51
+Count: 23  Distance: 52
+Count: 24  Distance: 51
+Count: 25  Distance: 51
+Count: 26  Distance: 51
+Count: 27  Distance: 51
+Count: 28  Distance: 51
+Count: 29  Distance: 51
+Count: 30  Distance: 51
+Count: 31  Distance: 51
+Count: 32  Distance: 51
+Count: 33  Distance: 51
+Count: 34  Distance: 51
+Count: 35  Distance: 51
+Count: 36  Distance: 51
+Count: 37  Distance: 51
+Count: 38  Distance: 50
+Count: 39  Distance: 51
+Count: 40  Distance: 51
+Count: 41  Distance: 51
+Count: 42  Distance: 51
+Count: 43  Distance: 50
+Count: 44  Distance: 52
+Count: 45  Distance: 51
+Count: 46  Distance: 50
+Count: 47  Distance: 50
+Count: 48  Distance: 50
+Count: 49  Distance: 51
+Count: 50  Distance: 51
+Count: 51  Distance: 51
+Count: 52  Distance: 51
+Count: 53  Distance: 51
+Count: 54  Distance: 51
+Count: 55  Distance: 51
+Count: 56  Distance: 51
+Count: 57  Distance: 52
+Count: 58  Distance: 51
+Count: 59  Distance: 52
+Count: 60  Distance: 51
+Count: 61  Distance: 51
+Count: 62  Distance: 51
+Count: 63  Distance: 51
+Count: 64  Distance: 51
+Count: 65  Distance: 51
+Count: 66  Distance: 51
+Count: 67  Distance: 51
+Count: 68  Distance: 50
+Count: 69  Distance: 51
+Count: 70  Distance: 51
+Count: 71  Distance: 51
+Count: 72  Distance: 51
+Count: 73  Distance: 51
+Count: 74  Distance: 51
+Count: 75  Distance: 51
+Count: 76  Distance: 51
+Count: 77  Distance: 51
+Count: 78  Distance: 51
+Count: 79  Distance: 51
+Count: 80  Distance: 51
+Count: 81  Distance: 51
+Count: 82  Distance: 51
+Count: 83  Distance: 51
+Count: 84  Distance: 51
+Count: 85  Distance: 51
+Count: 86  Distance: 51
+Count: 87  Distance: 51
+Count: 88  Distance: 51
+Count: 89  Distance: 51
+Count: 90  Distance: 51
+Count: 91  Distance: 51
+Count: 92  Distance: 51
+Count: 93  Distance: 51
+Count: 94  Distance: 51
+Count: 95  Distance: 51
+Count: 96  Distance: 51
+Count: 97  Distance: 52
+Count: 98  Distance: 51
+Count: 99  Distance: 51
+Count: 100  Distance: 51
+Count: 101  Distance: 51
+Count: 102  Distance: 51
+Count: 103  Distance: 50
+Count: 104  Distance: 51
+Count: 105  Distance: 50
+Count: 106  Distance: 51
+Count: 107  Distance: 51
+Count: 108  Distance: 51
+Count: 109  Distance: 51
+Count: 110  Distance: 51
+Count: 111  Distance: 51
+Count: 112  Distance: 51
+Count: 113  Distance: 51
+Count: 114  Distance: 51
+Count: 115  Distance: 51
+Count: 116  Distance: 51
+Count: 117  Distance: 51
+Count: 118  Distance: 50
+Count: 119  Distance: 51
+Count: 120  Distance: 51
+Count: 121  Distance: 51
+Count: 122  Distance: 51
+Count: 123  Distance: 51
+Count: 124  Distance: 51
+Count: 125  Distance: 51
+Count: 126  Distance: 51
+Count: 127  Distance: 51
+Count: 128  Distance: 51
+Count: 129  Distance: 51
+Count: 130  Distance: 51
+Count: 131  Distance: 51
+Count: 132  Distance: 51
+Count: 133  Distance: 50
+Count: 134  Distance: 51
+Count: 135  Distance: 51
+Count: 136  Distance: 50
+Count: 137  Distance: 51
+Count: 138  Distance: 51
+Count: 139  Distance: 50
+Count: 140  Distance: 51
+Count: 141  Distance: 51
+Count: 142  Distance: 51
+Count: 143  Distance: 49
+Count: 144  Distance: 50
+Count: 145  Distance: 51
+Count: 146  Distance: 50
+Count: 147  Distance: 51
+Count: 148  Distance: 50
+Count: 149  Distance: 50
+Count: 150  Distance: 51
+Count: 151  Distance: 51
+Count: 152  Distance: 51
+Count: 153  Distance: 51
+Count: 154  Distance: 51
+Count: 155  Distance: 51
+Count: 156  Distance: 51
+Count: 157  Distance: 51
+Count: 158  Distance: 51
+Count: 159  Distance: 50
+Count: 160  Distance: 51
+Count: 161  Distance: 51
+Count: 162  Distance: 51
+Count: 163  Distance: 51
+Count: 164  Distance: 51
+Count: 165  Distance: 51
+Count: 166  Distance: 51
+Count: 167  Distance: 51
+Count: 168  Distance: 51
+Count: 169  Distance: 51
+Count: 170  Distance: 51
+Count: 171  Distance: 51
+Count: 172  Distance: 51
+Count: 173  Distance: 51
+Count: 174  Distance: 51
+Count: 175  Distance: 51
+Count: 176  Distance: 51
+Count: 177  Distance: 51
+Count: 178  Distance: 51
+Count: 179  Distance: 51
+Count: 180  Distance: 50
+Count: 181  Distance: 51
+Count: 182  Distance: 51
+Count: 183  Distance: 52
+Count: 184  Distance: 51
+Count: 185  Distance: 51
+Count: 186  Distance: 51
+Count: 187  Distance: 51
+Count: 188  Distance: 51
+Count: 189  Distance: 51
+Count: 190  Distance: 51
+Count: 191  Distance: 51
+Count: 192  Distance: 51
+Count: 193  Distance: 50
+Count: 194  Distance: 51
+Count: 195  Distance: 51
+Count: 196  Distance: 51
+Count: 197  Distance: 51
+Count: 198  Distance: 51
+Count: 199  Distance: 50
+Count: 200  Distance: 51
+Count: 201  Distance: 51
+Count: 202  Distance: 51
+Count: 203  Distance: 51
+Count: 204  Distance: 51
+Count: 205  Distance: 51
+Count: 206  Distance: 51
+Count: 207  Distance: 51
+Count: 208  Distance: 50
+Count: 209  Distance: 51
+Count: 210  Distance: 51
+Count: 211  Distance: 51
+Count: 212  Distance: 51
+Count: 213  Distance: 51
+Count: 214  Distance: 51
+Count: 215  Distance: 51
+Count: 216  Distance: 51
+Count: 217  Distance: 51
+Count: 218  Distance: 51
+Count: 219  Distance: 51
+Count: 220  Distance: 51
+Count: 221  Distance: 51
+Count: 222  Distance: 51
+Count: 223  Distance: 51
+Count: 224  Distance: 51
+Count: 225  Distance: 51
+Count: 226  Distance: 51
+Count: 227  Distance: 51
+Count: 228  Distance: 51
+Count: 229  Distance: 50
+Count: 230  Distance: 52
+Count: 231  Distance: 50
+Count: 232  Distance: 52
+Count: 233  Distance: 51
+Count: 234  Distance: 51
+Count: 235  Distance: 50
+Count: 236  Distance: 52
+Count: 237  Distance: 52
+Count: 238  Distance: 50
+Count: 239  Distance: 51
+Count: 240  Distance: 50
+Count: 241  Distance: 51
+Count: 242  Distance: 51
+Count: 243  Distance: 51
+Count: 244  Distance: 50
+Count: 245  Distance: 51
+Count: 246  Distance: 50
+Count: 247  Distance: 50
+Count: 248  Distance: 50
+Count: 249  Distance: 51
+Count: 250  Distance: 51
+Count: 251  Distance: 51
+Count: 252  Distance: 50
+Count: 253  Distance: 50
+Count: 254  Distance: 50
+Count: 255  Distance: 51
+Count: 256  Distance: 51
+Count: 257  Distance: 50
+Count: 258  Distance: 51
+Count: 259  Distance: 51
+Count: 260  Distance: 50
+Count: 261  Distance: 51
+Count: 262  Distance: 51
+Count: 263  Distance: 50
+Count: 264  Distance: 51
+Count: 265  Distance: 51
+Count: 266  Distance: 51
+Count: 267  Distance: 51
+Count: 268  Distance: 51
+Count: 269  Distance: 51
+Count: 270  Distance: 51
+Count: 271  Distance: 51
+Count: 272  Distance: 51
+Count: 273  Distance: 51
+Count: 274  Distance: 51
+Count: 275  Distance: 51
+Count: 276  Distance: 51
+Count: 277  Distance: 52
+Count: 278  Distance: 49
+Count: 279  Distance: 51
+Count: 280  Distance: 50
+Count: 281  Distance: 51
+Count: 282  Distance: 50
+Count: 283  Distance: 50
+Count: 284  Distance: 50
+Count: 285  Distance: 50
+Count: 286  Distance: 50
+Count: 287  Distance: 50
+Count: 288  Distance: 50
+Count: 289  Distance: 50
+Count: 290  Distance: 50
+Count: 291  Distance: 51
+Count: 292  Distance: 51
+Count: 293  Distance: 51
+Count: 294  Distance: 51
+Count: 295  Distance: 51
+Count: 296  Distance: 51
+Count: 297  Distance: 51
+Count: 298  Distance: 50
+Count: 299  Distance: 51
+Count: 300  Distance: 50
+Count: 301  Distance: 51
+Count: 302  Distance: 51
+Count: 303  Distance: 52
+Count: 304  Distance: 51
+Count: 305  Distance: 51
+Count: 306  Distance: 51
+Count: 307  Distance: 51
+Count: 308  Distance: 51
+Count: 309  Distance: 51
+Count: 310  Distance: 51
+Count: 311  Distance: 51
+Count: 312  Distance: 51
+Count: 313  Distance: 51
+Count: 314  Distance: 51
+Count: 315  Distance: 50
+Count: 316  Distance: 51
+Count: 317  Distance: 51
+Count: 318  Distance: 52
+Count: 319  Distance: 51
+Count: 320  Distance: 51
+Count: 321  Distance: 51
+Count: 322  Distance: 51
+Count: 323  Distance: 51
+Count: 324  Distance: 49
+Count: 325  Distance: 50
+Count: 326  Distance: 51
+Count: 327  Distance: 51
+Count: 328  Distance: 51
+Count: 329  Distance: 50
+Count: 330  Distance: 50
+Count: 331  Distance: 50
+Count: 332  Distance: 51
+Count: 333  Distance: 51
+Count: 334  Distance: 51
+Count: 335  Distance: 51
+Count: 336  Distance: 51
+Count: 337  Distance: 52
+Count: 338  Distance: 51
+Count: 339  Distance: 51
+Count: 340  Distance: 51
+Count: 341  Distance: 50
+Count: 342  Distance: 51
+Count: 343  Distance: 51
+Count: 344  Distance: 51
+Count: 345  Distance: 52
+Count: 346  Distance: 51
+Count: 347  Distance: 52
+Count: 348  Distance: 51
+Count: 349  Distance: 52
+Count: 350  Distance: 51
+Count: 351  Distance: 51
+Count: 352  Distance: 51
+Count: 353  Distance: 50
+Count: 354  Distance: 51
+Count: 355  Distance: 51
+Count: 356  Distance: 50
+Count: 357  Distance: 51
+Count: 358  Distance: 51
+Count: 359  Distance: 51
+Count: 360  Distance: 51
+Count: 361  Distance: 50
+Count: 362  Distance: 52
+Count: 363  Distance: 50
+Count: 364  Distance: 51
+Count: 365  Distance: 51
+Count: 366  Distance: 50
+Count: 367  Distance: 51
+Count: 368  Distance: 51
+Count: 369  Distance: 50
+Count: 370  Distance: 51
+Count: 371  Distance: 50
+Count: 372  Distance: 51
+Count: 373  Distance: 51
+Count: 374  Distance: 52
+Count: 375  Distance: 51
+Count: 376  Distance: 51
+Count: 377  Distance: 51
+Count: 378  Distance: 51
+Count: 379  Distance: 51
+Count: 380  Distance: 51
+Count: 381  Distance: 51
+Count: 382  Distance: 51
+Count: 383  Distance: 51
+Count: 384  Distance: 51
+Count: 385  Distance: 51
+Count: 386  Distance: 50
+Count: 387  Distance: 50
+Count: 388  Distance: 51
+Count: 389  Distance: 51
+Count: 390  Distance: 51
+Count: 391  Distance: 50
+Count: 392  Distance: 51
+Count: 393  Distance: 50
+Count: 394  Distance: 51
+Count: 395  Distance: 51
+Count: 396  Distance: 51
+Count: 397  Distance: 51
+Count: 398  Distance: 51
+Count: 399  Distance: 51
+Count: 400  Distance: 51
+Count: 401  Distance: 51
+Count: 402  Distance: 51
+Count: 403  Distance: 51
+Count: 404  Distance: 51
+Count: 405  Distance: 51
+Count: 406  Distance: 50
+Count: 407  Distance: 51
+Count: 408  Distance: 51
+Count: 409  Distance: 51
+Count: 410  Distance: 51
+Count: 411  Distance: 51
+Count: 412  Distance: 52
+Count: 413  Distance: 51
+Count: 414  Distance: 51
+Count: 415  Distance: 52
+Count: 416  Distance: 51
+Count: 417  Distance: 52
+Count: 418  Distance: 51
+Count: 419  Distance: 52
+Count: 420  Distance: 51
+Count: 421  Distance: 52
+Count: 422  Distance: 52
+Count: 423  Distance: 52
+Count: 424  Distance: 52
+Count: 425  Distance: 52
+Count: 426  Distance: 51
+Count: 427  Distance: 51
+Count: 428  Distance: 51
+Count: 429  Distance: 50
+Count: 430  Distance: 51
+Count: 431  Distance: 51
+Count: 432  Distance: 51
+Count: 433  Distance: 51
+Count: 434  Distance: 51
+Count: 435  Distance: 51
+Count: 436  Distance: 51
+Count: 437  Distance: 51
+Count: 438  Distance: 51
+Count: 439  Distance: 52
+Count: 440  Distance: 51
+Count: 441  Distance: 51
+Count: 442  Distance: 51
+Count: 443  Distance: 51
+Count: 444  Distance: 51
+Count: 445  Distance: 51
+Count: 446  Distance: 51
+Count: 447  Distance: 51
+Count: 448  Distance: 50
+Count: 449  Distance: 51
+Count: 450  Distance: 51
+Count: 451  Distance: 51
+Count: 452  Distance: 51
+Count: 453  Distance: 51
+Count: 454  Distance: 51
+Count: 455  Distance: 51
+Count: 456  Distance: 51
+Count: 457  Distance: 51
+Count: 458  Distance: 51
+Count: 459  Distance: 51
+Count: 460  Distance: 51
+Count: 461  Distance: 50
+Count: 462  Distance: 51
+Count: 463  Distance: 51
+Count: 464  Distance: 51
+Count: 465  Distance: 51
+Count: 466  Distance: 51
+Count: 467  Distance: 51
+Count: 468  Distance: 50
+Count: 469  Distance: 51
+Count: 470  Distance: 51
+Count: 471  Distance: 50
+Count: 472  Distance: 51
+Count: 473  Distance: 50
+Count: 474  Distance: 51
+Count: 475  Distance: 51
+Count: 476  Distance: 51
+Count: 477  Distance: 51
+Count: 478  Distance: 50
+Count: 479  Distance: 51
+Count: 480  Distance: 51
+Count: 481  Distance: 50
+Count: 482  Distance: 51
+Count: 483  Distance: 52
+Count: 484  Distance: 51
+Count: 485  Distance: 50
+Count: 486  Distance: 51
+Count: 487  Distance: 51
+Count: 488  Distance: 50
+Count: 489  Distance: 51
+Count: 490  Distance: 51
+Count: 491  Distance: 51
+Count: 492  Distance: 51
+Count: 493  Distance: 51
+Count: 494  Distance: 52
+Count: 495  Distance: 51
+Count: 496  Distance: 51
+Count: 497  Distance: 51
+Count: 498  Distance: 50
+Count: 499  Distance: 51
+Count: 500  Distance: 50
+Count: 501  Distance: 50
+Count: 502  Distance: 50
+Count: 503  Distance: 50
+Count: 504  Distance: 50
+Count: 505  Distance: 51
+Count: 506  Distance: 50
+Count: 507  Distance: 51
+Count: 508  Distance: 50
+Count: 509  Distance: 51
+Count: 510  Distance: 50
+Count: 511  Distance: 51
+Count: 512  Distance: 50
+Count: 513  Distance: 51
+Count: 514  Distance: 51
+Count: 515  Distance: 51
+Count: 516  Distance: 51
+Count: 517  Distance: 51
+Count: 518  Distance: 51
+Count: 519  Distance: 51
+Count: 520  Distance: 50
+Count: 521  Distance: 52
+Count: 522  Distance: 51
+Count: 523  Distance: 51
+Count: 524  Distance: 51
+Count: 525  Distance: 51
+Count: 526  Distance: 51
+Count: 527  Distance: 51
+Count: 528  Distance: 51
+Count: 529  Distance: 51
+Count: 530  Distance: 51
+Count: 531  Distance: 51
+Count: 532  Distance: 51
+Count: 533  Distance: 51
+Count: 534  Distance: 50
+Count: 535  Distance: 51
+Count: 536  Distance: 50
+Count: 537  Distance: 51
+Count: 538  Distance: 51
+Count: 539  Distance: 51
+Count: 540  Distance: 51
+Count: 541  Distance: 50
+Count: 542  Distance: 50
+Count: 543  Distance: 51
+Count: 544  Distance: 50
+Count: 545  Distance: 51
+Count: 546  Distance: 51
+Count: 547  Distance: 50
+Count: 548  Distance: 51
+Count: 549  Distance: 51
+Count: 550  Distance: 51
+Count: 551  Distance: 51
+Count: 552  Distance: 50
+Count: 553  Distance: 50
+Count: 554  Distance: 50
+Count: 555  Distance: 50
+Count: 556  Distance: 50
+Count: 557  Distance: 50
+Count: 558  Distance: 49
+Count: 559  Distance: 49
+Count: 560  Distance: 50
+Count: 561  Distance: 51
+Count: 562  Distance: 50
+Count: 563  Distance: 50
+Count: 564  Distance: 50
+Count: 565  Distance: 51
+Count: 566  Distance: 51
+Count: 567  Distance: 51
+Count: 568  Distance: 51
+Count: 569  Distance: 52
+Count: 570  Distance: 51
+Count: 571  Distance: 51
+Count: 572  Distance: 51
+Count: 573  Distance: 50
+Count: 574  Distance: 51
+Count: 575  Distance: 51
+Count: 576  Distance: 51
+Count: 577  Distance: 51
+Count: 578  Distance: 51
+Count: 579  Distance: 51
+Count: 580  Distance: 50
+Count: 581  Distance: 51
+Count: 582  Distance: 52
+Count: 583  Distance: 51
+Count: 584  Distance: 51
+Count: 585  Distance: 51
+Count: 586  Distance: 51
+Count: 587  Distance: 51
+Count: 588  Distance: 51
+Count: 589  Distance: 51
+Count: 590  Distance: 51
+Count: 591  Distance: 51
+Count: 592  Distance: 51
+Count: 593  Distance: 51
+Count: 594  Distance: 51
+Count: 595  Distance: 50
+Count: 596  Distance: 51
+Count: 597  Distance: 51
+Count: 598  Distance: 51
+Count: 599  Distance: 51
+Count: 600  Distance: 51
+Count: 601  Distance: 51
+Count: 602  Distance: 51
+Count: 603  Distance: 51
+Count: 604  Distance: 50
+Count: 605  Distance: 50
+Count: 606  Distance: 51
+Count: 607  Distance: 51
+Count: 608  Distance: 51
+Count: 609  Distance: 51
+Count: 610  Distance: 51
+Count: 611  Distance: 51
+Count: 612  Distance: 51
+Count: 613  Distance: 52
+Count: 614  Distance: 51
+Count: 615  Distance: 51
+Count: 616  Distance: 51
+Count: 617  Distance: 51
+Count: 618  Distance: 51
+Count: 619  Distance: 51
+Count: 620  Distance: 51
+Count: 621  Distance: 52
+Count: 622  Distance: 52
+Count: 623  Distance: 51
+Count: 624  Distance: 51
+Count: 625  Distance: 51
+Count: 626  Distance: 51
+Count: 627  Distance: 51
+Count: 628  Distance: 51
+Count: 629  Distance: 51
+Count: 630  Distance: 51
+Count: 631  Distance: 51
+Count: 632  Distance: 51
+Count: 633  Distance: 50
+Count: 634  Distance: 51
+Count: 635  Distance: 51
+Count: 636  Distance: 50
+Count: 637  Distance: 51
+Count: 638  Distance: 51
+Count: 639  Distance: 51
+Count: 640  Distance: 51
+Count: 641  Distance: 51
+Count: 642  Distance: 51
+Count: 643  Distance: 51
+Count: 644  Distance: 51
+Count: 645  Distance: 51
+Count: 646  Distance: 51
+Count: 647  Distance: 51
+Count: 648  Distance: 51
+Count: 649  Distance: 51
+Count: 650  Distance: 51
+Count: 651  Distance: 51
+Count: 652  Distance: 50
+Count: 653  Distance: 51
+Count: 654  Distance: 50
+Count: 655  Distance: 51
+Count: 656  Distance: 51
+Count: 657  Distance: 51
+Count: 658  Distance: 50
+Count: 659  Distance: 51
+Count: 660  Distance: 51
+Count: 661  Distance: 51
+Count: 662  Distance: 50
+Count: 663  Distance: 50
+Count: 664  Distance: 51
+Count: 665  Distance: 51
+Count: 666  Distance: 49
+Count: 667  Distance: 51
+Count: 668  Distance: 51
+Count: 669  Distance: 51
+Count: 670  Distance: 51
+Count: 671  Distance: 51
+Count: 672  Distance: 51
+Count: 673  Distance: 51
+Count: 674  Distance: 52
+Count: 675  Distance: 51
+Count: 676  Distance: 51
+Count: 677  Distance: 51
+Count: 678  Distance: 51
+Count: 679  Distance: 51
+Count: 680  Distance: 50
+Count: 681  Distance: 51
+Count: 682  Distance: 51
+Count: 683  Distance: 51
+Count: 684  Distance: 50
+Count: 685  Distance: 51
+Count: 686  Distance: 50
+Count: 687  Distance: 52
+Count: 688  Distance: 50
+Count: 689  Distance: 51
+Count: 690  Distance: 50
+Count: 691  Distance: 51
+Count: 692  Distance: 51
+Count: 693  Distance: 51
+Count: 694  Distance: 50
+Count: 695  Distance: 50
+Count: 696  Distance: 50
+Count: 697  Distance: 52
+Count: 698  Distance: 51
+Count: 699  Distance: 51
+Count: 700  Distance: 50
+Count: 701  Distance: 51
+Count: 702  Distance: 50
+Count: 703  Distance: 50
+Count: 704  Distance: 50
+Count: 705  Distance: 49
+Count: 706  Distance: 50
+Count: 707  Distance: 50
+Count: 708  Distance: 49
+Count: 709  Distance: 51
+Count: 710  Distance: 51
+Count: 711  Distance: 51
+Count: 712  Distance: 51
+Count: 713  Distance: 51
+Count: 714  Distance: 51
+Count: 715  Distance: 51
+Count: 716  Distance: 51
+Count: 717  Distance: 51
+Count: 718  Distance: 51
+Count: 719  Distance: 51
+Count: 720  Distance: 51
+Count: 721  Distance: 51
+Count: 722  Distance: 51
+Count: 723  Distance: 51
+Count: 724  Distance: 51
+Count: 725  Distance: 51
+Count: 726  Distance: 51
+Count: 727  Distance: 51
+Count: 728  Distance: 52
+Count: 729  Distance: 51
+Count: 730  Distance: 51
+Count: 731  Distance: 52
+Count: 732  Distance: 52
+Count: 733  Distance: 52
+Count: 734  Distance: 51
+Count: 735  Distance: 51
+Count: 736  Distance: 51
+Count: 737  Distance: 51
+Count: 738  Distance: 50
+Count: 739  Distance: 50
+Count: 740  Distance: 51
+Count: 741  Distance: 51
+Count: 742  Distance: 52
+Count: 743  Distance: 51
+Count: 744  Distance: 51
+Count: 745  Distance: 52
+Count: 746  Distance: 52
+Count: 747  Distance: 52
+Count: 748  Distance: 51
+Count: 749  Distance: 52
+Count: 750  Distance: 51
+Count: 751  Distance: 51
+Count: 752  Distance: 51
+Count: 753  Distance: 51
+Count: 754  Distance: 51
+Count: 755  Distance: 51
+Count: 756  Distance: 51
+Count: 757  Distance: 52
+Count: 758  Distance: 51
+Count: 759  Distance: 50
+Count: 760  Distance: 51
+Count: 761  Distance: 51
+Count: 762  Distance: 51
+Count: 763  Distance: 51
+Count: 764  Distance: 50
+Count: 765  Distance: 50
+Count: 766  Distance: 50
+Count: 767  Distance: 50
+Count: 768  Distance: 49
+Count: 769  Distance: 50
+Count: 770  Distance: 51
+Count: 771  Distance: 51
+Count: 772  Distance: 50
+Count: 773  Distance: 50
+Count: 774  Distance: 50
+Count: 775  Distance: 51
+Count: 776  Distance: 50
+Count: 777  Distance: 52
+Count: 778  Distance: 51
+Count: 779  Distance: 51
+Count: 780  Distance: 51
+Count: 781  Distance: 51
+Count: 782  Distance: 51
+Count: 783  Distance: 51
+Count: 784  Distance: 50
+Count: 785  Distance: 51
+Count: 786  Distance: 51
+Count: 787  Distance: 51
+Count: 788  Distance: 51
+Count: 789  Distance: 51
+Count: 790  Distance: 51
+Count: 791  Distance: 52
+Count: 792  Distance: 51
+Count: 793  Distance: 52
+Count: 794  Distance: 51
+Count: 795  Distance: 52
+Count: 796  Distance: 51
+Count: 797  Distance: 52
+Count: 798  Distance: 51
+Count: 799  Distance: 52
+Count: 800  Distance: 52
+Count: 801  Distance: 52
+Count: 802  Distance: 53
+Count: 803  Distance: 52
+Count: 804  Distance: 52
+Count: 805  Distance: 52
+Count: 806  Distance: 52
+Count: 807  Distance: 52
+Count: 808  Distance: 51
+Count: 809  Distance: 52
+Count: 810  Distance: 51
+Count: 811  Distance: 51
+Count: 812  Distance: 51
+Count: 813  Distance: 51
+Count: 814  Distance: 51
+Count: 815  Distance: 51
+Count: 816  Distance: 51
+Count: 817  Distance: 51
+Count: 818  Distance: 51
+Count: 819  Distance: 51
+Count: 820  Distance: 51
+Count: 821  Distance: 52
+Count: 822  Distance: 51
+Count: 823  Distance: 51
+Count: 824  Distance: 51
+Count: 825  Distance: 50
+Count: 826  Distance: 51
+Count: 827  Distance: 52
+Count: 828  Distance: 51
+Count: 829  Distance: 51
+Count: 830  Distance: 51
+Count: 831  Distance: 50
+Count: 832  Distance: 51
+Count: 833  Distance: 51
+Count: 834  Distance: 52
+Count: 835  Distance: 51
+Count: 836  Distance: 51
+Count: 837  Distance: 51
+Count: 838  Distance: 50
+Count: 839  Distance: 51
+Count: 840  Distance: 51
+Count: 841  Distance: 51
+Count: 842  Distance: 51
+Count: 843  Distance: 51
+Count: 844  Distance: 51
+Count: 845  Distance: 51
+Count: 846  Distance: 51
+Count: 847  Distance: 51
+Count: 848  Distance: 51
+Count: 849  Distance: 52
+Count: 850  Distance: 51
+Count: 851  Distance: 52
+Count: 852  Distance: 51
+Count: 853  Distance: 52
+Count: 854  Distance: 52
+Count: 855  Distance: 52
+Count: 856  Distance: 52
+Count: 857  Distance: 52
+Count: 858  Distance: 52
+Count: 859  Distance: 52
+Count: 860  Distance: 51
+Count: 861  Distance: 51
+Count: 862  Distance: 51
+Count: 863  Distance: 51
+Count: 864  Distance: 51
+Count: 865  Distance: 51
+Count: 866  Distance: 51
+Count: 867  Distance: 52
+Count: 868  Distance: 51
+Count: 869  Distance: 52
+Count: 870  Distance: 51
+Count: 871  Distance: 51
+Count: 872  Distance: 51
+Count: 873  Distance: 51
+Count: 874  Distance: 51
+Count: 875  Distance: 51
+Count: 876  Distance: 52
+Count: 877  Distance: 52
+Count: 878  Distance: 51
+Count: 879  Distance: 51
+Count: 880  Distance: 51
+Count: 881  Distance: 51
+Count: 882  Distance: 51
+Count: 883  Distance: 51
+Count: 884  Distance: 51
+Count: 885  Distance: 51
+Count: 886  Distance: 51
+Count: 887  Distance: 51
+Count: 888  Distance: 51
+Count: 889  Distance: 52
+Count: 890  Distance: 51
+Count: 891  Distance: 51
+Count: 892  Distance: 52
+Count: 893  Distance: 51
+Count: 894  Distance: 51
+Count: 895  Distance: 51
+Count: 896  Distance: 51
+Count: 897  Distance: 51
+Count: 898  Distance: 51
+Count: 899  Distance: 51
+Count: 900  Distance: 51
+Count: 901  Distance: 51
+Count: 902  Distance: 51
+Count: 903  Distance: 51
+Count: 904  Distance: 51
+Count: 905  Distance: 51
+Count: 906  Distance: 51
+Count: 907  Distance: 51
+Count: 908  Distance: 51
+Count: 909  Distance: 51
+Count: 910  Distance: 51
+Count: 911  Distance: 51
+Count: 912  Distance: 52
+Count: 913  Distance: 51
+Count: 914  Distance: 51
+Count: 915  Distance: 51
+Count: 916  Distance: 51
+Count: 917  Distance: 52
+Count: 918  Distance: 51
+Count: 919  Distance: 51
+Count: 920  Distance: 51
+Count: 921  Distance: 51
+Count: 922  Distance: 51
+Count: 923  Distance: 51
+Count: 924  Distance: 51
+Count: 925  Distance: 51
+Count: 926  Distance: 51
+Count: 927  Distance: 52
+Count: 928  Distance: 51
+Count: 929  Distance: 51
+Count: 930  Distance: 51
+Count: 931  Distance: 51
+Count: 932  Distance: 51
+Count: 933  Distance: 51
+Count: 934  Distance: 51
+Count: 935  Distance: 51
+Count: 936  Distance: 51
+Count: 937  Distance: 52
+Count: 938  Distance: 50
+Count: 939  Distance: 50
+Count: 940  Distance: 49
+Count: 941  Distance: 51
+Count: 942  Distance: 50
+Count: 943  Distance: 50
+Count: 944  Distance: 50
+Count: 945  Distance: 51
+Count: 946  Distance: 51
+Count: 947  Distance: 51
+Count: 948  Distance: 50
+Count: 949  Distance: 51
+Count: 950  Distance: 50
+Count: 951  Distance: 50
+Count: 952  Distance: 51
+Count: 953  Distance: 51
+Count: 954  Distance: 50
+Count: 955  Distance: 51
+Count: 956  Distance: 50
+Count: 957  Distance: 50
+Count: 958  Distance: 51
+Count: 959  Distance: 51
+Count: 960  Distance: 51
+Count: 961  Distance: 51
+Count: 962  Distance: 52
+Count: 963  Distance: 51
+Count: 964  Distance: 50
+Count: 965  Distance: 51
+Count: 966  Distance: 51
+Count: 967  Distance: 51
+Count: 968  Distance: 51
+Count: 969  Distance: 51
+Count: 970  Distance: 50
+Count: 971  Distance: 51
+Count: 972  Distance: 52
+Count: 973  Distance: 51
+Count: 974  Distance: 51
+Count: 975  Distance: 51
+Count: 976  Distance: 51
+Count: 977  Distance: 51
+Count: 978  Distance: 51
+Count: 979  Distance: 52
+Count: 980  Distance: 50
+Count: 981  Distance: 51
+Count: 982  Distance: 51
+Count: 983  Distance: 50
+Count: 984  Distance: 51
+Count: 985  Distance: 51
+Count: 986  Distance: 51
+Count: 987  Distance: 51
+Count: 988  Distance: 49
+Count: 989  Distance: 51
+Count: 990  Distance: 50
+Count: 991  Distance: 50
+Count: 992  Distance: 50
+Count: 993  Distance: 51
+Count: 994  Distance: 50
+Count: 995  Distance: 50
+Count: 996  Distance: 50
+Count: 997  Distance: 51
+Count: 998  Distance: 51
+Count: 999  Distance: 51
+Count: 1000  Distance: 51
+Count: 1001  Distance: 52
+Count: 1002  Distance: 51
+Count: 1003  Distance: 51
+Count: 1004  Distance: 50
+Count: 1005  Distance: 50
+Count: 1006  Distance: 50
+Count: 1007  Distance: 51
+Count: 1008  Distance: 51
+Count: 1009  Distance: 51
+Count: 1010  Distance: 50
+Count: 1011  Distance: 51
+Count: 1012  Distance: 52
+Count: 1013  Distance: 50
+Count: 1014  Distance: 50
+Count: 1015  Distance: 52
+Count: 1016  Distance: 51
+Count: 1017  Distance: 51
+Count: 1018  Distance: 50
+Count: 1019  Distance: 51
+Count: 1020  Distance: 50
+Count: 1021  Distance: 51
+Count: 1022  Distance: 50
+Count: 1023  Distance: 50
+Count: 1024  Distance: 50
+Count: 1025  Distance: 50
+Count: 1026  Distance: 50
+Count: 1027  Distance: 50
+Count: 1028  Distance: 50
+Count: 1029  Distance: 50
+Count: 1030  Distance: 50
+Count: 1031  Distance: 51
+Count: 1032  Distance: 50
+Count: 1033  Distance: 51
+Count: 1034  Distance: 50
+Count: 1035  Distance: 51
+Count: 1036  Distance: 51
+Count: 1037  Distance: 51
+Count: 1038  Distance: 50
+Count: 1039  Distance: 51
+Count: 1040  Distance: 51
+Count: 1041  Distance: 51
+Count: 1042  Distance: 51
+Count: 1043  Distance: 52
+Count: 1044  Distance: 50
+Count: 1045  Distance: 51
+Count: 1046  Distance: 50
+Count: 1047  Distance: 50
+Count: 1048  Distance: 50
+Count: 1049  Distance: 50
+Count: 1050  Distance: 50
+Count: 1051  Distance: 50
+Count: 1052  Distance: 50
+Count: 1053  Distance: 50
+Count: 1054  Distance: 50
+Count: 1055  Distance: 50
+Count: 1056  Distance: 50
+Count: 1057  Distance: 49
+Count: 1058  Distance: 50
+Count: 1059  Distance: 51
+Count: 1060  Distance: 51
+Count: 1061  Distance: 51
+Count: 1062  Distance: 50
+Count: 1063  Distance: 51
+Count: 1064  Distance: 51
+Count: 1065  Distance: 51
+Count: 1066  Distance: 51
+Count: 1067  Distance: 52
+Count: 1068  Distance: 50
+Count: 1069  Distance: 52
+Count: 1070  Distance: 51
+Count: 1071  Distance: 51
+Count: 1072  Distance: 50
+Count: 1073  Distance: 51
+Count: 1074  Distance: 51
+Count: 1075  Distance: 51
+Count: 1076  Distance: 51
+Count: 1077  Distance: 51
+Count: 1078  Distance: 50
+Count: 1079  Distance: 51
+Count: 1080  Distance: 51
+Count: 1081  Distance: 51
+Count: 1082  Distance: 51
+Count: 1083  Distance: 51
+Count: 1084  Distance: 51
+Count: 1085  Distance: 51
+Count: 1086  Distance: 51
+Count: 1087  Distance: 51
+Count: 1088  Distance: 51
+Count: 1089  Distance: 51
+Count: 1090  Distance: 51
+Count: 1091  Distance: 51
+Count: 1092  Distance: 51
+Count: 1093  Distance: 51
+Count: 1094  Distance: 51
+Count: 1095  Distance: 51
+Count: 1096  Distance: 51
+Count: 1097  Distance: 51
+Count: 1098  Distance: 51
+Count: 1099  Distance: 51
+Count: 1100  Distance: 51
+Count: 1101  Distance: 52
+Count: 1102  Distance: 52
+Count: 1103  Distance: 51
+Count: 1104  Distance: 50
+Count: 1105  Distance: 50
+Count: 1106  Distance: 50
+Count: 1107  Distance: 50
+Count: 1108  Distance: 49
+Count: 1109  Distance: 51
+Count: 1110  Distance: 51
+Count: 1111  Distance: 51
+Count: 1112  Distance: 52
+Count: 1113  Distance: 51
+Count: 1114  Distance: 50
+Count: 1115  Distance: 51
+Count: 1116  Distance: 51
+Count: 1117  Distance: 51
+Count: 1118  Distance: 51
+Count: 1119  Distance: 51
+Count: 1120  Distance: 51
+Count: 1121  Distance: 51
+Count: 1122  Distance: 51
+Count: 1123  Distance: 52
+Count: 1124  Distance: 51
+Count: 1125  Distance: 51
+Count: 1126  Distance: 51
+Count: 1127  Distance: 52
+Count: 1128  Distance: 51
+Count: 1129  Distance: 52
+Count: 1130  Distance: 52
+Count: 1131  Distance: 52
+Count: 1132  Distance: 51
+Count: 1133  Distance: 52
+Count: 1134  Distance: 51
+Count: 1135  Distance: 52
+Count: 1136  Distance: 52
+Count: 1137  Distance: 52
+Count: 1138  Distance: 50
+Count: 1139  Distance: 52
+Count: 1140  Distance: 52
+Count: 1141  Distance: 51
+Count: 1142  Distance: 51
+Count: 1143  Distance: 52
+Count: 1144  Distance: 52
+Count: 1145  Distance: 51
+Count: 1146  Distance: 51
+Count: 1147  Distance: 51
+Count: 1148  Distance: 50
+Count: 1149  Distance: 51
+Count: 1150  Distance: 51
+Count: 1151  Distance: 51
+Count: 1152  Distance: 51
+Count: 1153  Distance: 51
+Count: 1154  Distance: 51
+Count: 1155  Distance: 51
+Count: 1156  Distance: 51
+Count: 1157  Distance: 51
+Count: 1158  Distance: 51
+Count: 1159  Distance: 52
+Count: 1160  Distance: 51
+Count: 1161  Distance: 51
+Count: 1162  Distance: 51
+Count: 1163  Distance: 51
+Count: 1164  Distance: 51
+Count: 1165  Distance: 51
+Count: 1166  Distance: 51
+Count: 1167  Distance: 52
+Count: 1168  Distance: 50
+Count: 1169  Distance: 51
+Count: 1170  Distance: 51
+Count: 1171  Distance: 51
+Count: 1172  Distance: 51
+Count: 1173  Distance: 51
+Count: 1174  Distance: 52
+Count: 1175  Distance: 51
+Count: 1176  Distance: 51
+Count: 1177  Distance: 51
+Count: 1178  Distance: 51
+Count: 1179  Distance: 50
+Count: 1180  Distance: 51
+Count: 1181  Distance: 51
+Count: 1182  Distance: 51
+Count: 1183  Distance: 51
+Count: 1184  Distance: 51
+Count: 1185  Distance: 51
+Count: 1186  Distance: 51
+Count: 1187  Distance: 51
+Count: 1188  Distance: 51
+Count: 1189  Distance: 51
+Count: 1190  Distance: 51
+Count: 1191  Distance: 51
+Count: 1192  Distance: 51
+Count: 1193  Distance: 51
+Count: 1194  Distance: 51
+Count: 1195  Distance: 52
+Count: 1196  Distance: 51
+Count: 1197  Distance: 52
+Count: 1198  Distance: 51
+Count: 1199  Distance: 52
+Count: 1200  Distance: 52
+Count: 1201  Distance: 52
+Count: 1202  Distance: 52
+Count: 1203  Distance: 52
+Count: 1204  Distance: 52
+Count: 1205  Distance: 52
+Count: 1206  Distance: 51
+Count: 1207  Distance: 52
+Count: 1208  Distance: 51
+Count: 1209  Distance: 51
+Count: 1210  Distance: 51
+Count: 1211  Distance: 51
+Count: 1212  Distance: 51
+Count: 1213  Distance: 51
+Count: 1214  Distance: 51
+Count: 1215  Distance: 52
+Count: 1216  Distance: 51
+Count: 1217  Distance: 51
+Count: 1218  Distance: 51
+Count: 1219  Distance: 51
+Count: 1220  Distance: 51
+Count: 1221  Distance: 51
+Count: 1222  Distance: 51
+Count: 1223  Distance: 50
+Count: 1224  Distance: 50
+Count: 1225  Distance: 51
+Count: 1226  Distance: 51
+Count: 1227  Distance: 51
+Count: 1228  Distance: 50
+Count: 1229  Distance: 50
+Count: 1230  Distance: 50
+Count: 1231  Distance: 51
+Count: 1232  Distance: 51
+Count: 1233  Distance: 51
+Count: 1234  Distance: 51
+Count: 1235  Distance: 50
+Count: 1236  Distance: 51
+Count: 1237  Distance: 51
+Count: 1238  Distance: 50
+Count: 1239  Distance: 51
+Count: 1240  Distance: 51
+Count: 1241  Distance: 51
+Count: 1242  Distance: 51
+Count: 1243  Distance: 51
+Count: 1244  Distance: 50
+Count: 1245  Distance: 51
+Count: 1246  Distance: 50
+Count: 1247  Distance: 51
+Count: 1248  Distance: 51
+Count: 1249  Distance: 51
+Count: 1250  Distance: 51
+Count: 1251  Distance: 51
+Count: 1252  Distance: 51
+Count: 1253  Distance: 51
+Count: 1254  Distance: 51
+Count: 1255  Distance: 51
+Count: 1256  Distance: 51
+Count: 1257  Distance: 51
+Count: 1258  Distance: 51
+Count: 1259  Distance: 51
+Count: 1260  Distance: 51
+Count: 1261  Distance: 51
+Count: 1262  Distance: 52
+Count: 1263  Distance: 51
+Count: 1264  Distance: 51
+Count: 1265  Distance: 51
+Count: 1266  Distance: 51
+Count: 1267  Distance: 51
+Count: 1268  Distance: 51
+Count: 1269  Distance: 51
+Count: 1270  Distance: 50
+Count: 1271  Distance: 51
+Count: 1272  Distance: 51
+Count: 1273  Distance: 51
+Count: 1274  Distance: 51
+Count: 1275  Distance: 51
+Count: 1276  Distance: 51
+Count: 1277  Distance: 51
+Count: 1278  Distance: 51
+Count: 1279  Distance: 52
+Count: 1280  Distance: 51
+Count: 1281  Distance: 51
+Count: 1282  Distance: 50
+Count: 1283  Distance: 51
+Count: 1284  Distance: 50
+Count: 1285  Distance: 51
+Count: 1286  Distance: 51
+Count: 1287  Distance: 51
+Count: 1288  Distance: 50
+Count: 1289  Distance: 50
+Count: 1290  Distance: 50
+Count: 1291  Distance: 50
+Count: 1292  Distance: 50
+Count: 1293  Distance: 51
+Count: 1294  Distance: 50
+Count: 1295  Distance: 51
+Count: 1296  Distance: 51
+Count: 1297  Distance: 51
+Count: 1298  Distance: 51
+Count: 1299  Distance: 51
+Count: 1300  Distance: 50
+Count: 1301  Distance: 50
+Count: 1302  Distance: 50
+Count: 1303  Distance: 50
+Count: 1304  Distance: 50
+Count: 1305  Distance: 51
+Count: 1306  Distance: 50
+Count: 1307  Distance: 51
+Count: 1308  Distance: 51
+Count: 1309  Distance: 51
+Count: 1310  Distance: 51
+Count: 1311  Distance: 51
+Count: 1312  Distance: 51
+Count: 1313  Distance: 51
+Count: 1314  Distance: 50
+Count: 1315  Distance: 49
+Count: 1316  Distance: 50
+Count: 1317  Distance: 51
+Count: 1318  Distance: 50
+Count: 1319  Distance: 51
+Count: 1320  Distance: 50
+Count: 1321  Distance: 51
+Count: 1322  Distance: 51
+Count: 1323  Distance: 51
+Count: 1324  Distance: 51
+Count: 1325  Distance: 51
+Count: 1326  Distance: 51
+Count: 1327  Distance: 51
+Count: 1328  Distance: 51
+Count: 1329  Distance: 50
+Count: 1330  Distance: 51
+Count: 1331  Distance: 51
+Count: 1332  Distance: 51
+Count: 1333  Distance: 51
+Count: 1334  Distance: 50
+Count: 1335  Distance: 50
+Count: 1336  Distance: 49
+Count: 1337  Distance: 51
+Count: 1338  Distance: 51
+Count: 1339  Distance: 51
+Count: 1340  Distance: 50
+Count: 1341  Distance: 51
+Count: 1342  Distance: 50
+Count: 1343  Distance: 50
+Count: 1344  Distance: 50
+Count: 1345  Distance: 50
+Count: 1346  Distance: 50
+Count: 1347  Distance: 50
+Count: 1348  Distance: 49
+Count: 1349  Distance: 50
+Count: 1350  Distance: 50
+Count: 1351  Distance: 51
+Count: 1352  Distance: 50
+Count: 1353  Distance: 51
+Count: 1354  Distance: 49
+Count: 1355  Distance: 50
+Count: 1356  Distance: 50
+Count: 1357  Distance: 50
+Count: 1358  Distance: 49
+Count: 1359  Distance: 50
+Count: 1360  Distance: 50
+Count: 1361  Distance: 49
+Count: 1362  Distance: 50
+Count: 1363  Distance: 50
+Count: 1364  Distance: 50
+Count: 1365  Distance: 51
+Count: 1366  Distance: 49
+Count: 1367  Distance: 51
+Count: 1368  Distance: 50
+Count: 1369  Distance: 51
+Count: 1370  Distance: 51
+Count: 1371  Distance: 50
+Count: 1372  Distance: 51
+Count: 1373  Distance: 51
+Count: 1374  Distance: 50
+Count: 1375  Distance: 50
+Count: 1376  Distance: 51
+Count: 1377  Distance: 51
+Count: 1378  Distance: 50
+Count: 1379  Distance: 51
+Count: 1380  Distance: 51
+Count: 1381  Distance: 51
+Count: 1382  Distance: 51
+Count: 1383  Distance: 51
+Count: 1384  Distance: 50
+Count: 1385  Distance: 50
+Count: 1386  Distance: 50
+Count: 1387  Distance: 50
+Count: 1388  Distance: 51
+Count: 1389  Distance: 51
+Count: 1390  Distance: 51
+Count: 1391  Distance: 51
+Count: 1392  Distance: 51
+Count: 1393  Distance: 51
+Count: 1394  Distance: 49
+Count: 1395  Distance: 50
+Count: 1396  Distance: 50
+Count: 1397  Distance: 51
+Count: 1398  Distance: 51
+Count: 1399  Distance: 51
+Count: 1400  Distance: 50
+Count: 1401  Distance: 50
+Count: 1402  Distance: 50
+Count: 1403  Distance: 50
+Count: 1404  Distance: 49
+Count: 1405  Distance: 50
+Count: 1406  Distance: 50
+Count: 1407  Distance: 49
+Count: 1408  Distance: 49
+Count: 1409  Distance: 51
+Count: 1410  Distance: 50
+Count: 1411  Distance: 49
+Count: 1412  Distance: 50
+Count: 1413  Distance: 50
+Count: 1414  Distance: 50
+Count: 1415  Distance: 49
+Count: 1416  Distance: 50
+Count: 1417  Distance: 50
+Count: 1418  Distance: 50
+Count: 1419  Distance: 49
+Count: 1420  Distance: 50
+Count: 1421  Distance: 50
+Count: 1422  Distance: 51
+Count: 1423  Distance: 50
+Count: 1424  Distance: 51
+Count: 1425  Distance: 51
+Count: 1426  Distance: 50
+Count: 1427  Distance: 51
+Count: 1428  Distance: 51
+Count: 1429  Distance: 51
+Count: 1430  Distance: 51
+Count: 1431  Distance: 50
+Count: 1432  Distance: 51
+Count: 1433  Distance: 51
+Count: 1434  Distance: 51
+Count: 1435  Distance: 51
+Count: 1436  Distance: 51
+Count: 1437  Distance: 52
+Count: 1438  Distance: 50
+Count: 1439  Distance: 51
+Count: 1440  Distance: 51
+Count: 1441  Distance: 52
+Count: 1442  Distance: 51
+Count: 1443  Distance: 51
+Count: 1444  Distance: 51
+Count: 1445  Distance: 51
+Count: 1446  Distance: 51
+Count: 1447  Distance: 51
+Count: 1448  Distance: 50
+Count: 1449  Distance: 51
+Count: 1450  Distance: 51
+Count: 1451  Distance: 51
+Count: 1452  Distance: 51
+Count: 1453  Distance: 51
+Count: 1454  Distance: 51
+Count: 1455  Distance: 51
+Count: 1456  Distance: 51
+Count: 1457  Distance: 51
+Count: 1458  Distance: 51
+Count: 1459  Distance: 51
+Count: 1460  Distance: 50
+Count: 1461  Distance: 51
+Count: 1462  Distance: 52
+Count: 1463  Distance: 51
+Count: 1464  Distance: 51
+Count: 1465  Distance: 51
+Count: 1466  Distance: 50
+Count: 1467  Distance: 51
+Count: 1468  Distance: 51
+Count: 1469  Distance: 51
+Count: 1470  Distance: 51
+Count: 1471  Distance: 51
+Count: 1472  Distance: 51
+Count: 1473  Distance: 51
+Count: 1474  Distance: 50
+Count: 1475  Distance: 51
+Count: 1476  Distance: 51
+Count: 1477  Distance: 51
+Count: 1478  Distance: 50
+Count: 1479  Distance: 51
+Count: 1480  Distance: 51
+Count: 1481  Distance: 51
+Count: 1482  Distance: 51
+Count: 1483  Distance: 51
+Count: 1484  Distance: 50
+Count: 1485  Distance: 50
+Count: 1486  Distance: 50
+Count: 1487  Distance: 50
+Count: 1488  Distance: 50
+Count: 1489  Distance: 50
+Count: 1490  Distance: 50
+Count: 1491  Distance: 50
+Count: 1492  Distance: 50
+Count: 1493  Distance: 51
+Count: 1494  Distance: 51
+Count: 1495  Distance: 51
+Count: 1496  Distance: 50
+Count: 1497  Distance: 50
+Count: 1498  Distance: 49
+Count: 1499  Distance: 50
+Count: 1500  Distance: 50
+Count: 1501  Distance: 51
+Count: 1502  Distance: 50
+Count: 1503  Distance: 50
+Count: 1504  Distance: 50
+Count: 1505  Distance: 51
+Count: 1506  Distance: 50
+Count: 1507  Distance: 51
+Count: 1508  Distance: 51
+Count: 1509  Distance: 51
+Count: 1510  Distance: 50
+Count: 1511  Distance: 51
+Count: 1512  Distance: 51
+Count: 1513  Distance: 51
+Count: 1514  Distance: 51
+Count: 1515  Distance: 51
+Count: 1516  Distance: 51
+Count: 1517  Distance: 51
+Count: 1518  Distance: 51
+Count: 1519  Distance: 51
+Count: 1520  Distance: 51
+Count: 1521  Distance: 51
+Count: 1522  Distance: 51
+Count: 1523  Distance: 51
+Count: 1524  Distance: 51
+Count: 1525  Distance: 51
+Count: 1526  Distance: 50
+Count: 1527  Distance: 51
+Count: 1528  Distance: 51
+Count: 1529  Distance: 52
+Count: 1530  Distance: 51
+Count: 1531  Distance: 51
+Count: 1532  Distance: 51
+Count: 1533  Distance: 50
+Count: 1534  Distance: 50
+Count: 1535  Distance: 49
+Count: 1536  Distance: 50
+Count: 1537  Distance: 50
+Count: 1538  Distance: 50
+Count: 1539  Distance: 50
+Count: 1540  Distance: 50
+Count: 1541  Distance: 50
+Count: 1542  Distance: 50
+Count: 1543  Distance: 50
+Count: 1544  Distance: 49
+Count: 1545  Distance: 51
+Count: 1546  Distance: 50
+Count: 1547  Distance: 50
+Count: 1548  Distance: 50
+Count: 1549  Distance: 51
+Count: 1550  Distance: 51
+Count: 1551  Distance: 51
+Count: 1552  Distance: 50
+Count: 1553  Distance: 51
+Count: 1554  Distance: 50
+Count: 1555  Distance: 50
+Count: 1556  Distance: 50
+Count: 1557  Distance: 51
+Count: 1558  Distance: 50
+Count: 1559  Distance: 49
+Count: 1560  Distance: 50
+Count: 1561  Distance: 51
+Count: 1562  Distance: 51
+Count: 1563  Distance: 52
+Count: 1564  Distance: 51
+Count: 1565  Distance: 51
+Count: 1566  Distance: 51
+Count: 1567  Distance: 51
+Count: 1568  Distance: 51
+Count: 1569  Distance: 51
+Count: 1570  Distance: 51
+Count: 1571  Distance: 51
+Count: 1572  Distance: 51
+Count: 1573  Distance: 50
+Count: 1574  Distance: 51
+Count: 1575  Distance: 51
+Count: 1576  Distance: 51
+Count: 1577  Distance: 52
+Count: 1578  Distance: 51
+Count: 1579  Distance: 51
+Count: 1580  Distance: 51
+Count: 1581  Distance: 52
+Count: 1582  Distance: 51
+Count: 1583  Distance: 51
+Count: 1584  Distance: 51
+Count: 1585  Distance: 51
+Count: 1586  Distance: 51
+Count: 1587  Distance: 51
+Count: 1588  Distance: 51
+Count: 1589  Distance: 51
+Count: 1590  Distance: 51
+Count: 1591  Distance: 50
+Count: 1592  Distance: 50
+Count: 1593  Distance: 51
+Count: 1594  Distance: 50
+Count: 1595  Distance: 50
+Count: 1596  Distance: 50
+Count: 1597  Distance: 50
+Count: 1598  Distance: 50
+Count: 1599  Distance: 52
+Count: 1600  Distance: 51
+Count: 1601  Distance: 51
+Count: 1602  Distance: 52
+Count: 1603  Distance: 50
+Count: 1604  Distance: 50
+Count: 1605  Distance: 50
+Count: 1606  Distance: 50
+Count: 1607  Distance: 50
+Count: 1608  Distance: 50
+Count: 1609  Distance: 50
+Count: 1610  Distance: 50
+Count: 1611  Distance: 51
+Count: 1612  Distance: 50
+Count: 1613  Distance: 51
+Count: 1614  Distance: 51
+Count: 1615  Distance: 51
+Count: 1616  Distance: 49
+Count: 1617  Distance: 51
+Count: 1618  Distance: 50
+Count: 1619  Distance: 51
+Count: 1620  Distance: 51
+Count: 1621  Distance: 50
+Count: 1622  Distance: 50
+Count: 1623  Distance: 51
+Count: 1624  Distance: 51
+Count: 1625  Distance: 51
+Count: 1626  Distance: 51
+Count: 1627  Distance: 51
+Count: 1628  Distance: 50
+Count: 1629  Distance: 51
+Count: 1630  Distance: 49
+Count: 1631  Distance: 51
+Count: 1632  Distance: 51
+Count: 1633  Distance: 51
+Count: 1634  Distance: 51
+Count: 1635  Distance: 51
+Count: 1636  Distance: 51
+Count: 1637  Distance: 51
+Count: 1638  Distance: 51
+Count: 1639  Distance: 52
+Count: 1640  Distance: 51
+Count: 1641  Distance: 50
+Count: 1642  Distance: 52
+Count: 1643  Distance: 51
+Count: 1644  Distance: 51
+Count: 1645  Distance: 52
+Count: 1646  Distance: 51
+Count: 1647  Distance: 52
+Count: 1648  Distance: 51
+Count: 1649  Distance: 52
+Count: 1650  Distance: 51
+Count: 1651  Distance: 52
+Count: 1652  Distance: 51
+Count: 1653  Distance: 52
+Count: 1654  Distance: 51
+Count: 1655  Distance: 51
+Count: 1656  Distance: 50
+Count: 1657  Distance: 52
+Count: 1658  Distance: 51
+Count: 1659  Distance: 51
+Count: 1660  Distance: 50
+Count: 1661  Distance: 52
+Count: 1662  Distance: 51
+Count: 1663  Distance: 51
+Count: 1664  Distance: 51
+Count: 1665  Distance: 51
+Count: 1666  Distance: 51
+Count: 1667  Distance: 51
+Count: 1668  Distance: 51
+Count: 1669  Distance: 51
+Count: 1670  Distance: 51
+Count: 1671  Distance: 51
+Count: 1672  Distance: 51
+Count: 1673  Distance: 51
+Count: 1674  Distance: 50
+Count: 1675  Distance: 50
+Count: 1676  Distance: 50
+Count: 1677  Distance: 51
+Count: 1678  Distance: 50
+Count: 1679  Distance: 51
+Count: 1680  Distance: 50
+Count: 1681  Distance: 51
+Count: 1682  Distance: 51
+Count: 1683  Distance: 51
+Count: 1684  Distance: 51
+Count: 1685  Distance: 50
+Count: 1686  Distance: 50
+Count: 1687  Distance: 50
+Count: 1688  Distance: 50
+Count: 1689  Distance: 51
+Count: 1690  Distance: 50
+Count: 1691  Distance: 52
+Count: 1692  Distance: 50
+Count: 1693  Distance: 50
+Count: 1694  Distance: 51
+Count: 1695  Distance: 51
+Count: 1696  Distance: 50
+Count: 1697  Distance: 52
+Count: 1698  Distance: 49
+Count: 1699  Distance: 51
+Count: 1700  Distance: 51
+Count: 1701  Distance: 51
+Count: 1702  Distance: 51
+Count: 1703  Distance: 51
+Count: 1704  Distance: 51
+Count: 1705  Distance: 51
+Count: 1706  Distance: 51
+Count: 1707  Distance: 51
+Count: 1708  Distance: 50
+Count: 1709  Distance: 51
+Count: 1710  Distance: 50
+Count: 1711  Distance: 51
+Count: 1712  Distance: 50
+Count: 1713  Distance: 51
+Count: 1714  Distance: 51
+Count: 1715  Distance: 51
+Count: 1716  Distance: 51
+Count: 1717  Distance: 52
+Count: 1718  Distance: 51
+Count: 1719  Distance: 51
+Count: 1720  Distance: 51
+Count: 1721  Distance: 51
+Count: 1722  Distance: 51
+Count: 1723  Distance: 52
+Count: 1724  Distance: 51
+Count: 1725  Distance: 51
+Count: 1726  Distance: 51
+Count: 1727  Distance: 51
+Count: 1728  Distance: 51
+Count: 1729  Distance: 51
+Count: 1730  Distance: 51
+Count: 1731  Distance: 51
+Count: 1732  Distance: 52
+Count: 1733  Distance: 51
+Count: 1734  Distance: 50
+Count: 1735  Distance: 51
+Count: 1736  Distance: 50
+Count: 1737  Distance: 51
+Count: 1738  Distance: 50
+Count: 1739  Distance: 50
+Count: 1740  Distance: 51
+Count: 1741  Distance: 51
+Count: 1742  Distance: 49
+Count: 1743  Distance: 51
+Count: 1744  Distance: 50
+Count: 1745  Distance: 51
+Count: 1746  Distance: 51
+Count: 1747  Distance: 51
+Count: 1748  Distance: 50
+Count: 1749  Distance: 51
+Count: 1750  Distance: 50
+Count: 1751  Distance: 51
+Count: 1752  Distance: 50
+Count: 1753  Distance: 51
+Count: 1754  Distance: 52
+Count: 1755  Distance: 51
+Count: 1756  Distance: 51
+Count: 1757  Distance: 52
+Count: 1758  Distance: 50
+Count: 1759  Distance: 51
+Count: 1760  Distance: 51
+Count: 1761  Distance: 51
+Count: 1762  Distance: 52
+Count: 1763  Distance: 51
+Count: 1764  Distance: 51
+Count: 1765  Distance: 51
+Count: 1766  Distance: 51
+Count: 1767  Distance: 51
+Count: 1768  Distance: 51
+Count: 1769  Distance: 51
+Count: 1770  Distance: 50
+Count: 1771  Distance: 51
+Count: 1772  Distance: 50
+Count: 1773  Distance: 51
+Count: 1774  Distance: 51
+Count: 1775  Distance: 51
+Count: 1776  Distance: 51
+Count: 1777  Distance: 51
+Count: 1778  Distance: 51
+Count: 1779  Distance: 51
+Count: 1780  Distance: 50
+Count: 1781  Distance: 51
+Count: 1782  Distance: 51
+Count: 1783  Distance: 51
+Count: 1784  Distance: 51
+Count: 1785  Distance: 51
+Count: 1786  Distance: 51
+Count: 1787  Distance: 52
+Count: 1788  Distance: 51
+Count: 1789  Distance: 51
+Count: 1790  Distance: 51
+Count: 1791  Distance: 51
+Count: 1792  Distance: 51
+Count: 1793  Distance: 50
+Count: 1794  Distance: 50
+Count: 1795  Distance: 51
+Count: 1796  Distance: 51
+Count: 1797  Distance: 51
+Count: 1798  Distance: 51
+Count: 1799  Distance: 51
+Count: 1800  Distance: 51
+Count: 1801  Distance: 51
+Count: 1802  Distance: 51
+Count: 1803  Distance: 52
+Count: 1804  Distance: 52
+Count: 1805  Distance: 52
+Count: 1806  Distance: 51
+Count: 1807  Distance: 50
+Count: 1808  Distance: 51
+Count: 1809  Distance: 51
+Count: 1810  Distance: 51
+Count: 1811  Distance: 51
+Count: 1812  Distance: 51
+Count: 1813  Distance: 51
+Count: 1814  Distance: 51
+Count: 1815  Distance: 51
+Count: 1816  Distance: 51
+Count: 1817  Distance: 51
+Count: 1818  Distance: 50
+Count: 1819  Distance: 51
+Count: 1820  Distance: 51
+Count: 1821  Distance: 52
+Count: 1822  Distance: 51
+Count: 1823  Distance: 52
+Count: 1824  Distance: 51
+Count: 1825  Distance: 52
+Count: 1826  Distance: 51
+Count: 1827  Distance: 51
+Count: 1828  Distance: 51
+Count: 1829  Distance: 51
+Count: 1830  Distance: 51
+Count: 1831  Distance: 52
+Count: 1832  Distance: 51
+Count: 1833  Distance: 51
+Count: 1834  Distance: 51
+Count: 1835  Distance: 51
+Count: 1836  Distance: 51
+Count: 1837  Distance: 52
+Count: 1838  Distance: 51
+Count: 1839  Distance: 52
+Count: 1840  Distance: 52
+Count: 1841  Distance: 52
+Count: 1842  Distance: 52
+Count: 1843  Distance: 52
+Count: 1844  Distance: 51
+Count: 1845  Distance: 52
+Count: 1846  Distance: 51
+Count: 1847  Distance: 51
+Count: 1848  Distance: 51
+Count: 1849  Distance: 51
+Count: 1850  Distance: 51
+Count: 1851  Distance: 51
+Count: 1852  Distance: 51
+Count: 1853  Distance: 52
+Count: 1854  Distance: 52
+Count: 1855  Distance: 52
+Count: 1856  Distance: 52
+Count: 1857  Distance: 52
+Count: 1858  Distance: 51
+Count: 1859  Distance: 51
+Count: 1860  Distance: 51
+Count: 1861  Distance: 51
+Count: 1862  Distance: 51
+Count: 1863  Distance: 51
+Count: 1864  Distance: 51
+Count: 1865  Distance: 51
+Count: 1866  Distance: 51
+Count: 1867  Distance: 51
+Count: 1868  Distance: 50
+Count: 1869  Distance: 51
+Count: 1870  Distance: 51
+Count: 1871  Distance: 51
+Count: 1872  Distance: 51
+Count: 1873  Distance: 51
+Count: 1874  Distance: 51
+Count: 1875  Distance: 52
+Count: 1876  Distance: 52
+Count: 1877  Distance: 52
+Count: 1878  Distance: 52
+Count: 1879  Distance: 52
+Count: 1880  Distance: 52
+Count: 1881  Distance: 52
+Count: 1882  Distance: 51
+Count: 1883  Distance: 51
+Count: 1884  Distance: 52
+Count: 1885  Distance: 52
+Count: 1886  Distance: 51
+Count: 1887  Distance: 51
+Count: 1888  Distance: 51
+Count: 1889  Distance: 52
+Count: 1890  Distance: 52
+Count: 1891  Distance: 52
+Count: 1892  Distance: 52
+Count: 1893  Distance: 52
+Count: 1894  Distance: 51
+Count: 1895  Distance: 50
+Count: 1896  Distance: 50
+Count: 1897  Distance: 52
+Count: 1898  Distance: 51
+Count: 1899  Distance: 51
+Count: 1900  Distance: 51
+Count: 1901  Distance: 51
+Count: 1902  Distance: 51
+Count: 1903  Distance: 51
+Count: 1904  Distance: 51
+Count: 1905  Distance: 51
+Count: 1906  Distance: 51
+Count: 1907  Distance: 51
+Count: 1908  Distance: 51
+Count: 1909  Distance: 51
+Count: 1910  Distance: 51
+Count: 1911  Distance: 51
+Count: 1912  Distance: 51
+Count: 1913  Distance: 52
+Count: 1914  Distance: 52
+Count: 1915  Distance: 52
+Count: 1916  Distance: 51
+Count: 1917  Distance: 52
+Count: 1918  Distance: 52
+Count: 1919  Distance: 51
+Count: 1920  Distance: 52
+Count: 1921  Distance: 52
+Count: 1922  Distance: 52
+Count: 1923  Distance: 51
+Count: 1924  Distance: 52
+Count: 1925  Distance: 52
+Count: 1926  Distance: 51
+Count: 1927  Distance: 52
+Count: 1928  Distance: 51
+Count: 1929  Distance: 51
+Count: 1930  Distance: 51
+Count: 1931  Distance: 51
+Count: 1932  Distance: 51
+Count: 1933  Distance: 50
+Count: 1934  Distance: 51
+Count: 1935  Distance: 51
+Count: 1936  Distance: 51
+Count: 1937  Distance: 52
+Count: 1938  Distance: 50
+Count: 1939  Distance: 52
+Count: 1940  Distance: 51
+Count: 1941  Distance: 51
+Count: 1942  Distance: 51
+Count: 1943  Distance: 52
+Count: 1944  Distance: 51
+Count: 1945  Distance: 51
+Count: 1946  Distance: 51
+Count: 1947  Distance: 51
+Count: 1948  Distance: 52
+Count: 1949  Distance: 52
+Count: 1950  Distance: 51
+Count: 1951  Distance: 50
+Count: 1952  Distance: 51
+Count: 1953  Distance: 51
+Count: 1954  Distance: 51
+Count: 1955  Distance: 50
+Count: 1956  Distance: 51
+Count: 1957  Distance: 51
+Count: 1958  Distance: 51
+Count: 1959  Distance: 51
+Count: 1960  Distance: 51
+Count: 1961  Distance: 51
+Count: 1962  Distance: 51
+Count: 1963  Distance: 51
+Count: 1964  Distance: 50
+Count: 1965  Distance: 51
+Count: 1966  Distance: 51
+Count: 1967  Distance: 51
+Count: 1968  Distance: 51
+Count: 1969  Distance: 52
+Count: 1970  Distance: 51
+Count: 1971  Distance: 50
+Count: 1972  Distance: 51
+Count: 1973  Distance: 51
+Count: 1974  Distance: 51
+Count: 1975  Distance: 51
+Count: 1976  Distance: 51
+Count: 1977  Distance: 52
+Count: 1978  Distance: 51
+Count: 1979  Distance: 51
+Count: 1980  Distance: 51
+Count: 1981  Distance: 51
+Count: 1982  Distance: 51
+Count: 1983  Distance: 51
+Count: 1984  Distance: 51
+Count: 1985  Distance: 51
+Count: 1986  Distance: 51
+Count: 1987  Distance: 51
+Count: 1988  Distance: 50
+Count: 1989  Distance: 51
+Count: 1990  Distance: 51
+Count: 1991  Distance: 50
+Count: 1992  Distance: 51
+Count: 1993  Distance: 52
+Count: 1994  Distance: 51
+Count: 1995  Distance: 51
+Count: 1996  Distance: 51
+Count: 1997  Distance: 51
+Count: 1998  Distance: 51
+Count: 1999  Distance: 51
+Count: 2000  Distance: 51
+Count: 2001  Distance: 51
+Count: 2002  Distance: 52
+Count: 2003  Distance: 51
+Count: 2004  Distance: 51
+Count: 2005  Distance: 51
+Count: 2006  Distance: 51
+Count: 2007  Distance: 51
+Count: 2008  Distance: 51
+Count: 2009  Distance: 52
+Count: 2010  Distance: 50
+Count: 2011  Distance: 51
+Count: 2012  Distance: 51
+Count: 2013  Distance: 52
+Count: 2014  Distance: 50
+Count: 2015  Distance: 52
+Count: 2016  Distance: 50
+Count: 2017  Distance: 50
+Count: 2018  Distance: 50
+Count: 2019  Distance: 50
+Count: 2020  Distance: 51
+Count: 2021  Distance: 49
+Count: 2022  Distance: 50
+Count: 2023  Distance: 51
+Count: 2024  Distance: 51
+Count: 2025  Distance: 51
+Count: 2026  Distance: 51
+Count: 2027  Distance: 51
+Count: 2028  Distance: 51
+Count: 2029  Distance: 51
+Count: 2030  Distance: 51
+Count: 2031  Distance: 51
+Count: 2032  Distance: 51
+Count: 2033  Distance: 50
+Count: 2034  Distance: 51
+Count: 2035  Distance: 51
+Count: 2036  Distance: 51
+Count: 2037  Distance: 51
+Count: 2038  Distance: 51
+Count: 2039  Distance: 51
+Count: 2040  Distance: 51
+Count: 2041  Distance: 51
+Count: 2042  Distance: 50
+Count: 2043  Distance: 51
+Count: 2044  Distance: 51
+Count: 2045  Distance: 51
+Count: 2046  Distance: 50
+Count: 2047  Distance: 51
+Count: 2048  Distance: 51
+Count: 2049  Distance: 51
+Count: 2050  Distance: 50
+Count: 2051  Distance: 51
+Count: 2052  Distance: 50
+Count: 2053  Distance: 51
+Count: 2054  Distance: 50
+Count: 2055  Distance: 51
+Count: 2056  Distance: 51
+Count: 2057  Distance: 51
+Count: 2058  Distance: 50
+Count: 2059  Distance: 51
+Count: 2060  Distance: 50
+Count: 2061  Distance: 51
+Count: 2062  Distance: 51
+Count: 2063  Distance: 51
+Count: 2064  Distance: 51
+Count: 2065  Distance: 51
+Count: 2066  Distance: 51
+Count: 2067  Distance: 51
+Count: 2068  Distance: 51
+Count: 2069  Distance: 50
+Count: 2070  Distance: 51
+Count: 2071  Distance: 50
+Count: 2072  Distance: 51
+Count: 2073  Distance: 51
+Count: 2074  Distance: 50
+Count: 2075  Distance: 51
+Count: 2076  Distance: 50
+Count: 2077  Distance: 51
+Count: 2078  Distance: 50
+Count: 2079  Distance: 51
+Count: 2080  Distance: 51
+Count: 2081  Distance: 51
+Count: 2082  Distance: 51
+Count: 2083  Distance: 50
+Count: 2084  Distance: 51
+Count: 2085  Distance: 51
+Count: 2086  Distance: 51
+Count: 2087  Distance: 51
+Count: 2088  Distance: 50
+Count: 2089  Distance: 51
+Count: 2090  Distance: 51
+Count: 2091  Distance: 51
+Count: 2092  Distance: 52
+Count: 2093  Distance: 51
+Count: 2094  Distance: 51
+Count: 2095  Distance: 51
+Count: 2096  Distance: 51
+Count: 2097  Distance: 50
+Count: 2098  Distance: 51
+Count: 2099  Distance: 51
+Count: 2100  Distance: 51
+Count: 2101  Distance: 52
+Count: 2102  Distance: 51
+Count: 2103  Distance: 52
+Count: 2104  Distance: 51
+Count: 2105  Distance: 51
+Count: 2106  Distance: 51
+Count: 2107  Distance: 52
+Count: 2108  Distance: 51
+Count: 2109  Distance: 52
+Count: 2110  Distance: 51
+Count: 2111  Distance: 51
+Count: 2112  Distance: 51
+Count: 2113  Distance: 51
+Count: 2114  Distance: 51
+Count: 2115  Distance: 52
+Count: 2116  Distance: 51
+Count: 2117  Distance: 51
+Count: 2118  Distance: 51
+Count: 2119  Distance: 51
+Count: 2120  Distance: 51
+Count: 2121  Distance: 51
+Count: 2122  Distance: 51
+Count: 2123  Distance: 51
+Count: 2124  Distance: 51
+Count: 2125  Distance: 50
+Count: 2126  Distance: 51
+Count: 2127  Distance: 51
+Count: 2128  Distance: 50
+Count: 2129  Distance: 51
+Count: 2130  Distance: 51
+Count: 2131  Distance: 51
+Count: 2132  Distance: 51
+Count: 2133  Distance: 51
+Count: 2134  Distance: 51
+Count: 2135  Distance: 51
+Count: 2136  Distance: 50
+Count: 2137  Distance: 50
+Count: 2138  Distance: 49
+Count: 2139  Distance: 49
+Count: 2140  Distance: 50
+Count: 2141  Distance: 51
+Count: 2142  Distance: 51
+Count: 2143  Distance: 51
+Count: 2144  Distance: 51
+Count: 2145  Distance: 51
+Count: 2146  Distance: 51
+Count: 2147  Distance: 51
+Count: 2148  Distance: 51
+Count: 2149  Distance: 50
+Count: 2150  Distance: 50
+Count: 2151  Distance: 51
+Count: 2152  Distance: 51
+Count: 2153  Distance: 50
+Count: 2154  Distance: 51
+Count: 2155  Distance: 51
+Count: 2156  Distance: 51
+Count: 2157  Distance: 52
+Count: 2158  Distance: 51
+Count: 2159  Distance: 51
+Count: 2160  Distance: 51
+Count: 2161  Distance: 51
+Count: 2162  Distance: 50
+Count: 2163  Distance: 51
+Count: 2164  Distance: 51
+Count: 2165  Distance: 51
+Count: 2166  Distance: 51
+Count: 2167  Distance: 51
+Count: 2168  Distance: 51
+
