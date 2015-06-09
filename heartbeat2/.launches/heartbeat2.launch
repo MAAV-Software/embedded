@@ -5,7 +5,7 @@
 <stringAttribute key="com.ti.ccstudio.debug.debugModel.ATTR_PROGRAM.Stellaris In-Circuit Debug Interface/CORTEX_M4_0" value="${build_artifact:heartbeat2}"/>
 <stringAttribute key="com.ti.ccstudio.debug.debugModel.ATTR_PROJECT.Stellaris In-Circuit Debug Interface/CORTEX_M4_0" value="heartbeat2"/>
 <stringAttribute key="com.ti.ccstudio.debug.debugModel.ATTR_TARGET_CONFIG" value="${target_config_active_default:heartbeat2}"/>
-<stringAttribute key="com.ti.ccstudio.debug.debugModel.MRU_PROGRAM.Stellaris In-Circuit Debug Interface/CORTEX_M4_0" value="/home/zjcui/Desktop/MAAV/Tiva_testing/heartbeat2/Debug/heartbeat2.out"/>
+<stringAttribute key="com.ti.ccstudio.debug.debugModel.MRU_PROGRAM.Stellaris In-Circuit Debug Interface/CORTEX_M4_0" value="/home/sheldon/maav-controls/heartbeat2/Debug/heartbeat2.out"/>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
 <listEntry value="/heartbeat2"/>
 </listAttribute>
