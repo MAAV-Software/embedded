@@ -1,0 +1,2251 @@
+Count: 3023  Distance: 138
+Count: 3024  Distance: 138
+Count: 3025  Distance: 139
+Count: 3026  Distance: 138
+Count: 3027  Distance: 138
+Count: 3028  Distance: 138
+Count: 3029  Distance: 138
+Count: 3030  Distance: 138
+Count: 3031  Distance: Count: 7875  Distance: 139
+Count: 7876  Distance: 140
+Count: 7877  Distance: 140
+Count: 7878  Distance: 140
+Count: 7879  Distance: 140
+Count: 7880  Distance: 139
+Count: 7881  Distance: 139
+Count: 7882  Distance: 139
+Count: 7883  Distance: 140
+Count: 7884  Distance: 140
+Count: 7885  Distance: 140
+Count: 7886  Distance: 139
+Count: 7887  Distance: 140
+Count: 7888  Distance: 139
+Count: 7889  Distance: 140
+Count: 7890  Distance: 140
+Count: 7891  Distance: 140
+Count: 7892  Distance: 140
+Count: 7893  Distance: 139
+Count: 7894  Distance: 139
+Count: 7895  Distance: 140
+Count: 7896  Distance: 140
+Count: 7897  Distance: 139
+Count: 7898  Distance: 139
+Count: 7899  Distance: 139
+Count: 7900  Distance: 139
+Count: 7901  Distance: 139
+Count: 7902  Distance: 139
+Count: 7903  Distance: 139
+Count: 7904  Distance: 139
+Count: 7905  Distance: 139
+Count: 7906  Distance: 139
+Count: 7907  Distance: 139
+Count: 7908  Distance: 139
+Count: 7909  Distance: 139
+Count: 7910  Distance: 139
+Count: 7911  Distance: 139
+Count: 7912  Distance: 139
+Count: 7913  Distance: 139
+Count: 7914  Distance: 140
+Count: 7915  Distance: 139
+Count: 7916  Distance: 140
+Count: 7917  Distance: 139
+Count: 7918  Distance: 140
+Count: 7919  Distance: 139
+Welcome to the Pulsed Light lidar test program!
+Count: 1  Distance: 140
+Count: 2  Distance: 140
+Count: 3  Distance: 139
+Count: 4  Distance: 139
+Count: 5  Distance: 139
+Count: 6  Distance: 140
+Count: 7  Distance: 139
+Count: 8  Distance: 139
+Count: 9  Distance: 139
+Count: 10  Distance: 140
+Count: 11  Distance: 139
+Count: 12  Distance: 139
+Count: 13  Distance: 139
+Count: 14  Distance: 140
+Count: 15  Distance: 139
+Count: 16  Distance: 139
+Count: 17  Distance: 139
+Count: 18  Distance: 138
+Count: 19  Distance: 139
+Count: 20  Distance: 138
+Count: 21  Distance: 139
+Count: 22  Distance: 140
+Count: 23  Distance: 139
+Count: 24  Distance: 140
+Count: 25  Distance: 139
+Count: 26  Distance: 140
+Count: 27  Distance: 139
+Count: 28  Distance: 140
+Count: 29  Distance: 140
+Count: 30  Distance: 139
+Count: 31  Distance: 140
+Count: 32  Distance: 140
+Count: 33  Distance: 140
+Count: 34  Distance: 140
+Count: 35  Distance: 140
+Count: 36  Distance: 140
+Count: 37  Distance: 140
+Count: 38  Distance: 140
+Count: 39  Distance: 140
+Count: 40  Distance: 140
+Count: 41  Distance: 140
+Count: 42  Distance: 140
+Count: 43  Distance: 139
+Count: 44  Distance: 140
+Count: 45  Distance: 139
+Count: 46  Distance: 140
+Count: 47  Distance: 139
+Count: 48  Distance: 140
+Count: 49  Distance: 139
+Count: 50  Distance: 140
+Count: 51  Distance: 140
+Count: 52  Distance: 140
+Count: 53  Distance: 140
+Count: 54  Distance: 140
+Count: 55  Distance: 140
+Count: 56  Distance: 139
+Count: 57  Distance: 139
+Count: 58  Distance: 140
+Count: 59  Distance: 139
+Count: 60  Distance: 140
+Count: 61  Distance: 140
+Count: 62  Distance: 140
+Count: 63  Distance: 139
+Count: 64  Distance: 140
+Count: 65  Distance: 139
+Count: 66  Distance: 139
+Count: 67  Distance: 139
+Count: 68  Distance: 139
+Count: 69  Distance: 139
+Count: 70  Distance: 140
+Count: 71  Distance: 139
+Count: 72  Distance: 140
+Count: 73  Distance: 138
+Count: 74  Distance: 140
+Count: 75  Distance: 139
+Count: 76  Distance: 139
+Count: 77  Distance: 139
+Count: 78  Distance: 140
+Count: 79  Distance: 140
+Count: 80  Distance: 140
+Count: 81  Distance: 140
+Count: 82  Distance: 140
+Count: 83  Distance: 139
+Count: 84  Distance: 139
+Count: 85  Distance: 139
+Count: 86  Distance: 140
+Count: 87  Distance: 139
+Count: 88  Distance: 139
+Count: 89  Distance: 139
+Count: 90  Distance: 139
+Count: 91  Distance: 139
+Count: 92  Distance: 139
+Count: 93  Distance: 139
+Count: 94  Distance: 139
+Count: 95  Distance: 139
+Count: 96  Distance: 139
+Count: 97  Distance: 139
+Count: 98  Distance: 139
+Count: 99  Distance: 139
+Count: 100  Distance: 139
+Count: 101  Distance: 139
+Count: 102  Distance: 140
+Count: 103  Distance: 139
+Count: 104  Distance: 140
+Count: 105  Distance: 138
+Count: 106  Distance: 139
+Count: 107  Distance: 139
+Count: 108  Distance: 140
+Count: 109  Distance: 139
+Count: 110  Distance: 140
+Count: 111  Distance: 139
+Count: 112  Distance: 139
+Count: 113  Distance: 139
+Count: 114  Distance: 139
+Count: 115  Distance: 139
+Count: 116  Distance: 140
+Count: 117  Distance: 139
+Count: 118  Distance: 140
+Count: 119  Distance: 140
+Count: 120  Distance: 140
+Count: 121  Distance: 139
+Count: 122  Distance: 139
+Count: 123  Distance: 139
+Count: 124  Distance: 140
+Count: 125  Distance: 139
+Count: 126  Distance: 140
+Count: 127  Distance: 139
+Count: 128  Distance: 140
+Count: 129  Distance: 140
+Count: 130  Distance: 140
+Count: 131  Distance: 139
+Count: 132  Distance: 140
+Count: 133  Distance: 140
+Count: 134  Distance: 140
+Count: 135  Distance: 140
+Count: 136  Distance: 140
+Count: 137  Distance: 140
+Count: 138  Distance: 140
+Count: 139  Distance: 140
+Count: 140  Distance: 140
+Count: 141  Distance: 139
+Count: 142  Distance: 140
+Count: 143  Distance: 140
+Count: 144  Distance: 140
+Count: 145  Distance: 140
+Count: 146  Distance: 140
+Count: 147  Distance: 140
+Count: 148  Distance: 140
+Count: 149  Distance: 140
+Count: 150  Distance: 140
+Count: 151  Distance: 140
+Count: 152  Distance: 140
+Count: 153  Distance: 139
+Count: 154  Distance: 140
+Count: 155  Distance: 139
+Count: 156  Distance: 139
+Count: 157  Distance: 139
+Count: 158  Distance: 140
+Count: 159  Distance: 139
+Count: 160  Distance: 140
+Count: 161  Distance: 139
+Count: 162  Distance: 139
+Count: 163  Distance: 139
+Count: 164  Distance: 139
+Count: 165  Distance: 139
+Count: 166  Distance: 140
+Count: 167  Distance: 139
+Count: 168  Distance: 140
+Count: 169  Distance: 140
+Count: 170  Distance: 140
+Count: 171  Distance: 139
+Count: 172  Distance: 140
+Count: 173  Distance: 138
+Count: 174  Distance: 139
+Count: 175  Distance: 139
+Count: 176  Distance: 139
+Count: 177  Distance: 139
+Count: 178  Distance: 139
+Count: 179  Distance: 138
+Count: 180  Distance: 139
+Count: 181  Distance: 139
+Count: 182  Distance: 139
+Count: 183  Distance: 139
+Count: 184  Distance: 139
+Count: 185  Distance: 139
+Count: 186  Distance: 140
+Count: 187  Distance: 139
+Count: 188  Distance: 140
+Count: 189  Distance: 139
+Count: 190  Distance: 139
+Count: 191  Distance: 139
+Count: 192  Distance: 139
+Count: 193  Distance: 138
+Count: 194  Distance: 139
+Count: 195  Distance: 139
+Count: 196  Distance: 140
+Count: 197  Distance: 139
+Count: 198  Distance: 140
+Count: 199  Distance: 139
+Count: 200  Distance: 140
+Count: 201  Distance: 138
+Count: 202  Distance: 139
+Count: 203  Distance: 138
+Count: 204  Distance: 139
+Count: 205  Distance: 139
+Count: 206  Distance: 139
+Count: 207  Distance: 138
+Count: 208  Distance: 139
+Count: 209  Distance: 138
+Count: 210  Distance: 138
+Count: 211  Distance: 138
+Count: 212  Distance: 140
+Count: 213  Distance: 140
+Count: 214  Distance: 140
+Count: 215  Distance: 139
+Count: 216  Distance: 140
+Count: 217  Distance: 140
+Count: 218  Distance: 140
+Count: 219  Distance: 140
+Count: 220  Distance: 140
+Count: 221  Distance: 140
+Count: 222  Distance: 140
+Count: 223  Distance: 138
+Count: 224  Distance: 140
+Count: 225  Distance: 138
+Count: 226  Distance: 138
+Count: 227  Distance: 139
+Count: 228  Distance: 139
+Count: 229  Distance: 139
+Count: 230  Distance: 138
+Count: 231  Distance: 139
+Count: 232  Distance: 139
+Count: 233  Distance: 139
+Count: 234  Distance: 139
+Count: 235  Distance: 138
+Count: 236  Distance: 139
+Count: 237  Distance: 138
+Count: 238  Distance: 140
+Count: 239  Distance: 139
+Count: 240  Distance: 138
+Count: 241  Distance: 139
+Count: 242  Distance: 140
+Count: 243  Distance: 139
+Count: 244  Distance: 140
+Count: 245  Distance: 139
+Count: 246  Distance: 140
+Count: 247  Distance: 138
+Count: 248  Distance: 139
+Count: 249  Distance: 138
+Count: 250  Distance: 139
+Count: 251  Distance: 139
+Count: 252  Distance: 139
+Count: 253  Distance: 138
+Count: 254  Distance: 139
+Count: 255  Distance: 139
+Count: 256  Distance: 140
+Count: 257  Distance: 140
+Count: 258  Distance: 140
+Count: 259  Distance: 139
+Count: 260  Distance: 140
+Count: 261  Distance: 139
+Count: 262  Distance: 140
+Count: 263  Distance: 139
+Count: 264  Distance: 140
+Count: 265  Distance: 139
+Count: 266  Distance: 140
+Count: 267  Distance: 140
+Count: 268  Distance: 139
+Count: 269  Distance: 140
+Count: 270  Distance: 140
+Count: 271  Distance: 140
+Count: 272  Distance: 140
+Count: 273  Distance: 140
+Count: 274  Distance: 140
+Count: 275  Distance: 140
+Count: 276  Distance: 140
+Count: 277  Distance: 140
+Count: 278  Distance: 140
+Count: 279  Distance: 140
+Count: 280  Distance: 140
+Count: 281  Distance: 140
+Count: 282  Distance: 140
+Count: 283  Distance: 140
+Count: 284  Distance: 140
+Count: 285  Distance: 138
+Count: 286  Distance: 139
+Count: 287  Distance: 139
+Count: 288  Distance: 138
+Count: 289  Distance: 139
+Count: 290  Distance: 139
+Count: 291  Distance: 139
+Count: 292  Distance: 140
+Count: 293  Distance: 140
+Count: 294  Distance: 140
+Count: 295  Distance: 139
+Count: 296  Distance: 139
+Count: 297  Distance: 139
+Count: 298  Distance: 139
+Count: 299  Distance: 139
+Count: 300  Distance: 139
+Count: 301  Distance: 139
+Count: 302  Distance: 139
+Count: 303  Distance: 139
+Count: 304  Distance: 139
+Count: 305  Distance: 139
+Count: 306  Distance: 139
+Count: 307  Distance: 139
+Count: 308  Distance: 139
+Count: 309  Distance: 139
+Count: 310  Distance: 139
+Count: 311  Distance: 139
+Count: 312  Distance: 139
+Count: 313  Distance: 139
+Count: 314  Distance: 140
+Count: 315  Distance: 139
+Count: 316  Distance: 140
+Count: 317  Distance: 139
+Count: 318  Distance: 140
+Count: 319  Distance: 140
+Count: 320  Distance: 140
+Count: 321  Distance: 139
+Count: 322  Distance: 140
+Count: 323  Distance: 138
+Count: 324  Distance: 140
+Count: 325  Distance: 139
+Count: 326  Distance: 138
+Count: 327  Distance: 139
+Count: 328  Distance: 140
+Count: 329  Distance: 139
+Count: 330  Distance: 140
+Count: 331  Distance: 139
+Count: 332  Distance: 138
+Count: 333  Distance: 139
+Count: 334  Distance: 140
+Count: 335  Distance: 139
+Count: 336  Distance: 139
+Count: 337  Distance: 140
+Count: 338  Distance: 140
+Count: 339  Distance: 138
+Count: 340  Distance: 140
+Count: 341  Distance: 139
+Count: 342  Distance: 140
+Count: 343  Distance: 138
+Count: 344  Distance: 139
+Count: 345  Distance: 139
+Count: 346  Distance: 140
+Count: 347  Distance: 140
+Count: 348  Distance: 140
+Count: 349  Distance: 139
+Count: 350  Distance: 139
+Count: 351  Distance: 140
+Count: 352  Distance: 140
+Count: 353  Distance: 139
+Count: 354  Distance: 139
+Count: 355  Distance: 140
+Count: 356  Distance: 140
+Count: 357  Distance: 140
+Count: 358  Distance: 140
+Count: 359  Distance: 140
+Count: 360  Distance: 140
+Count: 361  Distance: 139
+Count: 362  Distance: 140
+Count: 363  Distance: 140
+Count: 364  Distance: 140
+Count: 365  Distance: 139
+Count: 366  Distance: 140
+Count: 367  Distance: 139
+Count: 368  Distance: 140
+Count: 369  Distance: 139
+Count: 370  Distance: 140
+Count: 371  Distance: 139
+Count: 372  Distance: 139
+Count: 373  Distance: 138
+Count: 374  Distance: 140
+Count: 375  Distance: 140
+Count: 376  Distance: 140
+Count: 377  Distance: 138
+Count: 378  Distance: 139
+Count: 379  Distance: 139
+Count: 380  Distance: 139
+Count: 381  Distance: 138
+Count: 382  Distance: 138
+Count: 383  Distance: 138
+Count: 384  Distance: 140
+Count: 385  Distance: 139
+Count: 386  Distance: 139
+Count: 387  Distance: 140
+Count: 388  Distance: 139
+Count: 389  Distance: 140
+Count: 390  Distance: 140
+Count: 391  Distance: 139
+Count: 392  Distance: 139
+Count: 393  Distance: 139
+Count: 394  Distance: 140
+Count: 395  Distance: 139
+Count: 396  Distance: 140
+Count: 397  Distance: 139
+Count: 398  Distance: 140
+Count: 399  Distance: 139
+Count: 400  Distance: 140
+Count: 401  Distance: 139
+Count: 402  Distance: 140
+Count: 403  Distance: 139
+Count: 404  Distance: 140
+Count: 405  Distance: 140
+Count: 406  Distance: 141
+Count: 407  Distance: 139
+Count: 408  Distance: 139
+Count: 409  Distance: 139
+Count: 410  Distance: 140
+Count: 411  Distance: 139
+Count: 412  Distance: 140
+Count: 413  Distance: 139
+Count: 414  Distance: 140
+Count: 415  Distance: 139
+Count: 416  Distance: 140
+Count: 417  Distance: 140
+Count: 418  Distance: 140
+Count: 419  Distance: 141
+Count: 420  Distance: 140
+Count: 421  Distance: 140
+Count: 422  Distance: 140
+Count: 423  Distance: 140
+Count: 424  Distance: 140
+Count: 425  Distance: 140
+Count: 426  Distance: 140
+Count: 427  Distance: 140
+Count: 428  Distance: 140
+Count: 429  Distance: 140
+Count: 430  Distance: 140
+Count: 431  Distance: 139
+Count: 432  Distance: 139
+Count: 433  Distance: 139
+Count: 434  Distance: 139
+Count: 435  Distance: 139
+Count: 436  Distance: 140
+Count: 437  Distance: 139
+Count: 438  Distance: 140
+Count: 439  Distance: 140
+Count: 440  Distance: 140
+Count: 441  Distance: 139
+Count: 442  Distance: 140
+Count: 443  Distance: 139
+Count: 444  Distance: 140
+Count: 445  Distance: 139
+Count: 446  Distance: 140
+Count: 447  Distance: 140
+Count: 448  Distance: 140
+Count: 449  Distance: 140
+Count: 450  Distance: 140
+Count: 451  Distance: 138
+Count: 452  Distance: 140
+Count: 453  Distance: 139
+Count: 454  Distance: 139
+Count: 455  Distance: 139
+Count: 456  Distance: 139
+Count: 457  Distance: 140
+Count: 458  Distance: 140
+Count: 459  Distance: 140
+Count: 460  Distance: 140
+Count: 461  Distance: 139
+Count: 462  Distance: 140
+Count: 463  Distance: 140
+Count: 464  Distance: 140
+Count: 465  Distance: 140
+Count: 466  Distance: 140
+Count: 467  Distance: 139
+Count: 468  Distance: 140
+Count: 469  Distance: 139
+Count: 470  Distance: 140
+Count: 471  Distance: 140
+Count: 472  Distance: 140
+Count: 473  Distance: 139
+Count: 474  Distance: 140
+Count: 475  Distance: 139
+Count: 476  Distance: 139
+Count: 477  Distance: 139
+Count: 478  Distance: 140
+Count: 479  Distance: 139
+Count: 480  Distance: 140
+Count: 481  Distance: 139
+Count: 482  Distance: 140
+Count: 483  Distance: 139
+Count: 484  Distance: 140
+Count: 485  Distance: 138
+Count: 486  Distance: 140
+Count: 487  Distance: 139
+Count: 488  Distance: 140
+Count: 489  Distance: 139
+Count: 490  Distance: 139
+Count: 491  Distance: 139
+Count: 492  Distance: 139
+Count: 493  Distance: 139
+Count: 494  Distance: 139
+Count: 495  Distance: 139
+Count: 496  Distance: 139
+Count: 497  Distance: 139
+Count: 498  Distance: 139
+Count: 499  Distance: 139
+Count: 500  Distance: 140
+Count: 501  Distance: 140
+Count: 502  Distance: 140
+Count: 503  Distance: 140
+Count: 504  Distance: 140
+Count: 505  Distance: 140
+Count: 506  Distance: 140
+Count: 507  Distance: 140
+Count: 508  Distance: 140
+Count: 509  Distance: 140
+Count: 510  Distance: 140
+Count: 511  Distance: 140
+Count: 512  Distance: 140
+Count: 513  Distance: 140
+Count: 514  Distance: 140
+Count: 515  Distance: 140
+Count: 516  Distance: 140
+Count: 517  Distance: 140
+Count: 518  Distance: 140
+Count: 519  Distance: 140
+Count: 520  Distance: 140
+Count: 521  Distance: 139
+Count: 522  Distance: 140
+Count: 523  Distance: 139
+Count: 524  Distance: 140
+Count: 525  Distance: 140
+Count: 526  Distance: 140
+Count: 527  Distance: 140
+Count: 528  Distance: 140
+Count: 529  Distance: 140
+Count: 530  Distance: 139
+Count: 531  Distance: 140
+Count: 532  Distance: 140
+Count: 533  Distance: 140
+Count: 534  Distance: 140
+Count: 535  Distance: 139
+Count: 536  Distance: 140
+Count: 537  Distance: 139
+Count: 538  Distance: 140
+Count: 539  Distance: 139
+Count: 540  Distance: 139
+Count: 541  Distance: 139
+Count: 542  Distance: 140
+Count: 543  Distance: 140
+Count: 544  Distance: 140
+Count: 545  Distance: 139
+Count: 546  Distance: 139
+Count: 547  Distance: 139
+Count: 548  Distance: 139
+Count: 549  Distance: 139
+Count: 550  Distance: 139
+Count: 551  Distance: 139
+Count: 552  Distance: 139
+Count: 553  Distance: 139
+Count: 554  Distance: 139
+Count: 555  Distance: 139
+Count: 556  Distance: 140
+Count: 557  Distance: 139
+Count: 558  Distance: 140
+Count: 559  Distance: 139
+Count: 560  Distance: 140
+Count: 561  Distance: 139
+Count: 562  Distance: 140
+Count: 563  Distance: 139
+Count: 564  Distance: 140
+Count: 565  Distance: 138
+Count: 566  Distance: 140
+Count: 567  Distance: 139
+Count: 568  Distance: 140
+Count: 569  Distance: 139
+Count: 570  Distance: 139
+Count: 571  Distance: 139
+Count: 572  Distance: 139
+Count: 573  Distance: 139
+Count: 574  Distance: 140
+Count: 575  Distance: 139
+Count: 576  Distance: 139
+Count: 577  Distance: 138
+Count: 578  Distance: 140
+Count: 579  Distance: 139
+Count: 580  Distance: 139
+Count: 581  Distance: 139
+Count: 582  Distance: 140
+Count: 583  Distance: 139
+Count: 584  Distance: 140
+Count: 585  Distance: 139
+Count: 586  Distance: 140
+Count: 587  Distance: 140
+Count: 588  Distance: 140
+Count: 589  Distance: 139
+Count: 590  Distance: 140
+Count: 591  Distance: 138
+Count: 592  Distance: 140
+Count: 593  Distance: 139
+Count: 594  Distance: 140
+Count: 595  Distance: 140
+Count: 596  Distance: 140
+Count: 597  Distance: 140
+Count: 598  Distance: 140
+Count: 599  Distance: 140
+Count: 600  Distance: 140
+Count: 601  Distance: 140
+Count: 602  Distance: 140
+Count: 603  Distance: 139
+Count: 604  Distance: 140
+Count: 605  Distance: 140
+Count: 606  Distance: 140
+Count: 607  Distance: 139
+Count: 608  Distance: 140
+Count: 609  Distance: 139
+Count: 610  Distance: 140
+Count: 611  Distance: 139
+Count: 612  Distance: 139
+Count: 613  Distance: 139
+Count: 614  Distance: 139
+Count: 615  Distance: 138
+Count: 616  Distance: 140
+Count: 617  Distance: 139
+Count: 618  Distance: 138
+Count: 619  Distance: 139
+Count: 620  Distance: 139
+Count: 621  Distance: 139
+Count: 622  Distance: 140
+Count: 623  Distance: 140
+Count: 624  Distance: 140
+Count: 625  Distance: 139
+Count: 626  Distance: 140
+Count: 627  Distance: 139
+Count: 628  Distance: 138
+Count: 629  Distance: 139
+Count: 630  Distance: 139
+Count: 631  Distance: 138
+Count: 632  Distance: 140
+Count: 633  Distance: 140
+Count: 634  Distance: 140
+Count: 635  Distance: 138
+Count: 636  Distance: 139
+Count: 637  Distance: 139
+Count: 638  Distance: 140
+Count: 639  Distance: 139
+Count: 640  Distance: 140
+Count: 641  Distance: 139
+Count: 642  Distance: 140
+Count: 643  Distance: 140
+Count: 644  Distance: 140
+Count: 645  Distance: 140
+Count: 646  Distance: 140
+Count: 647  Distance: 140
+Count: 648  Distance: 140
+Count: 649  Distance: 140
+Count: 650  Distance: 140
+Count: 651  Distance: 140
+Count: 652  Distance: 140
+Count: 653  Distance: 139
+Count: 654  Distance: 140
+Count: 655  Distance: 140
+Count: 656  Distance: 140
+Count: 657  Distance: 140
+Count: 658  Distance: 140
+Count: 659  Distance: 140
+Count: 660  Distance: 139
+Count: 661  Distance: 140
+Count: 662  Distance: 140
+Count: 663  Distance: 139
+Count: 664  Distance: 140
+Count: 665  Distance: 139
+Count: 666  Distance: 140
+Count: 667  Distance: 139
+Count: 668  Distance: 140
+Count: 669  Distance: 139
+Count: 670  Distance: 140
+Count: 671  Distance: 140
+Count: 672  Distance: 140
+Count: 673  Distance: 140
+Count: 674  Distance: 140
+Count: 675  Distance: 140
+Count: 676  Distance: 139
+Count: 677  Distance: 140
+Count: 678  Distance: 140
+Count: 679  Distance: 140
+Count: 680  Distance: 139
+Count: 681  Distance: 139
+Count: 682  Distance: 139
+Count: 683  Distance: 139
+Count: 684  Distance: 140
+Count: 685  Distance: 139
+Count: 686  Distance: 138
+Count: 687  Distance: 139
+Count: 688  Distance: 140
+Count: 689  Distance: 139
+Count: 690  Distance: 140
+Count: 691  Distance: 138
+Count: 692  Distance: 140
+Count: 693  Distance: 139
+Count: 694  Distance: 139
+Count: 695  Distance: 139
+Count: 696  Distance: 139
+Count: 697  Distance: 139
+Count: 698  Distance: 140
+Count: 699  Distance: 139
+Count: 700  Distance: 140
+Count: 701  Distance: 139
+Count: 702  Distance: 140
+Count: 703  Distance: 140
+Count: 704  Distance: 140
+Count: 705  Distance: 139
+Count: 706  Distance: 140
+Count: 707  Distance: 139
+Count: 708  Distance: 140
+Count: 709  Distance: 140
+Count: 710  Distance: 140
+Count: 711  Distance: 139
+Count: 712  Distance: 139
+Count: 713  Distance: 138
+Count: 714  Distance: 140
+Count: 715  Distance: 139
+Count: 716  Distance: 140
+Count: 717  Distance: 138
+Count: 718  Distance: 138
+Count: 719  Distance: 139
+Count: 720  Distance: 140
+Count: 721  Distance: 139
+Count: 722  Distance: 140
+Count: 723  Distance: 139
+Count: 724  Distance: 140
+Count: 725  Distance: 139
+Count: 726  Distance: 139
+Count: 727  Distance: 139
+Count: 728  Distance: 140
+Count: 729  Distance: 139
+Count: 730  Distance: 138
+Count: 731  Distance: 139
+Count: 732  Distance: 140
+Count: 733  Distance: 140
+Count: 734  Distance: 140
+Count: 735  Distance: 140
+Count: 736  Distance: 140
+Count: 737  Distance: 140
+Count: 738  Distance: 140
+Count: 739  Distance: 140
+Count: 740  Distance: 140
+Count: 741  Distance: 139
+Count: 742  Distance: 140
+Count: 743  Distance: 139
+Count: 744  Distance: 140
+Count: 745  Distance: 140
+Count: 746  Distance: 140
+Count: 747  Distance: 140
+Count: 748  Distance: 140
+Count: 749  Distance: 139
+Count: 750  Distance: 140
+Count: 751  Distance: 139
+Count: 752  Distance: 140
+Count: 753  Distance: 139
+Count: 754  Distance: 140
+Count: 755  Distance: 139
+Count: 756  Distance: 140
+Count: 757  Distance: 140
+Count: 758  Distance: 139
+Count: 759  Distance: 140
+Count: 760  Distance: 140
+Count: 761  Distance: 140
+Count: 762  Distance: 139
+Count: 763  Distance: 138
+Count: 764  Distance: 140
+Count: 765  Distance: 139
+Count: 766  Distance: 139
+Count: 767  Distance: 139
+Count: 768  Distance: 138
+Count: 769  Distance: 139
+Count: 770  Distance: 140
+Count: 771  Distance: 140
+Count: 772  Distance: 140
+Count: 773  Distance: 139
+Count: 774  Distance: 139
+Count: 775  Distance: 139
+Count: 776  Distance: 139
+Count: 777  Distance: 138
+Count: 778  Distance: 138
+Count: 779  Distance: 139
+Count: 780  Distance: 139
+Count: 781  Distance: 138
+Count: 782  Distance: 139
+Count: 783  Distance: 139
+Count: 784  Distance: 140
+Count: 785  Distance: 139
+Count: 786  Distance: 139
+Count: 787  Distance: 138
+Count: 788  Distance: 139
+Count: 789  Distance: 139
+Count: 790  Distance: 139
+Count: 791  Distance: 138
+Count: 792  Distance: 140
+Count: 793  Distance: 140
+Count: 794  Distance: 140
+Count: 795  Distance: 139
+Count: 796  Distance: 138
+Count: 797  Distance: 139
+Count: 798  Distance: 139
+Count: 799  Distance: 139
+Count: 800  Distance: 139
+Count: 801  Distance: 139
+Count: 802  Distance: 140
+Count: 803  Distance: 139
+Count: 804  Distance: 140
+Count: 805  Distance: 139
+Count: 806  Distance: 140
+Count: 807  Distance: 139
+Count: 808  Distance: 139
+Count: 809  Distance: 139
+Count: 810  Distance: 139
+Count: 811  Distance: 139
+Count: 812  Distance: 140
+Count: 813  Distance: 139
+Count: 814  Distance: 140
+Count: 815  Distance: 138
+Count: 816  Distance: 139
+Count: 817  Distance: 139
+Count: 818  Distance: 139
+Count: 819  Distance: 139
+Count: 820  Distance: 140
+Count: 821  Distance: 139
+Count: 822  Distance: 140
+Count: 823  Distance: 140
+Count: 824  Distance: 140
+Count: 825  Distance: 139
+Count: 826  Distance: 140
+Count: 827  Distance: 140
+Count: 828  Distance: 140
+Count: 829  Distance: 139
+Count: 830  Distance: 140
+Count: 831  Distance: 140
+Count: 832  Distance: 140
+Count: 833  Distance: 140
+Count: 834  Distance: 140
+Count: 835  Distance: 140
+Count: 836  Distance: 140
+Count: 837  Distance: 139
+Count: 838  Distance: 140
+Count: 839  Distance: 139
+Count: 840  Distance: 140
+Count: 841  Distance: 139
+Count: 842  Distance: 140
+Count: 843  Distance: 139
+Count: 844  Distance: 140
+Count: 845  Distance: 139
+Count: 846  Distance: 139
+Count: 847  Distance: 139
+Count: 848  Distance: 140
+Count: 849  Distance: 139
+Count: 850  Distance: 139
+Count: 851  Distance: 139
+Count: 852  Distance: 140
+Count: 853  Distance: 139
+Count: 854  Distance: 140
+Count: 855  Distance: 139
+Count: 856  Distance: 140
+Count: 857  Distance: 139
+Count: 858  Distance: 140
+Count: 859  Distance: 139
+Count: 860  Distance: 140
+Count: 861  Distance: 139
+Count: 862  Distance: 140
+Count: 863  Distance: 140
+Count: 864  Distance: 140
+Count: 865  Distance: 140
+Count: 866  Distance: 140
+Count: 867  Distance: 139
+Count: 868  Distance: 139
+Count: 869  Distance: 139
+Count: 870  Distance: 140
+Count: 871  Distance: 139
+Count: 872  Distance: 139
+Count: 873  Distance: 139
+Count: 874  Distance: 139
+Count: 875  Distance: 139
+Count: 876  Distance: 139
+Count: 877  Distance: 139
+Count: 878  Distance: 139
+Count: 879  Distance: 139
+Count: 880  Distance: 139
+Count: 881  Distance: 139
+Count: 882  Distance: 139
+Count: 883  Distance: 139
+Count: 884  Distance: 139
+Count: 885  Distance: 139
+Count: 886  Distance: 139
+Count: 887  Distance: 139
+Count: 888  Distance: 140
+Count: 889  Distance: 140
+Count: 890  Distance: 140
+Count: 891  Distance: 139
+Count: 892  Distance: 140
+Count: 893  Distance: 139
+Count: 894  Distance: 139
+Count: 895  Distance: 139
+Count: 896  Distance: 139
+Count: 897  Distance: 140
+Count: 898  Distance: 140
+Count: 899  Distance: 140
+Count: 900  Distance: 140
+Count: 901  Distance: 140
+Count: 902  Distance: 140
+Count: 903  Distance: 140
+Count: 904  Distance: 140
+Count: 905  Distance: 139
+Count: 906  Distance: 140
+Count: 907  Distance: 140
+Count: 908  Distance: 140
+Count: 909  Distance: 139
+Count: 910  Distance: 140
+Count: 911  Distance: 140
+Count: 912  Distance: 139
+Count: 913  Distance: 139
+Count: 914  Distance: 140
+Count: 915  Distance: 140
+Count: 916  Distance: 140
+Count: 917  Distance: 139
+Count: 918  Distance: 138
+Count: 919  Distance: 139
+Count: 920  Distance: 138
+Count: 921  Distance: 139
+Count: 922  Distance: 140
+Count: 923  Distance: 139
+Count: 924  Distance: 140
+Count: 925  Distance: 139
+Count: 926  Distance: 139
+Count: 927  Distance: 140
+Count: 928  Distance: 139
+Count: 929  Distance: 138
+Count: 930  Distance: 139
+Count: 931  Distance: 140
+Count: 932  Distance: 140
+Count: 933  Distance: 140
+Count: 934  Distance: 140
+Count: 935  Distance: 140
+Count: 936  Distance: 140
+Count: 937  Distance: 139
+Count: 938  Distance: 138
+Count: 939  Distance: 139
+Count: 940  Distance: 139
+Count: 941  Distance: 140
+Count: 942  Distance: 140
+Count: 943  Distance: 139
+Count: 944  Distance: 139
+Count: 945  Distance: 139
+Count: 946  Distance: 140
+Count: 947  Distance: 139
+Count: 948  Distance: 140
+Count: 949  Distance: 139
+Count: 950  Distance: 140
+Count: 951  Distance: 139
+Count: 952  Distance: 139
+Count: 953  Distance: 138
+Count: 954  Distance: 139
+Count: 955  Distance: 139
+Count: 956  Distance: 140
+Count: 957  Distance: 140
+Count: 958  Distance: 140
+Count: 959  Distance: 140
+Count: 960  Distance: 139
+Count: 961  Distance: 139
+Count: 962  Distance: 140
+Count: 963  Distance: 140
+Count: 964  Distance: 140
+Count: 965  Distance: 139
+Count: 966  Distance: 139
+Count: 967  Distance: 139
+Count: 968  Distance: 139
+Count: 969  Distance: 139
+Count: 970  Distance: 139
+Count: 971  Distance: 139
+Count: 972  Distance: 140
+Count: 973  Distance: 139
+Count: 974  Distance: 139
+Count: 975  Distance: 139
+Count: 976  Distance: 139
+Count: 977  Distance: 139
+Count: 978  Distance: 139
+Count: 979  Distance: 139
+Count: 980  Distance: 140
+Count: 981  Distance: 139
+Count: 982  Distance: 140
+Count: 983  Distance: 140
+Count: 984  Distance: 140
+Count: 985  Distance: 139
+Count: 986  Distance: 140
+Count: 987  Distance: 139
+Count: 988  Distance: 140
+Count: 989  Distance: 140
+Count: 990  Distance: 140
+Count: 991  Distance: 138
+Count: 992  Distance: 139
+Count: 993  Distance: 139
+Count: 994  Distance: 139
+Count: 995  Distance: 139
+Count: 996  Distance: 139
+Count: 997  Distance: 139
+Count: 998  Distance: 139
+Count: 999  Distance: 139
+Count: 1000  Distance: 140
+Count: 1001  Distance: 139
+Count: 1002  Distance: 140
+Count: 1003  Distance: 138
+Count: 1004  Distance: 140
+Count: 1005  Distance: 139
+Count: 1006  Distance: 139
+Count: 1007  Distance: 139
+Count: 1008  Distance: 140
+Count: 1009  Distance: 140
+Count: 1010  Distance: 139
+Count: 1011  Distance: 140
+Count: 1012  Distance: 140
+Count: 1013  Distance: 139
+Count: 1014  Distance: 139
+Count: 1015  Distance: 139
+Count: 1016  Distance: 139
+Count: 1017  Distance: 138
+Count: 1018  Distance: 138
+Count: 1019  Distance: 139
+Count: 1020  Distance: 138
+Count: 1021  Distance: 138
+Count: 1022  Distance: 138
+Count: 1023  Distance: 139
+Count: 1024  Distance: 140
+Count: 1025  Distance: 138
+Count: 1026  Distance: 139
+Count: 1027  Distance: 140
+Count: 1028  Distance: 140
+Count: 1029  Distance: 140
+Count: 1030  Distance: 140
+Count: 1031  Distance: 139
+Count: 1032  Distance: 138
+Count: 1033  Distance: 138
+Count: 1034  Distance: 139
+Count: 1035  Distance: 138
+Count: 1036  Distance: 140
+Count: 1037  Distance: 139
+Count: 1038  Distance: 140
+Count: 1039  Distance: 139
+Count: 1040  Distance: 139
+Count: 1041  Distance: 140
+Count: 1042  Distance: 140
+Count: 1043  Distance: 139
+Count: 1044  Distance: 140
+Count: 1045  Distance: 139
+Count: 1046  Distance: 140
+Count: 1047  Distance: 138
+Count: 1048  Distance: 139
+Count: 1049  Distance: 139
+Count: 1050  Distance: 140
+Count: 1051  Distance: 138
+Count: 1052  Distance: 140
+Count: 1053  Distance: 139
+Count: 1054  Distance: 139
+Count: 1055  Distance: 139
+Count: 1056  Distance: 139
+Count: 1057  Distance: 139
+Count: 1058  Distance: 139
+Count: 1059  Distance: 140
+Count: 1060  Distance: 140
+Count: 1061  Distance: 140
+Count: 1062  Distance: 140
+Count: 1063  Distance: 138
+Count: 1064  Distance: 140
+Count: 1065  Distance: 138
+Count: 1066  Distance: 140
+Count: 1067  Distance: 139
+Count: 1068  Distance: 140
+Count: 1069  Distance: 140
+Count: 1070  Distance: 139
+Count: 1071  Distance: 139
+Count: 1072  Distance: 139
+Count: 1073  Distance: 139
+Count: 1074  Distance: 140
+Count: 1075  Distance: 140
+Count: 1076  Distance: 140
+Count: 1077  Distance: 139
+Count: 1078  Distance: 140
+Count: 1079  Distance: 139
+Count: 1080  Distance: 140
+Count: 1081  Distance: 139
+Count: 1082  Distance: 139
+Count: 1083  Distance: 139
+Count: 1084  Distance: 139
+Count: 1085  Distance: 139
+Count: 1086  Distance: 139
+Count: 1087  Distance: 138
+Count: 1088  Distance: 139
+Count: 1089  Distance: 139
+Count: 1090  Distance: 139
+Count: 1091  Distance: 139
+Count: 1092  Distance: 140
+Count: 1093  Distance: 139
+Count: 1094  Distance: 139
+Count: 1095  Distance: 138
+Count: 1096  Distance: 139
+Count: 1097  Distance: 138
+Count: 1098  Distance: 138
+Count: 1099  Distance: 139
+Count: 1100  Distance: 138
+Count: 1101  Distance: 139
+Count: 1102  Distance: 138
+Count: 1103  Distance: 138
+Count: 1104  Distance: 139
+Count: 1105  Distance: 138
+Count: 1106  Distance: 140
+Count: 1107  Distance: 140
+Count: 1108  Distance: 139
+Count: 1109  Distance: 140
+Count: 1110  Distance: 140
+Count: 1111  Distance: 139
+Count: 1112  Distance: 140
+Count: 1113  Distance: 139
+Count: 1114  Distance: 140
+Count: 1115  Distance: 138
+Count: 1116  Distance: 138
+Count: 1117  Distance: 139
+Count: 1118  Distance: 139
+Count: 1119  Distance: 138
+Count: 1120  Distance: 138
+Count: 1121  Distance: 139
+Count: 1122  Distance: 139
+Count: 1123  Distance: 139
+Count: 1124  Distance: 139
+Count: 1125  Distance: 139
+Count: 1126  Distance: 140
+Count: 1127  Distance: 139
+Count: 1128  Distance: 140
+Count: 1129  Distance: 140
+Count: 1130  Distance: 139
+Count: 1131  Distance: 138
+Count: 1132  Distance: 140
+Count: 1133  Distance: 139
+Count: 1134  Distance: 138
+Count: 1135  Distance: 138
+Count: 1136  Distance: 139
+Count: 1137  Distance: 139
+Count: 1138  Distance: 138
+Count: 1139  Distance: 139
+Count: 1140  Distance: 140
+Count: 1141  Distance: 139
+Count: 1142  Distance: 140
+Count: 1143  Distance: 138
+Count: 1144  Distance: 140
+Count: 1145  Distance: 138
+Count: 1146  Distance: 140
+Count: 1147  Distance: 139
+Count: 1148  Distance: 140
+Count: 1149  Distance: 140
+Count: 1150  Distance: 139
+Count: 1151  Distance: 139
+Count: 1152  Distance: 140
+Count: 1153  Distance: 139
+Count: 1154  Distance: 139
+Count: 1155  Distance: 139
+Count: 1156  Distance: 140
+Count: 1157  Distance: 139
+Count: 1158  Distance: 138
+Count: 1159  Distance: 139
+Count: 1160  Distance: 139
+Count: 1161  Distance: 138
+Count: 1162  Distance: 140
+Count: 1163  Distance: 139
+Count: 1164  Distance: 140
+Count: 1165  Distance: 139
+Count: 1166  Distance: 139
+Count: 1167  Distance: 138
+Count: 1168  Distance: 139
+Count: 1169  Distance: 139
+Count: 1170  Distance: 139
+Count: 1171  Distance: 139
+Count: 1172  Distance: 140
+Count: 1173  Distance: 140
+Count: 1174  Distance: 140
+Count: 1175  Distance: 140
+Count: 1176  Distance: 139
+Count: 1177  Distance: 138
+Count: 1178  Distance: 139
+Count: 1179  Distance: 139
+Count: 1180  Distance: 139
+Count: 1181  Distance: 139
+Count: 1182  Distance: 139
+Count: 1183  Distance: 139
+Count: 1184  Distance: 138
+Count: 1185  Distance: 138
+Count: 1186  Distance: 139
+Count: 1187  Distance: 139
+Count: 1188  Distance: 138
+Count: 1189  Distance: 138
+Count: 1190  Distance: 139
+Count: 1191  Distance: 139
+Count: 1192  Distance: 138
+Count: 1193  Distance: 139
+Count: 1194  Distance: 139
+Count: 1195  Distance: 139
+Count: 1196  Distance: 139
+Count: 1197  Distance: 138
+Count: 1198  Distance: 138
+Count: 1199  Distance: 138
+Count: 1200  Distance: 139
+Count: 1201  Distance: 139
+Count: 1202  Distance: 139
+Count: 1203  Distance: 139
+Count: 1204  Distance: 139
+Count: 1205  Distance: 139
+Count: 1206  Distance: 138
+Count: 1207  Distance: 139
+Count: 1208  Distance: 140
+Count: 1209  Distance: 139
+Count: 1210  Distance: 138
+Count: 1211  Distance: 139
+Count: 1212  Distance: 139
+Count: 1213  Distance: 138
+Count: 1214  Distance: 139
+Count: 1215  Distance: 139
+Count: 1216  Distance: 139
+Count: 1217  Distance: 140
+Count: 1218  Distance: 139
+Count: 1219  Distance: 139
+Count: 1220  Distance: 140
+Count: 1221  Distance: 139
+Count: 1222  Distance: 138
+Count: 1223  Distance: 138
+Count: 1224  Distance: 140
+Count: 1225  Distance: 139
+Count: 1226  Distance: 139
+Count: 1227  Distance: 140
+Count: 1228  Distance: 139
+Count: 1229  Distance: 139
+Count: 1230  Distance: 139
+Count: 1231  Distance: 139
+Count: 1232  Distance: 140
+Count: 1233  Distance: 139
+Count: 1234  Distance: 140
+Count: 1235  Distance: 139
+Count: 1236  Distance: 139
+Count: 1237  Distance: 140
+Count: 1238  Distance: 140
+Count: 1239  Distance: 139
+Count: 1240  Distance: 140
+Count: 1241  Distance: 139
+Count: 1242  Distance: 140
+Count: 1243  Distance: 139
+Count: 1244  Distance: 140
+Count: 1245  Distance: 139
+Count: 1246  Distance: 139
+Count: 1247  Distance: 140
+Count: 1248  Distance: 140
+Count: 1249  Distance: 139
+Count: 1250  Distance: 138
+Count: 1251  Distance: 139
+Count: 1252  Distance: 139
+Count: 1253  Distance: 139
+Count: 1254  Distance: 139
+Count: 1255  Distance: 139
+Count: 1256  Distance: 139
+Count: 1257  Distance: 140
+Count: 1258  Distance: 139
+Count: 1259  Distance: 140
+Count: 1260  Distance: 140
+Count: 1261  Distance: 139
+Count: 1262  Distance: 140
+Count: 1263  Distance: 139
+Count: 1264  Distance: 140
+Count: 1265  Distance: 139
+Count: 1266  Distance: 140
+Count: 1267  Distance: 140
+Count: 1268  Distance: 140
+Count: 1269  Distance: 140
+Count: 1270  Distance: 139
+Count: 1271  Distance: 140
+Count: 1272  Distance: 140
+Count: 1273  Distance: 139
+Count: 1274  Distance: 140
+Count: 1275  Distance: 138
+Count: 1276  Distance: 140
+Count: 1277  Distance: 140
+Count: 1278  Distance: 140
+Count: 1279  Distance: 140
+Count: 1280  Distance: 140
+Count: 1281  Distance: 140
+Count: 1282  Distance: 140
+Count: 1283  Distance: 139
+Count: 1284  Distance: 140
+Count: 1285  Distance: 139
+Count: 1286  Distance: 140
+Count: 1287  Distance: 139
+Count: 1288  Distance: 140
+Count: 1289  Distance: 138
+Count: 1290  Distance: 140
+Count: 1291  Distance: 139
+Count: 1292  Distance: 140
+Count: 1293  Distance: 140
+Count: 1294  Distance: 140
+Count: 1295  Distance: 140
+Count: 1296  Distance: 140
+Count: 1297  Distance: 139
+Count: 1298  Distance: 139
+Count: 1299  Distance: 140
+Count: 1300  Distance: 139
+Count: 1301  Distance: 138
+Count: 1302  Distance: 139
+Count: 1303  Distance: 139
+Count: 1304  Distance: 139
+Count: 1305  Distance: 139
+Count: 1306  Distance: 140
+Count: 1307  Distance: 139
+Count: 1308  Distance: 140
+Count: 1309  Distance: 139
+Count: 1310  Distance: 140
+Count: 1311  Distance: 138
+Count: 1312  Distance: 139
+Count: 1313  Distance: 139
+Count: 1314  Distance: 139
+Count: 1315  Distance: 139
+Count: 1316  Distance: 139
+Count: 1317  Distance: 139
+Count: 1318  Distance: 139
+Count: 1319  Distance: 138
+Count: 1320  Distance: 139
+Count: 1321  Distance: 139
+Count: 1322  Distance: 139
+Count: 1323  Distance: 139
+Count: 1324  Distance: 140
+Count: 1325  Distance: 139
+Count: 1326  Distance: 139
+Count: 1327  Distance: 139
+Count: 1328  Distance: 139
+Count: 1329  Distance: 139
+Count: 1330  Distance: 139
+Count: 1331  Distance: 139
+Count: 1332  Distance: 139
+Count: 1333  Distance: 138
+Count: 1334  Distance: 139
+Count: 1335  Distance: 139
+Count: 1336  Distance: 140
+Count: 1337  Distance: 139
+Count: 1338  Distance: 138
+Count: 1339  Distance: 138
+Count: 1340  Distance: 139
+Count: 1341  Distance: 139
+Count: 1342  Distance: 140
+Count: 1343  Distance: 139
+Count: 1344  Distance: 140
+Count: 1345  Distance: 139
+Count: 1346  Distance: 140
+Count: 1347  Distance: 139
+Count: 1348  Distance: 140
+Count: 1349  Distance: 139
+Count: 1350  Distance: 139
+Count: 1351  Distance: 139
+Count: 1352  Distance: 140
+Count: 1353  Distance: 139
+Count: 1354  Distance: 139
+Count: 1355  Distance: 139
+Count: 1356  Distance: 140
+Count: 1357  Distance: 140
+Count: 1358  Distance: 140
+Count: 1359  Distance: 139
+Count: 1360  Distance: 138
+Count: 1361  Distance: 139
+Count: 1362  Distance: 140
+Count: 1363  Distance: 140
+Count: 1364  Distance: 140
+Count: 1365  Distance: 138
+Count: 1366  Distance: 140
+Count: 1367  Distance: 139
+Count: 1368  Distance: 140
+Count: 1369  Distance: 140
+Count: 1370  Distance: 140
+Count: 1371  Distance: 139
+Count: 1372  Distance: 140
+Count: 1373  Distance: 140
+Count: 1374  Distance: 140
+Count: 1375  Distance: 140
+Count: 1376  Distance: 140
+Count: 1377  Distance: 140
+Count: 1378  Distance: 140
+Count: 1379  Distance: 140
+Count: 1380  Distance: 140
+Count: 1381  Distance: 139
+Count: 1382  Distance: 140
+Count: 1383  Distance: 138
+Count: 1384  Distance: 139
+Count: 1385  Distance: 139
+Count: 1386  Distance: 139
+Count: 1387  Distance: 139
+Count: 1388  Distance: 139
+Count: 1389  Distance: 138
+Count: 1390  Distance: 139
+Count: 1391  Distance: 139
+Count: 1392  Distance: 139
+Count: 1393  Distance: 139
+Count: 1394  Distance: 139
+Count: 1395  Distance: 139
+Count: 1396  Distance: 138
+Count: 1397  Distance: 139
+Count: 1398  Distance: 138
+Count: 1399  Distance: 139
+Count: 1400  Distance: 139
+Count: 1401  Distance: 139
+Count: 1402  Distance: 139
+Count: 1403  Distance: 139
+Count: 1404  Distance: 139
+Count: 1405  Distance: 139
+Count: 1406  Distance: 140
+Count: 1407  Distance: 139
+Count: 1408  Distance: 140
+Count: 1409  Distance: 139
+Count: 1410  Distance: 140
+Count: 1411  Distance: 140
+Count: 1412  Distance: 140
+Count: 1413  Distance: 140
+Count: 1414  Distance: 140
+Count: 1415  Distance: 140
+Count: 1416  Distance: 140
+Count: 1417  Distance: 140
+Count: 1418  Distance: 140
+Count: 1419  Distance: 139
+Count: 1420  Distance: 140
+Count: 1421  Distance: 139
+Count: 1422  Distance: 140
+Count: 1423  Distance: 140
+Count: 1424  Distance: 140
+Count: 1425  Distance: 139
+Count: 1426  Distance: 139
+Count: 1427  Distance: 140
+Count: 1428  Distance: 139
+Count: 1429  Distance: 140
+Count: 1430  Distance: 140
+Count: 1431  Distance: 138
+Count: 1432  Distance: 140
+Count: 1433  Distance: 139
+Count: 1434  Distance: 140
+Count: 1435  Distance: 139
+Count: 1436  Distance: 140
+Count: 1437  Distance: 140
+Count: 1438  Distance: 140
+Count: 1439  Distance: 139
+Count: 1440  Distance: 140
+Count: 1441  Distance: 139
+Count: 1442  Distance: 139
+Count: 1443  Distance: 139
+Count: 1444  Distance: 138
+Count: 1445  Distance: 139
+Count: 1446  Distance: 139
+Count: 1447  Distance: 139
+Count: 1448  Distance: 139
+Count: 1449  Distance: 139
+Count: 1450  Distance: 140
+Count: 1451  Distance: 139
+Count: 1452  Distance: 139
+Count: 1453  Distance: 139
+Count: 1454  Distance: 140
+Count: 1455  Distance: 140
+Count: 1456  Distance: 139
+Count: 1457  Distance: 140
+Count: 1458  Distance: 140
+Count: 1459  Distance: 140
+Count: 1460  Distance: 140
+Count: 1461  Distance: 139
+Count: 1462  Distance: 140
+Count: 1463  Distance: 139
+Count: 1464  Distance: 140
+Count: 1465  Distance: 140
+Count: 1466  Distance: 140
+Count: 1467  Distance: 140
+Count: 1468  Distance: 140
+Count: 1469  Distance: 140
+Count: 1470  Distance: 140
+Count: 1471  Distance: 139
+Count: 1472  Distance: 140
+Count: 1473  Distance: 139
+Count: 1474  Distance: 140
+Count: 1475  Distance: 139
+Count: 1476  Distance: 140
+Count: 1477  Distance: 139
+Count: 1478  Distance: 140
+Count: 1479  Distance: 139
+Count: 1480  Distance: 140
+Count: 1481  Distance: 139
+Count: 1482  Distance: 139
+Count: 1483  Distance: 139
+Count: 1484  Distance: 140
+Count: 1485  Distance: 140
+Count: 1486  Distance: 140
+Count: 1487  Distance: 139
+Count: 1488  Distance: 140
+Count: 1489  Distance: 139
+Count: 1490  Distance: 139
+Count: 1491  Distance: 139
+Count: 1492  Distance: 140
+Count: 1493  Distance: 140
+Count: 1494  Distance: 140
+Count: 1495  Distance: 139
+Count: 1496  Distance: 140
+Count: 1497  Distance: 140
+Count: 1498  Distance: 140
+Count: 1499  Distance: 139
+Count: 1500  Distance: 139
+Count: 1501  Distance: 139
+Count: 1502  Distance: 140
+Count: 1503  Distance: 139
+Count: 1504  Distance: 138
+Count: 1505  Distance: 139
+Count: 1506  Distance: 140
+Count: 1507  Distance: 139
+Count: 1508  Distance: 140
+Count: 1509  Distance: 138
+Count: 1510  Distance: 140
+Count: 1511  Distance: 140
+Count: 1512  Distance: 140
+Count: 1513  Distance: 140
+Count: 1514  Distance: 140
+Count: 1515  Distance: 140
+Count: 1516  Distance: 140
+Count: 1517  Distance: 140
+Count: 1518  Distance: 140
+Count: 1519  Distance: 140
+Count: 1520  Distance: 140
+Count: 1521  Distance: 140
+Count: 1522  Distance: 140
+Count: 1523  Distance: 139
+Count: 1524  Distance: 140
+Count: 1525  Distance: 139
+Count: 1526  Distance: 139
+Count: 1527  Distance: 139
+Count: 1528  Distance: 140
+Count: 1529  Distance: 139
+Count: 1530  Distance: 139
+Count: 1531  Distance: 139
+Count: 1532  Distance: 140
+Count: 1533  Distance: 139
+Count: 1534  Distance: 139
+Count: 1535  Distance: 139
+Count: 1536  Distance: 139
+Count: 1537  Distance: 139
+Count: 1538  Distance: 139
+Count: 1539  Distance: 139
+Count: 1540  Distance: 139
+Count: 1541  Distance: 139
+Count: 1542  Distance: 139
+Count: 1543  Distance: 139
+Count: 1544  Distance: 139
+Count: 1545  Distance: 139
+Count: 1546  Distance: 140
+Count: 1547  Distance: 140
+Count: 1548  Distance: 140
+Count: 1549  Distance: 140
+Count: 1550  Distance: 140
+Count: 1551  Distance: 139
+Count: 1552  Distance: 140
+Count: 1553  Distance: 140
+Count: 1554  Distance: 140
+Count: 1555  Distance: 140
+Count: 1556  Distance: 139
+Count: 1557  Distance: 140
+Count: 1558  Distance: 140
+Count: 1559  Distance: 140
+Count: 1560  Distance: 139
+Count: 1561  Distance: 140
+Count: 1562  Distance: 140
+Count: 1563  Distance: 138
+Count: 1564  Distance: 140
+Count: 1565  Distance: 139
+Count: 1566  Distance: 139
+Count: 1567  Distance: 139
+Count: 1568  Distance: 139
+Count: 1569  Distance: 140
+Count: 1570  Distance: 140
+Count: 1571  Distance: 140
+Count: 1572  Distance: 140
+Count: 1573  Distance: 140
+Count: 1574  Distance: 140
+Count: 1575  Distance: 140
+Count: 1576  Distance: 140
+Count: 1577  Distance: 140
+Count: 1578  Distance: 140
+Count: 1579  Distance: 139
+Count: 1580  Distance: 140
+Count: 1581  Distance: 139
+Count: 1582  Distance: 140
+Count: 1583  Distance: 140
+Count: 1584  Distance: 140
+Count: 1585  Distance: 140
+Count: 1586  Distance: 139
+Count: 1587  Distance: 139
+Count: 1588  Distance: 140
+Count: 1589  Distance: 140
+Count: 1590  Distance: 140
+Count: 1591  Distance: 139
+Count: 1592  Distance: 140
+Count: 1593  Distance: 138
+Count: 1594  Distance: 140
+Count: 1595  Distance: 139
+Count: 1596  Distance: 139
+Count: 1597  Distance: 139
+Count: 1598  Distance: 139
+Count: 1599  Distance: 139
+Count: 1600  Distance: 139
+Count: 1601  Distance: 140
+Count: 1602  Distance: 140
+Count: 1603  Distance: 139
+Count: 1604  Distance: 139
+Count: 1605  Distance: 139
+Count: 1606  Distance: 139
+Count: 1607  Distance: 139
+Count: 1608  Distance: 139
+Count: 1609  Distance: 139
+Count: 1610  Distance: 139
+Count: 1611  Distance: 139
+Count: 1612  Distance: 139
+Count: 1613  Distance: 139
+Count: 1614  Distance: 139
+Count: 1615  Distance: 139
+Count: 1616  Distance: 139
+Count: 1617  Distance: 139
+Count: 1618  Distance: 139
+Count: 1619  Distance: 139
+Count: 1620  Distance: 140
+Count: 1621  Distance: 139
+Count: 1622  Distance: 140
+Count: 1623  Distance: 140
+Count: 1624  Distance: 140
+Count: 1625  Distance: 139
+Count: 1626  Distance: 140
+Count: 1627  Distance: 139
+Count: 1628  Distance: 140
+Count: 1629  Distance: 139
+Count: 1630  Distance: 140
+Count: 1631  Distance: 139
+Count: 1632  Distance: 140
+Count: 1633  Distance: 139
+Count: 1634  Distance: 139
+Count: 1635  Distance: 139
+Count: 1636  Distance: 139
+Count: 1637  Distance: 139
+Count: 1638  Distance: 139
+Count: 1639  Distance: 139
+Count: 1640  Distance: 139
+Count: 1641  Distance: 139
+Count: 1642  Distance: 140
+Count: 1643  Distance: 139
+Count: 1644  Distance: 140
+Count: 1645  Distance: 140
+Count: 1646  Distance: 140
+Count: 1647  Distance: 140
+Count: 1648  Distance: 140
+Count: 1649  Distance: 140
+Count: 1650  Distance: 140
+Count: 1651  Distance: 140
+Count: 1652  Distance: 140
+Count: 1653  Distance: 140
+Count: 1654  Distance: 139
+Count: 1655  Distance: 140
+Count: 1656  Distance: 140
+Count: 1657  Distance: 140
+Count: 1658  Distance: 140
+Count: 1659  Distance: 140
+Count: 1660  Distance: 140
+Count: 1661  Distance: 139
+Count: 1662  Distance: 140
+Count: 1663  Distance: 139
+Count: 1664  Distance: 140
+Count: 1665  Distance: 139
+Count: 1666  Distance: 140
+Count: 1667  Distance: 138
+Count: 1668  Distance: 140
+Count: 1669  Distance: 138
+Count: 1670  Distance: 140
+Count: 1671  Distance: 138
+Count: 1672  Distance: 140
+Count: 1673  Distance: 139
+Count: 1674  Distance: 140
+Count: 1675  Distance: 139
+Count: 1676  Distance: 140
+Count: 1677  Distance: 140
+Count: 1678  Distance: 140
+Count: 1679  Distance: 140
+Count: 1680  Distance: 139
+Count: 1681  Distance: 139
+Count: 1682  Distance: 140
+Count: 1683  Distance: 140
+Count: 1684  Distance: 140
+Count: 1685  Distance: 139
+Count: 1686  Distance: 140
+Count: 1687  Distance: 140
+Count: 1688  Distance: 139
+Count: 1689  Distance: 140
+Count: 1690  Distance: 140
+Count: 1691  Distance: 140
+Count: 1692  Distance: 140
+Count: 1693  Distance: 139
+Count: 1694  Distance: 140
+Count: 1695  Distance: 140
+Count: 1696  Distance: 140
+Count: 1697  Distance: 140
+Count: 1698  Distance: 140
+Count: 1699  Distance: 140
+Count: 1700  Distance: 140
+Count: 1701  Distance: 139
+Count: 1702  Distance: 140
+Count: 1703  Distance: 139
+Count: 1704  Distance: 139
+Count: 1705  Distance: 139
+Count: 1706  Distance: 140
+Count: 1707  Distance: 139
+Count: 1708  Distance: 140
+Count: 1709  Distance: 139
+Count: 1710  Distance: 139
+Count: 1711  Distance: 139
+Count: 1712  Distance: 140
+Count: 1713  Distance: 139
+Count: 1714  Distance: 140
+Count: 1715  Distance: 139
+Count: 1716  Distance: 140
+Count: 1717  Distance: 139
+Count: 1718  Distance: 139
+Count: 1719  Distance: 140
+Count: 1720  Distance: 139
+Count: 1721  Distance: 140
+Count: 1722  Distance: 140
+Count: 1723  Distance: 139
+Count: 1724  Distance: 140
+Count: 1725  Distance: 139
+Count: 1726  Distance: 140
+Count: 1727  Distance: 139
+Count: 1728  Distance: 140
+Count: 1729  Distance: 139
+Count: 1730  Distance: 140
+Count: 1731  Distance: 140
+Count: 1732  Distance: 140
+Count: 1733  Distance: 140
+Count: 1734  Distance: 140
+Count: 1735  Distance: 138
+Count: 1736  Distance: 139
+Count: 1737  Distance: 139
+Count: 1738  Distance: 139
+Count: 1739  Distance: 138
+Count: 1740  Distance: 140
+Count: 1741  Distance: 140
+Count: 1742  Distance: 139
+Count: 1743  Distance: 139
+Count: 1744  Distance: 140
+Count: 1745  Distance: 138
+Count: 1746  Distance: 140
+Count: 1747  Distance: 139
+Count: 1748  Distance: 140
+Count: 1749  Distance: 140
+Count: 1750  Distance: 139
+Count: 1751  Distance: 139
+Count: 1752  Distance: 140
+Count: 1753  Distance: 139
+Count: 1754  Distance: 140
+Count: 1755  Distance: 139
+Count: 1756  Distance: 140
+Count: 1757  Distance: 139
+Count: 1758  Distance: 140
+Count: 1759  Distance: 139
+Count: 1760  Distance: 140
+Count: 1761  Distance: 139
+Count: 1762  Distance: 139
+Count: 1763  Distance: 138
+Count: 1764  Distance: 138
+Count: 1765  Distance: 139
+Count: 1766  Distance: 139
+Count: 1767  Distance: 139
+Count: 1768  Distance: 139
+Count: 1769  Distance: 138
+Count: 1770  Distance: 139
+Count: 1771  Distance: 139
+Count: 1772  Distance: 139
+Count: 1773  Distance: 139
+Count: 1774  Distance: 140
+Count: 1775  Distance: 139
+Count: 1776  Distance: 140
+Count: 1777  Distance: 140
+Count: 1778  Distance: 140
+Count: 1779  Distance: 140
+Count: 1780  Distance: 140
+Count: 1781  Distance: 139
+Count: 1782  Distance: 140
+Count: 1783  Distance: 139
+Count: 1784  Distance: 139
+Count: 1785  Distance: 139
+Count: 1786  Distance: 139
+Count: 1787  Distance: 139
+Count: 1788  Distance: 140
+Count: 1789  Distance: 138
+Count: 1790  Distance: 140
+Count: 1791  Distance: 139
+Count: 1792  Distance: 139
+Count: 1793  Distance: 140
+Count: 1794  Distance: 139
+Count: 1795  Distance: 140
+Count: 1796  Distance: 139
+Count: 1797  Distance: 140
+Count: 1798  Distance: 140
+Count: 1799  Distance: 139
+Count: 1800  Distance: 140
+Count: 1801  Distance: 139
+Count: 1802  Distance: 139
+Count: 1803  Distance: 140
+Count: 1804  Distance: 140
+Count: 1805  Distance: 140
+Count: 1806  Distance: 139
+Count: 1807  Distance: 140
+Count: 1808  Distance: 140
+Count: 1809  Distance: 139
+Count: 1810  Distance: 139
+Count: 1811  Distance: 140
+Count: 1812  Distance: 139
+Count: 1813  Distance: 139
+Count: 1814  Distance: 139
+Count: 1815  Distance: 139
+Count: 1816  Distance: 139
+Count: 1817  Distance: 138
+Count: 1818  Distance: 139
+Count: 1819  Distance: 138
+Count: 1820  Distance: 140
+Count: 1821  Distance: 139
+Count: 1822  Distance: 140
+Count: 1823  Distance: 139
+Count: 1824  Distance: 140
+Count: 1825  Distance: 139
+Count: 1826  Distance: 140
+Count: 1827  Distance: 140
+Count: 1828  Distance: 140
+Count: 1829  Distance: 139
+Count: 1830  Distance: 140
+Count: 1831  Distance: 138
+Count: 1832  Distance: 140
+Count: 1833  Distance: 140
+Count: 1834  Distance: 140
+Count: 1835  Distance: 139
+Count: 1836  Distance: 140
+Count: 1837  Distance: 139
+Count: 1838  Distance: 140
+Count: 1839  Distance: 140
+Count: 1840  Distance: 140
+Count: 1841  Distance: 139
+Count: 1842  Distance: 140
+Count: 1843  Distance: 140
+Count: 1844  Distance: 140
+Count: 1845  Distance: 140
+Count: 1846  Distance: 140
+Count: 1847  Distance: 140
+Count: 1848  Distance: 140
+Count: 1849  Distance: 140
+Count: 1850  Distance: 140
+Count: 1851  Distance: 139
+Count: 1852  Distance: 140
+Count: 1853  Distance: 139
+Count: 1854  Distance: 139
+Count: 1855  Distance: 139
+Count: 1856  Distance: 139
+Count: 1857  Distance: 138
+Count: 1858  Distance: 139
+Count: 1859  Distance: 138
+Count: 1860  Distance: 139
+Count: 1861  Distance: 139
+Count: 1862  Distance: 139
+Count: 1863  Distance: 139
+Count: 1864  Distance: 139
+Count: 1865  Distance: 139
+Count: 1866  Distance: 140
+Count: 1867  Distance: 139
+Count: 1868  Distance: 140
+Count: 1869  Distance: 139
+Count: 1870  Distance: 139
+Count: 1871  Distance: 139
+Count: 1872  Distance: 139
+Count: 1873  Distance: 139
+Count: 1874  Distance: 140
+Count: 1875  Distance: 139
+Count: 1876  Distance: 139
+Count: 1877  Distance: 139
+Count: 1878  Distance: 140
+Count: 1879  Distance: 138
+Count: 1880  Distance: 140
+Count: 1881  Distance: 139
+Count: 1882  Distance: 139
+Count: 1883  Distance: 139
+Count: 1884  Distance: 139
+Count: 1885  Distance: 139
+Count: 1886  Distance: 139
+Count: 1887  Distance: 139
+Count: 1888  Distance: 140
+Count: 1889  Distance: 139
+Count: 1890  Distance: 140
+Count: 1891  Distance: 140
+Count: 1892  Distance: 139
+Count: 1893  Distance: 140
+Count: 1894  Distance: 140
+Count: 1895  Distance: 139
+Count: 1896  Distance: 140
+Count: 1897  Distance: 139
+Count: 1898  Distance: 139
+Count: 1899  Distance: 139
+Count: 1900  Distance: 140
+Count: 1901  Distance: 139
+Count: 1902  Distance: 140
+Count: 1903  Distance: 139
+Count: 1904  Distance: 140
+Count: 1905  Distance: 139
+Count: 1906  Distance: 139
+Count: 1907  Distance: 139
+Count: 1908  Distance: 140
+Count: 1909  Distance: 139
+Count: 1910  Distance: 140
+Count: 1911  Distance: 139
+Count: 1912  Distance: 140
+Count: 1913  Distance: 139
+Count: 1914  Distance: 140
+Count: 1915  Distance: 139
+Count: 1916  Distance: 140
+Count: 1917  Distance: 140
+Count: 1918  Distance: 140
+Count: 1919  Distance: 139
+Count: 1920  Distance: 140
+Count: 1921  Distance: 140
+Count: 1922  Distance: 139
+Count: 1923  Distance: 140
+Count: 1924  Distance: 140
+Count: 1925  Distance: 140
+Count: 1926  Distance: 140
+Count: 1927  Distance: 139
+Count: 1928  Distance: 140
+Count: 1929  Distance: 139
+Count: 1930  Distance: 140
+Count: 1931  Distance: 139
+Count: 1932  Distance: 140
+Count: 1933  Distance: 140
+Count: 1934  Distance: 139
+Count: 1935  Distance: 140
+Count: 1936  Distance: 140
+Count: 1937  Distance: 140
+Count: 1938  Distance: 140
+Count: 1939  Distance: 140
+Count: 1940  Distance: 139
+Count: 1941  Distance: 138
+Count: 1942  Distance: 139
+Count: 1943  Distance: 139
+Count: 1944  Distance: 139
+Count: 1945  Distance: 139
+Count: 1946  Distance: 140
+Count: 1947  Distance: 139
+Count: 1948  Distance: 139
+Count: 1949  Distance: 140
+Count: 1950  Distance: 139
+Count: 1951  Distance: 138
+Count: 1952  Distance: 140
+Count: 1953  Distance: 140
+Count: 1954  Distance: 139
+Count: 1955  Distance: 138
+Count: 1956  Distance: 139
+Count: 1957  Distance: 138
+Count: 1958  Distance: 139
+Count: 1959  Distance: 139
+Count: 1960  Distance: 139
+Count: 1961  Distance: 139
+Count: 1962  Distance: 139
+Count: 1963  Distance: 139
+Count: 1964  Distance: 139
+Count: 1965  Distance: 139
+Count: 1966  Distance: 140
+Count: 1967  Distance: 139
+Count: 1968  Distance: 139
+Count: 1969  Distance: 138
+Count: 1970  Distance: 138
+Count: 1971  Distance: 139
+Count: 1972  Distance: 140
+Count: 1973  Distance: 139
+Count: 1974  Distance: 139
+Count: 1975  Distance: 139
+Count: 1976  Distance: 140
+Count: 1977  Distance: 138
+Count: 1978  Distance: 140
+Count: 1979  Distance: 140
+Count: 1980  Distance: 140
+Count: 1981  Distance: 139
+Count: 1982  Distance: 140
+Count: 1983  Distance: 139
+Count: 1984  Distance: 140
+Count: 1985  Distance: 139
+Count: 1986  Distance: 140
+Count: 1987  Distance: 139
+Count: 1988  Distance: 139
+Count: 1989  Distance: 139
+Count: 1990  Distance: 140
+Count: 1991  Distance: 139
+Count: 1992  Distance: 140
+Count: 1993  Distance: 138
+Count: 1994  Distance: 139
+Count: 1995  Distance: 138
+Count: 1996  Distance: 140
+Count: 1997  Distance: 139
+Count: 1998  Distance: 140
+Count: 1999  Distance: 140
+Count: 2000  Distance: 140
+Count: 2001  Distance: 139
+Count: 2002  Distance: 140
+Count: 2003  Distance: 140
+Count: 2004  Distance: 140
+Count: 2005  Distance: 139
+Count: 2006  Distance: 140
+Count: 2007  Distance: 139
+Count: 2008  Distance: 140
+Count: 2009  Distance: 138
+Count: 2010  Distance: 139
+Count: 2011  Distance: 139
+Count: 2012  Distance: 139
+Count: 2013  Distance: 138
+Count: 2014  Distance: 140
+Count: 2015  Distance: 140
+Count: 2016  Distance: 140
+Count: 2017  Distance: 140
+Count: 2018  Distance: 140
+Count: 2019  Distance: 138
+Count: 2020  Distance: 139
+Count: 2021  Distance: 139
+Count: 2022  Distance: 139
+Count: 2023  Distance: 139
+Count: 2024  Distance: 139
+Count: 2025  Distance: 139
+Count: 2026  Distance: 140
+Count: 2027  Distance: 139
+Count: 2028  Distance: 140
+Count: 2029  Distance: 138
+Count: 2030  Distance: 139
+Count: 2031  Distance: 140
+Count: 2032  Distance: 140
+Count: 2033  Distance: 140
+Count: 2034  Distance: 140
+Count: 2035  Distance: 140
+Count: 2036  Distance: 140
+Count: 2037  Distance: 139
+Count: 2038  Distance: 140
+Count: 2039  Distance: 138
+Count: 2040  Distance: 140
+Count: 2041  Distance: 139
+Count: 2042  Distance: 139
+Count: 2043  Distance: 140
+Count: 2044  Distance: 139
+Count: 2045  Distance: 140
+Count: 2046  Distance: 140
+Count: 2047  Distance: 140
+Count: 2048  Distance: 139
+Count: 2049  Distance: 140
+Count: 2050  Distance: 140
+Count: 2051  Distance: 140
+Count: 2052  Distance: 140
+Count: 2053  Distance: 140
+Count: 2054  Distance: 140
+Count: 2055  Distance: 139
+Count: 2056  Distance: 140
+Count: 2057  Distance: 139
+Count: 2058  Distance: 140
+Count: 2059  Distance: 139
+Count: 2060  Distance: 140
+Count: 2061  Distance: 139
+Count: 2062  Distance: 140
+Count: 2063  Distance: 139
+Count: 2064  Distance: 139
+Count: 2065  Distance: 140
+Count: 2066  Distance: 140
+Count: 2067  Distance: 139
+Count: 2068  Distance: 140
+Count: 2069  Distance: 139
+Count: 2070  Distance: 139
+Count: 2071  Distance: 140
+Count: 2072  Distance: 139
+Count: 2073  Distance: 139
+Count: 2074  Distance: 139
+Count: 2075  Distance: 138
+Count: 2076  Distance: 139
+Count: 2077  Distance: 139
+Count: 2078  Distance: 140
+Count: 2079  Distance: 139
+Count: 2080  Distance: 140
+Count: 2081  Distance: 140
+Count: 2082  Distance: 139
+Count: 2083  Distance: 139
+Count: 2084  Distance: 140
+Count: 2085  Distance: 140
+Count: 2086  Distance: 140
+Count: 2087  Distance: 140
+Count: 2088  Distance: 140
+Count: 2089  Distance: 139
+Count: 2090  Distance: 139
+Count: 2091  Distance: 139
+Count: 2092  Distance: 138
+Count: 2093  Distance: 139
+Count: 2094  Distance: 139
+Count: 2095  Distance: 139
+Count: 2096  Distance: 138
+Count: 2097  Distance: 138
+Count: 2098  Distance: 138
+Count: 2099  Distance: 138
+Count: 2100  Distance: 139
+Count: 2101  Distance: 139
+Count: 2102  Distance: 139
+Count: 2103  Distance: 140
+Count: 2104  Distance: 139
+Count: 2105  Distance: 139
+Count: 2106  Distance: 140
+Count: 2107  Distance: 140
+Count: 2108  Distance: 140
+Count: 2109  Distance: 139
+Count: 2110  Distance: 140
+Count: 2111  Distance: 139
+Count: 2112  Distance: 140
+Count: 2113  Distance: 139
+Count: 2114  Distance: 139
+Count: 2115  Distance: 139
+Count: 2116  Distance: 139
+Count: 2117  Distance: 139
+Count: 2118  Distance: 140
+Count: 2119  Distance: 139
+Count: 2120  Distance: 139
+Count: 2121  Distance: 139
+Count: 2122  Distance: 139
+Count: 2123  Distance: 139
+Count: 2124  Distance: 140
+Count: 2125  Distance: 140
+Count: 2126  Distance: 140
+Count: 2127  Distance: 139
+Count: 2128  Distance: 140
+Count: 2129  Distance: 139
+Count: 2130  Distance: 139
+Count: 2131  Distance: 140
+Count: 2132  Distance: 139
+Count: 2133  Distance: 140
+Count: 2134  Distance: 140
+Count: 2135  Distance: 140
+Count: 2136  Distance: 140
+Count: 2137  Distance: 140
+Count: 2138  Distance: 140
+Count: 2139  Distance: 140
+Count: 2140  Distance: 140
+Count: 2141  Distance: 139
+Count: 2142  Distance: 139
+Count: 2143  Distance: 140
+Count: 2144  Distance: 140
+Count: 2145  Distance: 140
+Count: 2146  Distance: 139
+Count: 2147  Distance: 140
+Count: 2148  Distance: 140
+Count: 2149  Distance: 140
+Count: 2150  Distance: 140
+Count: 2151  Distance: 140
+Count: 2152  Distance: 139
+Count: 2153  Distance: 140
+Count: 2154  Distance: 139
+Count: 2155  Distance: 140
+Count: 2156  Distance: 140
+Count: 2157  Distance: 139
+Count: 2158  Distance: 140
+Count: 2159  Distance: 139
+Count: 2160  Distance: 140
+Count: 2161  Distance: 140
+Count: 2162  Distance: 139
+Count: 2163  Distance: 140
+Count: 2164  Distance: 139
+Count: 2165  Distance: 140
+Count: 2166  Distance: 140
+Count: 2167  Distance: 140
+Count: 2168  Distance: 140
+Count: 2169  Distance: 139
+Count: 2170  Distance: 140
+Count: 2171  Distance: 139
+Count: 2172  Distance: 140
+Count: 2173  Distance: 140
+Count: 2174  Distance: 140
+Count: 2175  Distance: 140
+Count: 2176  Distance: 140
+Count: 2177  Distance: 139
+Count: 2178  Distance: 140
+Count: 2179  Distance: 138
+Count: 2180  Distance: 140
+Count: 2181  Distance: 138
+Count: 2182  Distance: 139
+Count: 2183  Distance: 139
+Count: 2184  Distance: 138
+Count: 2185  Distance: 139
+Count: 2186  Distance: 139
+Count: 2187  Distance: 138
+Count: 2188  Distance: 139
+Count: 2189  Distance: 138
+Count: 2190  Distance: 138
+Count: 2191  Distance: 139
+Count: 2192  Distance: 139
+Count: 2193  Distance: 139
+Count: 2194  Distance: 139
+Count: 2195  Distance: 139
+Count: 2196  Distance: 139
+Count: 2197  Distance: 1
