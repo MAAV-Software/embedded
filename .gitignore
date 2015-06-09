@@ -4,6 +4,8 @@
 *TMP*
 *.map
 *.out
+*.o
+test/bin/*
 
 # folders
 Debug
