@@ -229,7 +229,7 @@ void Dof::updateSetpt(const float x, const float DxDt, const float D2xDt2, const
 	setpt[ACCEL] = D2xDt2;
 	setpt[TIME]  = t;
 
-	if (stateBound > 0.000001) // small tolerance for float precision
+	if (state > 0.000001) // small tolerance for float precision
 	{
 		while (setpt[VAL] >  stateBound) setpt[VAL] -= 2 * stateBound;
 		while (setpt[VAL] < -stateBound) setpt[VAL] += 2 * stateBound;
