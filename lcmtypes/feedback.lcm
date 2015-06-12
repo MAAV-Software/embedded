@@ -1,0 +1,12 @@
+struct feedback_t 
+{
+	float x[3];
+	float y[3];
+	float z[3];
+	float roll;
+	float pitch;
+	float yaw;
+	int8_t flags;
+	int64_t utime;
+	const int8_t VAL = 0, RATE = 1, ACCEL = 2;
+}

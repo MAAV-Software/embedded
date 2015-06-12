@@ -1,0 +1,10 @@
+struct gains_t 
+{
+	float xGains[6];
+	float yGains[6];
+	float zGains[6];
+	float yawGains[3];
+	int64_t utime;
+	const int8_t VAL_KP = 0, VAL_KI = 1, VAL_KD = 2, 
+		  		 RATE_KP = 3, RATE_KI = 4, RATE_KD = 5;
+}

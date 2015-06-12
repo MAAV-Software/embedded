@@ -1,0 +1,44 @@
+struct ctrl_log_t
+{
+	int64_t utime;
+	int8_t flags;
+	int8_t mode;
+	
+	float xFilt[3];
+	float yFilt[3];
+	float zFilt[3];
+	float rollFilt;
+	float pitchFilt;
+	float yawFilt;
+	float yawRateFilt;
+	
+	float xUval;
+	float yUval;
+	float zUval;
+	float xSetpt[2];
+	float ySetpt[2];
+	float zSetpt[2];
+	float yawSetpt;
+	
+	float xGains[6];
+	float yGains[6];
+	float zGains[6];
+	float yawGains[3];
+	
+	float imuAccel[3];
+	float imuGyro[3];
+	float imuMag[3];
+	float imuRot[9];
+	float lidarZ;
+	float camX;
+	float camY;
+	float camYaw;
+	float px4Xdot;
+	float px4Ydot;
+	
+	const int8_t VAL = 0, RATE = 1, ACCEL = 2;
+	const int8_t MANUAL = 0, ASSISTED = 1, AUTONOMOUS = 2;
+	const int8_t NORMAL = 0, TAKEOFF = 1, LAND = 2, IDLE = 3, KILL = 4;
+	const int8_t VAL_KP = 0, VAL_KI = 1, VAL_KD = 2, 
+		  		 RATE_KP = 3, RATE_KI = 4, RATE_KD = 5;
+}

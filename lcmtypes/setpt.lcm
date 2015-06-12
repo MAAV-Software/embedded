@@ -1,0 +1,12 @@
+struct setpt_t
+{
+	float x;
+	float y;
+	float z;
+	float yaw;
+	int8_t flags;
+	int8_t setptType;
+	int32_t utime;
+	const int8_t POSE_SETPT = 0, RATE_SETPT = 1;
+	const int8_t NORMAL = 0, TAKEOFF = 1, LAND = 2, IDLE = 3;
+}

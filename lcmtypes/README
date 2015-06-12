@@ -1,0 +1,29 @@
+LCM(-Lite) for MAAV Controls
+----------------------------
+
+This directory contains the LCM message specifiers and auto-generated code for 
+handling the messaging system of LCM. Two versions of the auto-generated code 
+exist in the following:
+
+1) gen-lite
+
+	This directory contains lcm-generated code for each message in the "lite" 
+	format (i.e. generated with "lcm-gen <msg>.lcm --c --c-no-pubsub").
+	
+2) gen-lite-typeinfo
+
+	This directory contains lcm-generated code for each message in the "lite"
+	format with typeinfo functions (i.e. generated with 
+	"lcm-gen <msg>.lcm --c --c-no-pubsub --c-typeinfo").
+
+All code is generated in the format of "lcm-lite" (which is the lcm code in C 
+without publish and subscribe functions) which allows it to be used in embedded 
+systems.
+
+Each message is specifiec in its respective "<msg>.lcm" file like a struct. The 
+data fields of each message take on LCM's primitive types (see LCM documentation 
+for more info on type specifications).
+
+Here's an overview of each message and it's purpose:
+
+

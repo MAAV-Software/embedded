@@ -1,0 +1,5 @@
+struct emergency_t 
+{
+	int8_t status;
+	const int8_t NORMAL = 0, LOW_BATTERY = 1, KILL = 2;
+}
