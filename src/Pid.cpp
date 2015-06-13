@@ -154,7 +154,7 @@ void Pid::calcError(PIDStateEnum idx)
 	}
 }
 
-void Pid::runPid()
+void Pid::run()
 {
 	// first get the ctrl dt
 	calcDt();

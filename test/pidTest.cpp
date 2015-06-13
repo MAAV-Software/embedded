@@ -54,7 +54,7 @@ BOOST_AUTO_TEST_CASE(flagsTest)
 BOOST_AUTO_TEST_CASE(plainCtrlTest1)
 {
 	Fixture f;
-	f.p.runPid();
+	f.p.run();
 	BOOST_CHECK_CLOSE(f.p.getOutput(), 3.0, 0.001);
 }
 
@@ -62,7 +62,7 @@ BOOST_AUTO_TEST_CASE(plainCtrlTest2)
 {
 	Fixture f;
 	f.p.setSetpt(-1, 1);
-	f.p.runPid();
+	f.p.run();
 	BOOST_CHECK_CLOSE(f.p.getOutput(), -3.0, 0.001);
 }
 
@@ -70,15 +70,15 @@ BOOST_AUTO_TEST_CASE(plainCtrlTest2)
 BOOST_AUTO_TEST_CASE(customCtrlTest)
 {
 	Fixture f;
-	f.c.runPid();
+	f.c.run();
 	BOOST_CHECK_CLOSE(f.c.getOutput(), 2.5, 0.001);
 
 	f.c.setState(2.5, 0, 2.5);
-	f.c.runPid();
+	f.c.run();
 	BOOST_CHECK(f.c.getOutput() < 0);
 
 	f.c.setState(0.5, 0.5, 4);
-	f.c.runPid();
+	f.c.run();
 	BOOST_CHECK(f.c.getOutput() > 0);
 }
 

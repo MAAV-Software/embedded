@@ -44,7 +44,7 @@ public:
 	void setGains(const float kp, const float ki, const float kd);
 	
 	// runs the PID algorithm
-	void runPid();
+	void run();
 
 	// return the output of the PID
 	float getOutput() const;
