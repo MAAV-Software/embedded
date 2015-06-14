@@ -7,6 +7,19 @@ This is the repository for MAAV's controls subteam.
 All controls code, documentation, and other important products/resources will go here.
 
 
+
+maav CCS Project Instructions
+-----------------------------
+The following paths need to be set up in order to open the "maav" project in CCS.
+
+REPO_LOC: this is the path to the maav-controls/repo on your computer
+TIVAWARE_INSTALL: this is the path to your installation of Ti's TivaWare software library
+
+In the Include Options, you need to add ${REPO_LOC}/include and ${REPO_LOC}/src in order to 
+use maav's custom code in the project.
+
+
+
 Repo Structure
 --------------
 maav		This is the main Code Composer Studio project for the flight controller running on the Tiva. 
