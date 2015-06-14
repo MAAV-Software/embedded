@@ -46,14 +46,14 @@ public:
 	
 	// Sets the setpoint for the PID algorithm
 	void setSetpt(const float setpt[NUM_DOF_STATES], bool isYaw, 
-				  FlightMode_t mode);
+				  int mode);
 	
 	// Sets the gains for the PID algorithm
 	void setGains(const float valueGains[NUM_GAINS], 
 				  const float rateGains[NUM_GAINS]);
 	
 	// runs the PID algorithm
-	void runCtrl(bool isYaw, FlightMode_t mode);
+	void runCtrl(bool isYaw, int mode);
 
 	// return the velocity output of the value PID
 	float getRate() const;

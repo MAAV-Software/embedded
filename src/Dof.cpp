@@ -64,7 +64,7 @@ void Dof::setState(const float state[NUM_DOF_STATES])
 }
 	
 // Sets the setpoint for the PID algorithm
-void Dof::setSetpt(const float setpt[NUM_SETPTS], bool isYaw, FlightMode_t mode)
+void Dof::setSetpt(const float setpt[NUM_SETPTS], bool isYaw, int mode)
 {
 	//TODO Need to make FlightMode_t and isYaw inputs consistent with actual things
 	if ((mode == ASSISTED) && !isYaw)
@@ -84,7 +84,7 @@ void Dof::setGains(const float valueGains[NUM_GAINS],
 }
 	
 // runs the PID algorithm
-void Dof::run(bool isYaw, FlightMode_t mode)
+void Dof::run(bool isYaw, int mode)
 {
 	if ((mode == AUTONOMOUS) || ((mode == ASSISTED) && isYaw))
 		valuePid.run();
