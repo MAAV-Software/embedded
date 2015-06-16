@@ -2,19 +2,10 @@
 #define DOF_HPP_
 
 /** \file dof.h
-    \brief Declaration of the DOF structure and supporting functions
-
-    Defines the DOF structure and declares the support functions allowing the
-    structure to be used for implementing a controller for the quadrotor.
-
-    \author Sajan Patel
-    \version 3.0
-    \date July 2014
-
-    \see dof.c
 */
 #include <stdint.h>
 #include "Pid.hpp"
+#include "FlightMode.hpp"
 
 #define NUM_DOF_STATES 4 // val, rate, accel, and time
 
@@ -45,15 +36,14 @@ public:
 	void setState(const float state[NUM_DOF_STATES]);
 	
 	// Sets the setpoint for the PID algorithm
-	void setSetpt(const float setpt[NUM_DOF_STATES], bool isYaw, 
-				  int mode);
+	void setSetpt(const float setpt[NUM_DOF_STATES], bool rateOnly);
 	
 	// Sets the gains for the PID algorithm
 	void setGains(const float valueGains[NUM_GAINS], 
 				  const float rateGains[NUM_GAINS]);
 	
 	// runs the PID algorithm
-	void runCtrl(bool isYaw, int mode);
+	void run(bool rateOnly);
 
 	// return the velocity output of the value PID
 	float getRate() const;

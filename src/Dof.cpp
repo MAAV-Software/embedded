@@ -1,17 +1,8 @@
-/** \file dof.c
-    \brief Implimentation of the DOF structure support functions
-
-    Implements the functionality and support of the DOF structure allowing the
-    structure to be used for implementing a controller for the quadrotor.
-
-    \author Mathew Karashin, Sajan Patel
-    \version 3.0
-    \date July 2014
-
-    \see dof.h
+/** Dof.cpp
+  Implementation of the DOF (degree of freedom) class.
 */
 #include <stdint.h>
-#include <math.h>
+#include <math.h>`
 #include "Dof.hpp"
 #include "Pid.hpp"
 
@@ -40,6 +31,7 @@ Dof::Dof(const float state[NUM_DOF_STATES],
 		 const float valueLpCoeff[NUM_STATES - 1],
 		 const float rateLpCoeff[NUM_STATES - 1])
 {
+	name = dofName;
 	float valState[NUM_STATES]  = {state[DOF_VAL], state[DOF_RATE], 
 								   state[DOF_TIME]};
 	float rateState[NUM_STATES] = {state[DOF_RATE], state[DOF_ACCEL], 
@@ -64,14 +56,18 @@ void Dof::setState(const float state[NUM_DOF_STATES])
 }
 	
 // Sets the setpoint for the PID algorithm
-void Dof::setSetpt(const float setpt[NUM_SETPTS], bool isYaw, int mode)
+void Dof::setSetpt(const float setpt[NUM_DOF_STATES], bool rateOnly)
 {
-	//TODO Need to make FlightMode_t and isYaw inputs consistent with actual things
-	if ((mode == ASSISTED) && !isYaw)
+	// Only give rate setpts when using rate PIDs only
+	if (rateOnly) 
+	{
 		ratePid.setSetpt(setpt[DOF_RATE], setpt[DOF_TIME]);
+		rate = setpt[DOF_RATE]; // log rate for later use
+	}
 	else
 		valuePid.setSetpt(setpt[DOF_VAL], setpt[DOF_TIME]);
 
+	// log setpt time for later use	
 	setptTime = setpt[DOF_TIME];
 }
 	
@@ -80,17 +76,20 @@ void Dof::setGains(const float valueGains[NUM_GAINS],
 				   const float rateGains[NUM_GAINS])
 {
 	valuePid.setGains(valueGains[KP], valueGains[KI], valueGains[KD]);
-	raetPid.setGains(rateGains[KP], rateGains[KI], rateGains[KD]);
+	ratePid.setGains(rateGains[KP], rateGains[KI], rateGains[KD]);
 }
 	
 // runs the PID algorithm
-void Dof::run(bool isYaw, int mode)
+void Dof::run(bool rateOnly)
 {
-	if ((mode == AUTONOMOUS) || ((mode == ASSISTED) && isYaw))
+	if (!rateOnly) // only run value PIDs when not solely running rate PIDs
+	{
 		valuePid.run();
-
-	rate = valuePid.getOutput();
-	ratePid.setSetpt(rate, setptTime);
+		rate = valuePid.getOutput();
+		ratePid.setSetpt(rate, setptTime);
+	}
+	
+	// Always run Rate PID (setpt either got set above or in Dof::setSetpt())
 	ratePid.run();
 	Uval = inertia * ratePid.getOutput();
 }
