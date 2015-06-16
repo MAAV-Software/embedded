@@ -14,10 +14,10 @@ class Fixture
 public:
 	Fixture() 
 	{
-		float states[NUM_STATES] = {0, 0, 0};
-		float setpt[NUM_STATES] = {1, 0, 1};
-		float gains[NUM_GAINS] = {1, 1, 1};
-		float lpCoeff[NUM_STATES - 1] = {0, 0};
+		float states[NUM_PID_STATES] = {0, 0, 0};
+		float setpt[NUM_PID_STATES] = {1, 0, 1};
+		float gains[NUM_PID_GAINS] = {1, 1, 1};
+		float lpCoeff[NUM_PID_STATES - 1] = {0, 0};
 
 		c = Pid(states, setpt, 
 				(uint8_t)DERR_DT_MASK | (uint8_t)(DISC_DERIV_MASK), 

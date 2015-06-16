@@ -13,8 +13,8 @@
 #define DERR_DT_MASK		0x04 // enable use of error derivative for D gain output
 
 // Global constants for max lengths of arrays in this class
-#define NUM_GAINS	3	// 3 PID gains
-#define NUM_STATES	3	// States are state value, derivative, and time
+#define NUM_PID_GAINS	3	// 3 PID gains
+#define NUM_PID_STATES	3	// States are state value, derivative, and time
 
 // Enums for gains and states
 enum PIDGainsEnum {KP, KI, KD}; 
@@ -29,10 +29,10 @@ public:
 	Pid();
 	
 	// Custom constructor that initializes the state, setpt, flags, gains, limits, and lowpass coefficients
-	Pid(const float initState[NUM_STATES], const float initSetpt[NUM_STATES],
-		const uint8_t initFlags, const float initGains[NUM_GAINS], 
+	Pid(const float initState[NUM_PID_STATES], const float initSetpt[NUM_PID_STATES],
+		const uint8_t initFlags, const float initGains[NUM_PID_GAINS], 
 	    const float initStateBound, const float initOutUpLim,
-		const float initOutLwLim, const float lpCoeff[NUM_STATES - 1]);
+		const float initOutLwLim, const float lpCoeff[NUM_PID_STATES - 1]);
 	
 	// Sets the state (feedback) for the PID algorithm
 	void setState(const float val, const float deriv, const float time);
@@ -53,25 +53,25 @@ public:
 	void prepareLog(); 
 	
 private:
-	float state[NUM_STATES];			// [val, deriv, time] for the current continuous state variable
-	float prevState[NUM_STATES];		// previous [val, deriv, time]
+	float state[NUM_PID_STATES];			// [val, deriv, time] for the current continuous state variable
+	float prevState[NUM_PID_STATES];		// previous [val, deriv, time]
 	
-	float setpt[NUM_STATES];			// [val, deriv, time] setpoint for the continuous state
+	float setpt[NUM_PID_STATES];			// [val, deriv, time] setpoint for the continuous state
 	
-	float error[NUM_STATES];			// setpt - state, the error for the PID algorithm
-	float prevError[NUM_STATES];		// previous error
+	float error[NUM_PID_STATES];			// setpt - state, the error for the PID algorithm
+	float prevError[NUM_PID_STATES];		// previous error
 	
 	float ctrlDt;						// time difference between current and last PID algorithm executions
-	float dErrDt[NUM_STATES - 1]; 		// derivative of the error (doesn't need time, so 1 less array item)
-	float errIntegral[NUM_STATES - 1];	// integral of the error (doesn't need time, so 1 less array item)
+	float dErrDt[NUM_PID_STATES - 1]; 		// derivative of the error (doesn't need time, so 1 less array item)
+	float errIntegral[NUM_PID_STATES - 1];	// integral of the error (doesn't need time, so 1 less array item)
 	
 	float ctrlOutput;					// final output of the PID controller on this state, which is 
 										// viewed as a derivative of the state that is being controlled
 	
-	float gains[NUM_GAINS];				// [KP, KI, KD] array of PID gains
+	float gains[NUM_PID_GAINS];				// [KP, KI, KD] array of PID gains
 	
-	float lowPassCoef[NUM_STATES - 1];  // lowpass filter coeffs don't need time
-	float lowPassState[NUM_STATES - 1]; // lowpass filter state
+	float lowPassCoef[NUM_PID_STATES - 1];  // lowpass filter coeffs don't need time
+	float lowPassState[NUM_PID_STATES - 1]; // lowpass filter state
 	
 	float stateBound; 					// Bound on the state VALUE (mainly for rotational quantities)
 	float outUpLim;						// Limits on the output for saturation

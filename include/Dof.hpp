@@ -5,7 +5,6 @@
 */
 #include <stdint.h>
 #include "Pid.hpp"
-#include "FlightMode.hpp"
 
 #define NUM_DOF_STATES 4 // val, rate, accel, and time
 
@@ -19,8 +18,8 @@ public:
 	
 	Dof(const float state[NUM_DOF_STATES], 
 		const float setpt[NUM_DOF_STATES],
-	 	const float valueGains[NUM_GAINS],
-		const float rateGains[NUM_GAINS],
+	 	const float valueGains[NUM_PID_GAINS],
+		const float rateGains[NUM_PID_GAINS],
 		const uint8_t valueFlags,
 		const uint8_t rateFlags,
 		const float Inertia,
@@ -29,8 +28,8 @@ public:
 		const float rateLwLim, 
 		const float accelUpLim,
 		const float accelLwLim,
-		const float valueLpCoeff[NUM_STATES - 1],
-		const float rateLpCoeff[NUM_STATES - 1]);
+		const float valueLpCoeff[NUM_PID_STATES - 1],
+		const float rateLpCoeff[NUM_PID_STATES - 1]);
 	
 	// Sets the state (feedback) for the PID algorithm
 	void setState(const float state[NUM_DOF_STATES]);
@@ -39,8 +38,8 @@ public:
 	void setSetpt(const float setpt[NUM_DOF_STATES], bool rateOnly);
 	
 	// Sets the gains for the PID algorithm
-	void setGains(const float valueGains[NUM_GAINS], 
-				  const float rateGains[NUM_GAINS]);
+	void setGains(const float valueGains[NUM_PID_GAINS], 
+				  const float rateGains[NUM_PID_GAINS]);
 	
 	// runs the PID algorithm
 	void run(bool rateOnly);

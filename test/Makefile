@@ -40,12 +40,12 @@ Pid.o: $(SRC_DIR)/Pid.cpp $(INC_DIR)/Pid.hpp
 	$(CXX) -c $(CFLAGS) $(SRC_DIR)/Pid.cpp -I $(INC_DIR) -o $(BUILD_DIR)/Pid.o
 
 dofTest: Pid.o Dof.o dofTest.o
-	$(CXX) $(CFLAGS) $(BUILD_DIR)/dofTest.o $(BUILD_DIR)/Dof.o $(BUILD_DIR)/Pid.o -o $(BIN_DIR)/dofTest
+	$(CXX) $(CFLAGS) $(BUILD_DIR)/dofTest.o $(BUILD_DIR)/Dof.o $(BUILD_DIR)/Pid.o $(LIBS) -o $(BIN_DIR)/dofTest
 
-dofTest.o: dofTest.cpp $(INC_DIR)/Dof.hpp
+dofTest.o: $(INC_DIR)/Dof.hpp dofTest.cpp
 	$(CXX) -c $(CFLAGS) dofTest.cpp -I $(INC_DIR) -o $(BUILD_DIR)/dofTest.o
 
-Dof.o: $(SRC_DIR)/Dof.cpp $(INC_DIR)/Dof.hpp $(INC_DIR)/Pid.hpp $(INC_DIR)/FlightMode.hpp
+Dof.o: $(SRC_DIR)/Dof.cpp $(INC_DIR)/Dof.hpp $(INC_DIR)/Pid.hpp
 	$(CXX) -c $(CLFAGS) $(SRC_DIR)/Dof.cpp -I $(INC_DIR) -o $(BUILD_DIR)/Dof.o
 
 clean:

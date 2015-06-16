@@ -2,7 +2,7 @@
   Implementation of the DOF (degree of freedom) class.
 */
 #include <stdint.h>
-#include <math.h>`
+#include <math.h>
 #include "Dof.hpp"
 #include "Pid.hpp"
 
@@ -18,8 +18,8 @@ Dof::Dof()
 	
 Dof::Dof(const float state[NUM_DOF_STATES], 
 		 const float setpt[NUM_DOF_STATES],
-	 	 const float valueGains[NUM_GAINS],
-		 const float rateGains[NUM_GAINS],
+	 	 const float valueGains[NUM_PID_GAINS],
+		 const float rateGains[NUM_PID_GAINS],
 		 const uint8_t valueFlags,
 		 const uint8_t rateFlags,
 		 const float Inertia,
@@ -28,16 +28,15 @@ Dof::Dof(const float state[NUM_DOF_STATES],
 		 const float rateLwLim, 
 		 const float accelUpLim,
 		 const float accelLwLim,
-		 const float valueLpCoeff[NUM_STATES - 1],
-		 const float rateLpCoeff[NUM_STATES - 1])
+		 const float valueLpCoeff[NUM_PID_STATES - 1],
+		 const float rateLpCoeff[NUM_PID_STATES - 1])
 {
-	name = dofName;
-	float valState[NUM_STATES]  = {state[DOF_VAL], state[DOF_RATE], 
-								   state[DOF_TIME]};
-	float rateState[NUM_STATES] = {state[DOF_RATE], state[DOF_ACCEL], 
-								   state[DOF_TIME]};
-	float valSetpt[NUM_STATES]  = {setpt[DOF_VAL], 0, setpt[DOF_TIME]};
-	float rateSetpt[NUM_STATES] = {setpt[DOF_RATE], 0, setpt[DOF_TIME]};
+	float valState[NUM_PID_STATES]  = {state[DOF_VAL], state[DOF_RATE], 
+								       state[DOF_TIME]};
+	float rateState[NUM_PID_STATES] = {state[DOF_RATE], state[DOF_ACCEL], 
+								   	   state[DOF_TIME]};
+	float valSetpt[NUM_PID_STATES]  = {setpt[DOF_VAL], 0, setpt[DOF_TIME]};
+	float rateSetpt[NUM_PID_STATES] = {setpt[DOF_RATE], 0, setpt[DOF_TIME]};
 	valuePid = Pid(valState, valSetpt, valueFlags, valueGains, stateBound, 
 				   rateUpLim, rateLwLim, valueLpCoeff);
 	ratePid  = Pid(rateState, rateSetpt, rateFlags, rateGains, 0, 
@@ -66,14 +65,14 @@ void Dof::setSetpt(const float setpt[NUM_DOF_STATES], bool rateOnly)
 	}
 	else
 		valuePid.setSetpt(setpt[DOF_VAL], setpt[DOF_TIME]);
-
+	
 	// log setpt time for later use	
 	setptTime = setpt[DOF_TIME];
 }
 	
 // Sets the gains for the PID algorithm
-void Dof::setGains(const float valueGains[NUM_GAINS], 
-				   const float rateGains[NUM_GAINS])
+void Dof::setGains(const float valueGains[NUM_PID_GAINS], 
+				   const float rateGains[NUM_PID_GAINS])
 {
 	valuePid.setGains(valueGains[KP], valueGains[KI], valueGains[KD]);
 	ratePid.setGains(rateGains[KP], rateGains[KI], rateGains[KD]);

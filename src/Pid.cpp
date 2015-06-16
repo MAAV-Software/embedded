@@ -7,7 +7,7 @@
 
 Pid::Pid()
 {
-	for (unsigned i = 0; i < NUM_STATES; ++i)
+	for (unsigned i = 0; i < NUM_PID_STATES; ++i)
 	{
 		state[i]     = 0;
 		prevState[i] = 0;
@@ -16,7 +16,7 @@ Pid::Pid()
 		prevError[i] = 0;
 	}
 	
-	for (unsigned i = 0; i < (NUM_STATES - 1); ++i)
+	for (unsigned i = 0; i < (NUM_PID_STATES - 1); ++i)
 	{
 		dErrDt[i]       = 0;
 		errIntegral[i]  = 0;
@@ -24,7 +24,7 @@ Pid::Pid()
 		lowPassState[i] = 0;
 	}
 
-	for (unsigned i = 0; i < NUM_GAINS; ++i) gains[i] = 0;
+	for (unsigned i = 0; i < NUM_PID_GAINS; ++i) gains[i] = 0;
 
 	outUpLim   =  (float)HUGE_VAL;
 	outLwLim   = -(float)HUGE_VAL;
@@ -34,16 +34,16 @@ Pid::Pid()
 	ctrlOutput = 0;
 }
 	
-Pid::Pid(const float initState[NUM_STATES], 
-	     const float initSetpt[NUM_STATES],
+Pid::Pid(const float initState[NUM_PID_STATES], 
+	     const float initSetpt[NUM_PID_STATES],
 		 const uint8_t initFlags,
-		 const float initGains[NUM_GAINS], 
+		 const float initGains[NUM_PID_GAINS], 
 	     const float initStateBound,
 		 const float initOutUpLim,
 		 const float initOutLwLim,
-		 const float lpCoeff[NUM_STATES - 1])
+		 const float lpCoeff[NUM_PID_STATES - 1])
 {
-	for (unsigned i = 0; i < NUM_STATES; ++i)
+	for (unsigned i = 0; i < NUM_PID_STATES; ++i)
 	{
 		state[i]     = initState[i];
 		prevState[i] = 0;
@@ -52,7 +52,7 @@ Pid::Pid(const float initState[NUM_STATES],
 		prevError[i] = 0;
 	}
 	
-	for (unsigned i = 0; i < (NUM_STATES - 1); ++i)
+	for (unsigned i = 0; i < (NUM_PID_STATES - 1); ++i)
 	{
 		dErrDt[i]       = 0;
 		errIntegral[i]  = 0;
@@ -60,7 +60,7 @@ Pid::Pid(const float initState[NUM_STATES],
 		lowPassState[i] = 0;
 	}
 
-	for (unsigned i = 0; i < NUM_GAINS; ++i) gains[i] = initGains[i];
+	for (unsigned i = 0; i < NUM_PID_GAINS; ++i) gains[i] = initGains[i];
 	
 	stateBound = initStateBound;
 	outUpLim   = initOutUpLim;
