@@ -8,21 +8,13 @@
 test/bin/*
 
 # folders
-Debug
-targetConfigs
-.cproject
-.launches
-.project
-.settings
-
-Debug
-targetConfigs
-
-.launches
-.settings
-.project
-.cproject
-.ccsproject
+#Debug
+#targetConfigs
+#.cproject
+#.launches
+#.project
+#.settings
+#.ccsproject
 
 # latex temporary files
 *.aux
@@ -30,5 +22,4 @@ targetConfigs
 *.blg
 *.bbl
 *.syntex.gz
-
 
