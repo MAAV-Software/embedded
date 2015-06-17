@@ -8,7 +8,7 @@
 
 #define NUM_DOF_STATES 4 // val, rate, accel, and time
 
-typedef enum _DofStatesEnum {DOF_VAL, DOF_RATE, DOF_ACCEL, DOF_TIME} DofStatesEnum;
+enum DofStatesEnum {DOF_VAL, DOF_RATE, DOF_ACCEL, DOF_TIME};
 
 class Dof
 {

@@ -2,12 +2,13 @@
 #define VEHICLE_HPP_
 
 #include "Dof.hpp"
+#include "Pid.hpp"
 #include "FlightMode.hpp"
-
 
 // Defines for array sizes
 #define NUM_DOFS	4
 #define NUM_ANGLES	2
+#define ROTMAT_SIZE 9
 
 // Enums for array indecies
 enum xyzhEnum {X_AXIS, Y_AXIS, Z_AXIS, YAW};
@@ -16,98 +17,66 @@ enum rpEnum {ROLL, PITCH};
 class Vehicle
 {
 public:
+	// Public Methods
 	// Constructors
 	Vehicle();
-
-	Vehicle(const float valueGains[NUM_DOFS][NUM_GAINS],
-			const float rateGains[NUM_DOFS][NUM_GAINS],
-			const float stateBounds[NUM_DOFS],
-			const float velCaps[NUM_DOFS],
-			const float rpCaps[NUM_ANGLES],
-			const float UvalPosThresh[NUM_DOFS],
-			const float UvalNegThresh[NUM_DOFS],
-			const uint8_t flags[NUM_DOFS],
-			const FlightMode modeInit,
-			const float massInit);
-
-	// Destructor
-	~Vehicle();
-
+	//Vehicle();
+	
+	// TODO Implement this when the State Estimator is ready
+	// Destructor (will need to free memory allocation for EKF)
+	//~Vehicle();
+	
 	// Assigns state feedback to the individual DOF structs within the vehicle
-	void setState(const float state[], const float t);
-
+	void setState(const float state[NUM_DOFS][NUM_DOF_STATES], 
+				  const float rotation[ROTMAT_SIZE]);
+					
 	// Assigns setpoints based on the controller mode
-	void setSetpt(const float setpt[], const float t);
-
+	void setSetpt(const float setpt[NUM_DOFS][NUM_DOF_STATES], 
+				  FlightMode mode);
+	
 	// Assigns gains to the DOFs within this Vehicle
-	void setGains(const float gains[NUM_DOFS][NUM_GAINS],
-				  const float rateGains[NUM_DOFS][NUM_GAINS]);
-
+	void setGains(const float valueGains[NUM_DOFS][NUM_PID_GAINS],
+				  const float rateGains[NUM_DOFS][NUM_PID_GAINS]);
+	
 	// Executes all PID control for all DOFs in qc based on ctrl_mode
-	void runPID();
-
+	void runCtrl(FlightMode mode);
+	
 	// Calculates Roll, Pitch, Z Force, and Yaw Rate to send to the DJI
 	void calcDJIValues();
 
+// TODO Implement these when the state estimator is ready	
 	// Set the EKF sensor input
-	void setEkfSensors();
-
+//	void setEkfSensors(const float rotation[ROTMAT_SIZE], const float t);
 	// Runs the EKF prediciton step
-	void EkfPredict();
-
+//	void EkfPredict(float t);
 	// Runs the EKF correction step, this should also automatically udpdate the
 	// states in Dof as well.
-	void EkfCorrect();
-
-	// Sets the Flight Mode of the controller
-	void setFlightMode(const FlightMode modeIn);
-
-	// Gets the Flight Mode
-	FlightMode getFlightMode() const;
-
+//	void EkfCorrect(float t);
+	
 	// The following getter functions return the controller values that will be
 	// sent to the DJI
 	float getDjiRoll() const;
 	float getDjiPitch() const;
 	float getDjiYawDot() const;
-	float getDjiForceZ() const;
+	float getDjiThrust() const;
 
-	// Returns a pointer to the array of 4 Dofs within the Vehicle so when we
-	// do logging, we can use them directly.
-	const Dof* getDofs() const;
+	// Logging function
+	void prepareLog();
 
 private:
+	// Controller specific Members
+	Dof dofs[NUM_DOFS]; 		// DOF classes for xyzh
+	float djiRoll;				// Roll for DJI
+	float djiPitch;				// Pitch for DJI
+	float djiYawDot;			// Yaw rate for DJI
+	float djiThrust;			// Thrust for DJI
+	float mass;					// Mass of the Vehicle
+	float rpLimits[NUM_ANGLES];	// max roll and pitch limit
+	float rotMat[ROTMAT_SIZE];	// Rotation matrix from sensor feedback
+	float time;					// Timestamp for the rotation Matrix
 
-	// public member variables
-	FlightMode mode;
-
-	/// Controller Specific Members
-	Dof xyzh[NUM_DOFS]; 		// DOF classes for xyzh
-
-	float djiRoll;		// Roll for DJI
-	float djiPitch;		// Pitch for DJI
-	float djiYawDot;	// Yaw rate for DJI
-	float djiForceZ;	// Thrust for DJI
-	float mass;			// Mass of the Vehicle
-
-	// private controller variables
-	float rpLimits[NUM_ANGLES];   // max roll and pitch limit
-
-	// pre-calculated trig values for YAW for one execution loop
-	// (so we don't have to recalculate across many different functions
-	// that are executed per iteration of the control loop)
-	float preYawSin;
-	float preYawCos;
-
-	/// State Estimator Specific Enums
-	// declare EKF instance here
-
-
-
-	// private controller functions
-	void runValuePID(); // runs Value PIDs on DOF
-
-	void runRatePID(); // runs Rate PIDs on DOF
+	// State Estimator Specific Members
+	// TODO Add EKF here	
 };
 
 #endif /* VEHICLE_HPP_ */

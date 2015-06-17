@@ -1,8 +1,9 @@
 #include <stdint.h>
 #include <cstdlib>
-#include <math.h>
+#include <cmath>
 #include "Vehicle.hpp"
 #include "Dof.hpp"
+#include "Pid.hpp"
 #include "FlightMode.hpp"
 
 // define PI just in case
@@ -10,152 +11,58 @@
 #define M_PI 3.14159265358979323846
 #endif
 
+// Define Gravity
+#ifndef GRAVITY
 #define GRAVITY 9.81
+#endif
 
 Vehicle::Vehicle()
 {
-	// value and rate PID gains
-	float valueGains[NUM_DOFS][NUM_GAINS] =
-	{
-		/* Kp,  Ki,    Kd 		value gains */
-		{1.00, 0.00, 0.00,},	/* x */
-		{1.00, 0.00, 0.00,},	/* y */
-		{1.00, 0.00, 0.00,},	/* z */
-		{1.00, 0.00, 0.00,},	/* yaw */
-	};
-	float rateGains[NUM_DOFS][NUM_GAINS] =
-	{
-		/* Kp,  Ki,    Kd		rate gains */
-		{1.00, 0.00, 0.00,},	/* x */
-		{1.00, 0.00, 0.00,},	/* y */
-		{1.00, 0.00, 0.00,},	/* z */
-		{1.00, 0.00, 0.00,},	/* yaw */
-	};
-
-	// flags for taking discrete derivatives of state variables
-	uint8_t flags[NUM_DOFS] =
-	{
-		DISC_ACCEL,	/* x */
-		DISC_ACCEL,	/* y */
-		DISC_ACCEL,	/* z */
-		DISC_ACCEL | WRAP_AROUND,	/* yaw */
-	};
-
-	// index order used by the following: [X, Y, Z, Yaw]
-	float stateBounds[NUM_DOFS]		= {0, 0, 0, M_PI};
-	float velCaps[NUM_DOFS]			= {1.0, 1.0, 1.0, 1.0};
-	float UvalPosThresh[NUM_DOFS]	= {100.0, 100.0, 150.0, 1.0};
-	float UvalNegThresh[NUM_DOFS]	= {-100.0, -100.0, -150.0, -1.0};
-
-	// Vehicle Members
-	mode            = MANUAL;
-	djiRoll         = 0.0;
-	djiPitch        = 0.0;
-	djiYawDot       = 0.0;
-	djiForceZ       = 0.0;
-	mass            = 1.0;
-	rpLimits[ROLL]  = 1.0;
-	rpLimits[PITCH] = 1.0;
-	preYawSin       = 0.0;
-	preYawCos       = 0.0;
-
-	for (int i = 0; i < NUM_DOFS; ++i) // loop through and initialize dofs
-	{
-		xyzh[i] = Dof(0, 0, 0, 0, mass, stateBounds[i], velCaps[i],
-					  UvalPosThresh[i], UvalNegThresh[i], flags[i]);
-		xyzh[i].setGains(valueGains[i], rateGains[i]);
-	}
+	for (int i = 0; i < NUM_DOFS; ++i) dofs[i] = Dof();
+	for (int i = 0; i < NUM_ANGLES; ++i) rpLimits[i] = M_PI_4;
+	for (int i = 0; i < ROTMAT_SIZE; ++i) rotMat[i] = 0;
+	rotMat[0] = rotMat[4] = rotMat[8] = 1;
+	djiRoll   = 0;
+	djiPitch  = 0; 
+	djiYawDot = 0;
+	djiThrust = 0;
+	mass      = 1;
+	time      = 0;
 }
 
+Vehicle::Vehicle(
 
-Vehicle::Vehicle(const float valueGains[NUM_DOFS][NUM_GAINS],
-				 const float rateGains[NUM_DOFS][NUM_GAINS],
-				 const float stateBounds[NUM_DOFS],
-				 const float velCaps[NUM_DOFS],
-				 const float rpCaps[NUM_ANGLES],
-				 const float UvalPosThresh[NUM_DOFS],
-				 const float UvalNegThresh[NUM_DOFS],
-				 const uint8_t flags[NUM_DOFS],
-				 const FlightMode modeInit,
-				 const float massInit)
+
+		)
 {
-	mode 			= modeInit;
-	mass 			= massInit;
-	rpLimits[ROLL]  = rpCaps[ROLL];
-	rpLimits[PITCH] = rpCaps[PITCH];
-	preYawSin 		= 0.0;
-	preYawCos 		= 1.0;
-	djiRoll   		= 0.0;
-	djiPitch  		= 0.0;
-	djiYawDot 		= 0.0;
-	djiForceZ 		= 0.0;
 
-	for (int i = 0; i < NUM_DOFS; ++i) // loop through and initialize dofs
-	{
-		xyzh[i] = Dof(0, 0, 0, 0, mass, stateBounds[i], velCaps[i],
-		     		  UvalPosThresh[i], UvalNegThresh[i], flags[i]);
-		xyzh[i].setGains(valueGains[i], rateGains[i]);
-	}
+
+	Dof(const float state[NUM_DOF_STATES], 
+		const float setpt[NUM_DOF_STATES],
+	 	const float valueGains[NUM_PID_GAINS],
+		const float rateGains[NUM_PID_GAINS],
+		const uint8_t valueFlags,
+		const uint8_t rateFlags,
+		const float Inertia,
+		const float stateBound,
+		const float rateUpLim,
+		const float rateLwLim, 
+		const float accelUpLim,
+		const float accelLwLim,
+		const float valueLpCoeff[NUM_PID_STATES - 1],
+		const float rateLpCoeff[NUM_PID_STATES - 1]);
+	
+
+
 }
 
-Vehicle::~Vehicle() {}
-
-void Vehicle::setSetpt(const float setpt[], const float t)
-{
-	for (int i = 0; i < NUM_DOFS; ++i) xyzh[i].setSetpt(setpt[i], setpt[i+4], 0, t);
-}
-
-
-void Vehicle::setGains(const float valueGains[NUM_DOFS][NUM_GAINS],
-					   const float rateGains[NUM_DOFS][NUM_GAINS])
-{
-	for (int i = 0; i < NUM_DOFS; ++i) xyzh[i].setGains(valueGains[i], rateGains[i]);
-}
-
-void Vehicle::runPID()
-{
-	for (int i = 0; i < NUM_DOFS; ++i) xyzh[i].calcCtrlDt();
-	// get change in time for all DOFs
-
-	runValuePID(); // run position->velocity PID (accounts for ctrl mode)
-	runRatePID(); // run velocity->force PID
-}
-
-void Vehicle::runValuePID()
-{
-	if (mode == AUTONOMOUS) // only do X, Y value PID if in auton mode
-	{
-		for (int i = 0; i < 2; ++i) // loop through x, y DOFs
-		{
-			xyzh[i].calcError(VAL, true);
-			xyzh[i].valuePID(false);
-		}
-	}
-
-	// always do Z and Yaw value PID
-	for (int i = 2; i < 4; ++i)
-	{
-		xyzh[i].calcError(VAL, true);
-		xyzh[i].valuePID(false);
-	}
-}
-
-void Vehicle::runRatePID()
-{
-	for (int i = 0; i < 3; ++i) // only run through X, Y, Z rate PIDs
-	{
-		xyzh[i].calcError(RATE, true); // calculate rate and accel error
-		xyzh[i].calcError(ACCEL, true);// (accel probably not needed)
-		xyzh[i].ratePID(true); // run rate PID with d(rate_error)/dt
-	}
-}
-
+/*
 void Vehicle::calcDJIValues()
 {
 	float forceVe[3];      // vehicle force in the earth frame (in R^3)
 	float forceVy[3];      // vehicle force in the yaw frame (in R^3)
 	float forceMag = 0;    // magnitude of the vehicle force
-	float angle[NUM_ANGLES];       // roll and pitch setpoint
+	float angle[NUM_ANGLES]; // roll and pitch setpoint for dji
 
 	// get earth frame vehicle forces
 	for (int i = 0; i < 3; ++i) forceVe[i] = xyzh[i].getUval();
@@ -168,13 +75,13 @@ void Vehicle::calcDJIValues()
 	forceVy[Z_AXIS] = forceVe[Z_AXIS];
 
 	// calculate ||F|| = sqrt(Fx^2 + Fy^2 + Fz^2)
-	for (uint8_t i = 0; i < 3; ++i) forceMag += forceVy[i] * forceVy[i];
+	for (int i = 0; i < 3; ++i) forceMag += forceVy[i] * forceVy[i];
 	forceMag = sqrt(forceMag);
 
 	// Calculate roll and pitch
 	angle[ROLL]  = -asin(forceVy[Y_AXIS] / forceMag);
-	angle[PITCH] =  asin(forceVy[X_AXIS] / sqrt((forceMag * forceMag)
-	            		   - (forceVy[Y_AXIS] * forceVy[Y_AXIS])));
+	angle[PITCH] =  asin(forceVy[X_AXIS] / 
+			sqrt((forceMag * forceMag) - (forceVy[Y_AXIS] * forceVy[Y_AXIS])));
 
 	// cap roll and pitch
 	if (angle[ROLL]  >  rpLimits[ROLL])  angle[ROLL]  =  rpLimits[ROLL];
@@ -185,19 +92,10 @@ void Vehicle::calcDJIValues()
 	// assign DJI values
 	djiRoll   = angle[ROLL];
 	djiPitch  = angle[PITCH];
-	djiForceZ = xyzh[Z_AXIS].getUval();
-	djiYawDot = xyzh[YAW].getVelocity();
+	djiThrust = xyzh[Z_AXIS].getUval();
+	djiYawDot = xyzh[YAW].getRate();
 }
-
-void Vehicle::setFlightMode(const FlightMode modeIn)
-{
-	mode = modeIn;
-}
-
-FlightMode Vehicle::getFlightMode() const
-{
-	return mode;
-}
+*/
 
 float Vehicle::getDjiRoll() const
 {
@@ -214,14 +112,14 @@ float Vehicle::getDjiYawDot() const
 	return djiYawDot;
 }
 
-float Vehicle::getDjiForceZ() const
+float Vehicle::getDjiThrust() const
 {
-	return djiForceZ;
+	return djiThrust;
 }
 
-const Dof* Vehicle::getDofs() const
-{
-	return xyzh;
+void Vehicle::prepareLog()
+{	
+	//TODO Implement thif function
 }
 
 // End of File
