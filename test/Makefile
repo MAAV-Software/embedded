@@ -19,41 +19,61 @@ LIBS = -lboost_unit_test_framework
 all: setup test run
 
 setup:
+	@echo ""
+	@echo "Setting Up Build"
 	mkdir -p $(BIN_DIR)
 	mkdir -p $(BUILD_DIR)
+	@echo "Setup Done, Building Code"
 
 test: pidTest dofTest sampleTest
 
 sampleTest: sampleTest.o
+	@echo ""
+	@echo "Building Sample Test"
 	$(CXX) $(CFLAGS) $(BUILD_DIR)/sampleTest.o $(LIBS) -o $(BIN_DIR)/sampleTest
 
 sampleTest.o: sampleTest.cpp
 	$(CXX) -c $(CFLAGS) sampleTest.cpp -o $(BUILD_DIR)/sampleTest.o
 
 pidTest: Pid.o pidTest.o
+	@echo ""
+	@echo "Building Sample Test"
 	$(CXX) $(CFLAGS) $(BUILD_DIR)/pidTest.o $(BUILD_DIR)/Pid.o $(LIBS) -o $(BIN_DIR)/pidTest
 
 pidTest.o: $(INC_DIR)/Pid.hpp pidTest.cpp
 	$(CXX) -c $(CFLAGS) pidTest.cpp -I $(INC_DIR) -o $(BUILD_DIR)/pidTest.o
 
 Pid.o: $(SRC_DIR)/Pid.cpp $(INC_DIR)/Pid.hpp
+	@echo ""
+	@echo "Building Pid"
 	$(CXX) -c $(CFLAGS) $(SRC_DIR)/Pid.cpp -I $(INC_DIR) -o $(BUILD_DIR)/Pid.o
 
 dofTest: Pid.o Dof.o dofTest.o
+	@echo ""
+	@echo "Building Dof Test"
 	$(CXX) $(CFLAGS) $(BUILD_DIR)/dofTest.o $(BUILD_DIR)/Dof.o $(BUILD_DIR)/Pid.o $(LIBS) -o $(BIN_DIR)/dofTest
 
 dofTest.o: $(INC_DIR)/Dof.hpp dofTest.cpp
 	$(CXX) -c $(CFLAGS) dofTest.cpp -I $(INC_DIR) -o $(BUILD_DIR)/dofTest.o
 
 Dof.o: $(SRC_DIR)/Dof.cpp $(INC_DIR)/Dof.hpp $(INC_DIR)/Pid.hpp
+	@echo ""
+	@echo "Building Dof"
 	$(CXX) -c $(CLFAGS) $(SRC_DIR)/Dof.cpp -I $(INC_DIR) -o $(BUILD_DIR)/Dof.o
 
 clean:
+	@echo
+	@echo "Removing Build Files"
 	rm -rf $(BUILD_DIR)/*.o $(BIN_DIR)/*
 
-run:  
+run:
+	@echo ""
+	@echo "Running Tests"
+	@echo ""
 	$(BIN_DIR)/pidTest
+	@echo ""
 	$(BIN_DIR)/dofTest
+	@echo ""
 	$(BIN_DIR)/sampleTest
 
 
