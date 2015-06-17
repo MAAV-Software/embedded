@@ -8,6 +8,35 @@ ORDERED_OBJS += \
 "./main.obj" \
 "./tm4c123gh6pm_startup_ccs.obj" \
 "./uartstdio.obj" \
+"./src/Dof.obj" \
+"./src/FlightModeHw.obj" \
+"./src/Loop.obj" \
+"./src/PPM.obj" \
+"./src/Pid.obj" \
+"./src/Px4.obj" \
+"./src/Vehicle.obj" \
+"./src/px4_i2c.obj" \
+"./src/px4_kalman.obj" \
+"./src/rc.obj" \
+"./src/servoIn.obj" \
+"./src/switch.obj" \
+"./src/time_util.obj" \
+"./src/utility.obj" \
+"./src/runnables/ControllerRunnable.obj" \
+"./src/runnables/DjiRunnable.obj" \
+"./src/runnables/FlightModeRunnable.obj" \
+"./src/runnables/OptSwitchRunnables.obj" \
+"./src/runnables/Px4Runnable.obj" \
+"./src/messaging/data_link.obj" \
+"./src/messaging/djiout_feedback_t.obj" \
+"./src/messaging/dof_feedback_t.obj" \
+"./src/messaging/feedback_t.obj" \
+"./src/messaging/lcmlite.obj" \
+"./src/messaging/position_t.obj" \
+"./src/messaging/ringbuf.obj" \
+"./src/messaging/str_log_t.obj" \
+"./src/messaging/target_t.obj" \
+"./src/messaging/tuning_t.obj" \
 "/home/sajan/ti/SW-TM4C-2.1.0.12573/driverlib/ccs/Debug/driverlib.lib" \
 "/home/sajan/ti/SW-TM4C-2.1.0.12573/sensorlib/ccs/Debug/sensorlib.lib" \
 "../tm4c123gh6pm.cmd" \
@@ -22,7 +51,13 @@ RMDIR := rm -rf
 # All of the sources participating in the build are defined here
 -include sources.mk
 -include subdir_vars.mk
+-include src/subdir_vars.mk
+-include src/runnables/subdir_vars.mk
+-include src/messaging/subdir_vars.mk
 -include subdir_rules.mk
+-include src/subdir_rules.mk
+-include src/runnables/subdir_rules.mk
+-include src/messaging/subdir_rules.mk
 -include objects.mk
 
 ifneq ($(MAKECMDGOALS),clean)
@@ -148,9 +183,9 @@ maav.hex: $(EXE_OUTPUTS)
 # Other Targets
 clean:
 	-$(RM) $(EXE_OUTPUTS__QUOTED)$(BIN_OUTPUTS__QUOTED)
-	-$(RM) "main.pp" 
-	-$(RM) "tm4c123gh6pm_startup_ccs.pp" "uartstdio.pp" 
-	-$(RM) "main.obj" "tm4c123gh6pm_startup_ccs.obj" "uartstdio.obj" 
+	-$(RM) "main.pp" "src/Dof.pp" "src/FlightModeHw.pp" "src/Loop.pp" "src/Pid.pp" "src/Px4.pp" "src/Vehicle.pp" "src/rc.pp" "src/servoIn.pp" "src/runnables/ControllerRunnable.pp" "src/runnables/DjiRunnable.pp" "src/runnables/FlightModeRunnable.pp" "src/runnables/OptSwitchRunnables.pp" "src/runnables/Px4Runnable.pp" 
+	-$(RM) "tm4c123gh6pm_startup_ccs.pp" "uartstdio.pp" "src/PPM.pp" "src/px4_i2c.pp" "src/px4_kalman.pp" "src/switch.pp" "src/time_util.pp" "src/utility.pp" "src/messaging/data_link.pp" "src/messaging/djiout_feedback_t.pp" "src/messaging/dof_feedback_t.pp" "src/messaging/feedback_t.pp" "src/messaging/lcmlite.pp" "src/messaging/position_t.pp" "src/messaging/ringbuf.pp" "src/messaging/str_log_t.pp" "src/messaging/target_t.pp" "src/messaging/tuning_t.pp" 
+	-$(RM) "main.obj" "tm4c123gh6pm_startup_ccs.obj" "uartstdio.obj" "src/Dof.obj" "src/FlightModeHw.obj" "src/Loop.obj" "src/PPM.obj" "src/Pid.obj" "src/Px4.obj" "src/Vehicle.obj" "src/px4_i2c.obj" "src/px4_kalman.obj" "src/rc.obj" "src/servoIn.obj" "src/switch.obj" "src/time_util.obj" "src/utility.obj" "src/runnables/ControllerRunnable.obj" "src/runnables/DjiRunnable.obj" "src/runnables/FlightModeRunnable.obj" "src/runnables/OptSwitchRunnables.obj" "src/runnables/Px4Runnable.obj" "src/messaging/data_link.obj" "src/messaging/djiout_feedback_t.obj" "src/messaging/dof_feedback_t.obj" "src/messaging/feedback_t.obj" "src/messaging/lcmlite.obj" "src/messaging/position_t.obj" "src/messaging/ringbuf.obj" "src/messaging/str_log_t.obj" "src/messaging/target_t.obj" "src/messaging/tuning_t.obj" 
 	-@echo 'Finished clean'
 	-@echo ' '
 

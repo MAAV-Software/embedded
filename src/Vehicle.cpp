@@ -1,6 +1,6 @@
 #include <stdint.h>
 #include <cstdlib>
-#include <cmath>
+#include <math.h>
 #include "Vehicle.hpp"
 #include "Dof.hpp"
 #include "Pid.hpp"
@@ -19,7 +19,7 @@
 Vehicle::Vehicle()
 {
 	for (int i = 0; i < NUM_DOFS; ++i) dofs[i] = Dof();
-	for (int i = 0; i < NUM_ANGLES; ++i) rpLimits[i] = M_PI_4;
+	for (int i = 0; i < NUM_ANGLES; ++i) rpLimits[i] = M_PI / 4;
 	for (int i = 0; i < ROTMAT_SIZE; ++i) rotMat[i] = 0;
 	rotMat[0] = rotMat[4] = rotMat[8] = 1;
 	djiRoll   = 0;
@@ -29,7 +29,7 @@ Vehicle::Vehicle()
 	mass      = 1;
 	time      = 0;
 }
-
+/*
 Vehicle::Vehicle(
 
 
@@ -55,7 +55,7 @@ Vehicle::Vehicle(
 
 
 }
-
+*/
 /*
 void Vehicle::calcDJIValues()
 {

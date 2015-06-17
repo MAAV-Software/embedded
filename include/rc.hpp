@@ -33,7 +33,7 @@
 
 typedef struct _RC_CHAN 
 {
-	uint32_t gpioPortBase
+	uint32_t gpioPortBase;
 } RC_CHAN;
 
 

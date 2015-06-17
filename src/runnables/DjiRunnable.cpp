@@ -17,7 +17,9 @@ DjiRunnable::DjiRunnable(Vehicle* v)
 DjiRunnable::~DjiRunnable() { }
 
 void DjiRunnable::run() {
-	switch (vehicle->getFlightMode()) {
+	//switch (vehicle->getFlightMode())
+	switch(0)
+	{
 		case AUTONOMOUS:
 		case ASSISTED:
 //			PPM_setPulse(0, servoIn_getPulse(RC_CHAN1));

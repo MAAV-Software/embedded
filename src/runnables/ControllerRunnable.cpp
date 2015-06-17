@@ -21,7 +21,8 @@ void ControllerRunnable::run()
 	uint32_t xChannel;
 	uint32_t zChannel;
 	uint32_t yawChannel;
-	switch (vehicle->getFlightMode())
+	//switch (vehicle->getFlightMode())
+	switch(0)
 	{
 		case AUTONOMOUS:
 			break;

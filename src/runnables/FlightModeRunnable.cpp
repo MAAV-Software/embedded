@@ -1,5 +1,6 @@
 #include "runnables/FlightModeRunnable.hpp"
 #include "FlightMode.hpp"
+#include "FlightModeHw.hpp"
 #include "led.h"
 #include "inc/hw_memmap.h"
 #include "inc/hw_types.h"
@@ -16,8 +17,9 @@ FlightModeRunnable::FlightModeRunnable(Vehicle* v)
 FlightModeRunnable::~FlightModeRunnable() { }
 
 void FlightModeRunnable::run() {
-	vehicle->setFlightMode(flightModeGet());
-	switch (vehicle->getFlightMode()) {
+	//vehicle->setFlightMode(flightModeGet());
+	//switch (vehicle->getFlightMode())
+	switch(flightModeGet()){
 		case ASSISTED:
 			GPIOPinWrite(GPIO_PORTF_BASE, RED_LED | GREEN_LED |
 					BLUE_LED, RED_LED);
