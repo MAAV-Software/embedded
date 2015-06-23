@@ -2,7 +2,7 @@
  *
  */
 #define BOOST_TEST_DYN_LINK
-#define BOOST_TEST_MODULE sampleTest
+#define BOOST_TEST_MODULE "Sample Test"
 #include <boost/test/unit_test.hpp>
 
 int add(int i, int j) { return i + j; }
