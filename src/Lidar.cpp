@@ -5,24 +5,40 @@
  *      Author: James Connolly
  */
 
-#include "Lidar.h"
+#include "Lidar.hpp"
+#include "LidarDefines.hpp"
 
-Lidar::Lidar() {
-	// TODO Auto-generated constructor stub
-
+Lidar::Lidar() 
+{
+	dist = 0;
+	vel = 0;
 }
 
-Lidar::~Lidar() {
-	// TODO Auto-generated destructor stub
+float Lidar::getDist() const 
+{
+	return dist;
 }
 
-float Lidar::getHeight() const {
-	return data.height;
+float Lidar::getVel() const
+{
+	return val;
 }
 
-void Lidar::parse(uint8_t * raw) {
-	for(int i = 0; i < sizeof(float) / sizeof(uint8_t); ++i){
-		(data.internal)[i] = *raw;
-		++raw;
+void Lidar::parse(uint8_t* raw, const uint8_t size) 
+{
+	switch (size)
+	{
+		case LIDAR_DIST_SIZE:
+			// raw array is [dist upper byte, dist lower byte], 
+			// so we join them together and scale them into meters 
+			// since the raw value is in cm
+			dist =  (float)((((uint16_t)raw[0]) << 8) | raw[1]) / 100.0;
+			break;
+		case LIDAR_VEL_SIZE:
+			// velocity is just an 8-bit singed int with no scaling
+			vel = (float)((int8_t)(*raw));
+			break;
+		defualt:
+			break;
 	}
 }
