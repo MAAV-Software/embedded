@@ -14,7 +14,7 @@ TEST_DIR = $(ROOT_DIR)/test
 BIN_DIR = $(TEST_DIR)/bin
 BUILD_DIR = $(TEST_DIR)/build
 
-LIBS = -lboost_unit_test_framework
+LIBS = -lm -lboost_unit_test_framework
 
 all: setup test run
 
@@ -25,7 +25,7 @@ setup:
 	mkdir -p $(BUILD_DIR)
 	@echo "Setup Done, Building Code"
 
-test: pidTest dofTest sampleTest
+test: Px4SwTest pidTest dofTest sampleTest
 
 sampleTest: sampleTest.o
 	@echo ""
@@ -37,7 +37,7 @@ sampleTest.o: sampleTest.cpp
 
 pidTest: Pid.o pidTest.o
 	@echo ""
-	@echo "Building Sample Test"
+	@echo "Building PID Test"
 	$(CXX) $(CFLAGS) $(BUILD_DIR)/pidTest.o $(BUILD_DIR)/Pid.o $(LIBS) -o $(BIN_DIR)/pidTest
 
 pidTest.o: $(INC_DIR)/Pid.hpp pidTest.cpp
@@ -61,6 +61,19 @@ Dof.o: $(SRC_DIR)/Dof.cpp $(INC_DIR)/Dof.hpp $(INC_DIR)/Pid.hpp
 	@echo "Building Dof"
 	$(CXX) -c $(CLFAGS) $(SRC_DIR)/Dof.cpp -I $(INC_DIR) -o $(BUILD_DIR)/Dof.o
 
+Px4SwTest: Px4.o Px4SwTest.o
+	@echo ""
+	@echo "Building Px4 Sw Test"
+	$(CXX) $(CFLAGS) $(BUILD_DIR)/Px4.o $(BUILD_DIR)/Px4SwTest.o $(LIBS) -o $(BIN_DIR)/Px4SwTest
+
+Px4SwTest.o: $(INC_DIR)/Px4.hpp $(INC_DIR)/Px4Defines.hpp Px4SwTest.cpp
+	$(CXX) -c $(CFLAGS) Px4SwTest.cpp -I $(INC_DIR) -o $(BUILD_DIR)/Px4SwTest.o
+
+Px4.o: $(SRC_DIR)/Px4.cpp $(INC_DIR)/Px4.hpp $(INC_DIR)/Px4Defines.hpp
+	@echo ""
+	@echo "Building Px4"
+	$(CXX) -c $(CFLAGS) $(SRC_DIR)/Px4.cpp -I $(INC_DIR) -o $(BUILD_DIR)/Px4.o
+
 clean:
 	@echo
 	@echo "Removing Build Files"
@@ -69,6 +82,8 @@ clean:
 run:
 	@echo ""
 	@echo "Running Tests"
+	@echo ""
+	$(BIN_DIR)/Px4SwTest
 	@echo ""
 	$(BIN_DIR)/pidTest
 	@echo ""
