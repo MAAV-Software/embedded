@@ -4,4 +4,4 @@
 #define LIDAR_DIST_SIZE 2
 #define LIDAR_VEL_SIZE 1
 
-#endif /*LidarDefines.hpp"
+#endif /*LidarDefines.hpp*/

@@ -1,7 +1,7 @@
 #define BOOST_TEST_DYN_LINK
 #define BOOST_TEST_MODULE "Px4SoftwareTest"
 #include <boost/test/unit_test.hpp>
-//#include <boost/test/floating_point_comparison.hpp>
+#include <boost/test/floating_point_comparison.hpp>
 
 #include <cmath>
 #include "Px4.hpp"
