@@ -25,7 +25,7 @@ setup:
 	mkdir -p $(BUILD_DIR)
 	@echo "Setup Done, Building Code"
 
-test: Px4SwTest pidTest dofTest sampleTest
+test: LidarSwTest Px4SwTest pidTest dofTest sampleTest
 
 sampleTest: sampleTest.o
 	@echo ""
@@ -74,6 +74,19 @@ Px4.o: $(SRC_DIR)/Px4.cpp $(INC_DIR)/Px4.hpp $(INC_DIR)/Px4Defines.hpp
 	@echo "Building Px4"
 	$(CXX) -c $(CFLAGS) $(SRC_DIR)/Px4.cpp -I $(INC_DIR) -o $(BUILD_DIR)/Px4.o
 
+LidarSwTest: Lidar.o LidarSwTest.o
+	@echo ""
+	@echo "Building Lidar Sw Test"
+	$(CXX) $(CFLAGS) $(BUILD_DIR)/Lidar.o $(BUILD_DIR)/LidarSwTest.o $(LIBS) -o $(BIN_DIR)/LidarSwTest
+
+LidarSwTest.o: $(INC_DIR)/Lidar.hpp $(INC_DIR)/LidarDefines.hpp LidarSwTest.cpp
+	$(CXX) -c $(CFLAGS) LidarSwTest.cpp -I $(INC_DIR) -o $(BUILD_DIR)/LidarSwTest.o
+
+Lidar.o: $(SRC_DIR)/Lidar.cpp $(INC_DIR)/Lidar.hpp $(INC_DIR)/LidarDefines.hpp
+	@echo ""
+	@echo "Building Lidar"
+	$(CXX) -c $(CFLAGS) $(SRC_DIR)/Lidar.cpp -I $(INC_DIR) -o $(BUILD_DIR)/Lidar.o
+
 clean:
 	@echo
 	@echo "Removing Build Files"
@@ -82,6 +95,8 @@ clean:
 run:
 	@echo ""
 	@echo "Running Tests"
+	@echo ""
+	$(BIN_DIR)/LidarSwTest
 	@echo ""
 	$(BIN_DIR)/Px4SwTest
 	@echo ""
