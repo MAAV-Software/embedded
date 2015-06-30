@@ -1,7 +1,7 @@
 #define BOOST_TEST_DYN_LINK
-#define BOOST_TEST_MODULE "Px4 Software Test"
+#define BOOST_TEST_MODULE "Px4SoftwareTest"
 #include <boost/test/unit_test.hpp>
-#include <boost/test/floating_point_comparison.hpp>
+//#include <boost/test/floating_point_comparison.hpp>
 
 #include <cmath>
 #include "Px4.hpp"
@@ -35,15 +35,15 @@ BOOST_AUTO_TEST_CASE(ctorTest)
 	BOOST_CHECK_EQUAL(f.p.getFrameCount(), 0);
 	BOOST_CHECK_EQUAL(f.p.getSonarTimestamp(), 0);
 	BOOST_CHECK_EQUAL(f.p.getGyroRange(), 0);
-	BOOST_CHECK_EQUAL(f.p.getPixelXFlow(), 0);
-	BOOST_CHECK_EQUAL(f.p.getPixelYFlow(), 0);
-	BOOST_CHECK_EQUAL(f.p.getXFlow(), 0);
-	BOOST_CHECK_EQUAL(f.p.getYFlow(), 0);
-	BOOST_CHECK_EQUAL(f.p.getQual(), 0);
-	BOOST_CHECK_EQUAL(f.p.getGyroXRate(), 0);
-	BOOST_CHECK_EQUAL(f.p.getGyroYRate(), 0);
-	BOOST_CHECK_EQUAL(f.p.getGyroZRate(), 0);
-	BOOST_CHECK_EQUAL(f.p.getZDist(), 0);
+	BOOST_CHECK_CLOSE(f.p.getPixelXFlow(), 0, 0.1);
+	BOOST_CHECK_CLOSE(f.p.getPixelYFlow(), 0, 0.1);
+	BOOST_CHECK_CLOSE(f.p.getXFlow(), 0, 0.1);
+	BOOST_CHECK_CLOSE(f.p.getYFlow(), 0, 0.1);
+	BOOST_CHECK_CLOSE(f.p.getQual(), 0, 0.1);
+	BOOST_CHECK_CLOSE(f.p.getGyroXRate(), 0, 0.1);
+	BOOST_CHECK_CLOSE(f.p.getGyroYRate(), 0, 0.1);
+	BOOST_CHECK_CLOSE(f.p.getGyroZRate(), 0, 0.1);
+	BOOST_CHECK_CLOSE(f.p.getZDist(), 0, 0.1);
 }
 
 BOOST_AUTO_TEST_CASE(parseTest)
@@ -55,13 +55,13 @@ BOOST_AUTO_TEST_CASE(parseTest)
 	BOOST_CHECK_EQUAL(f.p.getFrameCount(), 1000);
 	BOOST_CHECK_EQUAL(f.p.getSonarTimestamp(), 200000);
 	BOOST_CHECK_EQUAL(f.p.getGyroRange(), 1);
-	BOOST_CHECK_EQUAL(f.p.getPixelXFlow(), 200);
-	BOOST_CHECK_EQUAL(f.p.getPixelYFlow(), 150);
-	BOOST_CHECK_EQUAL(f.p.getXFlow(), 10);
-	BOOST_CHECK_SMALL(f.p.getYFlow(), 0.015);
-	BOOST_CHECK_EQUAL(f.p.getQual(), 100.0 / 255.0);
-	BOOST_CHECK_EQUAL(f.p.getGyroXRate(), 2);
-	BOOST_CHECK_EQUAL(f.p.getGyroYRate(), 1);
-	BOOST_CHECK_EQUAL(f.p.getGyroZRate(), 3);
-	BOOST_CHECK_EQUAL(f.p.getZDist(), 2.135);
+	BOOST_CHECK_CLOSE(f.p.getPixelXFlow(), 2, 0.1);
+	BOOST_CHECK_CLOSE(f.p.getPixelYFlow(), 1.5, 0.1);
+	BOOST_CHECK_CLOSE(f.p.getXFlow(), 10, 0.1);
+	BOOST_CHECK_CLOSE(f.p.getYFlow(), 0.015, 0.1);
+	BOOST_CHECK_CLOSE(f.p.getQual(), 100.0 / 255.0, 0.1);
+	BOOST_CHECK_CLOSE(f.p.getGyroXRate(), 2, 0.1);
+	BOOST_CHECK_CLOSE(f.p.getGyroYRate(), 1, 0.1);
+	BOOST_CHECK_CLOSE(f.p.getGyroZRate(), 3, 0.1);
+	BOOST_CHECK_CLOSE(f.p.getZDist(), 2.135, 0.1);
 }
