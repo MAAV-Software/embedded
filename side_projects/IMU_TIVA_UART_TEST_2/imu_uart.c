@@ -83,12 +83,12 @@ void imu_uart_config_uart(void)
 {
     // Enable the GPIO Peripheral used by the UART1 on PC. UART0 on PA.
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOC);
-//    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
 
     // Enable UART1 and UART0.
     SysCtlPeripheralEnable(SYSCTL_PERIPH_UART1);
 //    SysCtlPeripheralSleepEnable(SYSCTL_PERIPH_UART1);
-//    SysCtlPeripheralEnable(SYSCTL_PERIPH_UART0);
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_UART0);
 //    SysCtlPeripheralSleepEnable(SYSCTL_PERIPH_UART0);
 
     // Configure GPIO Pins for UART mode.
@@ -96,17 +96,17 @@ void imu_uart_config_uart(void)
     GPIOPinConfigure(GPIO_PC5_U1TX);
     GPIOPinTypeUART(GPIO_PORTC_BASE, GPIO_PIN_4 | GPIO_PIN_5);
 
-//    GPIOPinConfigure(GPIO_PA0_U0RX);
-//	GPIOPinConfigure(GPIO_PA1_U0TX);
-//	GPIOPinTypeUART(GPIO_PORTA_BASE, GPIO_PIN_0 | GPIO_PIN_1);
+    GPIOPinConfigure(GPIO_PA0_U0RX);
+	GPIOPinConfigure(GPIO_PA1_U0TX);
+	GPIOPinTypeUART(GPIO_PORTA_BASE, GPIO_PIN_0 | GPIO_PIN_1);
 
 	// Configure UART Clock.
 	UARTClockSourceSet(UART1_BASE, UART_CLOCK_SYSTEM);
-//	UARTClockSourceSet(UART0_BASE, UART_CLOCK_SYSTEM);
+	UARTClockSourceSet(UART0_BASE, UART_CLOCK_SYSTEM);
 
 	//Configure UART for operation in the specified data format.
     UARTConfigSetExpClk(UART1_BASE, SysCtlClockGet(), 115200, (UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE | UART_CONFIG_PAR_NONE));
-//    UARTConfigSetExpClk(UART0_BASE, SysCtlClockGet(), 115200, (UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE | UART_CONFIG_PAR_NONE));
+    UARTConfigSetExpClk(UART0_BASE, SysCtlClockGet(), 115200, (UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE | UART_CONFIG_PAR_NONE));
 
     // Register and Enable UART1 RX Interrupt.
     UARTIntRegister(UART1_BASE, imu_uart_int_handler);

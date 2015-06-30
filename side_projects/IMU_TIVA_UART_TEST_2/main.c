@@ -50,7 +50,7 @@ int main(void)
 			// Print out Roll data
 		//	int out_length = ltoa((int)(imu_uart_getRoll()*1000), output);
 
-//			imu_uart_send(UART0_BASE, (uint8_t*)output, out_length);
+			imu_uart_send(UART0_BASE, (uint8_t*)output, out_length);
 		//	imu_uart_send(UART0_BASE, "\r\n", 2);
 
     	}
