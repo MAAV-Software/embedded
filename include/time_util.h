@@ -22,8 +22,9 @@ extern "C" {
 
 
 // System Clock Frequency
-#define SYSCLOCK 80000000
-
+//#define SYSCLOCK 80000000
+//#define SYSCLOCK 50000000
+#define SYSCLOCK   66666667
 
 void time_init(uint32_t ui32Peripheral, uint32_t sysClock, uint32_t ui32Base, uint32_t ui32Interrupt);
 uint64_t timestamp_now();

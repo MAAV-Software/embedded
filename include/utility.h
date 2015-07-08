@@ -18,7 +18,7 @@ extern "C" {
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdint.h>
-#include "px4_kalman.h"
+//#include "px4_kalman.h"
 //#include "QuadCtrl.hpp"
 #include "messaging/target_t.h"
 #include "messaging/tuning_t.h"
@@ -64,7 +64,7 @@ typedef union
 void ConfigureUART(void);
 
 // Writes kalman filter data over the serial port to be logged by the Atom
-void sendToSerialPort(kalman_t*, uint16_t);
+//void sendToSerialPort(kalman_t*, uint16_t);
 
 
 /*********************** PID Gains Memory Utilities ***************************/

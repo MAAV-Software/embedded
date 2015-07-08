@@ -2,7 +2,7 @@
 # Automatically-generated file. Do not edit!
 ################################################################################
 
-CG_TOOL_ROOT := /home/sajan/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.2
+CG_TOOL_ROOT := /home/sheldon/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.2
 
 ORDERED_OBJS += \
 "./main.obj" \
@@ -10,13 +10,16 @@ ORDERED_OBJS += \
 "./uartstdio.obj" \
 "./src/Dof.obj" \
 "./src/FlightModeHw.obj" \
+"./src/I2C_hw.obj" \
+"./src/Imu.obj" \
+"./src/Imu_hw.obj" \
+"./src/Lidar.obj" \
 "./src/Loop.obj" \
 "./src/PPM.obj" \
 "./src/Pid.obj" \
+"./src/ProgramState.obj" \
 "./src/Px4.obj" \
 "./src/Vehicle.obj" \
-"./src/px4_i2c.obj" \
-"./src/px4_kalman.obj" \
 "./src/rc.obj" \
 "./src/servoIn.obj" \
 "./src/switch.obj" \
@@ -25,6 +28,8 @@ ORDERED_OBJS += \
 "./src/runnables/ControllerRunnable.obj" \
 "./src/runnables/DjiRunnable.obj" \
 "./src/runnables/FlightModeRunnable.obj" \
+"./src/runnables/I2CRunnable.obj" \
+"./src/runnables/ImuRunnable.obj" \
 "./src/runnables/OptSwitchRunnables.obj" \
 "./src/runnables/Px4Runnable.obj" \
 "./src/messaging/data_link.obj" \
@@ -37,8 +42,8 @@ ORDERED_OBJS += \
 "./src/messaging/str_log_t.obj" \
 "./src/messaging/target_t.obj" \
 "./src/messaging/tuning_t.obj" \
-"/home/sajan/ti/SW-TM4C-2.1.0.12573/driverlib/ccs/Debug/driverlib.lib" \
-"/home/sajan/ti/SW-TM4C-2.1.0.12573/sensorlib/ccs/Debug/sensorlib.lib" \
+"/home/sheldon/ti/SW-TM4C-2.1.0.12573/driverlib/ccs/Debug/driverlib.lib" \
+"/home/sheldon/ti/SW-TM4C-2.1.0.12573/sensorlib/ccs/Debug/sensorlib.lib" \
 "../tm4c123gh6pm.cmd" \
 $(GEN_CMDS__FLAG) \
 -l"libc.a" \
@@ -170,22 +175,22 @@ all: maav.out
 maav.out: $(OBJS) $(CMD_SRCS) $(LIB_SRCS) $(GEN_CMDS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: ARM Linker'
-	"/home/sajan/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.2/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 --abi=eabi -me -Ooff --opt_for_speed=1 -g --gcc --define=PART_TM4C1230C3PM --define=ccs="ccs" --define=PART_TM4C123GH6PM --display_error_number --diag_warning=225 --diag_wrap=off -z -m"maav.map" --heap_size=1536 --stack_size=8196 -i"/home/sajan/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.2/lib" -i"/home/sajan/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.2/include" -i"/home/sajan/maav-controls/include" --reread_libs --warn_sections --display_error_number --diag_wrap=off --xml_link_info="maav_linkInfo.xml" --rom_model -o "maav.out" $(ORDERED_OBJS)
+	"/home/sheldon/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.2/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 --abi=eabi -me -Ooff --opt_for_speed=1 -g --gcc --define=PART_TM4C1230C3PM --define=ccs="ccs" --define=PART_TM4C123GH6PM --display_error_number --diag_warning=225 --diag_wrap=off -z -m"maav.map" --heap_size=1536 --stack_size=8196 -i"/home/sheldon/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.2/lib" -i"/home/sheldon/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.2/include" -i"/home/sheldon/maav-controls/include" --reread_libs --warn_sections --display_error_number --diag_wrap=off --xml_link_info="maav_linkInfo.xml" --rom_model -o "maav.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
 maav.hex: $(EXE_OUTPUTS)
 	@echo 'Invoking: ARM Hex Utility'
-	"/home/sajan/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.2/bin/armhex"  -o "maav.hex" $(EXE_OUTPUTS__QUOTED)
+	"/home/sheldon/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.2/bin/armhex"  -o "maav.hex" $(EXE_OUTPUTS__QUOTED)
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
 	-$(RM) $(EXE_OUTPUTS__QUOTED)$(BIN_OUTPUTS__QUOTED)
-	-$(RM) "main.pp" "src/Dof.pp" "src/FlightModeHw.pp" "src/Loop.pp" "src/Pid.pp" "src/Px4.pp" "src/Vehicle.pp" "src/rc.pp" "src/servoIn.pp" "src/runnables/ControllerRunnable.pp" "src/runnables/DjiRunnable.pp" "src/runnables/FlightModeRunnable.pp" "src/runnables/OptSwitchRunnables.pp" "src/runnables/Px4Runnable.pp" 
-	-$(RM) "tm4c123gh6pm_startup_ccs.pp" "uartstdio.pp" "src/PPM.pp" "src/px4_i2c.pp" "src/px4_kalman.pp" "src/switch.pp" "src/time_util.pp" "src/utility.pp" "src/messaging/data_link.pp" "src/messaging/djiout_feedback_t.pp" "src/messaging/dof_feedback_t.pp" "src/messaging/feedback_t.pp" "src/messaging/lcmlite.pp" "src/messaging/position_t.pp" "src/messaging/ringbuf.pp" "src/messaging/str_log_t.pp" "src/messaging/target_t.pp" "src/messaging/tuning_t.pp" 
-	-$(RM) "main.obj" "tm4c123gh6pm_startup_ccs.obj" "uartstdio.obj" "src/Dof.obj" "src/FlightModeHw.obj" "src/Loop.obj" "src/PPM.obj" "src/Pid.obj" "src/Px4.obj" "src/Vehicle.obj" "src/px4_i2c.obj" "src/px4_kalman.obj" "src/rc.obj" "src/servoIn.obj" "src/switch.obj" "src/time_util.obj" "src/utility.obj" "src/runnables/ControllerRunnable.obj" "src/runnables/DjiRunnable.obj" "src/runnables/FlightModeRunnable.obj" "src/runnables/OptSwitchRunnables.obj" "src/runnables/Px4Runnable.obj" "src/messaging/data_link.obj" "src/messaging/djiout_feedback_t.obj" "src/messaging/dof_feedback_t.obj" "src/messaging/feedback_t.obj" "src/messaging/lcmlite.obj" "src/messaging/position_t.obj" "src/messaging/ringbuf.obj" "src/messaging/str_log_t.obj" "src/messaging/target_t.obj" "src/messaging/tuning_t.obj" 
+	-$(RM) "main.pp" "src/Dof.pp" "src/FlightModeHw.pp" "src/I2C_hw.pp" "src/Imu.pp" "src/Imu_hw.pp" "src/Lidar.pp" "src/Loop.pp" "src/Pid.pp" "src/ProgramState.pp" "src/Px4.pp" "src/Vehicle.pp" "src/rc.pp" "src/servoIn.pp" "src/runnables/ControllerRunnable.pp" "src/runnables/DjiRunnable.pp" "src/runnables/FlightModeRunnable.pp" "src/runnables/I2CRunnable.pp" "src/runnables/ImuRunnable.pp" "src/runnables/OptSwitchRunnables.pp" "src/runnables/Px4Runnable.pp" 
+	-$(RM) "tm4c123gh6pm_startup_ccs.pp" "uartstdio.pp" "src/PPM.pp" "src/switch.pp" "src/time_util.pp" "src/utility.pp" "src/messaging/data_link.pp" "src/messaging/djiout_feedback_t.pp" "src/messaging/dof_feedback_t.pp" "src/messaging/feedback_t.pp" "src/messaging/lcmlite.pp" "src/messaging/position_t.pp" "src/messaging/ringbuf.pp" "src/messaging/str_log_t.pp" "src/messaging/target_t.pp" "src/messaging/tuning_t.pp" 
+	-$(RM) "main.obj" "tm4c123gh6pm_startup_ccs.obj" "uartstdio.obj" "src/Dof.obj" "src/FlightModeHw.obj" "src/I2C_hw.obj" "src/Imu.obj" "src/Imu_hw.obj" "src/Lidar.obj" "src/Loop.obj" "src/PPM.obj" "src/Pid.obj" "src/ProgramState.obj" "src/Px4.obj" "src/Vehicle.obj" "src/rc.obj" "src/servoIn.obj" "src/switch.obj" "src/time_util.obj" "src/utility.obj" "src/runnables/ControllerRunnable.obj" "src/runnables/DjiRunnable.obj" "src/runnables/FlightModeRunnable.obj" "src/runnables/I2CRunnable.obj" "src/runnables/ImuRunnable.obj" "src/runnables/OptSwitchRunnables.obj" "src/runnables/Px4Runnable.obj" "src/messaging/data_link.obj" "src/messaging/djiout_feedback_t.obj" "src/messaging/dof_feedback_t.obj" "src/messaging/feedback_t.obj" "src/messaging/lcmlite.obj" "src/messaging/position_t.obj" "src/messaging/ringbuf.obj" "src/messaging/str_log_t.obj" "src/messaging/target_t.obj" "src/messaging/tuning_t.obj" 
 	-@echo 'Finished clean'
 	-@echo ' '
 

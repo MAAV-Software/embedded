@@ -11,8 +11,8 @@
 #include "driverlib/pin_map.h"
 
 
-FlightModeRunnable::FlightModeRunnable(Vehicle* v)
-	: vehicle(v) {}
+FlightModeRunnable::FlightModeRunnable(ProgramState *pState)
+	: vehicle(pState->vehicle) {}
 
 FlightModeRunnable::~FlightModeRunnable() { }
 

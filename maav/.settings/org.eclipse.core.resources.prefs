@@ -1,6 +1,12 @@
 eclipse.preferences.version=1
 encoding//Debug/Debug__GNU__TI/subdir_rules.mk=UTF-8
 encoding//Debug/Debug__GNU__TI/subdir_vars.mk=UTF-8
+encoding//Debug/maav-controls/src/messaging/subdir_rules.mk=UTF-8
+encoding//Debug/maav-controls/src/messaging/subdir_vars.mk=UTF-8
+encoding//Debug/maav-controls/src/runnables/subdir_rules.mk=UTF-8
+encoding//Debug/maav-controls/src/runnables/subdir_vars.mk=UTF-8
+encoding//Debug/maav-controls/src/subdir_rules.mk=UTF-8
+encoding//Debug/maav-controls/src/subdir_vars.mk=UTF-8
 encoding//Debug/makefile=UTF-8
 encoding//Debug/objects.mk=UTF-8
 encoding//Debug/optimizerAssistant/opt_level__0/makefile=UTF-8

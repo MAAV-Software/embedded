@@ -1,8 +1,7 @@
 #ifndef PX4_HPP_
 #define PX4_HPP_
 
-#include <stdint.h>
-#include "Px4Defines.hpp"
+#include "Px4_Defines.hpp"
 
 // Union for raw array and px4 message frame
 typedef union _px4FrameBuffer

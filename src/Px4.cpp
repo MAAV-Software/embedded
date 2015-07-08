@@ -1,7 +1,4 @@
-#include <cstdlib>
-#include <stdint.h>
 #include "Px4.hpp"
-#include "Px4Defines.hpp"
 
 Px4::Px4()
 {

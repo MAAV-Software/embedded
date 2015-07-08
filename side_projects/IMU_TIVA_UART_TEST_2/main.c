@@ -41,16 +41,17 @@ int main(void)
 			// ACC&AngRate Command
 			imu_uart_send(UART1_BASE, (uint8_t *)g_IMU_Address_Sent, 1);
 
-			char output[20];
+			char output[100];
 
 			// Debug and test
 			// Print out Timmer
-			int out_length = snprintf(output, 20, "Timer:%u \n\r", imu_uart_getTimer());
+			int out_length = snprintf(output, 100, "Timer(s):%u\tRoll*1000:%d\tPitch*1000:%d\tYaw*1000:%d \n\r", imu_uart_getTimer(),(int)(imu_uart_getRoll()*1000),(int)(imu_uart_getPitch()*1000),(int)(imu_uart_getYaw()*1000));
 
 			// Print out Roll data
-		//	int out_length = ltoa((int)(imu_uart_getRoll()*1000), output);
+//			int out_length = ltoa((int)(imu_uart_getRoll()*1000), output);
 
 			imu_uart_send(UART0_BASE, (uint8_t*)output, out_length);
+			imu_uart_toggle_LED(RED_LED, g_one_sec/1000*5);
 		//	imu_uart_send(UART0_BASE, "\r\n", 2);
 
     	}
