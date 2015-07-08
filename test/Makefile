@@ -16,7 +16,7 @@ BUILD_DIR = $(TEST_DIR)/build
 
 LIBS = -lm -lboost_unit_test_framework
 
-all: setup test run
+all: setup test
 
 setup:
 	@echo ""
@@ -25,7 +25,8 @@ setup:
 	mkdir -p $(BUILD_DIR)
 	@echo "Setup Done, Building Code"
 
-test: LidarSwTest Px4SwTest pidTest dofTest sampleTest
+#test: LidarSwTest Px4SwTest pidTest dofTest sampleTest
+test: LidarSwTest Px4SwTest LowPassTest
 
 sampleTest: sampleTest.o
 	@echo ""
@@ -34,6 +35,19 @@ sampleTest: sampleTest.o
 
 sampleTest.o: sampleTest.cpp
 	$(CXX) -c $(CFLAGS) sampleTest.cpp -o $(BUILD_DIR)/sampleTest.o
+
+LowPassTest: LowPass.o LowPassTest.o
+	@echo ""
+	@echo "Building LowPass Test"
+	$(CXX) $(CFLAGS) $(BUILD_DIR)/LowPassTest.o $(BUILD_DIR)/LowPass.o $(LIBS) -o $(BIN_DIR)/LowPassTest
+
+LowPassTest.o: $(INC_DIR)/LowPass.hpp LowPassTest.cpp
+	$(CXX) -c $(CFLAGS) LowPassTest.cpp -I $(INC_DIR) -o $(BUILD_DIR)/LowPassTest.o
+
+LowPass.o: $(SRC_DIR)/LowPass.cpp $(INC_DIR)/LowPass.hpp
+	@echo ""
+	@echo "Building LowPass"
+	$(CXX) -c $(CFLAGS) $(SRC_DIR)/LowPass.cpp -I $(INC_DIR) -o $(BUILD_DIR)/LowPass.o
 
 pidTest: Pid.o pidTest.o
 	@echo ""
@@ -96,14 +110,16 @@ run:
 	@echo ""
 	@echo "Running Tests"
 	@echo ""
+	$(BIN_DIR)/LowPassTest
+	@echo ""
 	$(BIN_DIR)/LidarSwTest
 	@echo ""
 	$(BIN_DIR)/Px4SwTest
 	@echo ""
-	$(BIN_DIR)/pidTest
+#$(BIN_DIR)/pidTest
 	@echo ""
-	$(BIN_DIR)/dofTest
+#$(BIN_DIR)/dofTest
 	@echo ""
-	$(BIN_DIR)/sampleTest
+#$(BIN_DIR)/sampleTest
 
 

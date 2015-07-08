@@ -4,6 +4,14 @@
 #include <stdint.h>
 #include <cmath>
 #include "Pid.hpp"
+#include "LowPass.hpp"
+
+// Global constants for bitfields in the flags varaible
+const uint8_t DISC_DERIV_MASK    = 0x01;
+const uint8_t WRAP_AROUND_MASK   = 0x02;
+const uint8_t DERR_DT_MASK	     = 0x04;
+const uint8_t STATE_LOWPASS_MASK = 0x08;
+const uint8_t DERR_LOWPASS_MASK  = 0x10;
 
 Pid::Pid()
 {
@@ -12,19 +20,19 @@ Pid::Pid()
 		state[i]     = 0;
 		prevState[i] = 0;
 		setpt[i]     = 0;
-		error[i]     = 0;
-		prevError[i] = 0;
 	}
-	
-	for (unsigned i = 0; i < (NUM_PID_STATES - 1); ++i)
-	{
-		dErrDt[i]       = 0;
-		errIntegral[i]  = 0;
-		lowPassCoef[i]  = 0;
-		lowPassState[i] = 0;
-	}
+		
+	error         = 0;
+	prevError     = 0;
+	errorTime     = 0;
+	prevErrorTime = 0;
+	dErrDt        = 0;
+	errIntegral   = 0;	
 
 	for (unsigned i = 0; i < NUM_PID_GAINS; ++i) gains[i] = 0;
+	
+	stateLp = LowPass();
+	errorLp = LowPass();
 
 	outUpLim   =  (float)HUGE_VAL;
 	outLwLim   = -(float)HUGE_VAL;
@@ -41,27 +49,29 @@ Pid::Pid(const float initState[NUM_PID_STATES],
 	     const float initStateBound,
 		 const float initOutUpLim,
 		 const float initOutLwLim,
-		 const float lpCoeff[NUM_PID_STATES - 1])
+		 const float stateLpCoeff,
+		 const float errorLpCoeff)
 {
 	for (unsigned i = 0; i < NUM_PID_STATES; ++i)
 	{
 		state[i]     = initState[i];
 		prevState[i] = 0;
 		setpt[i]     = initSetpt[i];
-		error[i]     = 0;
-		prevError[i] = 0;
 	}
 	
-	for (unsigned i = 0; i < (NUM_PID_STATES - 1); ++i)
-	{
-		dErrDt[i]       = 0;
-		errIntegral[i]  = 0;
-		lowPassCoef[i]  = lpCoeff[i];
-		lowPassState[i] = 0;
-	}
+	setpt[DERIV]  = 0; // enforce 0 derivative setpt
+	error         = 0;
+	prevError     = 0;
+	errorTime     = 0;
+	prevErrorTime = 0;
+	dErrDt        = 0;	
+	errIntegral   = 0;
 
 	for (unsigned i = 0; i < NUM_PID_GAINS; ++i) gains[i] = initGains[i];
 	
+	stateLp = LowPass(stateLpCoeff);
+	errorLp = LowPass(errorLpCoeff);
+
 	stateBound = initStateBound;
 	outUpLim   = initOutUpLim;
 	outLwLim   = initOutLwLim;
@@ -80,8 +90,8 @@ void Pid::setState(const float val, const float deriv, const float time)
 	// wrap around stateBound if necessary (small tolerance for float precision)
 	if ((flags & WRAP_AROUND_MASK) && (stateBound > 0.000001))
 	{
-		while (state[VAL] >   stateBound) state[VAL] -= 2.0f * stateBound;
-		while (state[VAL] <= -stateBound) state[VAL] += 2.0f * stateBound;
+		while (state[VAL] >=  stateBound) state[VAL] -= 2.0f * stateBound;
+		while (state[VAL] <  -stateBound) state[VAL] += 2.0f * stateBound;
 	}
 
 	// calculate discrete derivatives for state if necessary
@@ -97,8 +107,8 @@ void Pid::setSetpt(const float val, const float time)
 	// wrap around stateBound if necessary (small tolerance for float precision)
 	if ((flags & WRAP_AROUND_MASK) && (stateBound > 0.000001))
 	{
-		while (setpt[VAL] >   stateBound) setpt[VAL] -= 2.0f * stateBound;
-		while (setpt[VAL] <= -stateBound) setpt[VAL] += 2.0f * stateBound;
+		while (setpt[VAL] >=  stateBound) setpt[VAL] -= 2.0f * stateBound;
+		while (setpt[VAL] <  -stateBound) setpt[VAL] += 2.0f * stateBound;
 	}
 }
 
@@ -107,8 +117,8 @@ void Pid::setGains(const float kp, const float ki, const float kd)
 	// Reset integral if integral gain changes
 	if (gains[KI] != ki)
 	{
-		if (ki != 0.0) errIntegral[VAL] *= gains[KI] / ki;
-		else		   errIntegral[VAL]  = 0.0;
+		if (ki != 0.0) errIntegral *= gains[KI] / ki;
+		else		   errIntegral  = 0.0;
 	}
 	// copy over gains
 	gains[KP] = kp;
@@ -116,58 +126,58 @@ void Pid::setGains(const float kp, const float ki, const float kd)
 	gains[KD] = kd;
 }
 
-void Pid::calcDt()
+float Pid::calcDt()
 {
-	prevError[TIME] = error[TIME]; // record previous error time
+	prevErrorTime = errorTime; // record previous error time
 	
 	// update new error time based on whether the state of setpt was the most
 	// recent item to be updated
-	if (state[TIME] >= setpt[TIME]) error[TIME] = state[TIME];
-	else 							error[TIME] = setpt[TIME];
-
-	ctrlDt = error[TIME] - prevError[TIME];	// calc dt		
+	if (state[TIME] >= setpt[TIME]) errorTime = state[TIME];
+	else 							errorTime = setpt[TIME];
+	
+	return errorTime - prevErrorTime; // calc dt		
 }	
 
-void Pid::calcError(PIDStateEnum idx)
+void Pid::calcError()
 {
+	ctrlDt = calcDt(); // get the controller's dt
+	
 	// only calc if dt is NOT too small
-	if (ctrlDt >= 0.001)
+	if (ctrlDt >= 0.001f)
 	{
 		// set previous and current controller errors
-		prevError[idx] = error[idx];
-		error[idx] = setpt[idx] - state[idx];
+		prevError = error;
+		error = setpt[VAL] - state[VAL];
 
 		// wraparound error for the main value
-		if ((idx == VAL) && (flags & WRAP_AROUND_MASK) 
-				&& (stateBound > 0.000001))
+		if ((flags & WRAP_AROUND_MASK) && (stateBound > 0.000001f))
 		{
-			if (error[idx] >  stateBound) error[idx] -= 2.0f * stateBound;
-			if (error[idx] < -stateBound) error[idx] += 2.0f * stateBound;
+			while (error >=  stateBound) error -= 2.0f * stateBound;
+			while (error < -stateBound) error += 2.0f * stateBound;
 		}
-
+		
 		// Calculate discrete derivative of error
-		dErrDt[idx] = (error[idx] - prevError[idx]) / ctrlDt;
-		// TODO Determine if lowpass filter is necessary
-
+		dErrDt = (error - prevError) / ctrlDt;
+		if (flags & DERR_LOWPASS_MASK) // lowpass the derivative if needed
+		{
+			errorLp.run(dErrDt);
+			dErrDt = errorLp.getState();
+		}
+		
 		// caclualte integral error
-		errIntegral[idx] += 0.5f * ctrlDt * (error[idx] + prevError[idx]);
+		errIntegral += 0.5f * ctrlDt * (error + prevError);
 	}
 }
 
 void Pid::run()
 {
-	// first get the ctrl dt
-	calcDt();
-
-	// next calc error based on which flags are set
-	calcError(VAL);
-	if (flags & DERR_DT_MASK) calcError(DERIV);
-
-	// Finally calculate the output of the PID algorithm (PI gains first)
-	ctrlOutput = (gains[KP] * error[VAL]) + (gains[KI] * errIntegral[VAL]);
+	calcError(); // calculate controller error
+	
+	// finally calculate the output of the PID algorithm (PI gains first)
+	ctrlOutput = (gains[KP] * error) + (gains[KI] * errIntegral);
 	
 	// choose state deriv or dErrDt as D gain based on flag
-	if (flags & DERR_DT_MASK) ctrlOutput += gains[KD] * dErrDt[VAL];
+	if (flags & DERR_DT_MASK) ctrlOutput += gains[KD] * dErrDt;
 	else	 				  ctrlOutput += gains[KD] * -state[DERIV];
 
 	// saturate at output limits
@@ -187,22 +197,25 @@ void Pid::prepareLog()
 
 void Pid::discreteDeriv()
 {
-	float dt = state[TIME] - prevState[TIME]; // dt for deriv calculation
-	
-	// only calculate if dt is NOT too small
-	if (dt > 0.001)
+	// only calculate if dt between state and prevState is not too small
+	if ((state[TIME] - prevState[TIME]) > 0.001f)
 	{
 		float diff = state[VAL] - prevState[VAL];
 		
 		// wraparound if necessary
 		if ((flags & WRAP_AROUND_MASK) && (stateBound > 0.000001))
 		{
-			while (diff >  stateBound) diff -= 2.0f * stateBound;
-			while (diff < -stateBound) diff += 2.0f * stateBound;
+			while (diff >=  stateBound) diff -= 2.0f * stateBound;
+			while (diff <  -stateBound) diff += 2.0f * stateBound;
 		}
 		
-		state[DERIV] = diff / dt;
-		// TODO Determine if lowpass filter is necessary
+		// calculate derivative
+		state[DERIV] = diff / (state[TIME] - prevState[TIME]);
+		if (flags & STATE_LOWPASS_MASK) // use LowPass if needed
+		{
+			stateLp.run(state[DERIV]);
+			state[DERIV] = stateLp.getState();
+		}
 	}
 }
 

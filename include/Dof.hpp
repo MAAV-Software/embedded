@@ -28,8 +28,10 @@ public:
 		const float rateLwLim, 
 		const float accelUpLim,
 		const float accelLwLim,
-		const float valueLpCoeff[NUM_PID_STATES - 1],
-		const float rateLpCoeff[NUM_PID_STATES - 1]);
+		const float valStateLpCoeff,
+		const float valErrorLpCoeff,
+		const float rateStateLpCoeff,
+		const float rateErrorLpCoeff);
 	
 	// Sets the state (feedback) for the PID algorithm
 	void setState(const float state[NUM_DOF_STATES]);
