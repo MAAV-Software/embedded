@@ -6,7 +6,7 @@
  */
 
 #include "Lidar.hpp"
-#include "LidarDefines.hpp"
+//#include "LidarDefines.hpp"
 
 Lidar::Lidar() 
 {
@@ -32,11 +32,13 @@ void Lidar::parse(uint8_t* raw, const uint8_t size)
 			// raw array is [dist upper byte, dist lower byte], 
 			// so we join them together and scale them into meters 
 			// since the raw value is in cm
-			dist =  (float)((((uint16_t)raw[0]) << 8) | raw[1]) / 100.0f;
+			dist =  (float)(((uint32_t)raw[0] << 8) | raw[1]) / 100.0;
 			break;
 		case LIDAR_VEL_SIZE:
 			// velocity is just an 8-bit singed int with no scaling
 			vel = (float)((int8_t)(*raw));
+			break;
+		default:
 			break;
 	}
 }

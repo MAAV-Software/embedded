@@ -23,12 +23,12 @@
 
 #include "utils/uartstdio.h"
 
-#include "px4_kalman.h"
+//#include "px4_kalman.h"
 #include "PPM.h"
 //#include "Dof.hpp"
 //#include "QuadCtrl.hpp"
-#include "px4_i2c.h"
-#include "utility.h"
+//#include "px4_i2c.h"
+//#include "utility.h"
 //#include "messaging/data_link.h"
 #include "time_util.h"
 
@@ -37,35 +37,35 @@
 
 
 /****************** Serial Port/Kalman Debug Utility Functions ****************/
-void sendToSerialPort(kalman_t* filter, uint16_t frameCount)
-{
-	char buffer[150];
-	uint32_t len = snprintf(buffer, 150,
-			"%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%f,%f,%f,%f,%f,%f,%f,%f,%f\n",
-			frameCount,
-			px4_i2c_get_pixel_flow_x_sum(),
-			px4_i2c_get_pixel_flow_y_sum(),
-			px4_i2c_get_flow_comp_m_x(),
-			px4_i2c_get_flow_comp_m_y(),
-			px4_i2c_get_qual(),
-			px4_i2c_get_gyro_x_rate(),
-			px4_i2c_get_gyro_y_rate(),
-			px4_i2c_get_gyro_z_rate(),
-			px4_i2c_get_gyro_range(),
-			px4_i2c_getTimestep(),
-			px4_i2c_getHeight(),
-			filter->xdot,
-			filter->ydot,
-			filter->z,
-			filter->zdot,
-			filter->P11,
-			filter->P22,
-			filter->P33,
-			filter->P34,
-			filter->P44);
-	UARTwrite(buffer, len);
-	return;
-}
+//void sendToSerialPort(kalman_t* filter, uint16_t frameCount)
+//{
+//	char buffer[150];
+//	uint32_t len = snprintf(buffer, 150,
+//			"%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%f,%f,%f,%f,%f,%f,%f,%f,%f\n",
+//			frameCount,
+//			px4_i2c_get_pixel_flow_x_sum(),
+//			px4_i2c_get_pixel_flow_y_sum(),
+//			px4_i2c_get_flow_comp_m_x(),
+//			px4_i2c_get_flow_comp_m_y(),
+//			px4_i2c_get_qual(),
+//			px4_i2c_get_gyro_x_rate(),
+//			px4_i2c_get_gyro_y_rate(),
+//			px4_i2c_get_gyro_z_rate(),
+//			px4_i2c_get_gyro_range(),
+//			px4_i2c_getTimestep(),
+//			px4_i2c_getHeight(),
+//			filter->xdot,
+//			filter->ydot,
+//			filter->z,
+//			filter->zdot,
+//			filter->P11,
+//			filter->P22,
+//			filter->P33,
+//			filter->P34,
+//			filter->P44);
+//	UARTwrite(buffer, len);
+//	return;
+//}
 
 // Configure the UART and its pins.  This must be called before UARTprintf().
 void ConfigureUART(void)
@@ -83,6 +83,9 @@ void ConfigureUART(void)
 
 	// Use the internal 16MHz oscillator as the UART clock source.
 	UARTClockSourceSet(UART0_BASE, UART_CLOCK_PIOSC);
+
+	// Edited by Zhengjie
+	UARTEnable(UART0_BASE);
 
 	// Initialize the UART for console I/O.
 	UARTStdioConfig(0, 115200, 16000000);

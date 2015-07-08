@@ -25,7 +25,7 @@
 //#include "driverlib/i2c.h"
 #include "driverlib/pin_map.h"
 #include "driverlib/sysctl.h"
-//#include "driverlib/uart.h"
+#include "driverlib/uart.h"
 //#include "driverlib/eeprom.h"
 //#include "driverlib/interrupt.h"
 
@@ -47,10 +47,14 @@
 //#include "tests/test_definitions.h"
 #include "runnables/DjiRunnable.hpp"
 #include "runnables/FlightModeRunnable.hpp"
+#include "runnables/ImuRunnable.hpp"
+#include "runnables/I2CRunnable.hpp"
 
 //#include "messaging/data_link.h"
 
 #include "utility.h"
+
+#include "ProgramState.hpp"
 
 bool px4_can_transmit = true;
 
@@ -63,8 +67,10 @@ int main(void)
 	FPULazyStackingEnable();
 	FPUEnable();
 
-	SysCtlClockSet(SYSCTL_SYSDIV_2_5 | SYSCTL_USE_PLL | SYSCTL_OSC_MAIN |
-				   SYSCTL_XTAL_16MHZ);
+//	SysCtlClockSet(SYSCTL_SYSDIV_2_5 | SYSCTL_USE_PLL | SYSCTL_OSC_MAIN |
+//				   SYSCTL_XTAL_16MHZ);
+	SysCtlClockSet(SYSCTL_SYSDIV_3 | SYSCTL_USE_PLL | SYSCTL_OSC_MAIN |
+					   SYSCTL_XTAL_16MHZ);
 	SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
 	GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE, GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3);
 	GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3, 0);
@@ -79,11 +85,21 @@ int main(void)
 	servoIn_attachPin();
 
 	Vehicle vehicle;
-	FlightModeRunnable flightModeRunnable(&vehicle);
-	DjiRunnable djiRunnable(&vehicle);
+	Imu		imu;
+	Lidar	lidar;
+	Px4		px4;
+	ProgramState	pState(&vehicle, &imu, &px4, &lidar);
+
+	FlightModeRunnable flightModeRunnable(&pState);
+	DjiRunnable djiRunnable(&pState);
+	ImuRunnable	imuRunnable(&pState);
+	I2CRunnable i2cRunnable(&pState);
+
 	Loop mainLoop;
 	mainLoop.addEvent(&flightModeRunnable, 10);
 	mainLoop.addEvent(&djiRunnable, 10);
+	mainLoop.addEvent(&imuRunnable, 0);
+	mainLoop.addEvent(&i2cRunnable, 0);
 	mainLoop.run();
 
 	return 0;

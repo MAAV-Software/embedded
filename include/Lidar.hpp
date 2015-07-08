@@ -8,7 +8,7 @@
 #ifndef LIDAR_HPP_
 #define LIDAR_HPP_
 
-#include <stdint.h>
+#include "Lidar_Defines.hpp"
 
 class Lidar 
 {

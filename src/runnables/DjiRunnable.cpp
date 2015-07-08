@@ -11,8 +11,8 @@
 #include "driverlib/sysctl.h"
 #include "driverlib/pin_map.h"
 
-DjiRunnable::DjiRunnable(Vehicle* v)
-	: vehicle(v) { }
+DjiRunnable::DjiRunnable(ProgramState* pState)
+	: vehicle(pState->vehicle) { }
 
 DjiRunnable::~DjiRunnable() { }
 
