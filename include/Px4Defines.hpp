@@ -21,6 +21,4 @@ typedef struct _px4Frame
 								// Positive value: distance known. Negative value: Unknown distance
 } px4Frame;
 
-i//#define PX4FRAME_SIZE 22
-
 #endif /* Px4Defines.hpp */

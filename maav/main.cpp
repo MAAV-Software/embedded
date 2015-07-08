@@ -9,25 +9,24 @@
  *        Date: Feb 24, 2015
  *
  */
-#include <servoIn.hpp>
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
 #include <stdint.h>
+#include <cstdlib>
 
-//#include "inc/hw_i2c.h"
+#include "servoIn.hpp"
+
+#include "inc/hw_i2c.h"
 #include "inc/hw_memmap.h"
 #include "inc/hw_types.h"
 #include "inc/tm4c123gh6pm.h"
 
 #include "driverlib/gpio.h"
 #include "driverlib/fpu.h"
-//#include "driverlib/i2c.h"
+#include "driverlib/i2c.h"
 #include "driverlib/pin_map.h"
 #include "driverlib/sysctl.h"
 #include "driverlib/uart.h"
-//#include "driverlib/eeprom.h"
-//#include "driverlib/interrupt.h"
+#include "driverlib/eeprom.h"
+#include "driverlib/interrupt.h"
 
 #include "utils/uartstdio.h"
 
@@ -85,10 +84,10 @@ int main(void)
 	servoIn_attachPin();
 
 	Vehicle vehicle;
-	Imu		imu;
-	Lidar	lidar;
-	Px4		px4;
-	ProgramState	pState(&vehicle, &imu, &px4, &lidar);
+	Imu imu;
+	Lidar lidar;
+	Px4 px4;
+	ProgramState pState(&vehicle, &imu, &px4, &lidar);
 
 	FlightModeRunnable flightModeRunnable(&pState);
 	DjiRunnable djiRunnable(&pState);

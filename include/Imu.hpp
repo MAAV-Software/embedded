@@ -8,9 +8,11 @@
 #ifndef IMU_HPP_
 #define IMU_HPP_
 
-#include "Imu_Defines.hpp"
+#include <stdint.h>
+#include "ImuDefines.hpp"
 
-class Imu {
+class Imu
+{
 public:
 	Imu();
 	void parse(const uint8_t * data);
@@ -41,10 +43,16 @@ private:
 	float MagZ;
 	float M[NUM_M_VAL];
 	uint32_t Timer;
+
+	/*
+	* Here are the corresponding M rotation matrix entries and their indecies
+	* M[0 1 2;
+	*   3 4 5;
+	*   6 7 8]
+	*/
 };
 
-uint32_t Bytes2Int(const unsigned char *raw, unsigned int i);
-
-float Bytes2Float(const unsigned char *raw, unsigned int i);
+uint32_t Bytes2Int(const uint8_t *raw, const unsigned int i);
+float Bytes2Float(const uint8_t *raw, const unsigned int i);
 
 #endif /* IMU_UART_H_ */

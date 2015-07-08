@@ -1,14 +1,18 @@
-#include "Imu_hw.hpp"
+#include <stdint.h>
 
-#include "inc/hw_ints.h"
+#include "ImuHw.hpp"
+
 #include "inc/hw_memmap.h"
 #include "inc/hw_types.h"
+#include "inc/hw_ints.h"
+#include "driverlib/debug.h"
 #include "driverlib/gpio.h"
 #include "driverlib/interrupt.h"
 #include "driverlib/pin_map.h"
+#include "driverlib/rom.h"
 #include "driverlib/sysctl.h"
+#include "driverlib/systick.h"
 #include "driverlib/uart.h"
-#include "driverlib/timer.h"
 
 uint8_t imuRawIn[IMU_DATA_LENGTH];
 uint8_t imuRawFinal[IMU_DATA_LENGTH];
@@ -78,7 +82,7 @@ void imuUartIntHandler()
         // Read next data.
         uint8_t dataGet = UARTCharGetNonBlocking(uartBase);
 
-        if ((dataGet == (uint8_t)ALL_VAL_CMD) &&
+        if ((dataGet == imuCmd) &&
         		((imuIndex == 0) || (imuIndex >= (uint8_t)IMU_DATA_LENGTH)))
         {
         	imuIndex = 0;

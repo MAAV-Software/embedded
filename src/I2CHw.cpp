@@ -4,6 +4,7 @@
  *  Created on: Jun 24, 2015
  *      Author: Zhengjie
  */
+#include <stdint.h>
 #include "inc/hw_memmap.h"
 #include "inc/hw_types.h"
 #include "inc/hw_ints.h"
@@ -17,7 +18,8 @@
 #include "driverlib/uart.h"
 #include "driverlib/i2c.h"
 #include "driverlib/timer.h"
-#include "utils/uartstdio.h"
+
+#include "sensorlib/i2cm_drv.h"
 
 #include "Px4Defines.hpp"
 #include "LidarDefines.hpp"
@@ -29,9 +31,9 @@ bool I2CMDone = true;
 tI2CMInstance I2CMInst;
 uint32_t LidarTime = 0;
 uint32_t PX4Time = 0;
-uint8_t rawpx4[sizeof(px4Frame)];
-uint8_t rawlidar[LIDAR_DIST_SIZE];
-uint32_t I2C_BASE;
+uint8_t rawPx4[sizeof(px4Frame)];
+uint8_t rawLidar[LIDAR_DIST_SIZE];
+uint32_t i2cBase;
 
 void I2CMasterIntHandler();
 

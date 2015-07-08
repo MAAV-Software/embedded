@@ -8,8 +8,8 @@
 #ifndef I2CHw_HPP_
 #define I2CHw_HPP_
 
+#include <stdint.h>
 #include "sensorlib/i2cm_drv.h"
-
 #include "I2CDefines.hpp"
 #include "Px4Defines.hpp"
 #include "LidarDefines.hpp"

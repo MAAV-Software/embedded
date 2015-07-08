@@ -1,6 +1,17 @@
 #include "runnables/I2CRunnable.hpp"
 #include "I2CHw.hpp"
 
+#include "inc/hw_ints.h"
+#include "inc/hw_memmap.h"
+#include "inc/hw_types.h"
+#include "driverlib/gpio.h"
+#include "driverlib/interrupt.h"
+#include "driverlib/pin_map.h"
+#include "driverlib/sysctl.h"
+#include "driverlib/uart.h"
+#include "driverlib/timer.h"
+#include "sensorlib/i2cm_drv.h"
+
 I2CRunnable::I2CRunnable(ProgramState *pState) 
 	: px4(pState->px4), lidar(pState->lidar)
 {
@@ -9,7 +20,7 @@ I2CRunnable::I2CRunnable(ProgramState *pState)
 			  I2C3_BASE, INT_I2C3, true); // this should move to main before the loop
 	
 	// Sending first Lidar Command
-	I2CMWrite(&g_sI2CMInst, LIDAR_I2C_ADDRESS, Command, 2, I2CMCallback, 0); // Start the measurment	
+	I2CMWrite(&I2CMInst, LIDAR_I2C_ADDRESS, command, 2, I2CMCallback, 0); // Start the measurment
 	currentState = Lidar_1;
 }
 
@@ -27,17 +38,17 @@ void I2CRunnable::run(void)
 				{
 					PX4Time = getTime; // the time of px4 start
 					I2CMDone = false;
-					I2CMRead(I2CMInst, PX4_I2C_ADDRESS, command + 3, 1, rawPx4, sizeof(px4Frame), I2CMCallback, 0);
+					I2CMRead(&I2CMInst, PX4_I2C_ADDRESS, command + 3, 1, rawPx4, (uint_fast16_t)sizeof(px4Frame), I2CMCallback, 0);
 					nextState = PX4_1;
 				}
 				break;
 			case PX4_1: // have sent px4 command, ready to parse px4 and send 2nd lidar command
-				if ((getTime - LidarTime) > (syscClock / 1000.0 * 20.0)) // wait for 18ms after lidar1 done
+				if ((getTime - LidarTime) > (sysClock / 1000.0 * 20.0)) // wait for 18ms after lidar1 done
 				{
 					px4->parse(rawPx4);
 					LidarTime = getTime; // the time of lidar2 start
 					I2CMDone = false;
-					I2CMRead(I2CMInst, LIDAR_I2C_ADDRESS, command + 2, 1, rawLidar, LIDAR_DIST_SIZE, I2CMCallback, 0);
+					I2CMRead(&I2CMInst, LIDAR_I2C_ADDRESS, command + 2, 1, rawLidar, LIDAR_DIST_SIZE, I2CMCallback, 0);
 					nextState = Lidar_2;
 				}
 				break;
@@ -47,7 +58,7 @@ void I2CRunnable::run(void)
 					lidar->parse(rawLidar, LIDAR_DIST_SIZE);
 					LidarTime = getTime; // the time of lidar start
 					I2CMDone = false;
-					I2CMWrite(I2CMInst, LIDAR_I2C_ADDRESS, command, 2, I2CMCallback, 0);
+					I2CMWrite(&I2CMInst, LIDAR_I2C_ADDRESS, command, 2, I2CMCallback, 0);
 					nextState = Lidar_1;
 				}
 				break;

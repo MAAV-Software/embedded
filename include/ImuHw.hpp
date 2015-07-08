@@ -2,6 +2,7 @@
 #define IMUHW_HPP_
 
 #include "ImuDefines.hpp"
+#include <stdint.h>
 
 // Global data to send and receive for testing
 extern uint8_t imuRawFinal[IMU_DATA_LENGTH];
@@ -10,7 +11,6 @@ extern bool imuDone;
 extern uint32_t imuTime;
 extern uint8_t imuIndex;
 extern uint8_t imuCmd;
-
 
 // Configure UART.
 void imuUartConfig(const uint32_t sysctlPeriphUart,
@@ -21,7 +21,7 @@ void imuUartConfig(const uint32_t sysctlPeriphUart,
 				   const uint32_t gpioRxPin,
 				   const uint32_t gpioTxPin,
 				   const uint32_t _uartBase,
-				   const uint32_t uartInterrupt)
+				   const uint32_t uartInterrupt);
 
 void imuUartIntHandler();
 

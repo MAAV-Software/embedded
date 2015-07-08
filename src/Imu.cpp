@@ -7,6 +7,8 @@
 
 
 #include "Imu.hpp"
+#include <stdint.h>
+#include <math.h>
 
 Imu::Imu()
 {
@@ -25,24 +27,12 @@ Imu::Imu()
 
 void Imu::parse(const uint8_t* data)
 {
-//	if (IMU_DATA_LENGTH < 79)
-//	{
-//		//TODO: may want to set an error flag
-//		return;
-//	}
-
 	// Check checksum
 	int16_t tChksum = 0;
 	for (unsigned int i = 0; i < 77; ++i) tChksum += data[i];
 
-	int16_t tResponseChksum = 0;
-	tResponseChksum = (uint16_t)data[77] << 8;
-	tResponseChksum += data[78];
-
-//	uint16_t tmp = ((uint16_t)data[77] << 8) + data[78];
-
+	int16_t tResponseChksum = (((uint16_t)data[77]) << 8) | data[78];
 	if (tChksum != tResponseChksum)
-//	if (tChksum != (int16_t)tmp)
 	{
 		return;
 	}
@@ -65,18 +55,8 @@ void Imu::parse(const uint8_t* data)
 *   3 4 5;
 *   6 7 8]
 */
-//		M[0] = Bytes2Float(data, 37); //M11
-//		M[1] = Bytes2Float(data, 41); //M12
-//		M[2] = Bytes2Float(data, 45); //M13
-//		M[3] = Bytes2Float(data, 49); //M21
-//		M[4] = Bytes2Float(data, 53); //M22
-//		M[5] = Bytes2Float(data, 57); //M23
-//		M[6] = Bytes2Float(data, 61); //M31
-//		M[7] = Bytes2Float(data, 65); //M32
-//		M[8] = Bytes2Float(data, 69); //M33
 
 	Timer = Bytes2Int(data, 73);
-
 }
 
 // Return data
@@ -142,15 +122,16 @@ float Imu::getMagZ() const
 
 uint32_t Imu::getTimer() const
 {
-	return Timer/62500;
+	return Timer / 62500;
 }
 
-uint32_t Bytes2Int(const unsigned char * const raw, unsigned int i)
+uint32_t Bytes2Int(const uint8_t *raw, const unsigned int i)
 {
-	union B2I{
-	   unsigned char buf[4];
+	union B2I
+	{
+	   uint8_t buf[4];
 	   uint32_t number;
-	}data;
+	} data;
 
 	data.buf[0] = raw[i+3];
 	data.buf[1] = raw[i+2];
@@ -160,12 +141,13 @@ uint32_t Bytes2Int(const unsigned char * const raw, unsigned int i)
 	return data.number;
 }
 
-float Bytes2Float(const unsigned char * const raw, unsigned int i)
+float Bytes2Float(const uint8_t *raw, const unsigned int i)
 {
-	union B2F{
+	union B2F
+	{
 	   unsigned char buf[4];
 	   float number;
-	}data;
+	} data;
 
 	data.buf[0] = raw[i+3];
 	data.buf[1] = raw[i+2];
