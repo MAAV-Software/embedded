@@ -16,7 +16,7 @@ BUILD_DIR = $(TEST_DIR)/build
 
 LIBS = -lm -lboost_unit_test_framework
 
-all: setup test run
+all: setup test
 
 setup:
 	@echo ""
