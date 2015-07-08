@@ -28,8 +28,10 @@ Dof::Dof(const float state[NUM_DOF_STATES],
 		 const float rateLwLim, 
 		 const float accelUpLim,
 		 const float accelLwLim,
-		 const float valueLpCoeff[NUM_PID_STATES - 1],
-		 const float rateLpCoeff[NUM_PID_STATES - 1])
+		 const float valStateLpCoeff,
+		 const float valErrorLpCoeff,
+		 const float rateStateLpCoeff,
+		 const float rateErrorLpCoeff)
 {
 	float valState[NUM_PID_STATES]  = {state[DOF_VAL], state[DOF_RATE], 
 								       state[DOF_TIME]};
@@ -38,9 +40,9 @@ Dof::Dof(const float state[NUM_DOF_STATES],
 	float valSetpt[NUM_PID_STATES]  = {setpt[DOF_VAL], 0, setpt[DOF_TIME]};
 	float rateSetpt[NUM_PID_STATES] = {setpt[DOF_RATE], 0, setpt[DOF_TIME]};
 	valuePid = Pid(valState, valSetpt, valueFlags, valueGains, stateBound, 
-				   rateUpLim, rateLwLim, valueLpCoeff);
+				   rateUpLim, rateLwLim, valStateLpCoeff, valErrorLpCoeff);
 	ratePid  = Pid(rateState, rateSetpt, rateFlags, rateGains, 0, 
-				   accelUpLim, accelLwLim, rateLpCoeff);
+				   accelUpLim, accelLwLim, rateStateLpCoeff, rateErrorLpCoeff);
 	Uval = 0;
 	rate = 0;
 	inertia = Inertia;
