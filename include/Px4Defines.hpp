@@ -2,9 +2,6 @@
 #define PX4_DEFINES_HPP_
 
 #include <stdint.h>
-#include <stdbool.h>
-#include <math.h>
-#include <stdlib.h>
 
 // Struct definition for 22-Byte Px4 message over i2c
 typedef struct _px4Frame
@@ -24,6 +21,6 @@ typedef struct _px4Frame
 								// Positive value: distance known. Negative value: Unknown distance
 } px4Frame;
 
-#define PX4FRAME_SIZE 22
+i//#define PX4FRAME_SIZE 22
 
 #endif /* Px4Defines.hpp */

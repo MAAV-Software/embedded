@@ -6,17 +6,13 @@
 
 class I2CRunnable : public Runnable
 {
+public:
+	I2CRunnable(ProgramState *pState);
+	void run();
+
 private:
 	Px4 	*px4;
 	Lidar	*lidar;
-
-public:
-	I2CRunnable(ProgramState *pState);
-
-	~I2CRunnable();
-
-	void run();
-
 };
 
 #endif /* I2CRUNNABLE_HPP_ */

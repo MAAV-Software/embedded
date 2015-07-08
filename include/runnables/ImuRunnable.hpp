@@ -6,16 +6,12 @@
 
 class ImuRunnable : public Runnable
 {
-private:
-	Imu 	*imu;
-
 public:
 	ImuRunnable(ProgramState *pState);
-
-	~ImuRunnable();
-
 	void run();
-
+	
+private:
+	Imu *imu;
 };
 
 #endif /* IMURUNNABLE_HPP_ */
