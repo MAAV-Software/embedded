@@ -26,7 +26,7 @@ setup:
 	@echo "Setup Done, Building Code"
 
 #test: LidarSwTest Px4SwTest pidTest dofTest sampleTest
-test: LidarSwTest Px4SwTest LowPassTest
+test: LidarSwTest Px4SwTest LowPassTest pidTest
 
 sampleTest: sampleTest.o
 	@echo ""
@@ -49,15 +49,15 @@ LowPass.o: $(SRC_DIR)/LowPass.cpp $(INC_DIR)/LowPass.hpp
 	@echo "Building LowPass"
 	$(CXX) -c $(CFLAGS) $(SRC_DIR)/LowPass.cpp -I $(INC_DIR) -o $(BUILD_DIR)/LowPass.o
 
-pidTest: Pid.o pidTest.o
+pidTest: Pid.o pidTest.o LowPass.o
 	@echo ""
 	@echo "Building PID Test"
-	$(CXX) $(CFLAGS) $(BUILD_DIR)/pidTest.o $(BUILD_DIR)/Pid.o $(LIBS) -o $(BIN_DIR)/pidTest
+	$(CXX) $(CFLAGS) $(BUILD_DIR)/pidTest.o $(BUILD_DIR)/Pid.o $(BUILD_DIR)/LowPass.o $(LIBS) -o $(BIN_DIR)/pidTest
 
 pidTest.o: $(INC_DIR)/Pid.hpp pidTest.cpp
 	$(CXX) -c $(CFLAGS) pidTest.cpp -I $(INC_DIR) -o $(BUILD_DIR)/pidTest.o
 
-Pid.o: $(SRC_DIR)/Pid.cpp $(INC_DIR)/Pid.hpp
+Pid.o: $(SRC_DIR)/Pid.cpp $(INC_DIR)/Pid.hpp $(INC_DIR)/LowPass.hpp
 	@echo ""
 	@echo "Building Pid"
 	$(CXX) -c $(CFLAGS) $(SRC_DIR)/Pid.cpp -I $(INC_DIR) -o $(BUILD_DIR)/Pid.o
@@ -116,7 +116,7 @@ run:
 	@echo ""
 	$(BIN_DIR)/Px4SwTest
 	@echo ""
-#$(BIN_DIR)/pidTest
+	$(BIN_DIR)/pidTest
 	@echo ""
 #$(BIN_DIR)/dofTest
 	@echo ""
