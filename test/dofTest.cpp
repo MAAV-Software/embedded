@@ -20,15 +20,15 @@ public:
 		float setpt[NUM_DOF_STATES] = {1, 1, 1, 1}; 		
 		float valueGains[NUM_PID_GAINS] = {1, 1, 1};
 		float rateGains[NUM_PID_GAINS] = {1, 1, 1};
-		float lpCoeff[NUM_PID_STATES - 1] = {0, 0};
+		float lpCoeff = 0;
 
 		d2 = Dof(state, setpt, valueGains, rateGains, (uint8_t)DISC_DERIV_MASK,
 				 (uint8_t)DERR_DT_MASK, 1, 0, (float)HUGE_VAL, -(float)HUGE_VAL, 
-				 (float)HUGE_VAL, -(float)HUGE_VAL, lpCoeff, lpCoeff);
+				 (float)HUGE_VAL, -(float)HUGE_VAL, lpCoeff, lpCoeff, lpCoeff, lpCoeff);
 
 		d3 = Dof(state, setpt, valueGains, rateGains, (uint8_t)DISC_DERIV_MASK,
 				 (uint8_t)DERR_DT_MASK, 1, 0, 10, -10, 
-				 5, -5, lpCoeff, lpCoeff);
+				 5, -5, lpCoeff, lpCoeff, lpCoeff, lpCoeff);
 	}
 
 	Dof d1, d2, d3;

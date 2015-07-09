@@ -58,7 +58,7 @@
 bool px4_can_transmit = true;
 
 ////////////////////////////// MAIN FUNCTION ///////////////////////////////////
-int main(void)
+int main()
 {
 	// TODO: PUT THESE CONFIGURATIONS FOR CLOCK AND GPIO INTO APPROPRIATE
 	// CONFIG FUNCTIONS!!!! EVERYONE IS FORGETTING TO TURN THE DAMN FPU ON!!!
@@ -87,8 +87,8 @@ int main(void)
 	Imu imu;
 	Lidar lidar;
 	Px4 px4;
-	ProgramState pState(&vehicle, &imu, &px4, &lidar);
-
+	ProgramState pState(&vehicle, &imu, &px4, &lidar, MANUAL);
+	
 	FlightModeRunnable flightModeRunnable(&pState);
 	DjiRunnable djiRunnable(&pState);
 	ImuRunnable	imuRunnable(&pState);
