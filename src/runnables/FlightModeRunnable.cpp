@@ -11,26 +11,21 @@
 #include "driverlib/pin_map.h"
 
 
-FlightModeRunnable::FlightModeRunnable(ProgramState *pState)
-	: vehicle(pState->vehicle) {}
+FlightModeRunnable::FlightModeRunnable(ProgramState *pState) : state(pState) {}
 
-FlightModeRunnable::~FlightModeRunnable() { }
-
-void FlightModeRunnable::run() {
-	//vehicle->setFlightMode(flightModeGet());
-	//switch (vehicle->getFlightMode())
-	switch(flightModeGet()){
+void FlightModeRunnable::run() 
+{
+	state->mode = flightModeGet();
+	switch(state->mode)
+	{
 		case ASSISTED:
-			GPIOPinWrite(GPIO_PORTF_BASE, RED_LED | GREEN_LED |
-					BLUE_LED, RED_LED);
+			GPIOPinWrite(GPIO_PORTF_BASE, RED_LED | GREEN_LED | BLUE_LED, RED_LED);
 			break;
 		case AUTONOMOUS:
-			GPIOPinWrite(GPIO_PORTF_BASE, RED_LED | GREEN_LED |
-					BLUE_LED, BLUE_LED);
+			GPIOPinWrite(GPIO_PORTF_BASE, RED_LED | GREEN_LED | BLUE_LED, BLUE_LED);
 			break;
 		case MANUAL:
-			GPIOPinWrite(GPIO_PORTF_BASE, RED_LED | GREEN_LED |
-					BLUE_LED, GREEN_LED);
+			GPIOPinWrite(GPIO_PORTF_BASE, RED_LED | GREEN_LED | BLUE_LED, GREEN_LED);
 			break;
 		default:
 			break;

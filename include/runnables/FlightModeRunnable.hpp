@@ -4,18 +4,14 @@
 #include "ProgramState.hpp"
 #include "runnables/Runnable.hpp"
 
-class FlightModeRunnable : public Runnable {
-private:
-	// pointer to vehicle state, it is probably shared
-	// between multiple classes
-	Vehicle* vehicle;
-
+class FlightModeRunnable : public Runnable 
+{
 public:
 	FlightModeRunnable(ProgramState* pState);
-
-	~FlightModeRunnable();
-
 	void run();
+
+private:
+	ProgramState *state;
 };
 
 #endif /* FLIGHTMODERUNNABLE_HPP_ */

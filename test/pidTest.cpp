@@ -17,16 +17,16 @@ public:
 		float states[NUM_PID_STATES] = {0, 0, 0};
 		float setpt[NUM_PID_STATES] = {1, 0, 1};
 		float gains[NUM_PID_GAINS] = {1, 1, 1};
-		float lpCoeff[NUM_PID_STATES - 1] = {0, 0};
+		float lpCoeff = 0.1f;
 
 		c = Pid(states, setpt, 
-				(uint8_t)DERR_DT_MASK | (uint8_t)(DISC_DERIV_MASK), 
-				gains, 0, (float)HUGE_VAL, 
-				-(float)HUGE_VAL, lpCoeff);
+				(DERR_DT_MASK | DISC_DERIV_MASK | 
+				 STATE_LOWPASS_MASK | DERR_LOWPASS_MASK), 
+				gains, 0, (float)HUGE_VAL, -(float)HUGE_VAL, lpCoeff, lpCoeff);
 		
-		p.flags |= (uint8_t)DISC_DERIV_MASK;
-		p.setGains(2.0, 2.0, 2.0);
-		p.setSetpt(1.0, 1.0);
+		p.flags |= DISC_DERIV_MASK;
+		p.setGains(2.0f, 2.0f, 2.0f);
+		p.setSetpt(1.0f, 1.0f);
 		p.setState(0, 0, 0);
 	}
 	
@@ -43,19 +43,20 @@ BOOST_AUTO_TEST_CASE(initTest)
 BOOST_AUTO_TEST_CASE(flagsTest)
 {
 	Fixture f;
-	BOOST_CHECK((f.c.flags & (uint8_t)DERR_DT_MASK) > 0);
-	BOOST_CHECK_EQUAL(f.p.flags, (uint8_t)DISC_DERIV_MASK);
-	f.p.flags &= (uint8_t)(~DISC_DERIV_MASK);
-	f.c.flags &= (uint8_t)(~DERR_DT_MASK);
+	BOOST_CHECK((f.c.flags & DERR_DT_MASK) > 0);
+	BOOST_CHECK_EQUAL(f.p.flags, DISC_DERIV_MASK);
+	f.p.flags &= (uint8_t)~DISC_DERIV_MASK;
+	f.c.flags &= (uint8_t)~DERR_DT_MASK;
 	BOOST_CHECK_EQUAL(f.p.flags, 0);
-	BOOST_CHECK_EQUAL(f.c.flags, (uint8_t)DISC_DERIV_MASK);
+	BOOST_CHECK_EQUAL(f.c.flags, 
+			DISC_DERIV_MASK | STATE_LOWPASS_MASK | DERR_LOWPASS_MASK);
 }
 
 BOOST_AUTO_TEST_CASE(plainCtrlTest1)
 {
 	Fixture f;
 	f.p.run();
-	BOOST_CHECK_CLOSE(f.p.getOutput(), 3.0, 0.001);
+	BOOST_CHECK_CLOSE(f.p.getOutput(), 3.0f, 0.001f);
 }
 
 BOOST_AUTO_TEST_CASE(plainCtrlTest2)
@@ -63,7 +64,7 @@ BOOST_AUTO_TEST_CASE(plainCtrlTest2)
 	Fixture f;
 	f.p.setSetpt(-1, 1);
 	f.p.run();
-	BOOST_CHECK_CLOSE(f.p.getOutput(), -3.0, 0.001);
+	BOOST_CHECK_CLOSE(f.p.getOutput(), -3.0f, 0.001f);
 }
 
 
@@ -71,13 +72,13 @@ BOOST_AUTO_TEST_CASE(customCtrlTest)
 {
 	Fixture f;
 	f.c.run();
-	BOOST_CHECK_CLOSE(f.c.getOutput(), 2.5, 0.001);
+	BOOST_CHECK_CLOSE(f.c.getOutput(), 1.6f, 0.001f);
 
-	f.c.setState(2.5, 0, 2.5);
+	f.c.setState(2.5f, 0.0f, 2.5f);
 	f.c.run();
 	BOOST_CHECK(f.c.getOutput() < 0);
 
-	f.c.setState(0.5, 0.5, 4);
+	f.c.setState(-10.0f, -1.0f, 4.0f);
 	f.c.run();
 	BOOST_CHECK(f.c.getOutput() > 0);
 }
