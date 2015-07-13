@@ -16,6 +16,8 @@
 #include "driverlib/timer.h"
 #include "driverlib/sysctl.h"
 #include "driverlib/interrupt.h"
+#include "driverlib/rom.h"
+#include "driverlib/rom_map.h"
 
 static void Time_Util_Int_Handler(void);
 
@@ -35,31 +37,31 @@ void time_init(uint32_t ui32Peripheral, uint32_t sysClock, uint32_t ui32Base, ui
 	timer_cycles_per_overflow = sysClock;
 	timer_period_us			  = timer_cycles_per_overflow * 1000000.0 / frequency;
 
-    SysCtlPeripheralEnable(ui32Peripheral);
-    TimerConfigure(timerBase, TIMER_CFG_PERIODIC);
+    ROM_SysCtlPeripheralEnable(ui32Peripheral);
+    ROM_TimerConfigure(timerBase, TIMER_CFG_PERIODIC);
 
-    TimerLoadSet(timerBase, TIMER_A, timer_cycles_per_overflow);
+    ROM_TimerLoadSet(timerBase, TIMER_A, timer_cycles_per_overflow);
 
     TimerIntRegister(timerBase, TIMER_A, &Time_Util_Int_Handler);
 
-    IntPrioritySet(ui32Interrupt, 0x00);
+    ROM_IntPrioritySet(ui32Interrupt, 0x00);
 
-    IntEnable(ui32Interrupt);
-    TimerIntEnable(timerBase, TIMER_TIMA_TIMEOUT);
+    ROM_IntEnable(ui32Interrupt);
+    ROM_TimerIntEnable(timerBase, TIMER_TIMA_TIMEOUT);
 
-	TimerEnable(timerBase, TIMER_A);
+	ROM_TimerEnable(timerBase, TIMER_A);
 }
 uint64_t timestamp_now() {
 	uint64_t us_sec, us_sec_confirm, us_us;
 
 	us_sec = uptime_overflow * timer_period_us;
 
-	uint64_t ticks = TimerValueGet(timerBase, TIMER_A);
+	uint64_t ticks = ROM_TimerValueGet(timerBase, TIMER_A);
 
 	us_sec_confirm = uptime_overflow * timer_period_us;
 
 	if(us_sec != us_sec_confirm) {
-		ticks = TimerValueGet(timerBase, TIMER_A);
+		ticks = ROM_TimerValueGet(timerBase, TIMER_A);
 		us_sec = uptime_overflow * timer_period_us;
 	}
 
@@ -79,11 +81,10 @@ uint32_t millis() {
 //
 //*****************************************************************************
 static void Time_Util_Int_Handler(void) {
-    //
+
     // Clear the timer interrupt.
-    //
-	uint32_t mode = TimerIntStatus(timerBase, 1);
-    TimerIntClear(timerBase, mode);
+	uint32_t mode = ROM_TimerIntStatus(timerBase, 1);
+    ROM_TimerIntClear(timerBase, mode);
     //XXX MAKE SURE TIMER VALUE IS WORKING
     uptime_overflow += 1;
 }

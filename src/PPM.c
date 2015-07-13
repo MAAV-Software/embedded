@@ -16,6 +16,8 @@
 #include "driverlib/sysctl.h"
 #include "driverlib/interrupt.h"
 #include "driverlib/gpio.h"
+#include "driverlib/rom.h"
+#include "driverlib/rom_map.h"
 
 static volatile uint32_t ui32_PPM_FrameLen;
 static volatile uint32_t timerBase;
@@ -60,22 +62,22 @@ void PPM_init(uint32_t timerPeripheral, uint32_t _sysClock, uint32_t _timerBase,
 	ui32_PPM_Arr[num_PPM_Channels] 	= ui32_PPM_FrameLen;
 
 	// Set up Timer0 for PPM out
-	SysCtlPeripheralEnable(timerPeripheral);
-	TimerConfigure(timerBase, TIMER_CFG_PERIODIC);
-	TimerControlStall(timerBase, TIMER_A, true);
+	ROM_SysCtlPeripheralEnable(timerPeripheral);
+	ROM_TimerConfigure(timerBase, TIMER_CFG_PERIODIC);
+	ROM_TimerControlStall(timerBase, TIMER_A, true);
 
 	// Configure GPIO for the PPM driver pins
-	SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOB);
-	GPIOPinTypeGPIOOutput(	GPIO_portBase, GPIO_pinMask);
-	GPIOPadConfigSet(		GPIO_portBase, GPIO_pinMask, GPIO_STRENGTH_2MA, GPIO_PIN_TYPE_STD);	// standard push-pull output pin
-	GPIOPinWrite(			GPIO_portBase, GPIO_pinMask, GPIO_pinMask);					// Set initial position to HIGH
+	ROM_SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOB);
+	ROM_GPIOPinTypeGPIOOutput(	GPIO_portBase, GPIO_pinMask);
+	ROM_GPIOPadConfigSet(		GPIO_portBase, GPIO_pinMask, GPIO_STRENGTH_2MA, GPIO_PIN_TYPE_STD);	// standard push-pull output pin
+	ROM_GPIOPinWrite(			GPIO_portBase, GPIO_pinMask, GPIO_pinMask);					// Set initial position to HIGH
 
 	// Register interrupt and enable PPM timer
 	TimerIntRegister(timerBase, TIMER_A, PPM_Int_Handler);
-	TimerLoadSet(timerBase, TIMER_A, ui32_PPM_TimeLow);
-	IntEnable(timerIntVect);
-	TimerIntEnable(timerBase, TIMER_TIMA_TIMEOUT);
-	TimerEnable(timerBase, TIMER_A);
+	ROM_TimerLoadSet(timerBase, TIMER_A, ui32_PPM_TimeLow);
+	ROM_IntEnable(timerIntVect);
+	ROM_TimerIntEnable(timerBase, TIMER_TIMA_TIMEOUT);
+	ROM_TimerEnable(timerBase, TIMER_A);
 	return;
 }
 void PPM_setPulse(uint8_t chNum, uint32_t pulseWidth) {
@@ -96,17 +98,17 @@ uint32_t MinMaxPulseThresh(uint32_t dataIn) {
 			dataIn > ui32_PPM_Max ? ui32_PPM_Max : dataIn;
 }
 void PPM_Int_Handler(void) {	// This ISR is for sending the PPM signal to the DJI
-	TimerIntClear(timerBase, TIMER_TIMA_TIMEOUT);		// Clear the timer interrupt
+	ROM_TimerIntClear(timerBase, TIMER_TIMA_TIMEOUT);		// Clear the timer interrupt
 
-	if(GPIOPinRead(GPIO_portBase, GPIO_pinMask)) { 				// The PIN is HIGH
-		GPIOPinWrite(GPIO_portBase, GPIO_pinMask, 0); 			// Turn off PPM pin
+	if(ROM_GPIOPinRead(GPIO_portBase, GPIO_pinMask)) { 				// The PIN is HIGH
+		ROM_GPIOPinWrite(GPIO_portBase, GPIO_pinMask, 0); 			// Turn off PPM pin
 		if(PPM_Channel == 0) {									// Start of frame, reset acc
 			ui32_PPM_Arr[num_PPM_Channels] = ui32_PPM_FrameLen; // reset frame time
 		}
-		TimerLoadSet(timerBase, TIMER_A, ui32_PPM_TimeLow-1);
+		ROM_TimerLoadSet(timerBase, TIMER_A, ui32_PPM_TimeLow-1);
 	} else {													// the PIN is LOW
-		GPIOPinWrite(GPIO_portBase, GPIO_pinMask, GPIO_pinMask); // Turn on PPM pin
-		TimerLoadSet(timerBase, TIMER_A, ui32_PPM_Arr[PPM_Channel]-ui32_PPM_TimeLow-1);
+		ROM_GPIOPinWrite(GPIO_portBase, GPIO_pinMask, GPIO_pinMask); // Turn on PPM pin
+		ROM_TimerLoadSet(timerBase, TIMER_A, ui32_PPM_Arr[PPM_Channel]-ui32_PPM_TimeLow-1);
 		ui32_PPM_Arr[num_PPM_Channels] -= ui32_PPM_Arr[PPM_Channel];
 		PPM_Channel++;
 		PPM_Channel%=(num_PPM_Channels+1);

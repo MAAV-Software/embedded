@@ -35,7 +35,7 @@ public:
 				 const float accelUpLims[NUM_DOFS],
 				 const float accelLwLims[NUM_DOFS],
 				 const float valueStateLpCoeffs[NUM_DOFS],
-				 const float valueErrorLpCoeffS[NUM_DOFS],
+				 const float valueErrorLpCoeffs[NUM_DOFS],
 				 const float rateStateLpCoeffs[NUM_DOFS],
 				 const float rateErrorLpCoeffs[NUM_DOFS],
 				 const float totalMass,

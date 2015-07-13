@@ -5,6 +5,7 @@
  **/
 
 #include <string.h>
+#include <stdlib.h>
 #include "messaging/tuning_t.h"
 
 static int __tuning_t_hash_computed;

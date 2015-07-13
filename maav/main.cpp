@@ -26,6 +26,8 @@
 #include "driverlib/sysctl.h"
 #include "driverlib/uart.h"
 #include "driverlib/eeprom.h"
+#include "driverlib/rom.h"
+#include "driverlib/rom_map.h"
 #include "driverlib/interrupt.h"
 
 #include "utils/uartstdio.h"
@@ -39,7 +41,7 @@
 //#include "QuadCtrl.hpp"
 //#include "switch.h"
 #include "rc.hpp"
-//#include "led.h"
+#include "LED.h"
 //#include "flight_mode.h"
 #include "Loop.hpp"
 #include "Vehicle.hpp"
@@ -63,16 +65,17 @@ int main()
 	// TODO: PUT THESE CONFIGURATIONS FOR CLOCK AND GPIO INTO APPROPRIATE
 	// CONFIG FUNCTIONS!!!! EVERYONE IS FORGETTING TO TURN THE DAMN FPU ON!!!
 	// IT'S THE *ONLY* REASON WE'RE USING THE TIVA IN THE FIRST PLACE!!!!
-	FPULazyStackingEnable();
-	FPUEnable();
+	MAP_FPULazyStackingEnable();
+	MAP_FPUEnable();
 
 //	SysCtlClockSet(SYSCTL_SYSDIV_2_5 | SYSCTL_USE_PLL | SYSCTL_OSC_MAIN |
 //				   SYSCTL_XTAL_16MHZ);
-	SysCtlClockSet(SYSCTL_SYSDIV_3 | SYSCTL_USE_PLL | SYSCTL_OSC_MAIN |
+	MAP_SysCtlClockSet(SYSCTL_SYSDIV_3 | SYSCTL_USE_PLL | SYSCTL_OSC_MAIN |
 					   SYSCTL_XTAL_16MHZ);
-	SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
-	GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE, GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3);
-	GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3, 0);
+//	SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
+//	GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE, GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3);
+//	GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3, 0);
+//	Config_LED();
 
 	ConfigureUART();
 	UARTprintf("Testing Uart Connection.\n\r");

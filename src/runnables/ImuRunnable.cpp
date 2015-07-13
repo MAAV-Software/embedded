@@ -12,6 +12,10 @@
 #include "driverlib/sysctl.h"
 #include "driverlib/uart.h"
 #include "driverlib/timer.h"
+#include "driverlib/rom.h"
+#include "driverlib/rom_map.h"
+
+#include "utils/uartstdio.h"
 
 ImuRunnable::ImuRunnable(ProgramState *pState) : imu(pState->imu)
 {
@@ -23,8 +27,8 @@ ImuRunnable::ImuRunnable(ProgramState *pState) : imu(pState->imu)
 
 void ImuRunnable::run()
 {
-	uint32_t getTime = TimerValueGet(TIMER4_BASE, TIMER_A);
-	float sysClock = (float)SysCtlClockGet();
+	uint32_t getTime = MAP_TimerValueGet(TIMER4_BASE, TIMER_A);
+	float sysClock = (float)MAP_SysCtlClockGet();
 
 	// Run at 100Hz 10ms
 	if (!imuDone && ((getTime - imuTime) > (sysClock / 1000.0 * 10.0)))
@@ -36,6 +40,8 @@ void ImuRunnable::run()
 	if (imuDone)
 	{
 		imu->parse(imuRawFinal);
+		// For debug print
+		UARTprintf("IMU:\tTime:%d\tRow:%d\tPitch:%d\tYaw:%d\n\r", (int32_t)imu->getTimer(),(int32_t)(imu->getRoll()*1e7),(int32_t)(imu->getPitch()*1e7),(int32_t)(imu->getYaw()*1e7));
 		imuDone = false;
 	}
 }

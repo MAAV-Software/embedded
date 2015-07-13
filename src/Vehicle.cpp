@@ -1,13 +1,13 @@
 #include <stdint.h>
-#include <cstdlib>
-#include <cmath>
+#include <stdlib.h>
+#include <math.h>
 #include "Vehicle.hpp"
 #include "Dof.hpp"
 #include "Pid.hpp"
 #include "FlightMode.hpp"
 
 // define pi and gravity
-const float PI = 3.14159265358979323846;
+const float M_PI = 3.14159265358979323846;
 const float GRAVITY = 9.81;
 
 Vehicle::Vehicle()
@@ -38,7 +38,7 @@ Vehicle::Vehicle(const float states[NUM_DOFS][NUM_DOF_STATES],
 				 const float accelUpLims[NUM_DOFS],
 				 const float accelLwLims[NUM_DOFS],
 				 const float valueStateLpCoeffs[NUM_DOFS],
-				 const float valueErrorLpCoeffS[NUM_DOFS],
+				 const float valueErrorLpCoeffs[NUM_DOFS],
 				 const float rateStateLpCoeffs[NUM_DOFS],
 				 const float rateErrorLpCoeffs[NUM_DOFS],
 				 const float totalMass,
@@ -77,6 +77,7 @@ void Vehicle::calcDJIValues()
 	for (int i = 0; i < 3; ++i) forceVe[i] = dofs[i].getUval();
 	forceVe[Z_AXIS] += mass * GRAVITY;
 
+	float preYawCos = 0, preYawSin = 0;
 	// Convert earth frame forces to body frame, adding trim (which is already
 	// in the body frame)
 	forceVy[X_AXIS] =  (preYawCos * forceVe[X_AXIS]) + (preYawSin * forceVe[Y_AXIS]);
