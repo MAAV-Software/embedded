@@ -53,9 +53,10 @@ void I2CRunnable::run(void)
 				if ((getTime - LidarTime) > (sysClock / 1000.0 * 20.0)) // wait for 20ms after lidar1 done
 				{
 					px4->parse(rawPx4);
+#if DEBUG == UARTPRINT
 					// For debug
 					UARTprintf("PX4:\tDis:%u\n\r",(uint32_t)(px4->getZDist()*1e3));
-
+#endif
 					LidarTime = getTime; // the time of lidar2 start
 					I2CMDone = false;
 					I2CMRead(&I2CMInst, LIDAR_I2C_ADDRESS, command + 2, 1, rawLidar, LIDAR_DIST_SIZE, I2CMCallback, 0);
@@ -66,8 +67,10 @@ void I2CRunnable::run(void)
 				if ((getTime - LidarTime) > (sysClock / 1000.0 * 0.1)) //wait for 0.1ms after lidar2 done
 				{
 					lidar->parse(rawLidar, LIDAR_DIST_SIZE);
+#if DEBUG == UARTPRINT
 					// For debug
 					UARTprintf("Lidar:\tDis:%u\n\r",(uint32_t)(lidar->getDist()*1e3));
+#endif
 					LidarTime = getTime; // the time of lidar start
 					I2CMDone = false;
 					I2CMWrite(&I2CMInst, LIDAR_I2C_ADDRESS, command, 2, I2CMCallback, 0);

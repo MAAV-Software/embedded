@@ -36,7 +36,17 @@
 			<locationURI>TIVAWARE_INSTALL/driverlib/ccs/Debug/driverlib.lib</locationURI>
 		</link>
 		<link>
+			<name>dsplib.lib</name>
+			<type>1</type>
+			<locationURI>REPO_LOC/libs/dsplib.lib</locationURI>
+		</link>
+		<link>
 			<name>include</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>kalman</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
@@ -104,6 +114,11 @@
 			<name>include/ImuHw.hpp</name>
 			<type>1</type>
 			<locationURI>REPO_LOC/include/ImuHw.hpp</locationURI>
+		</link>
+		<link>
+			<name>include/Include</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
 			<name>include/LED.h</name>
@@ -199,6 +214,16 @@
 			<name>include/utility.h</name>
 			<type>1</type>
 			<locationURI>REPO_LOC/include/utility.h</locationURI>
+		</link>
+		<link>
+			<name>kalman/ExtendedKalmanFilter.hpp</name>
+			<type>1</type>
+			<locationURI>REPO_LOC/include/kalman/ExtendedKalmanFilter.hpp</locationURI>
+		</link>
+		<link>
+			<name>kalman/KalmanFunctions.hpp</name>
+			<type>1</type>
+			<locationURI>REPO_LOC/include/kalman/KalmanFunctions.hpp</locationURI>
 		</link>
 		<link>
 			<name>src/Dof.cpp</name>
@@ -304,6 +329,71 @@
 			<name>src/utility.c</name>
 			<type>1</type>
 			<locationURI>REPO_LOC/src/utility.c</locationURI>
+		</link>
+		<link>
+			<name>include/Include/arm_common_tables.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-REPO_LOC/Downloads/CMSIS-SP-00300-r4p3-00rel0/CMSIS/Include/arm_common_tables.h</locationURI>
+		</link>
+		<link>
+			<name>include/Include/arm_const_structs.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-REPO_LOC/Downloads/CMSIS-SP-00300-r4p3-00rel0/CMSIS/Include/arm_const_structs.h</locationURI>
+		</link>
+		<link>
+			<name>include/Include/arm_math.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-REPO_LOC/Downloads/CMSIS-SP-00300-r4p3-00rel0/CMSIS/Include/arm_math.h</locationURI>
+		</link>
+		<link>
+			<name>include/Include/core_cm0.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-REPO_LOC/Downloads/CMSIS-SP-00300-r4p3-00rel0/CMSIS/Include/core_cm0.h</locationURI>
+		</link>
+		<link>
+			<name>include/Include/core_cm0plus.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-REPO_LOC/Downloads/CMSIS-SP-00300-r4p3-00rel0/CMSIS/Include/core_cm0plus.h</locationURI>
+		</link>
+		<link>
+			<name>include/Include/core_cm3.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-REPO_LOC/Downloads/CMSIS-SP-00300-r4p3-00rel0/CMSIS/Include/core_cm3.h</locationURI>
+		</link>
+		<link>
+			<name>include/Include/core_cm4.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-REPO_LOC/Downloads/CMSIS-SP-00300-r4p3-00rel0/CMSIS/Include/core_cm4.h</locationURI>
+		</link>
+		<link>
+			<name>include/Include/core_cm7.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-REPO_LOC/Downloads/CMSIS-SP-00300-r4p3-00rel0/CMSIS/Include/core_cm7.h</locationURI>
+		</link>
+		<link>
+			<name>include/Include/core_cmFunc.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-REPO_LOC/Downloads/CMSIS-SP-00300-r4p3-00rel0/CMSIS/Include/core_cmFunc.h</locationURI>
+		</link>
+		<link>
+			<name>include/Include/core_cmInstr.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-REPO_LOC/Downloads/CMSIS-SP-00300-r4p3-00rel0/CMSIS/Include/core_cmInstr.h</locationURI>
+		</link>
+		<link>
+			<name>include/Include/core_cmSimd.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-REPO_LOC/Downloads/CMSIS-SP-00300-r4p3-00rel0/CMSIS/Include/core_cmSimd.h</locationURI>
+		</link>
+		<link>
+			<name>include/Include/core_sc000.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-REPO_LOC/Downloads/CMSIS-SP-00300-r4p3-00rel0/CMSIS/Include/core_sc000.h</locationURI>
+		</link>
+		<link>
+			<name>include/Include/core_sc300.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-REPO_LOC/Downloads/CMSIS-SP-00300-r4p3-00rel0/CMSIS/Include/core_sc300.h</locationURI>
 		</link>
 		<link>
 			<name>include/messaging/data_link.h</name>
@@ -507,6 +597,10 @@
 		</link>
 	</linkedResources>
 	<variableList>
+		<variable>
+			<name>CMSIS_LOC</name>
+			<value>file:/home/sheldon/Downloads/CMSIS-SP-00300-r4p3-00rel0/CMSIS</value>
+		</variable>
 		<variable>
 			<name>REPO_LOC</name>
 			<value>file:/home/sheldon/maav-controls</value>

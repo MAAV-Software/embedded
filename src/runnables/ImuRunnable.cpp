@@ -40,8 +40,9 @@ void ImuRunnable::run()
 	if (imuDone)
 	{
 		imu->parse(imuRawFinal);
-		// For debug print
+#if DEBUG == UARTPRINT
 		UARTprintf("IMU:\tTime:%d\tRow:%d\tPitch:%d\tYaw:%d\n\r", (int32_t)imu->getTimer(),(int32_t)(imu->getRoll()*1e7),(int32_t)(imu->getPitch()*1e7),(int32_t)(imu->getYaw()*1e7));
+#endif
 		imuDone = false;
 	}
 }
