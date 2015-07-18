@@ -40,7 +40,7 @@ void ImuRunnable::run()
 	if (imuDone)
 	{
 		imu->parse(imuRawFinal);
-#if DEBUG == UARTPRINT
+#if ((DEBUG == PRINTALL) || (DEBUG == PRINTIMU))
 		UARTprintf("IMU:\tTime:%d\tRow:%d\tPitch:%d\tYaw:%d\n\r", (int32_t)imu->getTimer(),(int32_t)(imu->getRoll()*1e7),(int32_t)(imu->getPitch()*1e7),(int32_t)(imu->getYaw()*1e7));
 #endif
 		imuDone = false;

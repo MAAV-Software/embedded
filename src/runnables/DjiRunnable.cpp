@@ -12,13 +12,13 @@
 #include "driverlib/pin_map.h"
 
 DjiRunnable::DjiRunnable(ProgramState* pState)
-	: vehicle(pState->vehicle) { }
+	: state(pState) { }
 
 DjiRunnable::~DjiRunnable() { }
 
 void DjiRunnable::run() {
 	//switch (vehicle->getFlightMode())
-	switch(0)
+	switch(state->mode)
 	{
 		case AUTONOMOUS:
 		case ASSISTED:

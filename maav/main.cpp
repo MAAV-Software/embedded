@@ -58,7 +58,10 @@
 #include "ProgramState.hpp"
 
 // Define a debug method
-#define DEBUG	UARTPRINT
+//#define DEBUG	PRINTALL
+//#define DEBUG	PRINTIMUb
+//#define DEBUG	PRINTPX4
+#define DEBUG	PRINTLIDAR
 
 bool px4_can_transmit = true;
 
@@ -71,7 +74,7 @@ int main()
 	MAP_FPULazyStackingEnable();
 	MAP_FPUEnable();
 
-//	SysCtlClockSet(SYSCTL_SYSDIV_2_5 | SYSCTL_USE_PLL | SYSCTL_OSC_MAIN |
+//	MAP_SysCtlClockSet(SYSCTL_SYSDIV_2_5 | SYSCTL_USE_PLL | SYSCTL_OSC_MAIN |
 //				   SYSCTL_XTAL_16MHZ);
 	MAP_SysCtlClockSet(SYSCTL_SYSDIV_3 | SYSCTL_USE_PLL | SYSCTL_OSC_MAIN |
 					   SYSCTL_XTAL_16MHZ);
@@ -79,7 +82,7 @@ int main()
 	Config_LED();
 
 	ConfigureUART();
-	UARTprintf("Testing Uart Connection.\n\r");
+	UARTprintf("\nTesting Uart Connection.\n\r");
 
 	time_init(SYSCTL_PERIPH_TIMER1, SYSCLOCK, TIMER1_BASE, INT_TIMER1A);	// Chose any open timer
 	PPM_init(SYSCTL_PERIPH_TIMER2, SYSCLOCK, TIMER2_BASE, INT_TIMER2A,		// Chose any open timer
