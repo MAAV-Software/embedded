@@ -6,7 +6,8 @@
 // Uncomment to make the interrupt service handler turn on the red LED for debug purposes
 // #define ISR_LED
 
-#include "inc/hw_ints.h"
+//#include "inc/hw_ints.h"
+#include "inc/tm4c123gh6pm.h"
 #include "inc/hw_memmap.h"
 
 #include "driverlib/interrupt.h"

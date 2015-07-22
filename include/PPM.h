@@ -16,7 +16,7 @@ extern "C" {
 #include <stdbool.h>
 
 //typedef struct PPM_Driver_t PPM_Driver_t;
-
+extern uint32_t low_kill;
 
 void PPM_init(uint32_t ui32Peripheral, uint32_t sysClock, uint32_t ui32Base,
 			  uint32_t ui32Interrupt, uint32_t _GPIO_portBase,

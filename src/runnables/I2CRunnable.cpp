@@ -1,9 +1,10 @@
 #include "runnables/I2CRunnable.hpp"
 #include "I2CHw.hpp"
 
-#include "inc/hw_ints.h"
+//#include "inc/hw_ints.h"
 #include "inc/hw_memmap.h"
 #include "inc/hw_types.h"
+#include "inc/tm4c123gh6pm.h"
 #include "driverlib/gpio.h"
 #include "driverlib/interrupt.h"
 #include "driverlib/pin_map.h"
@@ -16,8 +17,11 @@
 
 #include "utils/uartstdio.h"
 
+#include "time_util.h"
+#include <string.h>
+
 I2CRunnable::I2CRunnable(ProgramState *pState) 
-	: px4(pState->px4), lidar(pState->lidar)
+	: state(pState)
 {
 //	ConfigI2C(SYSCTL_PERIPH_I2C3, SYSCTL_PERIPH_GPIOD, GPIO_PD0_I2C3SCL,
 //			  GPIO_PD1_I2C3SDA, GPIO_PORTD_BASE, GPIO_PIN_0, GPIO_PIN_1,
@@ -34,7 +38,7 @@ I2CRunnable::I2CRunnable(ProgramState *pState)
 void I2CRunnable::run(void)
 {
 	uint32_t getTime = MAP_TimerValueGet(TIMER4_BASE, TIMER_A);
-	float sysClock = (float)MAP_SysCtlClockGet();
+	float sysClock = (float)SYSCLOCK;
 
 	if (I2CMDone)
 	{
@@ -52,11 +56,12 @@ void I2CRunnable::run(void)
 			case PX4_1: // have sent px4 command, ready to parse px4 and send 2nd lidar command
 				if ((getTime - LidarTime) > (sysClock / 1000.0 * 20.0)) // wait for 20ms after lidar1 done
 				{
-					px4->parse(rawPx4);
-#if ((DEBUG == PRINTALL) || (DEBUG == PRINTPX4))
-					// For debug
-					UARTprintf("PX4(mm):\tDis:%u\n\r",(uint32_t)(px4->getZDist()*1.0e3));
-#endif
+					state->px4->parse(rawPx4);
+					// Log msg
+					char msg[100];
+					snprintf(msg, sizeof(msg), "PX4(mm):\tDis:%u\n\r",(uint32_t)(state->px4->getZDist()*1.0e3));
+					state->sdcard->write(msg, (uint32_t)strlen(msg));
+
 					LidarTime = getTime; // the time of lidar2 start
 					I2CMDone = false;
 					I2CMRead(&I2CMInst, LIDAR_I2C_ADDRESS, command + 2, 1, rawLidar, LIDAR_DIST_SIZE, I2CMCallback, 0);
@@ -66,11 +71,12 @@ void I2CRunnable::run(void)
 			case Lidar_2: // have sent the 2nd lidar command, ready to parse lidar and send 1st lidar command
 				if ((getTime - LidarTime) > (sysClock / 1000.0 * 0.1)) //wait for 0.1ms after lidar2 done
 				{
-					lidar->parse(rawLidar, LIDAR_DIST_SIZE);
-#if ((DEBUG == PRINTALL) || (DEBUG == PRINTLIDAR))
-					// For debug
-					UARTprintf("Lidar(cm):\tDis:%u\n\r",(uint32_t)(lidar->getDist()*1.0e2));
-#endif
+					state->lidar->parse(rawLidar, LIDAR_DIST_SIZE);
+					// Log msg
+					char msg[100];
+					snprintf(msg, sizeof(msg), "Lidar(cm):\tDis:%u\n\r",(uint32_t)(state->lidar->getDist()*1.0e2));
+					state->sdcard->write(msg, (uint32_t)strlen(msg));
+
 					LidarTime = getTime; // the time of lidar start
 					I2CMDone = false;
 					I2CMWrite(&I2CMInst, LIDAR_I2C_ADDRESS, command, 2, I2CMCallback, 0);

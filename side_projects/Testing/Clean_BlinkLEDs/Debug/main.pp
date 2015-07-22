@@ -16,6 +16,7 @@ main.obj: /home/sheldon/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.4/include/float.h
 main.obj: /home/sheldon/ti/SW-TM4C-2.1.0.12573/inc/hw_ints.h
 main.obj: /home/sheldon/ti/SW-TM4C-2.1.0.12573/inc/hw_memmap.h
 main.obj: /home/sheldon/ti/SW-TM4C-2.1.0.12573/inc/hw_types.h
+main.obj: /home/sheldon/ti/SW-TM4C-2.1.0.12573/inc/hw_nvic.h
 main.obj: /home/sheldon/ti/SW-TM4C-2.1.0.12573/driverlib/gpio.h
 main.obj: /home/sheldon/ti/SW-TM4C-2.1.0.12573/driverlib/interrupt.h
 main.obj: /home/sheldon/ti/SW-TM4C-2.1.0.12573/driverlib/pin_map.h
@@ -37,6 +38,7 @@ main.obj: /home/sheldon/ti/SW-TM4C-2.1.0.12573/driverlib/sysctl.h
 /home/sheldon/ti/SW-TM4C-2.1.0.12573/inc/hw_ints.h: 
 /home/sheldon/ti/SW-TM4C-2.1.0.12573/inc/hw_memmap.h: 
 /home/sheldon/ti/SW-TM4C-2.1.0.12573/inc/hw_types.h: 
+/home/sheldon/ti/SW-TM4C-2.1.0.12573/inc/hw_nvic.h: 
 /home/sheldon/ti/SW-TM4C-2.1.0.12573/driverlib/gpio.h: 
 /home/sheldon/ti/SW-TM4C-2.1.0.12573/driverlib/interrupt.h: 
 /home/sheldon/ti/SW-TM4C-2.1.0.12573/driverlib/pin_map.h: 

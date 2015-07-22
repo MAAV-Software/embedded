@@ -6,9 +6,19 @@
 #include <stdint.h>
 #include "runnables/Runnable.hpp"
 
+#include "SdCard.hpp"
+
 /**
  * @brief Class to handle timing events in a loop
  */
+
+struct Event
+	{
+		Runnable* task;
+		int32_t lastTime;
+		int32_t period;
+	};
+
 class Loop {
 public:
 	Loop();
@@ -25,17 +35,12 @@ public:
 	 * @brief runs the loop that calls events at set times
 	 * will not return
 	 */
-	void run();
+	void run(SdCard* sdcard);
 
 private:
-	struct Event
-	{
-		Runnable* task;
-		int32_t lastTime;
-		int32_t period;
-	};
 
 	std::vector<Event> _events;
+
 };
 
 #endif /* LOOP_HPP_ */

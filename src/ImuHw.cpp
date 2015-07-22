@@ -4,7 +4,8 @@
 
 #include "inc/hw_memmap.h"
 #include "inc/hw_types.h"
-#include "inc/hw_ints.h"
+//#include "inc/hw_ints.h"
+#include "inc/tm4c123gh6pm.h"
 #include "driverlib/debug.h"
 #include "driverlib/gpio.h"
 #include "driverlib/interrupt.h"
@@ -14,6 +15,8 @@
 #include "driverlib/sysctl.h"
 #include "driverlib/systick.h"
 #include "driverlib/uart.h"
+
+#include "time_util.h"
 
 uint8_t imuRawIn[IMU_DATA_LENGTH];
 uint8_t imuRawFinal[IMU_DATA_LENGTH];
@@ -51,7 +54,7 @@ void imuUartConfig(const uint32_t sysctlPeriphUart,
 	MAP_UARTClockSourceSet(uartBase, UART_CLOCK_SYSTEM);
 
 	//Configure UART for operation in the specified data format.
-    MAP_UARTConfigSetExpClk(uartBase, SysCtlClockGet(), 115200,
+    MAP_UARTConfigSetExpClk(uartBase, SYSCLOCK, 115200,
 			(UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE | UART_CONFIG_PAR_NONE));
 
     MAP_UARTEnable(uartBase);
@@ -63,7 +66,7 @@ void imuUartConfig(const uint32_t sysctlPeriphUart,
     MAP_UARTIntEnable(uartBase, UART_INT_RX | UART_INT_RT);
     
 	// delay for initialization
-	for (int i = 0; i < 3; ++i) MAP_SysCtlDelay(MAP_SysCtlClockGet() / 3);
+	for (int i = 0; i < 3; ++i) MAP_SysCtlDelay(SYSCLOCK / 3);
 	
 	imuDone = false;
 }

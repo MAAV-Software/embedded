@@ -3,7 +3,8 @@
 #include "Imu.hpp"
 #include "Px4.hpp"
 #include "Lidar.hpp"
+#include "SdCard.hpp"
 #include "FlightMode.hpp"
 
-ProgramState::ProgramState(Vehicle *v, Imu *i, Px4 *p, Lidar *l, FlightMode m)
-	: vehicle(v), imu(i), px4(p), lidar(l), mode(m) {}
+ProgramState::ProgramState(Vehicle *v, Imu *i, Px4 *p, Lidar *l, SdCard *s, FlightMode m)
+	: vehicle(v), imu(i), px4(p), lidar(l), sdcard(s), mode(m) {}

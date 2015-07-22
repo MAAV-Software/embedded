@@ -11,8 +11,9 @@ public:
 	void run();
 
 private:
-	Px4 	*px4;
-	Lidar	*lidar;
+//	Px4 	*px4;
+//	Lidar	*lidar;
+	ProgramState *state;
 };
 
 #endif /* I2CRUNNABLE_HPP_ */

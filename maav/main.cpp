@@ -10,7 +10,9 @@
  *
  */
 #include <stdint.h>
-#include <stdlib.h>
+#include <cstdlib>
+#include <cstdio>
+#include <cstring>
 
 #include "servoIn.hpp"
 
@@ -57,13 +59,8 @@
 
 #include "ProgramState.hpp"
 
-// Define a debug method
-//#define DEBUG	PRINTALL
-//#define DEBUG	PRINTIMUb
-//#define DEBUG	PRINTPX4
-#define DEBUG	PRINTLIDAR
-
 bool px4_can_transmit = true;
+uint32_t low_kill;
 
 ////////////////////////////// MAIN FUNCTION ///////////////////////////////////
 int main()
@@ -94,7 +91,8 @@ int main()
 	Imu imu;
 	Lidar lidar;
 	Px4 px4;
-	ProgramState pState(&vehicle, &imu, &px4, &lidar, MANUAL);
+	SdCard sdcard;
+	ProgramState pState(&vehicle, &imu, &px4, &lidar, &sdcard, MANUAL);
 	
 	FlightModeRunnable flightModeRunnable(&pState);
 	DjiRunnable djiRunnable(&pState);
@@ -106,8 +104,17 @@ int main()
 	mainLoop.addEvent(&djiRunnable, 10);
 	mainLoop.addEvent(&imuRunnable, 0);
 	mainLoop.addEvent(&i2cRunnable, 0);
-	mainLoop.run();
+
+	// read kill switch start position
+	low_kill = servoIn_getPulse(KILL_CHAN3);
+
+	// low boundry plus 0.5ms
+	while ((servoIn_getPulse(KILL_CHAN3)) < (low_kill + SYSCLOCK * 5 / 1000));
+	sdcard.open("Log.txt");
+
+	mainLoop.run(&sdcard);
 
 	return 0;
+
 }
 // End of File

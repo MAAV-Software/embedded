@@ -11,7 +11,8 @@ public:
 	void run();
 	
 private:
-	Imu *imu;
+//	Imu *imu;
+	ProgramState *state;
 };
 
 #endif /* IMURUNNABLE_HPP_ */

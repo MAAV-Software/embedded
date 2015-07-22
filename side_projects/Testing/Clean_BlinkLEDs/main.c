@@ -7,6 +7,7 @@
 #include "inc/hw_ints.h"
 #include "inc/hw_memmap.h"
 #include "inc/hw_types.h"
+#include "inc/hw_nvic.h"
 #include "driverlib/gpio.h"
 #include "driverlib/interrupt.h"
 #include "driverlib/pin_map.h"
@@ -50,13 +51,15 @@ int main(void)
 
 	Config_LED();
 
-	while(1)
-	{
-		Toggle_LED(GPIO_PIN_1, SysCtlClockGet()/3);
+	Toggle_LED(GPIO_PIN_1, SysCtlClockGet()/3);
 
-		Toggle_LED(GPIO_PIN_2, SysCtlClockGet()/3);
+	Toggle_LED(GPIO_PIN_2, SysCtlClockGet()/3);
 
-		Toggle_LED(GPIO_PIN_3, SysCtlClockGet()/3);
-	}
+	Toggle_LED(GPIO_PIN_3, SysCtlClockGet()/3);
+
+//	SysCtlDelay(SysCtlClockGet());
+
+	// software reset
+	HWREG(NVIC_APINT) = NVIC_APINT_VECTKEY | NVIC_APINT_SYSRESETREQ;
 	
 }

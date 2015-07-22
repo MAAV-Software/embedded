@@ -112,4 +112,5 @@ SUBDIRS := \
 src \
 src/runnables \
 src/messaging \
+sdlib \
 

@@ -51,6 +51,11 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
+			<name>sdlib</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
 			<name>sensorlib.lib</name>
 			<type>1</type>
 			<locationURI>TIVAWARE_INSTALL/sensorlib/ccs/Debug/sensorlib.lib</locationURI>
@@ -171,6 +176,16 @@
 			<locationURI>REPO_LOC/include/Px4Defines.hpp</locationURI>
 		</link>
 		<link>
+			<name>include/SdCard.hpp</name>
+			<type>1</type>
+			<locationURI>REPO_LOC/include/SdCard.hpp</locationURI>
+		</link>
+		<link>
+			<name>include/SdCardHw.hpp</name>
+			<type>1</type>
+			<locationURI>REPO_LOC/include/SdCardHw.hpp</locationURI>
+		</link>
+		<link>
 			<name>include/Vehicle.hpp</name>
 			<type>1</type>
 			<locationURI>REPO_LOC/include/Vehicle.hpp</locationURI>
@@ -224,6 +239,41 @@
 			<name>kalman/KalmanFunctions.hpp</name>
 			<type>1</type>
 			<locationURI>REPO_LOC/include/kalman/KalmanFunctions.hpp</locationURI>
+		</link>
+		<link>
+			<name>sdlib/diskio.h</name>
+			<type>1</type>
+			<locationURI>REPO_LOC/include/sdlib/diskio.h</locationURI>
+		</link>
+		<link>
+			<name>sdlib/ff.c</name>
+			<type>1</type>
+			<locationURI>REPO_LOC/include/sdlib/ff.c</locationURI>
+		</link>
+		<link>
+			<name>sdlib/ff.h</name>
+			<type>1</type>
+			<locationURI>REPO_LOC/include/sdlib/ff.h</locationURI>
+		</link>
+		<link>
+			<name>sdlib/ffconf.h</name>
+			<type>1</type>
+			<locationURI>REPO_LOC/include/sdlib/ffconf.h</locationURI>
+		</link>
+		<link>
+			<name>sdlib/integer.h</name>
+			<type>1</type>
+			<locationURI>REPO_LOC/include/sdlib/integer.h</locationURI>
+		</link>
+		<link>
+			<name>sdlib/mmc-dk-tm4c123g.c</name>
+			<type>1</type>
+			<locationURI>REPO_LOC/include/sdlib/mmc-dk-tm4c123g.c</locationURI>
+		</link>
+		<link>
+			<name>sdlib/option</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
 			<name>src/Dof.cpp</name>
@@ -289,6 +339,11 @@
 			<name>src/Px4.cpp</name>
 			<type>1</type>
 			<locationURI>REPO_LOC/src/Px4.cpp</locationURI>
+		</link>
+		<link>
+			<name>src/SdCard.cpp</name>
+			<type>1</type>
+			<locationURI>REPO_LOC/src/SdCard.cpp</locationURI>
 		</link>
 		<link>
 			<name>src/Vehicle.cpp</name>
@@ -499,6 +554,41 @@
 			<name>include/runnables/Runnable.hpp</name>
 			<type>1</type>
 			<locationURI>REPO_LOC/include/runnables/Runnable.hpp</locationURI>
+		</link>
+		<link>
+			<name>sdlib/option/cc932.c</name>
+			<type>1</type>
+			<locationURI>REPO_LOC/include/sdlib/option/cc932.c</locationURI>
+		</link>
+		<link>
+			<name>sdlib/option/cc936.c</name>
+			<type>1</type>
+			<locationURI>REPO_LOC/include/sdlib/option/cc936.c</locationURI>
+		</link>
+		<link>
+			<name>sdlib/option/cc949.c</name>
+			<type>1</type>
+			<locationURI>REPO_LOC/include/sdlib/option/cc949.c</locationURI>
+		</link>
+		<link>
+			<name>sdlib/option/cc950.c</name>
+			<type>1</type>
+			<locationURI>REPO_LOC/include/sdlib/option/cc950.c</locationURI>
+		</link>
+		<link>
+			<name>sdlib/option/ccsbcs.c</name>
+			<type>1</type>
+			<locationURI>REPO_LOC/include/sdlib/option/ccsbcs.c</locationURI>
+		</link>
+		<link>
+			<name>sdlib/option/syscall.c</name>
+			<type>1</type>
+			<locationURI>REPO_LOC/include/sdlib/option/syscall.c</locationURI>
+		</link>
+		<link>
+			<name>sdlib/option/unicode.c</name>
+			<type>1</type>
+			<locationURI>REPO_LOC/include/sdlib/option/unicode.c</locationURI>
 		</link>
 		<link>
 			<name>src/messaging/data_link.c</name>

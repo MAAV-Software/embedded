@@ -8,7 +8,8 @@
 
 #include "inc/hw_memmap.h"
 #include "inc/hw_types.h"
-#include "inc/hw_ints.h"
+//#include "inc/hw_ints.h"
+#include "inc/tm4c123gh6pm.h"
 #include "driverlib/debug.h"
 #include "driverlib/gpio.h"
 #include "driverlib/interrupt.h"
@@ -28,6 +29,8 @@
 #include "LidarDefines.hpp"
 #include "I2CDefines.hpp"
 #include "I2CHw.hpp"
+
+#include "time_util.h"
 
 uint8_t command[4] = {LIDAR_REG_MEA, LIDAR_MEA_VALE, LIDAR_FULL_BYTE, PX4_MEA};
 bool I2CMDone = true;
@@ -67,18 +70,18 @@ void ConfigI2C(const uint32_t sysctlPeriphI2C,
 	MAP_GPIOPinTypeI2C(gpioBase, gpioSdaPin);
 
     // Initializes operation of the I2C Master block by configuring the bus speed(true for 400Kps)
-	MAP_I2CMasterInitExpClk(i2cBase, MAP_SysCtlClockGet(), useFastBus);
+	MAP_I2CMasterInitExpClk(i2cBase, SYSCLOCK, useFastBus);
 
 	// register handler and enable interrupt
     I2CIntRegister(i2cBase, I2CMasterIntHandler);
     MAP_IntMasterEnable();
     
 	// delay for initialization
-	for (int i = 0; i < 3; ++i) MAP_SysCtlDelay(MAP_SysCtlClockGet() / 3);
+	for (int i = 0; i < 3; ++i) MAP_SysCtlDelay(SYSCLOCK / 3);
 	
 	// Initialize the I2C master driver. It is assumed that the I2C module has
 	// already been enabled and the I2C pins have been configured.
-	I2CMInit(&I2CMInst, i2cBase, i2cInterrupt, 0xff, 0xff, MAP_SysCtlClockGet());
+	I2CMInit(&I2CMInst, i2cBase, i2cInterrupt, 0xff, 0xff, SYSCLOCK);
 	I2CMDone = false;
 }
 
