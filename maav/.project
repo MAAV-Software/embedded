@@ -46,11 +46,6 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>kalman</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
 			<name>sdlib</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
@@ -119,11 +114,6 @@
 			<name>include/ImuHw.hpp</name>
 			<type>1</type>
 			<locationURI>REPO_LOC/include/ImuHw.hpp</locationURI>
-		</link>
-		<link>
-			<name>include/Include</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
 			<name>include/LED.h</name>
@@ -196,6 +186,11 @@
 			<locationURI>REPO_LOC/include/general.h</locationURI>
 		</link>
 		<link>
+			<name>include/kalman</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
 			<name>include/messaging</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
@@ -229,16 +224,6 @@
 			<name>include/utility.h</name>
 			<type>1</type>
 			<locationURI>REPO_LOC/include/utility.h</locationURI>
-		</link>
-		<link>
-			<name>kalman/ExtendedKalmanFilter.hpp</name>
-			<type>1</type>
-			<locationURI>REPO_LOC/include/kalman/ExtendedKalmanFilter.hpp</locationURI>
-		</link>
-		<link>
-			<name>kalman/KalmanFunctions.hpp</name>
-			<type>1</type>
-			<locationURI>REPO_LOC/include/kalman/KalmanFunctions.hpp</locationURI>
 		</link>
 		<link>
 			<name>sdlib/diskio.h</name>
@@ -351,6 +336,11 @@
 			<locationURI>REPO_LOC/src/Vehicle.cpp</locationURI>
 		</link>
 		<link>
+			<name>src/kalman</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
 			<name>src/messaging</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
@@ -386,69 +376,14 @@
 			<locationURI>REPO_LOC/src/utility.c</locationURI>
 		</link>
 		<link>
-			<name>include/Include/arm_common_tables.h</name>
+			<name>include/kalman/ExtendedKalmanFilter.hpp</name>
 			<type>1</type>
-			<locationURI>PARENT-1-REPO_LOC/Downloads/CMSIS-SP-00300-r4p3-00rel0/CMSIS/Include/arm_common_tables.h</locationURI>
+			<locationURI>REPO_LOC/include/kalman/ExtendedKalmanFilter.hpp</locationURI>
 		</link>
 		<link>
-			<name>include/Include/arm_const_structs.h</name>
+			<name>include/kalman/KalmanFunctions.hpp</name>
 			<type>1</type>
-			<locationURI>PARENT-1-REPO_LOC/Downloads/CMSIS-SP-00300-r4p3-00rel0/CMSIS/Include/arm_const_structs.h</locationURI>
-		</link>
-		<link>
-			<name>include/Include/arm_math.h</name>
-			<type>1</type>
-			<locationURI>PARENT-1-REPO_LOC/Downloads/CMSIS-SP-00300-r4p3-00rel0/CMSIS/Include/arm_math.h</locationURI>
-		</link>
-		<link>
-			<name>include/Include/core_cm0.h</name>
-			<type>1</type>
-			<locationURI>PARENT-1-REPO_LOC/Downloads/CMSIS-SP-00300-r4p3-00rel0/CMSIS/Include/core_cm0.h</locationURI>
-		</link>
-		<link>
-			<name>include/Include/core_cm0plus.h</name>
-			<type>1</type>
-			<locationURI>PARENT-1-REPO_LOC/Downloads/CMSIS-SP-00300-r4p3-00rel0/CMSIS/Include/core_cm0plus.h</locationURI>
-		</link>
-		<link>
-			<name>include/Include/core_cm3.h</name>
-			<type>1</type>
-			<locationURI>PARENT-1-REPO_LOC/Downloads/CMSIS-SP-00300-r4p3-00rel0/CMSIS/Include/core_cm3.h</locationURI>
-		</link>
-		<link>
-			<name>include/Include/core_cm4.h</name>
-			<type>1</type>
-			<locationURI>PARENT-1-REPO_LOC/Downloads/CMSIS-SP-00300-r4p3-00rel0/CMSIS/Include/core_cm4.h</locationURI>
-		</link>
-		<link>
-			<name>include/Include/core_cm7.h</name>
-			<type>1</type>
-			<locationURI>PARENT-1-REPO_LOC/Downloads/CMSIS-SP-00300-r4p3-00rel0/CMSIS/Include/core_cm7.h</locationURI>
-		</link>
-		<link>
-			<name>include/Include/core_cmFunc.h</name>
-			<type>1</type>
-			<locationURI>PARENT-1-REPO_LOC/Downloads/CMSIS-SP-00300-r4p3-00rel0/CMSIS/Include/core_cmFunc.h</locationURI>
-		</link>
-		<link>
-			<name>include/Include/core_cmInstr.h</name>
-			<type>1</type>
-			<locationURI>PARENT-1-REPO_LOC/Downloads/CMSIS-SP-00300-r4p3-00rel0/CMSIS/Include/core_cmInstr.h</locationURI>
-		</link>
-		<link>
-			<name>include/Include/core_cmSimd.h</name>
-			<type>1</type>
-			<locationURI>PARENT-1-REPO_LOC/Downloads/CMSIS-SP-00300-r4p3-00rel0/CMSIS/Include/core_cmSimd.h</locationURI>
-		</link>
-		<link>
-			<name>include/Include/core_sc000.h</name>
-			<type>1</type>
-			<locationURI>PARENT-1-REPO_LOC/Downloads/CMSIS-SP-00300-r4p3-00rel0/CMSIS/Include/core_sc000.h</locationURI>
-		</link>
-		<link>
-			<name>include/Include/core_sc300.h</name>
-			<type>1</type>
-			<locationURI>PARENT-1-REPO_LOC/Downloads/CMSIS-SP-00300-r4p3-00rel0/CMSIS/Include/core_sc300.h</locationURI>
+			<locationURI>REPO_LOC/include/kalman/KalmanFunctions.hpp</locationURI>
 		</link>
 		<link>
 			<name>include/messaging/data_link.h</name>
@@ -591,6 +526,16 @@
 			<locationURI>REPO_LOC/include/sdlib/option/unicode.c</locationURI>
 		</link>
 		<link>
+			<name>src/kalman/ExtendedKalmanFilter.cpp</name>
+			<type>1</type>
+			<locationURI>REPO_LOC/src/kalman/ExtendedKalmanFilter.cpp</locationURI>
+		</link>
+		<link>
+			<name>src/kalman/KalmanFunctions.cpp</name>
+			<type>1</type>
+			<locationURI>REPO_LOC/src/kalman/KalmanFunctions.cpp</locationURI>
+		</link>
+		<link>
 			<name>src/messaging/data_link.c</name>
 			<type>1</type>
 			<locationURI>REPO_LOC/src/messaging/data_link.c</locationURI>
@@ -689,15 +634,15 @@
 	<variableList>
 		<variable>
 			<name>CMSIS_LOC</name>
-			<value>file:/home/sheldon/Downloads/CMSIS-SP-00300-r4p3-00rel0/CMSIS</value>
+			<value>file:/home/sajan/ti/CMSIS-SP-00300-r4p3-00rel0/CMSIS</value>
 		</variable>
 		<variable>
 			<name>REPO_LOC</name>
-			<value>file:/home/sheldon/maav-controls</value>
+			<value>file:/home/sajan/maav-controls</value>
 		</variable>
 		<variable>
 			<name>TIVAWARE_INSTALL</name>
-			<value>file:/home/sheldon/ti/SW-TM4C-2.1.0.12573</value>
+			<value>file:/home/sajan/ti/SW-TM4C-2.1.0.12573</value>
 		</variable>
 	</variableList>
 </projectDescription>

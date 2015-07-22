@@ -1,5 +1,5 @@
 #include <stdint.h>
-#include <stdlib.h>
+#include <cstdlib>
 #include <math.h>
 #include "Vehicle.hpp"
 #include "Dof.hpp"
