@@ -113,3 +113,51 @@ void sensorGetJacobian(const arm_matrix_instance_f32* currState,
 							 * arm_cos_f32(currState->pData[7]));
 }
 
+
+void sensorPredictWithCam(const arm_matrix_instance_f32* currState,
+				   	   	  arm_matrix_instance_f32* sensor)
+{
+	/*
+	// sanity checks
+	assert(currState->numRows == 9);
+	assert(currState->numCols == 1);
+	assert(sensor->numRows == 6);
+	assert(sensor->numCols == 1);
+
+	sensor->pData[0] = currState->pData[6];
+	sensor->pData[1] = currState->pData[7];
+	sensor->pData[2] = currState->pData[8];
+	sensor->pData[3] = currState->pData[3] * arm_cos_f32(currState->pData[8]);
+	sensor->pData[4] = currState->pData[3] * arm_sin_f32(currState->pData[8]);
+	sensor->pData[5] = currState->pData[2]
+					   / (arm_cos_f32(currState->pData[6]) * arm_cos_f32(currState->pData[7]));
+	*/
+}
+
+void sensorGetJacobianWithCam(const arm_matrix_instance_f32* currState,
+					   	   	  arm_matrix_instance_f32* jacobian)
+{
+	/*
+	// sanity checks
+	assert(currState->numRows == 9);
+	assert(currState->numCols == 1);
+	assert(jacobian->numRows == 6);
+	assert(jacobian->numCols == 9);
+
+	memset(jacobian->pData, 0, sizeof(float) * jacobian->numRows * jacobian->numCols);
+	jacobian->pData[6]  = 1;
+	jacobian->pData[16] = 1;
+	jacobian->pData[26] = 1;
+	jacobian->pData[30] = arm_cos_f32(currState->pData[8]);
+	jacobian->pData[35] = -currState->pData[3] * arm_sin_f32(currState->pData[8]);
+	jacobian->pData[39] = arm_sin_f32(currState->pData[8]);
+	jacobian->pData[44] = currState->pData[3] * arm_cos_f32(currState->pData[8]);
+	jacobian->pData[47] = 1 / (arm_cos_f32(currState->pData[6]) * arm_cos_f32(currState->pData[7]));
+	jacobian->pData[51] = (currState->pData[2] * arm_sin_f32(currState->pData[6]))
+						  / (arm_cos_f32(currState->pData[6]) * arm_cos_f32(currState->pData[6])
+						     * arm_cos_f32(currState->pData[7]));
+	jacobian->pData[52] = (currState->pData[2] * arm_sin_f32(currState->pData[7]))
+						  / (arm_cos_f32(currState->pData[6]) * arm_cos_f32(currState->pData[7])
+							 * arm_cos_f32(currState->pData[7]));
+	*/
+}

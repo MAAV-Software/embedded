@@ -16,9 +16,6 @@
 //#include "driverlib/timer.h"
 
 #include "LED.h"
-#define RED_LED 	GPIO_PIN_1;
-#define BLUE_LED	GPIO_PIN_2;
-#define GREEN_LED	GPIO_PIN_3;
 
 //****************************************************************************************
 void Config_LED()

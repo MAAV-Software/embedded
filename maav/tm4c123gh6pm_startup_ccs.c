@@ -54,8 +54,9 @@ extern uint32_t __STACK_TOP;
 // External declarations for the interrupt handlers used by the application.
 //
 //*****************************************************************************
-// To be added by user
-extern void data_link_uart_rx_isr(void);
+// NONE SHOULD EVER EXIST SINCE USER-DEFINED INTERRUPT HANDLERS SHOULD BE
+// REGISTERD USING APPROPRIATE REGISTRATION FUNCTIONS FOR EACH PERIPHERAL
+// (SEE TIVAWARE API).
 
 //*****************************************************************************
 //
@@ -89,7 +90,7 @@ void (* const g_pfnVectors[])(void) =
     IntDefaultHandler,                      // GPIO Port C
     IntDefaultHandler,                      // GPIO Port D
     IntDefaultHandler,                      // GPIO Port E
-    data_link_uart_rx_isr,                  // UART0 Rx and Tx
+    IntDefaultHandler,                  	// UART0 Rx and Tx
     IntDefaultHandler,                      // UART1 Rx and Tx
     IntDefaultHandler,                      // SSI0 Rx and Tx
     IntDefaultHandler,                      // I2C0 Master and Slave

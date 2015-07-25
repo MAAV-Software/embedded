@@ -71,6 +71,16 @@
 			<locationURI>TIVAWARE_INSTALL/utils/uartstdio.h</locationURI>
 		</link>
 		<link>
+			<name>include/Battery.hpp</name>
+			<type>1</type>
+			<locationURI>REPO_LOC/include/Battery.hpp</locationURI>
+		</link>
+		<link>
+			<name>include/CtrlLogs.hpp</name>
+			<type>1</type>
+			<locationURI>REPO_LOC/include/CtrlLogs.hpp</locationURI>
+		</link>
+		<link>
 			<name>include/Dji.hpp</name>
 			<type>1</type>
 			<locationURI>REPO_LOC/include/Dji.hpp</locationURI>
@@ -259,6 +269,11 @@
 			<name>sdlib/option</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>src/Battery.cpp</name>
+			<type>1</type>
+			<locationURI>REPO_LOC/src/Battery.cpp</locationURI>
 		</link>
 		<link>
 			<name>src/Dof.cpp</name>

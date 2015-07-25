@@ -59,6 +59,8 @@
 
 #include "ProgramState.hpp"
 
+using namespace std;
+
 bool px4_can_transmit = true;
 uint32_t low_kill;
 uint32_t fileNumber = 0;

@@ -23,24 +23,29 @@ public:
 	// Constructors
 	Vehicle();
 	Vehicle(const float states[NUM_DOFS][NUM_DOF_STATES],
-				 const float setpts[NUM_DOFS][NUM_DOF_STATES],
-				 const float valueGains[NUM_DOFS][NUM_PID_GAINS],
-				 const float rateGains[NUM_DOFS][NUM_PID_GAINS],
-				 const float valueFlags[NUM_DOFS],
-				 const float rateFlags[NUM_DOFS],
-				 const float inertias[NUM_DOFS],
-				 const float stateBounds[NUM_DOFS],
-				 const float rateUpLims[NUM_DOFS],
-				 const float rateLwLims[NUM_DOFS],
-				 const float accelUpLims[NUM_DOFS],
-				 const float accelLwLims[NUM_DOFS],
-				 const float valueStateLpCoeffs[NUM_DOFS],
-				 const float valueErrorLpCoeffs[NUM_DOFS],
-				 const float rateStateLpCoeffs[NUM_DOFS],
-				 const float rateErrorLpCoeffs[NUM_DOFS],
-				 const float totalMass,
-				 const float initTime,
-				 const float rpLims[NUM_ANGLES]);
+			const float setpts[NUM_DOFS][NUM_DOF_STATES],
+			const float valueGains[NUM_DOFS][NUM_PID_GAINS],
+			const float rateGains[NUM_DOFS][NUM_PID_GAINS],
+			const float valueFlags[NUM_DOFS],
+			const float rateFlags[NUM_DOFS],
+			const float inertias[NUM_DOFS],
+			const float stateBounds[NUM_DOFS],
+			const float rateUpLims[NUM_DOFS],
+			const float rateLwLims[NUM_DOFS],
+			const float accelUpLims[NUM_DOFS],
+			const float accelLwLims[NUM_DOFS],
+			const float valueStateLpCoeffs[NUM_DOFS],
+			const float valueErrorLpCoeffs[NUM_DOFS],
+			const float rateStateLpCoeffs[NUM_DOFS],
+			const float rateErrorLpCoeffs[NUM_DOFS],
+			const float totalMass,
+			const float initTime,
+			const float rpLims[NUM_ANGLES],
+			const float ekfInitState[9],
+			const float ekfInitP[81],
+			float ekfQ[81],
+			float ekfNoCamR[36],
+			float ekfWithCamR[64]);
 	
 	// Destructor (will need to free memory allocation for EKF)
 	~Vehicle();
@@ -59,7 +64,8 @@ public:
 	// updates sensor inputs, runs the EKF, and updates the states in the DOFs
 	void runFilter(const float x, const float y, const float z,
 				   const float xdot, const float ydot, const float roll, 
-				   const float pitch, const float yaw, const float time);
+				   const float pitch, const float yawImu, const float yawCam,
+				   const float time, const bool withCam, const FlightMode mode);
 	
 	// returns the DJI values needed to send to it
 	Dji getDjiVals() const;
@@ -80,6 +86,7 @@ private:
 	ExtendedKalmanFilter *ekf;
 	arm_matrix_instance_f32 controlInputMat;
 	arm_matrix_instance_f32 sensorMeasurementMat;
+	arm_matrix_instance_f32 sensorMeasurementMatWithCam;
 	
 	// Calculates Roll, Pitch, Z Force, and Yaw Rate to send to the DJI
 	void calcDJIValues();

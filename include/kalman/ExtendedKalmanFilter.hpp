@@ -42,7 +42,7 @@ public:
 	 * current state, control input, and populate a delta State matrix
 	 * @param getJacobian function that will take in (in order)
 	 * current state, control input, and populate the system jacobian
-	 * @param covariance system covariance matrix
+	 * @param covariance system covariance matrix (copied internally)
 	 */
 	void setPredictFunc(const uint16_t controlInputSize,
 						void (*deltaState)(const arm_matrix_instance_f32*,
@@ -65,7 +65,7 @@ public:
 	 * current state, and populate the predicted sensor output
 	 * @param getJacobian function that will take in (in order)
 	 * current state, and populate the sensor jacobian
-	 * @param covariance sensor covariance matrix
+	 * @param covariance sensor covariance matrix (copied internally)
 	 */
 	void setUpdateFunc(const uint16_t id, const uint16_t sensorSize,
 					   void (*predictSensor)(const arm_matrix_instance_f32*,

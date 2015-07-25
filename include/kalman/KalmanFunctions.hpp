@@ -26,4 +26,10 @@ void sensorPredict(const arm_matrix_instance_f32* currState,
 void sensorGetJacobian(const arm_matrix_instance_f32* currState,
 					   arm_matrix_instance_f32* jacobian);
 
+void sensorPredictWithCam(const arm_matrix_instance_f32* currState,
+				   arm_matrix_instance_f32* sensor);
+
+void sensorGetJacobianWithCam(const arm_matrix_instance_f32* currState,
+					   arm_matrix_instance_f32* jacobian);
+
 #endif /* KALMANFUNCTIONS_HPP_ */

@@ -21,14 +21,14 @@ ExtendedKalmanFilter::ExtendedKalmanFilter(const uint16_t stateSize,
 {
 	// initializing state matrices
 	size_t stateMatSize = stateSize * stateSize * sizeof(float);
-	MAT_INIT(&_state, stateSize, 1);
+	MAT_INIT(&_state, stateSize, 1); // init X
 	memcpy(_state.pData, initialState, stateSize * sizeof(float));
-	MAT_INIT(&_P, stateSize, stateSize);
+	MAT_INIT(&_P, stateSize, stateSize); // init P
 	memcpy(_P.pData, initialErrorCov, stateMatSize);
 
 	// initializing predict related matrices
-	MAT_INIT(&_systemJacobian, stateSize, stateSize);
-	MAT_INIT(&_systemCovariance, stateSize, stateSize);
+	MAT_INIT(&_systemJacobian, stateSize, stateSize); // allocate A
+	MAT_INIT(&_systemCovariance, stateSize, stateSize); // allocate Q
 
 	// initializing temporary matrices
 	MAT_INIT(&_n1_0, stateSize, 1);
@@ -108,7 +108,7 @@ void ExtendedKalmanFilter::setPredictFunc(const uint16_t controlInputSize,
 	assert(covariance->numCols == _stateSize);
 
 	size_t covMatSize = _stateSize * _stateSize * sizeof(float);
-	memcpy(_systemCovariance.pData, covariance->pData, covMatSize);
+	memcpy(_systemCovariance.pData, covariance->pData, covMatSize); // init Q with given covariance
 
 	_controlInputSize = controlInputSize;
 }
@@ -152,7 +152,7 @@ void ExtendedKalmanFilter::setUpdateFunc(const uint16_t id,
 	_updateArr[id].predictSensor = predictSensor;
 	_updateArr[id].getJacobian = getJacobian;
 	memcpy(_updateArr[id].covMatrix.pData, covariance->pData, 
-		   sensorSize * sensorSize * sizeof(float));
+		   sensorSize * sensorSize * sizeof(float)); // init R with given covariance
 }
 
 void ExtendedKalmanFilter::predict(const float deltaTime, const float mass,
