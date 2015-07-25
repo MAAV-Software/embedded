@@ -40,7 +40,7 @@ Pid::Pid()
 	outUpLim   =  (float)HUGE_VAL;
 	outLwLim   = -(float)HUGE_VAL;
 	stateBound = 0;
-	flags      = 0;	
+	flags      = DISC_DERIV_MASK;	
 	ctrlDt     = 0;
 	ctrlOutput = 0;
 }

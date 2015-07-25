@@ -9,6 +9,9 @@
 #include <cmath>
 #include "Pid.hpp"
 
+using namespace std;
+
+
 class Fixture
 {
 public:
@@ -24,7 +27,6 @@ public:
 				 STATE_LOWPASS_MASK | DERR_LOWPASS_MASK), 
 				gains, 0, (float)HUGE_VAL, -(float)HUGE_VAL, lpCoeff, lpCoeff);
 		
-		p.flags |= DISC_DERIV_MASK;
 		p.setGains(2.0f, 2.0f, 2.0f);
 		p.setSetpt(1.0f, 1.0f);
 		p.setState(0, 0, 0);
@@ -38,18 +40,6 @@ BOOST_AUTO_TEST_CASE(initTest)
 	Fixture f;
 	BOOST_CHECK_EQUAL(f.p.getOutput(), 0);
 	BOOST_CHECK_EQUAL(f.c.getOutput(), 0);
-}
-
-BOOST_AUTO_TEST_CASE(flagsTest)
-{
-	Fixture f;
-	BOOST_CHECK((f.c.flags & DERR_DT_MASK) > 0);
-	BOOST_CHECK_EQUAL(f.p.flags, DISC_DERIV_MASK);
-	f.p.flags &= (uint8_t)~DISC_DERIV_MASK;
-	f.c.flags &= (uint8_t)~DERR_DT_MASK;
-	BOOST_CHECK_EQUAL(f.p.flags, 0);
-	BOOST_CHECK_EQUAL(f.c.flags, 
-			DISC_DERIV_MASK | STATE_LOWPASS_MASK | DERR_LOWPASS_MASK);
 }
 
 BOOST_AUTO_TEST_CASE(plainCtrlTest1)
