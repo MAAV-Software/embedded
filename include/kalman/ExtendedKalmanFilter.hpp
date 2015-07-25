@@ -90,6 +90,9 @@ public:
 	 */
 	void update(const float deltaTime, const uint16_t id,
 				const arm_matrix_instance_f32* sensorMeasurement);
+	
+	// Returns the state vector of the filter
+	arm_matrix_instance_f32 getState() const { return _state; }
 
 private:
 	// General State Variables

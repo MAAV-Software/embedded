@@ -39,7 +39,7 @@ ExtendedKalmanFilter::ExtendedKalmanFilter(const uint16_t stateSize,
 	MAT_INIT(&_nn_identity, stateSize, stateSize);
 	for (uint16_t i = 0; i < (stateSize * stateSize); ++i) 
 	{
-		if (i % (stateSize + 1) == 0) 
+		if ((i % (stateSize + 1)) == 0) 
 		{
 			_nn_identity.pData[i] = 1;
 		} 

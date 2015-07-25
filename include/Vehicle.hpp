@@ -4,12 +4,13 @@
 #include "Dji.hpp"
 #include "Dof.hpp"
 #include "Pid.hpp"
+#include "kalman/ExtendedKalmanFilter.hpp"
+#include "kalman/KalmanFunctions.hpp"
 #include "FlightMode.hpp"
 
 // Defines for array sizes
 #define NUM_DOFS	4
 #define NUM_ANGLES	2
-#define ROTMAT_SIZE 9
 
 // Enums for array indecies
 enum xyzhEnum {X_AXIS, Y_AXIS, Z_AXIS, YAW};
@@ -19,7 +20,6 @@ class Vehicle
 {
 public:
 	// Public Methods
-	//TODO ADD EKF TO CONSTRUCTORS
 	// Constructors
 	Vehicle();
 	Vehicle(const float states[NUM_DOFS][NUM_DOF_STATES],
@@ -40,43 +40,32 @@ public:
 				 const float rateErrorLpCoeffs[NUM_DOFS],
 				 const float totalMass,
 				 const float initTime,
-				 const float rpLims[NUM_ANGLES],
-				 const float initRotMat[ROTMAT_SIZE]);
+				 const float rpLims[NUM_ANGLES]);
 	
-	// TODO Implement this when the State Estimator is ready
 	// Destructor (will need to free memory allocation for EKF)
-	//~Vehicle();
+	~Vehicle();
 	
-	// Assigns state feedback to the individual DOF structs within the vehicle
-	void setState(const float state[NUM_DOFS][NUM_DOF_STATES], 
-				  const float rotation[ROTMAT_SIZE]);
-					
 	// Assigns setpoints based on the controller mode
 	void setSetpt(const float setpt[NUM_DOFS][NUM_DOF_STATES], 
-				  FlightMode mode);
+				  const FlightMode mode);
 	
 	// Assigns gains to the DOFs within this Vehicle
 	void setGains(const float valueGains[NUM_DOFS][NUM_PID_GAINS],
 				  const float rateGains[NUM_DOFS][NUM_PID_GAINS]);
 	
-	// Executes all PID control for all DOFs in qc based on ctrl_mode
-	void runCtrl(FlightMode mode);
+	// Executes all PID control for all DOFs based on flight mode and calcs DJI vals
+	void runCtrl(const FlightMode mode);
 	
-
-// TODO Implement these when the state estimator is ready	
-	// Set the EKF sensor input
-//	void setEkfSensors(const float rotation[ROTMAT_SIZE], const float t);
-	// Runs the EKF prediciton step
-//	void EkfPredict(float t);
-	// Runs the EKF correction step, this should also automatically udpdate the
-	// states in Dof as well.
-//	void EkfCorrect(float t);
+	// updates sensor inputs, runs the EKF, and updates the states in the DOFs
+	void runFilter(const float x, const float y, const float z,
+				   const float xdot, const float ydot, const float roll, 
+				   const float pitch, const float yaw, const float time);
 	
-	
+	// returns the DJI values needed to send to it
 	Dji getDjiVals() const;
 
 	// Logging function
-	void prepareLog();
+	void prepareLog(VehicleLog &vlog, PidLogs plogs[NUM_DOFS][2]);
 
 private:
 	// Controller specific Members
@@ -84,14 +73,19 @@ private:
 	Dji dji;					// DJI struct of values
 	float mass;					// Mass of the Vehicle
 	float rpLimits[NUM_ANGLES];	// max roll and pitch limit
-	float rotMat[ROTMAT_SIZE];	// Rotation matrix from sensor feedback
-	float time;					// Timestamp for the rotation Matrix
-
+	float lastPredTime; 		// time of the last ekf predict
+	float time;					// current time
+	
+	// State Estimator Specific Members	
+	ExtendedKalmanFilter *ekf;
+	arm_matrix_instance_f32 controlInputMat;
+	arm_matrix_instance_f32 sensorMeasurementMat;
+	
 	// Calculates Roll, Pitch, Z Force, and Yaw Rate to send to the DJI
 	void calcDJIValues();
 
-	// State Estimator Specific Members
-	// TODO Add EKF here	
+	// Updates the states of the DOFS
+	void setDofStates(const float state[NUM_DOFS][NUM_DOF_STATES])
 };
 
 #endif /* VEHICLE_HPP_ */

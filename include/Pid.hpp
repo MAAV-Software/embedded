@@ -5,6 +5,7 @@
  * PID class that executes discrete PID control on a continuous-time model.
  */
 #include <stdint.h>
+#include "CtrlLogs.hpp"
 #include "LowPass.hpp"
 
 // Global constants for max lengths of arrays in this class
@@ -20,13 +21,11 @@ extern const uint8_t DERR_LOWPASS_MASK; // enable use of lowpass filter on dErro
 
 // Enums for gains and states
 enum PIDGainsEnum {KP, KI, KD}; 
-typedef enum _PIDStateEnum {VAL, DERIV, TIME} PIDStateEnum;
+enum PIDStateEnum {VAL, DERIV, TIME};
 
 class Pid
 {
 public:
-	uint8_t flags; // flags for different options to enable on the controller
-
 	// Default constructor
 	Pid();
 	
@@ -57,9 +56,11 @@ public:
 	float getOutput() const;
 
 	// function for preparing the log data for this PID class
-	void prepareLog(); 
+	void prepareLog(PidLog &plog); 
 	
 private:
+	uint8_t flags;						// flags for PID ctrl options
+
 	float state[NUM_PID_STATES];		// [val, deriv, time] for the current continuous state variable
 	float prevState[NUM_PID_STATES];	// previous [val, deriv, time]
 										

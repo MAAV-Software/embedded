@@ -8,7 +8,9 @@
 
 #include "Imu.hpp"
 #include <stdint.h>
-#include <math.h>
+#include <cmath>
+
+using namespace std;
 
 Imu::Imu()
 {

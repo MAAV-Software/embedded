@@ -3,6 +3,8 @@
 
 #include "Battery.hpp"
 
+using namespace std;
+
 Battery::Battery(const float initVolts, const float minThresh,
 				 const uint8_t cellCount)
 {

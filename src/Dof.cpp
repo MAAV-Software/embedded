@@ -2,9 +2,12 @@
   Implementation of the DOF (degree of freedom) class.
 */
 #include <stdint.h>
-#include <math.h>
+#include <cmath>
 #include "Dof.hpp"
 #include "Pid.hpp"
+#include "CtrlLogs.hpp"
+
+using namespace std;
 
 Dof::Dof()
 {
@@ -108,10 +111,12 @@ float Dof::getUval() const
 	return Uval;
 }
 	
-// function for preparing the log data for this PID class
-void Dof::prepareLog()
+// function for preparing the log data for this Dof class
+void Dof::prepareLog(PidLog plogs[2])
 {
-//TODO Implement this function
+	// grab pid logs
+	valuePid.prepareLog(plogs[0]);
+	ratePid.prepareLog(plogs[1]);
 }	
 
 
