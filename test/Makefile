@@ -26,7 +26,7 @@ setup:
 	@echo "Setup Done, Building Code"
 
 #test: LidarSwTest Px4SwTest pidTest dofTest sampleTest
-test: LidarSwTest Px4SwTest LowPassTest pidTest dofTest
+test: BatteryTest LidarSwTest Px4SwTest LowPassTest pidTest dofTest
 
 sampleTest: sampleTest.o
 	@echo ""
@@ -101,6 +101,19 @@ Lidar.o: $(SRC_DIR)/Lidar.cpp $(INC_DIR)/Lidar.hpp $(INC_DIR)/LidarDefines.hpp
 	@echo "Building Lidar"
 	$(CXX) -c $(CFLAGS) $(SRC_DIR)/Lidar.cpp -I $(INC_DIR) -o $(BUILD_DIR)/Lidar.o
 
+BatteryTest: Battery.o BatteryTest.o
+	@echo ""
+	@echo "Building Battery Test"
+	$(CXX) $(CFLAGS) $(BUILD_DIR)/BatteryTest.o $(BUILD_DIR)/Battery.o $(LIBS) -o $(BIN_DIR)/BatteryTest
+
+BatteryTest.o: BatteryTest.cpp $(INC_DIR)/Battery.hpp
+	$(CXX) -c $(CFLAGS) BatteryTest.cpp -I $(INC_DIR) -o $(BUILD_DIR)/BatteryTest.o
+
+Battery.o: $(SRC_DIR)/Battery.cpp $(INC_DIR)/Battery.hpp
+	@echo ""
+	@echo "Building Battery"
+	$(CXX) -c $(CFLAGS) $(SRC_DIR)/Battery.cpp -I $(INC_DIR) -o $(BUILD_DIR)/Battery.o
+
 clean:
 	@echo
 	@echo "Removing Build Files"
@@ -109,6 +122,8 @@ clean:
 run:
 	@echo ""
 	@echo "Running Tests"
+	@echo ""
+	$(BIN_DIR)/BatteryTest
 	@echo ""
 	$(BIN_DIR)/LowPassTest
 	@echo ""
@@ -121,5 +136,3 @@ run:
 	$(BIN_DIR)/dofTest
 	@echo ""
 #$(BIN_DIR)/sampleTest
-
-

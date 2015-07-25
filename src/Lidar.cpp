@@ -6,7 +6,7 @@
  */
 
 #include "Lidar.hpp"
-//#include "LidarDefines.hpp"
+#include "LidarDefines.hpp"
 
 Lidar::Lidar() 
 {

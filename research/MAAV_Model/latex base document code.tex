@@ -1,0 +1,136 @@
+\documentclass[11pt]{article}
+
+\usepackage[top=1.0in, bottom=1.0in, left=1.0in, right=1.0in]{geometry} % This package allows you to change the border. 
+
+\usepackage{amsmath} % Math packages.
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{bm}
+\usepackage{mathrsfs}
+
+\usepackage{times} % To make times font.
+
+
+\title{ Bare-Bones Latex Template }
+
+\author{Prof.\ James Richard Forbes\thanks{Assistant Professor of Aerospace Engineering, University of Michigan}}
+
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+This is a ``bare-bones" latex template. I will demonstrate how to do the simplest but most useful things. 
+
+\subsection{Equations With Numbers}
+
+To start, how do I write an equation? Consider the equation
+%
+\begin{equation}
+	y = m x + b .
+	\label{eq:line}
+\end{equation}
+%
+Notice two things. First, notice there's an equation number. Second, notice the variable name ``{eq:line}" under the equation and the command ``label". I can use that variable name to then reference Eq.~\eqref{eq:line}.
+
+\subsection{Equations Without Numbers}
+\label{sec:eqs_without_nums}
+
+Sometimes you don't want to number an equation, so you'd write
+%
+\begin{displaymath}
+	\textbf{A} \textbf{x} = \textbf{b} ,
+\end{displaymath}
+%
+where I used ``displaymath" rather than ``equation" in the code. I can't reference this equation because it does not have a number, which is why I don't give it a variable name 
+
+\section{Matrices and Arrays}
+Sometimes you need to have an equation array:
+\begin{eqnarray}
+	\left[
+	\begin{array}{cc}
+		a & b \\
+		c & d
+	\end{array}
+	\right]
+	& = &
+	\left[
+	\begin{array}{c}
+		x \\
+		y
+	\end{array}
+	\right] \\
+	& = &
+	\left[
+	\begin{array}{c}
+		a x + b y \\
+		c x + d y
+	\end{array}
+	\right] .
+\end{eqnarray}
+%
+Notice how there's two more numbers. Say I didn't want them, then I'd write 
+%
+\begin{eqnarray*}
+	\left[
+	\begin{array}{cc}
+		a & b \\
+		c & d
+	\end{array}
+	\right]
+	& = &
+	\left[
+	\begin{array}{c}
+		x \\
+		y
+	\end{array}
+	\right] \\
+	& = &
+	\left[
+	\begin{array}{c}
+		a x + b y \\
+		c x + d y
+	\end{array}
+	\right] .
+\end{eqnarray*}
+%
+
+Say I wanted one number and a label, but not both. Then I'd write
+%
+\begin{eqnarray}
+	\left[
+	\begin{array}{cc}
+		a & b \\
+		c & d
+	\end{array}
+	\right]
+	& = &
+	\left[
+	\begin{array}{c}
+		x \\
+		y
+	\end{array}
+	\right] \label{eq:matrix_math} \\
+	& = &
+	\left[
+	\begin{array}{c}
+		a x + b y \\
+		c x + d y
+	\end{array}
+	\right] , \nonumber
+\end{eqnarray}
+%
+and now I can reference \eqref{eq:matrix_math}.
+
+Notice I can use ``label" to give a whole section a variable name, so I can then refer to the section, such as Section \eqref{sec:eqs_without_nums}.
+
+Also, note that you have to compile the latex code twice before your equation or section number will appear. When compiling a bibliography using bibtex you must compile as follows: ``latex bibtex latex latex". This has to do with latex creating a list and then reading the list. 
+
+\section{Closing Remarks}
+
+Latex is awesome. I hope you use it!
+
+\end{document}

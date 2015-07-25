@@ -1,5 +1,7 @@
 #include "LowPass.hpp"
 
+using namespace std;
+
 LowPass::LowPass() : alpha(0), state(0) {}
 
 LowPass::LowPass(const float a, const float s) : alpha(a), state(s) {}

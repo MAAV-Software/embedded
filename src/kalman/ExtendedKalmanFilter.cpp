@@ -1,22 +1,24 @@
 #include "kalman/ExtendedKalmanFilter.hpp"
-#include <stdlib.h>
-#include <assert.h>
+#include <cstdlib>
+#include <cassert>
+
+using namespace std;
 
 // TODO: check in arm_mat_mult_f32 if the destination can
 // be the same as a source (and inverse as well)
 
 // easy func for initializing a matrix with uninitialized data
-inline static void MAT_INIT(arm_matrix_instance_f32* mat,
-	size_t rows, size_t cols) {
-	arm_mat_init_f32(mat, rows, cols,
-		(float*)malloc(sizeof(float) * rows * cols));
+inline static void MAT_INIT(arm_matrix_instance_f32* mat, size_t rows, size_t cols) 
+{
+	arm_mat_init_f32(mat, rows, cols, (float*)malloc(sizeof(float) * rows * cols));
 }
 
-ExtendedKalmanFilter::ExtendedKalmanFilter(uint16_t stateSize,
-	float* initialState, float* initialErrorCov) :
-	_stateSize(stateSize), _controlInputSize(0),
-	_deltaState(NULL), _getJacobian(NULL) {
-
+ExtendedKalmanFilter::ExtendedKalmanFilter(const uint16_t stateSize, 
+										   const float* initialState, 
+										   const float* initialErrorCov) 
+	: _stateSize(stateSize), _controlInputSize(0), _deltaState(NULL), 
+	  _getJacobian(NULL) 
+{
 	// initializing state matrices
 	size_t stateMatSize = stateSize * stateSize * sizeof(float);
 	MAT_INIT(&_state, stateSize, 1);
@@ -35,15 +37,20 @@ ExtendedKalmanFilter::ExtendedKalmanFilter(uint16_t stateSize,
 
 	// initializing identity matrix
 	MAT_INIT(&_nn_identity, stateSize, stateSize);
-	for (uint16_t i = 0; i < stateSize * stateSize; i++) {
-		if (i % (stateSize + 1) == 0) {
+	for (uint16_t i = 0; i < (stateSize * stateSize); ++i) 
+	{
+		if ((i % (stateSize + 1)) == 0) 
+		{
 			_nn_identity.pData[i] = 1;
-		} else {
+		} 
+		else 
+		{
 			_nn_identity.pData[i] = 0;
 		}
 	}
 
-	for (uint16_t i = 0; i < NUM_UPDATE_SLOTS; i++) {
+	for (uint16_t i = 0; i < NUM_UPDATE_SLOTS; ++i) 
+	{
 		_updateArr[i].sensorSize = 0;
 		_updateArr[i].predictSensor = NULL;
 		_updateArr[i].getJacobian = NULL;
@@ -57,7 +64,8 @@ ExtendedKalmanFilter::ExtendedKalmanFilter(uint16_t stateSize,
 	}
 }
 
-ExtendedKalmanFilter::~ExtendedKalmanFilter() {
+ExtendedKalmanFilter::~ExtendedKalmanFilter() 
+{
 	free(_state.pData);
 	free(_P.pData);
 	free(_systemJacobian.pData);
@@ -67,8 +75,10 @@ ExtendedKalmanFilter::~ExtendedKalmanFilter() {
 	free(_nn_1.pData);
 	free(_nn_identity.pData);
 
-	for (uint16_t i = 0; i < NUM_UPDATE_SLOTS; i++) {
-		if (_updateArr[i].sensorSize != 0) {
+	for (uint16_t i = 0; i < NUM_UPDATE_SLOTS; ++i) 
+	{
+		if (_updateArr[i].sensorSize != 0) 
+		{
 			free(_updateArr[i].jacobian.pData);
 			free(_updateArr[i].covMatrix.pData);
 			free(_updateArr[i].ns_0.pData);
@@ -80,12 +90,17 @@ ExtendedKalmanFilter::~ExtendedKalmanFilter() {
 	}
 }
 
-void ExtendedKalmanFilter::setPredictFunc(uint16_t controlInputSize,
-	void (*deltaState)(const arm_matrix_instance_f32*,
-		const arm_matrix_instance_f32*, arm_matrix_instance_f32*),
-	void (*getJacobian)(const arm_matrix_instance_f32*,
-		const arm_matrix_instance_f32*, arm_matrix_instance_f32*),
-	const arm_matrix_instance_f32* covariance) {
+void ExtendedKalmanFilter::setPredictFunc(const uint16_t controlInputSize,
+						void (*deltaState)(const arm_matrix_instance_f32*,
+										   const arm_matrix_instance_f32*, 
+										   const float,
+										   arm_matrix_instance_f32*),
+						void (*getJacobian)(const arm_matrix_instance_f32*,
+											const arm_matrix_instance_f32*, 
+											const float,
+											arm_matrix_instance_f32*),
+						const arm_matrix_instance_f32* covariance) 
+{
 	_deltaState = deltaState;
 	_getJacobian = getJacobian;
 
@@ -98,21 +113,22 @@ void ExtendedKalmanFilter::setPredictFunc(uint16_t controlInputSize,
 	_controlInputSize = controlInputSize;
 }
 
-void ExtendedKalmanFilter::setUpdateFunc(uint16_t id, uint16_t sensorSize,
-	void (*predictSensor)(const arm_matrix_instance_f32*,
-		arm_matrix_instance_f32*),
-	void (*getJacobian)(const arm_matrix_instance_f32*,
-		arm_matrix_instance_f32*),
-	const arm_matrix_instance_f32* covariance) {
-
+void ExtendedKalmanFilter::setUpdateFunc(const uint16_t id, 
+										 const uint16_t sensorSize,
+	void (*predictSensor)(const arm_matrix_instance_f32*, arm_matrix_instance_f32*),
+	void (*getJacobian)(const arm_matrix_instance_f32*, arm_matrix_instance_f32*),
+										 const arm_matrix_instance_f32* covariance) 
+{
 	assert(sensorSize != 0);
 	assert(covariance->numRows == sensorSize);
 	assert(covariance->numCols == sensorSize);
 
 	// if sensor size is different or its the first time access
 	// delete old memory (if it exists) and allocate correct size
-	if (sensorSize != _updateArr[id].sensorSize) {
-		if (_updateArr[id].sensorSize != 0) {
+	if (sensorSize != _updateArr[id].sensorSize) 
+	{
+		if (_updateArr[id].sensorSize != 0) 
+		{
 			// there is old data here of a different size
 			free(_updateArr[id].jacobian.pData);
 			free(_updateArr[id].covMatrix.pData);
@@ -135,23 +151,23 @@ void ExtendedKalmanFilter::setUpdateFunc(uint16_t id, uint16_t sensorSize,
 
 	_updateArr[id].predictSensor = predictSensor;
 	_updateArr[id].getJacobian = getJacobian;
-	memcpy(_updateArr[id].covMatrix.pData, covariance->pData,
-		sensorSize * sensorSize * sizeof(float));
+	memcpy(_updateArr[id].covMatrix.pData, covariance->pData, 
+		   sensorSize * sensorSize * sizeof(float));
 }
 
-void ExtendedKalmanFilter::predict(float deltaTime,
-	const arm_matrix_instance_f32* controlInput) {
-
+void ExtendedKalmanFilter::predict(const float deltaTime, const float mass,
+								   const arm_matrix_instance_f32* controlInput) 
+{
 	assert(controlInput->numRows == _controlInputSize);
 	assert(controlInput->numCols == 1);
 
 	// x = x + deltaTime * f(x, u)
-	_deltaState(&_state, controlInput, &_n1_0);
+	_deltaState(&_state, controlInput, mass, &_n1_0);
 	arm_mat_scale_f32(&_n1_0, deltaTime, &_n1_0);
 	arm_mat_add_f32(&_state, &_n1_0, &_state);
 
 	// P = P + deltaTime * (A * P + P * A' + Q)
-	_getJacobian(&_state, controlInput, &_systemJacobian);
+	_getJacobian(&_state, controlInput, mass, &_systemJacobian);
 	arm_mat_trans_f32(&_systemJacobian, &_nn_0);
 	arm_mat_mult_f32(&_P, &_nn_0, &_nn_1);
 	arm_mat_mult_f32(&_P, &_systemJacobian, &_nn_0);
@@ -161,9 +177,9 @@ void ExtendedKalmanFilter::predict(float deltaTime,
 	arm_mat_add_f32(&_P, &_nn_0, &_P);
 }
 
-void ExtendedKalmanFilter::update(float deltaTime, const uint16_t id,
-	const arm_matrix_instance_f32* sensorMeasurement) {
-
+void ExtendedKalmanFilter::update(const float deltaTime, const uint16_t id,
+								  const arm_matrix_instance_f32* sensorMeasurement) 
+{
 	assert(sensorMeasurement->numRows == _updateArr[id].sensorSize);
 	assert(sensorMeasurement->numCols == 1);
 

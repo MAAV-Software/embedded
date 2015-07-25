@@ -1,5 +1,7 @@
 #include "Px4.hpp"
 
+using namespace std;
+
 Px4::Px4()
 {
 	for (uint32_t i = 0; i < sizeof(px4Frame); ++i) fb.raw[i] = 0;

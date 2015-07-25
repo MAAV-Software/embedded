@@ -5,6 +5,9 @@
 #include <cmath>
 #include "Pid.hpp"
 #include "LowPass.hpp"
+#include "CtrlLogs.hpp"
+
+using namespace std;
 
 // Global constants for bitfields in the flags varaible
 const uint8_t DISC_DERIV_MASK    = 0x01;
@@ -37,7 +40,7 @@ Pid::Pid()
 	outUpLim   =  (float)HUGE_VAL;
 	outLwLim   = -(float)HUGE_VAL;
 	stateBound = 0;
-	flags      = 0;	
+	flags      = DISC_DERIV_MASK;	
 	ctrlDt     = 0;
 	ctrlOutput = 0;
 }
@@ -190,9 +193,13 @@ float Pid::getOutput() const
 	return ctrlOutput;
 }
 
-void Pid::prepareLog()
+void Pid::prepareLog(PidLog &plog)
 {
-//TODO Implement this function after we figure out what the log format will be.
+	plog.setpt = setpt[VAL];
+	plog.kp    = gains[KP];
+	plog.ki    = gains[KI];
+	plog.kd	   = gains[KD];
+	plog.flags = flags;
 }
 
 void Pid::discreteDeriv()

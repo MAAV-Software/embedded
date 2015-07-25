@@ -409,7 +409,7 @@ static inline void data_link_branchless_assemble_byte(uint8_t* pkt, size_t* pkt_
 	uint8_t data_byte)
 {
 	uint8_t is_special_char = (data_byte == DATA_FRAME_START_DELIMITER) +
-	(data_byte == DATA_FRAME_ESCAPE_CHAR);
+								(data_byte == DATA_FRAME_ESCAPE_CHAR);
 	uint8_t xor_val = is_special_char << 5;
 	pkt[*pkt_i] = DATA_FRAME_ESCAPE_CHAR;
 	pkt[*pkt_i + is_special_char] = data_byte ^ xor_val;

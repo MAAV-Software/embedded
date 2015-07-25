@@ -10,14 +10,14 @@ CMD_SRCS += \
 ../tm4c123gh6pm.cmd 
 
 LIB_SRCS += \
-/home/sheldon/ti/SW-TM4C-2.1.0.12573/driverlib/ccs/Debug/driverlib.lib \
-/home/sheldon/maav-controls/libs/dsplib.lib \
-/home/sheldon/ti/SW-TM4C-2.1.0.12573/sensorlib/ccs/Debug/sensorlib.lib 
+/home/sajan/ti/SW-TM4C-2.1.0.12573/driverlib/ccs/Debug/driverlib.lib \
+/home/sajan/maav-controls/libs/dsplib.lib \
+/home/sajan/ti/SW-TM4C-2.1.0.12573/sensorlib/ccs/Debug/sensorlib.lib 
 
 C_SRCS += \
-/home/sheldon/ti/SW-TM4C-2.1.0.12573/utils/cmdline.c \
+/home/sajan/ti/SW-TM4C-2.1.0.12573/utils/cmdline.c \
 ../tm4c123gh6pm_startup_ccs.c \
-/home/sheldon/ti/SW-TM4C-2.1.0.12573/utils/uartstdio.c 
+/home/sajan/ti/SW-TM4C-2.1.0.12573/utils/uartstdio.c 
 
 OBJS += \
 ./cmdline.obj \
@@ -48,9 +48,9 @@ OBJS__QUOTED += \
 "uartstdio.obj" 
 
 C_SRCS__QUOTED += \
-"/home/sheldon/ti/SW-TM4C-2.1.0.12573/utils/cmdline.c" \
+"/home/sajan/ti/SW-TM4C-2.1.0.12573/utils/cmdline.c" \
 "../tm4c123gh6pm_startup_ccs.c" \
-"/home/sheldon/ti/SW-TM4C-2.1.0.12573/utils/uartstdio.c" 
+"/home/sajan/ti/SW-TM4C-2.1.0.12573/utils/uartstdio.c" 
 
 CPP_SRCS__QUOTED += \
 "../main.cpp" 

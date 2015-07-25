@@ -5,6 +5,7 @@
 */
 #include <stdint.h>
 #include "Pid.hpp"
+#include "CtrlLogs.hpp"
 
 #define NUM_DOF_STATES 4 // val, rate, accel, and time
 
@@ -53,7 +54,7 @@ public:
 	float getUval() const;
 	
 	// function for preparing the log data for this PID class
-	void prepareLog(); 
+	void prepareLog(PidLog plogs[2]); 
 	
 private:
 	Pid valuePid;	// value to rate PID for this degree of freedom
