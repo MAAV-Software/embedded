@@ -43,6 +43,25 @@ BOOST_AUTO_TEST_CASE(initTest)
 	BOOST_CHECK_EQUAL(f.d2.getUval(), 0);
 }
 
+BOOST_AUTO_TEST_CASE(logTest)
+{
+	Fixture f;
+	PidLog logs[2];
+	f.d2.prepareLog(logs);
+
+	BOOST_CHECK_CLOSE(logs[0].setpt, 1, 0.001);
+	BOOST_CHECK_CLOSE(logs[0].kp, 1, 0.001);
+	BOOST_CHECK_CLOSE(logs[0].ki, 1, 0.001);
+	BOOST_CHECK_CLOSE(logs[0].kd, 1, 0.001);
+	BOOST_CHECK_EQUAL(logs[0].flags, DISC_DERIV_MASK);
+	
+	BOOST_CHECK_CLOSE(logs[1].setpt, 0, 0.001);
+	BOOST_CHECK_CLOSE(logs[1].kp, 1, 0.001);
+	BOOST_CHECK_CLOSE(logs[1].ki, 1, 0.001);
+	BOOST_CHECK_CLOSE(logs[1].kd, 1, 0.001);
+	BOOST_CHECK_EQUAL(logs[1].flags, DERR_DT_MASK);
+}
+
 BOOST_AUTO_TEST_CASE(autonCtrlTest)
 {
 	Fixture f;

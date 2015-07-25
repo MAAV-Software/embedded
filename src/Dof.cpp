@@ -41,7 +41,8 @@ Dof::Dof(const float state[NUM_DOF_STATES],
 	float rateState[NUM_PID_STATES] = {state[DOF_RATE], state[DOF_ACCEL], 
 								   	   state[DOF_TIME]};
 	float valSetpt[NUM_PID_STATES]  = {setpt[DOF_VAL], 0, setpt[DOF_TIME]};
-	float rateSetpt[NUM_PID_STATES] = {setpt[DOF_RATE], 0, setpt[DOF_TIME]};
+	//float rateSetpt[NUM_PID_STATES] = {setpt[DOF_RATE], 0, setpt[DOF_TIME]};
+	float rateSetpt[NUM_PID_STATES] = {0, 0, setpt[DOF_TIME]};
 	
 	valuePid = Pid(valState, valSetpt, valueFlags, valueGains, stateBound, 
 				   rateUpLim, rateLwLim, valStateLpCoeff, valErrorLpCoeff);

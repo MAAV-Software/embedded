@@ -42,6 +42,19 @@ BOOST_AUTO_TEST_CASE(initTest)
 	BOOST_CHECK_EQUAL(f.c.getOutput(), 0);
 }
 
+BOOST_AUTO_TEST_CASE(logTest)
+{
+	Fixture f;
+	PidLog log;
+
+	f.p.prepareLog(log);
+	BOOST_CHECK_CLOSE(log.setpt, 1, 0.001);
+	BOOST_CHECK_CLOSE(log.kp, 2, 0.001);
+	BOOST_CHECK_CLOSE(log.ki, 2, 0.001);
+	BOOST_CHECK_CLOSE(log.kd, 2, 0.001);
+	BOOST_CHECK_EQUAL(log.flags, DISC_DERIV_MASK);
+}
+
 BOOST_AUTO_TEST_CASE(plainCtrlTest1)
 {
 	Fixture f;
