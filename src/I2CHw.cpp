@@ -32,6 +32,8 @@
 
 #include "time_util.h"
 
+#include "LED.h"
+
 uint8_t command[4] = {LIDAR_REG_MEA, LIDAR_MEA_VALE, LIDAR_FULL_BYTE, PX4_MEA};
 bool I2CMDone = true;
 tI2CMInstance I2CMInst;
@@ -77,7 +79,7 @@ void ConfigI2C(const uint32_t sysctlPeriphI2C,
     MAP_IntMasterEnable();
     
 	// delay for initialization
-	for (int i = 0; i < 3; ++i) MAP_SysCtlDelay(SYSCLOCK / 3);
+	for (int i = 0; i < 3; ++i) Toggle_LED(GREEN_LED, SYSCLOCK / 3 / 2);//MAP_SysCtlDelay(SYSCLOCK / 3);
 	
 	// Initialize the I2C master driver. It is assumed that the I2C module has
 	// already been enabled and the I2C pins have been configured.

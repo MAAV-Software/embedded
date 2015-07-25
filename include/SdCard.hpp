@@ -28,6 +28,7 @@ public:
 	uint32_t write(char* BufferWrite, uint32_t Writelen);
 	void closeFile();
 	void unmount();
+	void Sync();
 
 private:
 	FATFS FatFs;			// FatFs work area needed for each volume

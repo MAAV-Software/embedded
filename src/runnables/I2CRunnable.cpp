@@ -59,7 +59,7 @@ void I2CRunnable::run(void)
 					state->px4->parse(rawPx4);
 					// Log msg
 					char msg[100];
-					snprintf(msg, sizeof(msg), "PX4(mm):\tDis:%u\n\r",(uint32_t)(state->px4->getZDist()*1.0e3));
+					snprintf(msg, sizeof(msg), "PX4(mm):\tDis:%u\n",(uint32_t)(state->px4->getZDist()*1.0e3));
 					state->sdcard->write(msg, (uint32_t)strlen(msg));
 
 					LidarTime = getTime; // the time of lidar2 start
@@ -74,7 +74,7 @@ void I2CRunnable::run(void)
 					state->lidar->parse(rawLidar, LIDAR_DIST_SIZE);
 					// Log msg
 					char msg[100];
-					snprintf(msg, sizeof(msg), "Lidar(cm):\tDis:%u\n\r",(uint32_t)(state->lidar->getDist()*1.0e2));
+					snprintf(msg, sizeof(msg), "Lidar(cm):\tDis:%u\n",(uint32_t)(state->lidar->getDist()*1.0e2));
 					state->sdcard->write(msg, (uint32_t)strlen(msg));
 
 					LidarTime = getTime; // the time of lidar start

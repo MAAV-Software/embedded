@@ -18,6 +18,8 @@
 
 #include "time_util.h"
 
+#include "LED.h"
+
 uint8_t imuRawIn[IMU_DATA_LENGTH];
 uint8_t imuRawFinal[IMU_DATA_LENGTH];
 bool imuDone = false;
@@ -66,7 +68,7 @@ void imuUartConfig(const uint32_t sysctlPeriphUart,
     MAP_UARTIntEnable(uartBase, UART_INT_RX | UART_INT_RT);
     
 	// delay for initialization
-	for (int i = 0; i < 3; ++i) MAP_SysCtlDelay(SYSCLOCK / 3);
+	for (int i = 0; i < 3; ++i) Toggle_LED(BLUE_LED, SYSCLOCK / 3 / 2);//MAP_SysCtlDelay(SYSCLOCK / 3);
 	
 	imuDone = false;
 }

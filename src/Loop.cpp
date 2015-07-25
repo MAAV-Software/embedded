@@ -14,6 +14,7 @@
 #include "time_util.h"
 #include "rc.hpp"
 #include "servoIn.hpp"
+#include "inc/hw_nvic.h"
 
 Loop::Loop() { }
 
@@ -34,11 +35,20 @@ void Loop::run(SdCard* sdcard)
 		loopTime = millis();
 		for (size_t i = 0; i < _events.size(); ++i)
 		{
-			if ((servoIn_getPulse(KILL_CHAN3)) < (low_kill + SYSCLOCK * 5 / 1000))
+			if ((servoIn_getPulse(KILL_CHAN3)) < 80000)
 			{
-				// Kill
+				sdcard->Sync();
+
+				// close the file
 				sdcard->closeFile();
-				sdcard->unmount();
+//				sdcard->unmount();
+
+				// software reset
+//				HWREG(NVIC_APINT) = NVIC_APINT_VECTKEY | NVIC_APINT_SYSRESETREQ;
+
+				// waiting for unkill signal
+				while((servoIn_getPulse(KILL_CHAN3)) < 80000);
+
 
 			}
 

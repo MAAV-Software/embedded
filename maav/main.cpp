@@ -61,6 +61,7 @@
 
 bool px4_can_transmit = true;
 uint32_t low_kill;
+uint32_t fileNumber = 0;
 
 ////////////////////////////// MAIN FUNCTION ///////////////////////////////////
 int main()
@@ -71,10 +72,10 @@ int main()
 	MAP_FPULazyStackingEnable();
 	MAP_FPUEnable();
 
-//	MAP_SysCtlClockSet(SYSCTL_SYSDIV_2_5 | SYSCTL_USE_PLL | SYSCTL_OSC_MAIN |
-//				   SYSCTL_XTAL_16MHZ);
-	MAP_SysCtlClockSet(SYSCTL_SYSDIV_3 | SYSCTL_USE_PLL | SYSCTL_OSC_MAIN |
-					   SYSCTL_XTAL_16MHZ);
+	MAP_SysCtlClockSet(SYSCTL_SYSDIV_2_5 | SYSCTL_USE_PLL | SYSCTL_OSC_MAIN |
+				   SYSCTL_XTAL_16MHZ);
+//	MAP_SysCtlClockSet(SYSCTL_SYSDIV_3 | SYSCTL_USE_PLL | SYSCTL_OSC_MAIN |
+//					   SYSCTL_XTAL_16MHZ);
 
 	Config_LED();
 
@@ -105,12 +106,15 @@ int main()
 	mainLoop.addEvent(&imuRunnable, 0);
 	mainLoop.addEvent(&i2cRunnable, 0);
 
-	// read kill switch start position
-	low_kill = servoIn_getPulse(KILL_CHAN3);
+	// tricky way to get rid of the initial large values!
+	while(servoIn_getPulse(KILL_CHAN3) > 80000);
 
-	// low boundry plus 0.5ms
-	while ((servoIn_getPulse(KILL_CHAN3)) < (low_kill + SYSCLOCK * 5 / 1000));
-	sdcard.open("Log.txt");
+	// check if the stick is up PWM (59660, 127400)
+	while(servoIn_getPulse(KILL_CHAN3) < 80000);
+
+	char filename[15];
+	snprintf(filename, sizeof(filename), "log%u.txt", (uint32_t)fileNumber++);
+	sdcard.createFile(filename);
 
 	mainLoop.run(&sdcard);
 

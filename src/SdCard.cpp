@@ -10,6 +10,12 @@
 SdCard::SdCard()
 {
 //	for (int i = 0; i < SD_BUFFER_SIZE; i++) buffer[i] = 0;
+	ROM_SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOD);
+	ROM_SysCtlPeripheralEnable(SYSCTL_PERIPH_SSI1);
+	ROM_GPIOPinConfigure(GPIO_PD0_SSI1CLK);
+//	ROM_GPIOPinConfigure(GPIO_PD1_SSI1FSS);
+	ROM_GPIOPinConfigure(GPIO_PD2_SSI1RX);
+	ROM_GPIOPinConfigure(GPIO_PD3_SSI1TX);
 	SDMounted = false;
 	FileOpened = false;
 	FResult = FR_OK;
@@ -18,6 +24,7 @@ SdCard::SdCard()
 
 bool SdCard::mount()
 {
+	if (SDMounted) return SDMounted;
 	FResult = f_mount(&FatFs, "", 1);
 	switch(FResult)
 	{
@@ -111,4 +118,9 @@ uint32_t SdCard::write(char* BufferWrite, uint32_t WriteLen)
 		f_write(&FileObject, BufferWrite, WriteLen, &ActualWriteLen);
 	}
 	return ActualWriteLen;
+}
+
+void SdCard::Sync()
+{
+	f_sync(&FileObject);
 }

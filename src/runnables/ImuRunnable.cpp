@@ -48,7 +48,7 @@ void ImuRunnable::run()
 
 		// Log msg
 		char msg[100];
-		snprintf(msg, sizeof(msg), "IMU:\tTime:%d\tRow:%d\tPitch:%d\tYaw:%d\n\r",
+		snprintf(msg, sizeof(msg), "IMU:\tTime:%d\tRow:%d\tPitch:%d\tYaw:%d\n",
 				(int32_t)state->imu->getTimer(),
 				(int32_t)(state->imu->getRoll()*1e7),
 				(int32_t)(state->imu->getPitch()*1e7),
