@@ -65,7 +65,7 @@ public:
 	Dji getDjiVals() const;
 
 	// Logging function
-	void prepareLog(VehicleLog &vlog, PidLogs plogs[NUM_DOFS][2]);
+	void prepareLog(VehicleLog &vlog, PidLog plogs[NUM_DOFS][2]);
 
 private:
 	// Controller specific Members
@@ -85,7 +85,7 @@ private:
 	void calcDJIValues();
 
 	// Updates the states of the DOFS
-	void setDofStates(const float state[NUM_DOFS][NUM_DOF_STATES])
+	void setDofStates(const float state[NUM_DOFS][NUM_DOF_STATES]);
 };
 
 #endif /* VEHICLE_HPP_ */
