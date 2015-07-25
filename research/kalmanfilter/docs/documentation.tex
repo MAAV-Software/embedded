@@ -1,0 +1,244 @@
+\documentclass[12pt]{article}
+
+% This first part of the file is called the PREAMBLE. It includes
+% customizations and command definitions. The preamble is everything
+% between \documentclass and \begin{document}.
+
+\usepackage[margin=1in]{geometry}  % set the margins to 1in on all sides
+\usepackage{graphicx}              % to include figures
+\usepackage{amsmath}               % great math stuff
+\usepackage{amsfonts}              % for blackboard bold, etc
+\usepackage{amsthm}                % better theorem environments
+
+
+% various theorems, numbered by section
+
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{conj}[thm]{Conjecture}
+
+\DeclareMathOperator{\id}{id}
+
+\newcommand{\bd}[1]{\mathbf{#1}}  % for bolding symbols
+\newcommand{\RR}{\mathbb{R}}      % for Real numbers
+\newcommand{\ZZ}{\mathbb{Z}}      % for Integers
+\newcommand{\col}[1]{\left[\begin{matrix} #1 \end{matrix} \right]}
+\newcommand{\comb}[2]{\binom{#1^2 + #2^2}{#1+#2}}
+
+
+\begin{document}
+
+
+\title{Continuous Discrete Extended Kalman Filter Documentation}
+
+\author{Zhengjie Cui, Greg Miller, Clark Zhang \\ 
+Michigan Autonomous Aerial Vehicles \\
+University Of Michigan, Ann Arbor}
+
+\maketitle
+\begin{abstract}
+This contains documentation about research and implementation of our state estimation filter used for the MAAV vehicle 2015-2016.
+\end{abstract}
+
+\section{Basic Sensors and definitions overview}
+For sensors, we have
+\begin{enumerate}
+\item{
+Px4Flow Camera that gives us (the following are in the frame of reference of the camera and not global frame)
+\begin{enumerate}
+\item $\frac{dx}{dt}$
+\item $\frac{dy}{dt}$
+\item $z$
+\end{enumerate}
+}
+\item{
+Microstrain IMU
+\begin{enumerate}
+\item roll
+\item pitch
+\item yaw
+\end{enumerate}
+}
+\end{enumerate}
+
+We will use positive Z as upwards direction
+Looking at a bird's eye view of the field with our line on the bottom.
+Positive X is towards right, and positive Y is going up. Our Vehicle will have a mass, m.
+
+We are using a DJI Naza Lite
+that takes as it's input ($F_{z}$ is also in the frame of the vehicle)
+\begin{enumerate}
+\item $F_{z}$
+\item $\phi$
+\item $\theta$
+\item $\dot{\psi}$
+\end{enumerate}
+
+Our state that we will be estimating is (all states are in global frame)\\
+\begin{center}
+$
+\vec{x} = 
+\begin{Bmatrix}
+x \\
+y \\
+z \\
+\dot{x} \\
+\dot{y} \\
+\dot{z} \\
+\phi \\
+\theta \\
+\psi \\
+\end{Bmatrix}
+=
+\begin{Bmatrix}
+x_{1} \\
+x_{2} \\
+x_{3} \\
+x_{4} \\
+x_{5} \\
+x_{6} \\
+x_{7} \\
+x_{8} \\
+x_{9} \\
+\end{Bmatrix}
+$
+\end{center}
+
+Our sensor measurement will be in the form (these are in vehicle frame)
+\begin{center}
+$
+\vec{y} = 
+\begin{Bmatrix}
+\phi \\
+\theta \\
+\psi \\
+\dot{x} \\
+\dot{y} \\
+z \\
+\end{Bmatrix}
+=
+\begin{Bmatrix}
+y_{1} \\
+y_{2} \\
+y_{3} \\
+y_{4} \\
+y_{5} \\
+y_{6} \\
+\end{Bmatrix}
+$
+\end{center}
+
+our control input will be in the form (vehicle frame)
+\begin{center}
+$
+\vec{u} = 
+\begin{Bmatrix}
+F_{z}\\
+\phi \\
+\theta \\
+\psi \\
+\end{Bmatrix}
+=
+\begin{Bmatrix}
+u_{1} \\
+u_{2} \\
+u_{3} \\
+u_{4}
+\end{Bmatrix}
+$
+\end{center}
+
+\section{Continuous Discrete Extended Kalman Filter}
+We used the filter as described by Beard in his paper.
+Here are the predict and update equations. Note: $\Delta t$ is time since last predict\\
+Prediction:
+\begin{enumerate}
+\item $\hat{x} = \hat{x} + \Delta t f(\vec{x},\vec{u})$
+\item $A = \frac{\Delta f}{\Delta x}$
+\item $P = P + \Delta t (AP + PA^T + GQG^T)$
+\end{enumerate}
+Update
+\begin{enumerate}
+\item $C = \frac{\Delta c}{\Delta x}$
+\item $L = PC^T(R + CPC^T)^{-1}$
+\item $P = (I - LC)P$
+\item $\hat{x} = \hat{x} + L(y - c(\vec{x}))$
+\end{enumerate}
+
+Since we don't have direct access to output, we are unable to change the roll, pitch, yaw in the prediction step
+So we will being doing something unorthodox - just replacing roll pitch yaw with the MicroStrain roll pitch yaw every step.
+
+\section{Prediction Model}
+Our prediction model will continuous
+
+\begin{center}
+$\vec{\frac{dx}{dt}} =
+f(\vec{x}, \vec{u}) =
+\begin{Bmatrix}
+x_{4}\\
+x_{5}\\
+x_{6}\\
+-\frac{u_{1}}{m}\sin(x_{8})\\
+\frac{u_{1}}{m}\sin(x_{7})\cos(x_{8})\\
+\frac{u_{1}}{m}\cos(x_{7})\cos(x_{8})\\
+0\\
+0\\
+u_{4}\\
+\end{Bmatrix}
+$
+\end{center}
+
+The linearized model of this around a state is (the 'A' matrix)
+\begin{center}
+$
+A =
+\begin{Bmatrix}
+0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & -\frac{u_{1}}{m}\cos(x_8) & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & -\frac{u_{1}}{m}\cos(x_7)\cos(x_8) &
+	-\frac{u_{1}}{m}\sin(x_7)\sin(x_8) & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & -\frac{u_{1}}{m}\sin(x_7)\cos(x_8) &
+	-\frac{u_{1}}{m}\cos(x_7)\sin(x_8) & 0\\
+\end{Bmatrix}
+$
+
+\end{center}
+
+\section{Sensor Model}
+Our sensor model is
+\begin{center}
+$
+\hat{y} = c(\vec{x}) =
+\begin{Bmatrix}
+x_7 \\
+x_8 \\
+x_9 \\
+x_4 \cos(x_9) \\
+x_4 \sin(x_9) \\
+\frac{x_3}{\cos(x_7)\cos(x_8)}
+\end{Bmatrix}
+$
+\end{center}
+The linearized model of this around a state (the C matrix)
+\begin{center}
+C=
+$
+\begin{Bmatrix}
+0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1\\
+0 & 0 & 0 & \cos(x_9) & 0 & 0 & 0 & 0 & -x_4\sin(x_9)\\
+0 & 0 & 0 & \sin(x_9) & 0 & 0 & 0 & 0 & x_4\cos(x_9)\\
+0 & 0 & \frac{1}{\cos(x_7)\cos(x_8)} & 0 & 0 & 0 &
+	\frac{x_3\sin(x_7)}{\cos^2(x_7)\cos(x_8)} &
+	\frac{x_3\sin(x_8)}{\cos(x_7)\cos^2(x_8)} & 0
+\end{Bmatrix}
+$
+
+\end{center}
+
+\end{document}
