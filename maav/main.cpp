@@ -56,6 +56,7 @@
 #include "runnables/ImuRunnable.hpp"
 #include "runnables/I2CRunnable.hpp"
 #include "runnables/CtrlRunnable.hpp"
+#include "runnables/KillRunnable.hpp"
 
 //#include "messaging/data_link.h"
 
@@ -66,8 +67,6 @@
 using namespace std;
 
 bool px4_can_transmit = true;
-uint32_t low_kill;
-uint32_t fileNumber = 0;
 
 ////////////////////////////// MAIN FUNCTION ///////////////////////////////////
 int main()
@@ -201,27 +200,28 @@ int main()
 	
 	FlightModeRunnable flightModeRunnable(&pState);
 	DjiRunnable djiRunnable(&pState);
+	KillRunnable killRunnable(&pState);
 	ImuRunnable	imuRunnable(&pState);
 	I2CRunnable i2cRunnable(&pState);
 	CtrlRunnable ctrlRunnable(&pState);
 
 	Loop mainLoop;
-	/* Note: Keep track of the order! */
-	mainLoop.addEvent(&flightModeRunnable, 10);
-	mainLoop.addEvent(&ctrlRunnable, 10); // this may be too fast of a frequency
-	mainLoop.addEvent(&djiRunnable, 10);
-	mainLoop.addEvent(&imuRunnable, 0);
-	mainLoop.addEvent(&i2cRunnable, 0);
+	mainLoop.regEvent(&killRunnable, 0);
+	mainLoop.regEvent(&flightModeRunnable, 10);
+	mainLoop.regEvent(&djiRunnable, 10);
+	mainLoop.regEvent(&imuRunnable, 0);
+	mainLoop.regEvent(&i2cRunnable, 0);
 
 	// tricky way to get rid of the initial large values!
 	while(servoIn_getPulse(KILL_CHAN3) > 80000);
 
-	// check if the stick is up PWM (59660, 127400)
+	// check if the stick is up, PPM range(59660, 127400)
+	// might change after the calibration
 	while(servoIn_getPulse(KILL_CHAN3) < 80000);
 
 	sdcard.createFile("log0.txt");
 
-	mainLoop.run(&sdcard);
+	mainLoop.run();
 
 	return 0;
 }
