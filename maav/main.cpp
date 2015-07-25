@@ -206,11 +206,12 @@ int main()
 	CtrlRunnable ctrlRunnable(&pState);
 
 	Loop mainLoop;
-	mainLoop.regEvent(&killRunnable, 0);
-	mainLoop.regEvent(&flightModeRunnable, 10);
-	mainLoop.regEvent(&djiRunnable, 10);
-	mainLoop.regEvent(&imuRunnable, 0);
-	mainLoop.regEvent(&i2cRunnable, 0);
+	mainLoop.regEvent(&killRunnable, 0, 0);
+	mainLoop.regEvent(&flightModeRunnable, 10, 1);
+	mainLoop.regEvent(&ctrlRunnable, 10, 2);
+	mainLoop.regEvent(&djiRunnable, 10, 3);
+	mainLoop.regEvent(&imuRunnable, 0, 4);
+	mainLoop.regEvent(&i2cRunnable, 0, 5);
 
 	// tricky way to get rid of the initial large values!
 	while(servoIn_getPulse(KILL_CHAN3) > 80000);

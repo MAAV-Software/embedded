@@ -19,14 +19,22 @@ using namespace std;
 
 Loop::Loop()
 {
-	_eventCnt = 0;
+	//_eventCnt = 0;
+	for (int i = 0; i < NUM_EVENT; ++i)
+	{
+		_events[i].task = NULL;
+		_events[i].lastTime = 0;
+		_events[i].period = 0;
+	}
 }
 
-void Loop::regEvent(Runnable* task, int32_t periodMs) {
-	_events[_eventCnt].task = task;
-	_events[_eventCnt].lastTime = 0;
-	_events[_eventCnt].period = periodMs;
-	_eventCnt++;
+void Loop::regEvent(Runnable* task, int32_t periodMs, uint32_t idx)
+{
+	if (idx >= NUM_EVENT) return;
+	_events[idx].task = task;
+	_events[idx].lastTime = 0;
+	_events[idx].period = periodMs;
+	//_eventCnt++;
 }
 
 void Loop::run()

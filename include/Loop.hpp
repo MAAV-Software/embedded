@@ -5,7 +5,7 @@
 #include <stdint.h>
 #include "runnables/Runnable.hpp"
 
-#define NUM_EVENT 5
+#define NUM_EVENT 6
 /**
  * @brief Class to handle timing events in a loop
  */
@@ -28,7 +28,7 @@ public:
 	 * @param fn function pointer to be run
 	 * @param periodMs the period for how often to run the function in milliseconds
 	 */
-	void regEvent(Runnable* task, int32_t periodMs);
+	void regEvent(Runnable* task, int32_t periodMs, uint32_t idx);
 
 	/**
 	 * @brief runs the loop that calls events at set times
@@ -38,7 +38,7 @@ public:
 
 private:
 	Event _events[NUM_EVENT];
-	uint32_t _eventCnt;
+	//uint32_t _eventCnt;
 };
 
 #endif /* LOOP_HPP_ */
