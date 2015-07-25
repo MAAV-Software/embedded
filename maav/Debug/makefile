@@ -29,7 +29,7 @@ ORDERED_OBJS += \
 "./src/switch.obj" \
 "./src/time_util.obj" \
 "./src/utility.obj" \
-"./src/runnables/ControllerRunnable.obj" \
+"./src/runnables/CtrlRunnable.obj" \
 "./src/runnables/DataLinkRunnables.obj" \
 "./src/runnables/DjiRunnable.obj" \
 "./src/runnables/FlightModeRunnable.obj" \
@@ -60,11 +60,13 @@ RMDIR := rm -rf
 -include src/runnables/subdir_vars.mk
 -include src/kalman/subdir_vars.mk
 -include sdlib/subdir_vars.mk
+-include include/runnables/subdir_vars.mk
 -include subdir_rules.mk
 -include src/subdir_rules.mk
 -include src/runnables/subdir_rules.mk
 -include src/kalman/subdir_rules.mk
 -include sdlib/subdir_rules.mk
+-include include/runnables/subdir_rules.mk
 -include objects.mk
 
 ifneq ($(MAKECMDGOALS),clean)
@@ -190,9 +192,9 @@ maav.hex: $(EXE_OUTPUTS)
 # Other Targets
 clean:
 	-$(RM) $(EXE_OUTPUTS__QUOTED)$(BIN_OUTPUTS__QUOTED)
-	-$(RM) "main.pp" "src/Battery.pp" "src/Dof.pp" "src/FlightModeHw.pp" "src/I2CHw.pp" "src/Imu.pp" "src/ImuHw.pp" "src/Lidar.pp" "src/Loop.pp" "src/LowPass.pp" "src/Pid.pp" "src/ProgramState.pp" "src/Px4.pp" "src/SdCard.pp" "src/Vehicle.pp" "src/rc.pp" "src/servoIn.pp" "src/runnables/ControllerRunnable.pp" "src/runnables/DataLinkRunnables.pp" "src/runnables/DjiRunnable.pp" "src/runnables/FlightModeRunnable.pp" "src/runnables/I2CRunnable.pp" "src/runnables/ImuRunnable.pp" "src/runnables/OptSwitchRunnables.pp" "src/runnables/Px4Runnable.pp" "src/kalman/ExtendedKalmanFilter.pp" "src/kalman/KalmanFunctions.pp" 
+	-$(RM) "main.pp" "src/Battery.pp" "src/Dof.pp" "src/FlightModeHw.pp" "src/I2CHw.pp" "src/Imu.pp" "src/ImuHw.pp" "src/Lidar.pp" "src/Loop.pp" "src/LowPass.pp" "src/Pid.pp" "src/ProgramState.pp" "src/Px4.pp" "src/SdCard.pp" "src/Vehicle.pp" "src/rc.pp" "src/servoIn.pp" "src/runnables/CtrlRunnable.pp" "src/runnables/DataLinkRunnables.pp" "src/runnables/DjiRunnable.pp" "src/runnables/FlightModeRunnable.pp" "src/runnables/I2CRunnable.pp" "src/runnables/ImuRunnable.pp" "src/runnables/OptSwitchRunnables.pp" "src/runnables/Px4Runnable.pp" "src/kalman/ExtendedKalmanFilter.pp" "src/kalman/KalmanFunctions.pp" 
 	-$(RM) "tm4c123gh6pm_startup_ccs.pp" "uartstdio.pp" "src/LED.pp" "src/PPM.pp" "src/switch.pp" "src/time_util.pp" "src/utility.pp" "sdlib/ff.pp" "sdlib/mmc-dk-tm4c123g.pp" 
-	-$(RM) "main.obj" "tm4c123gh6pm_startup_ccs.obj" "uartstdio.obj" "src/Battery.obj" "src/Dof.obj" "src/FlightModeHw.obj" "src/I2CHw.obj" "src/Imu.obj" "src/ImuHw.obj" "src/LED.obj" "src/Lidar.obj" "src/Loop.obj" "src/LowPass.obj" "src/PPM.obj" "src/Pid.obj" "src/ProgramState.obj" "src/Px4.obj" "src/SdCard.obj" "src/Vehicle.obj" "src/rc.obj" "src/servoIn.obj" "src/switch.obj" "src/time_util.obj" "src/utility.obj" "src/runnables/ControllerRunnable.obj" "src/runnables/DataLinkRunnables.obj" "src/runnables/DjiRunnable.obj" "src/runnables/FlightModeRunnable.obj" "src/runnables/I2CRunnable.obj" "src/runnables/ImuRunnable.obj" "src/runnables/OptSwitchRunnables.obj" "src/runnables/Px4Runnable.obj" "src/kalman/ExtendedKalmanFilter.obj" "src/kalman/KalmanFunctions.obj" "sdlib/ff.obj" "sdlib/mmc-dk-tm4c123g.obj" 
+	-$(RM) "main.obj" "tm4c123gh6pm_startup_ccs.obj" "uartstdio.obj" "src/Battery.obj" "src/Dof.obj" "src/FlightModeHw.obj" "src/I2CHw.obj" "src/Imu.obj" "src/ImuHw.obj" "src/LED.obj" "src/Lidar.obj" "src/Loop.obj" "src/LowPass.obj" "src/PPM.obj" "src/Pid.obj" "src/ProgramState.obj" "src/Px4.obj" "src/SdCard.obj" "src/Vehicle.obj" "src/rc.obj" "src/servoIn.obj" "src/switch.obj" "src/time_util.obj" "src/utility.obj" "src/runnables/CtrlRunnable.obj" "src/runnables/DataLinkRunnables.obj" "src/runnables/DjiRunnable.obj" "src/runnables/FlightModeRunnable.obj" "src/runnables/I2CRunnable.obj" "src/runnables/ImuRunnable.obj" "src/runnables/OptSwitchRunnables.obj" "src/runnables/Px4Runnable.obj" "src/kalman/ExtendedKalmanFilter.obj" "src/kalman/KalmanFunctions.obj" "sdlib/ff.obj" "sdlib/mmc-dk-tm4c123g.obj" 
 	-@echo 'Finished clean'
 	-@echo ' '
 

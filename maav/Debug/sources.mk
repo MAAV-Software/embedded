@@ -113,4 +113,5 @@ src \
 src/runnables \
 src/kalman \
 sdlib \
+include/runnables \
 

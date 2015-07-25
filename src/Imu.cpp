@@ -61,6 +61,11 @@ void Imu::parse(const uint8_t* data)
 	Timer = Bytes2Int(data, 73);
 }
 
+void Imu::getRotMat(float dest[NUM_M_VAL])
+{
+	for (int i = 0; i < NUM_M_VAL; ++i) dest[i] = M[i];
+}
+
 // Return data
 float Imu::getAccX() const
 {

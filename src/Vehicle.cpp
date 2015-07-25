@@ -52,8 +52,8 @@ Vehicle::Vehicle(const float states[NUM_DOFS][NUM_DOF_STATES],
 				 const float setpts[NUM_DOFS][NUM_DOF_STATES],
 				 const float valueGains[NUM_DOFS][NUM_PID_GAINS],
 				 const float rateGains[NUM_DOFS][NUM_PID_GAINS],
-				 const float valueFlags[NUM_DOFS],
-				 const float rateFlags[NUM_DOFS],
+				 const uint8_t valueFlags[NUM_DOFS],
+				 const uint8_t rateFlags[NUM_DOFS],
 				 const float inertias[NUM_DOFS],
 				 const float stateBounds[NUM_DOFS],
 				 const float rateUpLims[NUM_DOFS],
@@ -91,44 +91,14 @@ Vehicle::Vehicle(const float states[NUM_DOFS][NUM_DOF_STATES],
 					  valueErrorLpCoeffs[i], rateStateLpCoeffs[i],
 					  rateErrorLpCoeffs[i]);
 	}
-	
-	// allocate EKF
-	//float initialState[9] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
-	//float initialErrorCov[81]; memset(initialErrorCov, 0, sizeof(float) * 81);
-	//ekf = new ExtendedKalmanFilter(9, initialState, initialErrorCov);
-	
+
 	// intial P = ekfInitErrorCov
 	ekf = new ExtendedKalmanFilter(9, ekfInitState, ekfInitP);
 
-	// predCov are values of Q
-	/*
-	float predictCov[81] = {
-			1, 0, 0, 0, 0, 0, 0, 0, 0,
-			0, 1, 0, 0, 0, 0, 0, 0, 0,
-			0, 0, 1, 0, 0, 0, 0, 0, 0,
-			0, 0, 0, 1, 0, 0, 0, 0, 0,
-			0, 0, 0, 0, 1, 0, 0, 0, 0,
-			0, 0, 0, 0, 0, 1, 0, 0, 0,
-			0, 0, 0, 0, 0, 0, 1, 0, 0,
-			0, 0, 0, 0, 0, 0, 0, 1, 0,
-			0, 0, 0, 0, 0, 0, 0, 0, 1,
-	};
-	*/
 	arm_matrix_instance_f32 Q;
 	arm_mat_init_f32(&Q, 9, 9, ekfQ);
 	ekf->setPredictFunc(4, systemDeltaState, systemGetJacobian, &Q);
 
-	// updateCov are values of R
-	/*
-	float updateCov[36] = {
-			1, 0, 0, 0, 0, 0,
-			0, 1, 0, 0, 0, 0,
-			0, 0, 1, 0, 0, 0,
-			0, 0, 0, 1, 0, 0,
-			0, 0, 0, 0, 1, 0,
-			0, 0, 0, 0, 0, 1,
-	};
-	*/
 	arm_matrix_instance_f32 RNoCam, RWithCam;
 	arm_mat_init_f32(&RNoCam, 6, 6, ekfNoCamR);
 	arm_mat_init_f32(&RWithCam, 8, 8, ekfWithCamR);

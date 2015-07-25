@@ -5,7 +5,7 @@
  *      Author: clark
  */
 
-#include <stdlib.h>
+#include <cstdlib>
 #include "Loop.hpp"
 #include "time_util.h"
 #include <vector>
@@ -16,7 +16,12 @@
 #include "servoIn.hpp"
 #include "inc/hw_nvic.h"
 
-Loop::Loop() { }
+using namespace std;
+
+Loop::Loop()
+{
+	fileNumber = 1;
+}
 
 void Loop::addEvent(Runnable* task, int32_t periodMs) {
 	Event event;
@@ -48,8 +53,9 @@ void Loop::run(SdCard* sdcard)
 
 				// waiting for unkill signal
 				while((servoIn_getPulse(KILL_CHAN3)) < 80000);
-
-
+				//char filename[15];
+				snprintf(fileName, sizeof(fileName), "log%u.txt", fileNumber++);
+				sdcard->createFile(fileName);
 			}
 
 			//TODO: FIGURE OUT WHY THIS WORKS BUT NOT THE COMMENTED OUT PART!!!!

@@ -13,6 +13,7 @@
 #include <cstdlib>
 #include <cstdio>
 #include <cstring>
+#include <cmath>
 
 #include "servoIn.hpp"
 
@@ -47,11 +48,14 @@
 //#include "flight_mode.h"
 #include "Loop.hpp"
 #include "Vehicle.hpp"
+#include "Dof.hpp"
+#include "Pid.hpp"
 //#include "tests/test_definitions.h"
 #include "runnables/DjiRunnable.hpp"
 #include "runnables/FlightModeRunnable.hpp"
 #include "runnables/ImuRunnable.hpp"
 #include "runnables/I2CRunnable.hpp"
+#include "runnables/CtrlRunnable.hpp"
 
 //#include "messaging/data_link.h"
 
@@ -90,20 +94,121 @@ int main()
 	servoIn_init(SYSCTL_PERIPH_TIMER4, TIMER4_BASE); 						// Chose timer4 until encapsulated
 	servoIn_attachPin();
 
-	Vehicle vehicle;
+	float time = (float)millis() / 1000.0f; // grab current time for initialization
+
+	// Ctrl Vals
+	// state and setpt will always be initialized the to 0 and time
+	float states[4][4] = {
+			{0, 0, 0, time},
+			{0, 0, 0, time},
+			{0, 0, 0, time},
+			{0, 0, 0, time},
+	};
+	float setpts[4][4] = {
+			{0, 0, 0, time},
+			{0, 0, 0, time},
+			{0, 0, 0, time},
+			{0, 0, 0, time},
+	};
+	// intial gains will be the same for val and rate PIDs
+	// TODO intialize gains from EEPROM storage of them
+	float valueGains[4][3] = {
+			{1, 0, 1},
+			{1, 0, 1},
+			{1, 0, 1},
+			{1, 0, 1},
+	};
+	float rateGains[4][3] = {
+			{1, 0, 1},
+			{1, 0, 1},
+			{1, 0, 1},
+			{1, 0, 1},
+	};
+	uint8_t valueFlags[4] = {
+			DERR_DT_MASK,
+			DERR_DT_MASK,
+			DERR_DT_MASK,
+			DERR_DT_MASK | DISC_DERIV_MASK | WRAP_AROUND_MASK,
+	};
+	uint8_t rateFlags[4] = {
+			DERR_DT_MASK | DISC_DERIV_MASK,
+			DERR_DT_MASK | DISC_DERIV_MASK,
+			DERR_DT_MASK | DISC_DERIV_MASK,
+			DERR_DT_MASK | DISC_DERIV_MASK,
+	};
+	float inertias[4] = {2.5f, 2.5f, 2.5f, 2.5f};
+	float stateBounds[4] = {0, 0, 0, PI};
+	float rateUpLims[4] = {20, 20, 20, 20};
+	float rateLwLims[4] = {-20, -20, -20, -20};
+	float accelUpLims[4] = {HUGE_VALF, HUGE_VALF, HUGE_VALF, HUGE_VALF};
+	float accelLwLims[4] = {-HUGE_VALF, -HUGE_VALF, -HUGE_VALF, -HUGE_VALF};
+
+	// todo for now, lp will be set to 0 and disabled.
+	float valueStateLpCoeffs[NUM_DOFS] = {0, 0, 0, 0};
+	float valueErrorLpCoeffs[NUM_DOFS] = {0, 0, 0, 0};
+	float rateStateLpCoeffs[NUM_DOFS] = {0, 0, 0, 0};
+	float rateErrorLpCoeffs[NUM_DOFS] = {0, 0, 0, 0};
+
+	float rpLims[NUM_ANGLES] = {PI / 4.0f, PI / 4.0f};
+
+	// EKF values
+	float ekfInitState[9] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
+	float ekfInitP[81]; memset(ekfInitP, 0, sizeof(float) * 81);
+	float ekfQ[81] = {
+			1, 0, 0, 0, 0, 0, 0, 0, 0,
+			0, 1, 0, 0, 0, 0, 0, 0, 0,
+			0, 0, 1, 0, 0, 0, 0, 0, 0,
+			0, 0, 0, 1, 0, 0, 0, 0, 0,
+			0, 0, 0, 0, 1, 0, 0, 0, 0,
+			0, 0, 0, 0, 0, 1, 0, 0, 0,
+			0, 0, 0, 0, 0, 0, 1, 0, 0,
+			0, 0, 0, 0, 0, 0, 0, 1, 0,
+			0, 0, 0, 0, 0, 0, 0, 0, 1,
+	};
+	float ekfNoCamR[36] = {
+			1, 0, 0, 0, 0, 0,
+			0, 1, 0, 0, 0, 0,
+			0, 0, 1, 0, 0, 0,
+			0, 0, 0, 1, 0, 0,
+			0, 0, 0, 0, 1, 0,
+			0, 0, 0, 0, 0, 1,
+	};
+	float ekfWithCamR[64] = {
+			1, 0, 0, 0, 0, 0, 0, 0,
+			0, 1, 0, 0, 0, 0, 0, 0,
+			0, 0, 1, 0, 0, 0, 0, 0,
+			0, 0, 0, 1, 0, 0, 0, 0,
+			0, 0, 0, 0, 1, 0, 0, 0,
+			0, 0, 0, 0, 0, 1, 0, 0,
+			0, 0, 0, 0, 0, 0, 1, 0,
+			0, 0, 0, 0, 0, 0, 0, 1,
+	};
+
+	float totalMass = 2.5f;
+	float initTime = time;
+	Vehicle v(states, setpts, valueGains, rateGains, valueFlags,
+			  rateFlags, inertias, stateBounds, rateUpLims,
+			  rateLwLims, accelUpLims, accelLwLims,
+			  valueStateLpCoeffs, valueErrorLpCoeffs,
+			  rateStateLpCoeffs, rateErrorLpCoeffs,
+			  totalMass, initTime, rpLims,
+			  ekfInitState, ekfInitP, ekfQ, ekfNoCamR, ekfWithCamR);
 	Imu imu;
 	Lidar lidar;
 	Px4 px4;
 	SdCard sdcard;
-	ProgramState pState(&vehicle, &imu, &px4, &lidar, &sdcard, MANUAL);
+	ProgramState pState(&v, &imu, &px4, &lidar, &sdcard, MANUAL);
 	
 	FlightModeRunnable flightModeRunnable(&pState);
 	DjiRunnable djiRunnable(&pState);
 	ImuRunnable	imuRunnable(&pState);
 	I2CRunnable i2cRunnable(&pState);
+	CtrlRunnable ctrlRunnable(&pState);
 
 	Loop mainLoop;
+	/* Note: Keep track of the order! */
 	mainLoop.addEvent(&flightModeRunnable, 10);
+	mainLoop.addEvent(&ctrlRunnable, 10); // this may be too fast of a frequency
 	mainLoop.addEvent(&djiRunnable, 10);
 	mainLoop.addEvent(&imuRunnable, 0);
 	mainLoop.addEvent(&i2cRunnable, 0);
@@ -114,9 +219,7 @@ int main()
 	// check if the stick is up PWM (59660, 127400)
 	while(servoIn_getPulse(KILL_CHAN3) < 80000);
 
-	char filename[15];
-	snprintf(filename, sizeof(filename), "log%u.txt", (uint32_t)fileNumber++);
-	sdcard.createFile(filename);
+	sdcard.createFile("log0.txt");
 
 	mainLoop.run(&sdcard);
 

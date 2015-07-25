@@ -2,10 +2,10 @@
 #define EVENT_HPP_
 
 // base class for event stuff
-class Runnable {
+class Runnable
+{
 public:
 	virtual void run() = 0;
-
 	virtual ~Runnable() {}
 };
 

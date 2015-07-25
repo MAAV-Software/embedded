@@ -13,13 +13,14 @@
  */
 
 struct Event
-	{
-		Runnable* task;
-		int32_t lastTime;
-		int32_t period;
-	};
+{
+	Runnable* task;
+	int32_t lastTime;
+	int32_t period;
+};
 
-class Loop {
+class Loop
+{
 public:
 	Loop();
 
@@ -38,7 +39,8 @@ public:
 	void run(SdCard* sdcard);
 
 private:
-
+	uint32_t fileNumber;
+	char fileName[15];
 	std::vector<Event> _events;
 
 };

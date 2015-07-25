@@ -7,12 +7,8 @@
 class DjiRunnable : public Runnable {
 private:
 	ProgramState *state;
-//	Vehicle* vehicle;
 public:
 	DjiRunnable(ProgramState *pState);
-
-	~DjiRunnable();
-
 	void run();
 };
 

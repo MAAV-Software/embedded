@@ -14,13 +14,11 @@
 DjiRunnable::DjiRunnable(ProgramState* pState)
 	: state(pState) { }
 
-DjiRunnable::~DjiRunnable() { }
-
-void DjiRunnable::run() {
-	//switch (vehicle->getFlightMode())
+void DjiRunnable::run()
+{
 	switch(state->mode)
 	{
-		case AUTONOMOUS:
+		case AUTONOMOUS: break;
 		case ASSISTED:
 //			PPM_setPulse(0, servoIn_getPulse(RC_CHAN1));
 //			PPM_setPulse(1, servoIn_getPulse(RC_CHAN2));
@@ -39,8 +37,6 @@ void DjiRunnable::run() {
 			PPM_setPulse(2, servoIn_getPulse(RC_CHAN3));	// Z Accel
 			PPM_setPulse(3, servoIn_getPulse(RC_CHAN4));	// Yaw Rate
 			break;
-		default:
-			break;
+		default: break;
 	}
 }
-

@@ -10,6 +10,8 @@ struct PidLog
 	float ki;
 	float kd;
 	uint8_t flags;
+
+	PidLog() : setpt(0), kp(0), ki(0), kd(0), flags(0) {}
 };
 
 struct VehicleLog
@@ -26,6 +28,10 @@ struct VehicleLog
 	float rollFilt;
 	float pitchFilt;
 	float yawFilt;
+
+	VehicleLog() : xUval(0), yUval(0), zUval(0), xFilt(0), yFilt(0), zFilt(0),
+				   xdotFilt(0), ydotFilt(0), zdotFilt(0), rollFilt(0),
+				   pitchFilt(0), yawFilt(0) {}
 };
 
 /* Note that these are minimalist log objects.

@@ -30,6 +30,7 @@ public:
 	float getMagY() const;
 	float getMagZ() const;
 	uint32_t getTimer() const;
+	void getRotMat(float dest[NUM_M_VAL]);
 
 private:
 	float AccX;

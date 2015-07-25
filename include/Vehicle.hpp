@@ -7,6 +7,7 @@
 #include "kalman/ExtendedKalmanFilter.hpp"
 #include "kalman/KalmanFunctions.hpp"
 #include "FlightMode.hpp"
+#include "CtrlLogs.hpp"
 
 // Defines for array sizes
 #define NUM_DOFS	4
@@ -26,8 +27,8 @@ public:
 			const float setpts[NUM_DOFS][NUM_DOF_STATES],
 			const float valueGains[NUM_DOFS][NUM_PID_GAINS],
 			const float rateGains[NUM_DOFS][NUM_PID_GAINS],
-			const float valueFlags[NUM_DOFS],
-			const float rateFlags[NUM_DOFS],
+			const uint8_t valueFlags[NUM_DOFS],
+			const uint8_t rateFlags[NUM_DOFS],
 			const float inertias[NUM_DOFS],
 			const float stateBounds[NUM_DOFS],
 			const float rateUpLims[NUM_DOFS],

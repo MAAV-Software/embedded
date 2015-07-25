@@ -461,9 +461,9 @@
 			<locationURI>REPO_LOC/include/messaging/tuning_t.h</locationURI>
 		</link>
 		<link>
-			<name>include/runnables/ControllerRunnable.hpp</name>
+			<name>include/runnables/CtrlRunnable.hpp</name>
 			<type>1</type>
-			<locationURI>REPO_LOC/include/runnables/ControllerRunnable.hpp</locationURI>
+			<locationURI>REPO_LOC/include/runnables/CtrlRunnable.hpp</locationURI>
 		</link>
 		<link>
 			<name>include/runnables/DataLinkRunnables.hpp</name>
@@ -601,9 +601,9 @@
 			<locationURI>REPO_LOC/src/messaging/tuning_t.c</locationURI>
 		</link>
 		<link>
-			<name>src/runnables/ControllerRunnable.cpp</name>
+			<name>src/runnables/CtrlRunnable.cpp</name>
 			<type>1</type>
-			<locationURI>REPO_LOC/src/runnables/ControllerRunnable.cpp</locationURI>
+			<locationURI>REPO_LOC/src/runnables/CtrlRunnable.cpp</locationURI>
 		</link>
 		<link>
 			<name>src/runnables/DataLinkRunnables.cpp</name>
