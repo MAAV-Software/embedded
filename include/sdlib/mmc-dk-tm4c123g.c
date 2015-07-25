@@ -16,6 +16,7 @@
 #include "inc/hw_memmap.h"
 #include "inc/hw_types.h"
 #include "driverlib/gpio.h"
+#include "driverlib/pin_map.h"
 #include "driverlib/rom.h"
 #include "driverlib/rom_map.h"
 #include "driverlib/ssi.h"
@@ -23,6 +24,8 @@
 
 #include "diskio.h"
 #include "integer.h"
+
+#include "time_util.h"
 
 /* Definitions for MMC/SDC command */
 #define CMD0    (0x40+0)    /* GO_IDLE_STATE */
@@ -62,7 +65,7 @@
 #define SDC_SSI_CLK             GPIO_PIN_0
 #define SDC_SSI_TX              GPIO_PIN_3
 #define SDC_SSI_RX              GPIO_PIN_2
-#define SDC_SSI_FSS             GPIO_PIN_1
+#define SDC_SSI_FSS             GPIO_PIN_4
 #define SDC_SSI_PINS            (SDC_SSI_TX | SDC_SSI_RX | SDC_SSI_CLK | SDC_SSI_FSS)
 
 // asserts the CS pin to the card
@@ -223,7 +226,7 @@ void power_on (void)
                          GPIO_STRENGTH_4MA, GPIO_PIN_TYPE_STD);
 
     /* Configure the SSI0 port */
-    ROM_SSIConfigSetExpClk(SDC_SSI_BASE, ROM_SysCtlClockGet(),
+    ROM_SSIConfigSetExpClk(SDC_SSI_BASE, SYSCLOCK,
                            SSI_FRF_MOTO_MODE_0, SSI_MODE_MASTER, 400000, 8);
     ROM_SSIEnable(SDC_SSI_BASE);
 
@@ -244,14 +247,14 @@ void set_max_speed(void)
     ROM_SSIDisable(SDC_SSI_BASE);
 
     /* Set the maximum speed as half the system clock, with a max of 12.5 MHz. */
-    i = ROM_SysCtlClockGet() / 2;
+    i = SYSCLOCK / 2;
     if(i > 12500000)
     {
         i = 12500000;
     }
 
     /* Configure the SSI0 port to run at 12.5MHz */
-    ROM_SSIConfigSetExpClk(SDC_SSI_BASE, ROM_SysCtlClockGet(),
+    ROM_SSIConfigSetExpClk(SDC_SSI_BASE, SYSCLOCK,
                            SSI_FRF_MOTO_MODE_0, SSI_MODE_MASTER, i, 8);
 
     /* Enable the SSI */

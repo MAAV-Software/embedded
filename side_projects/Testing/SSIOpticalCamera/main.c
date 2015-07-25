@@ -45,12 +45,18 @@ void ConfigUART(void)
 
 void ConfigSPI(void)
 {
-	SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
-	SysCtlPeripheralEnable(SYSCTL_PERIPH_SSI0);
-	GPIOPinConfigure(GPIO_PA2_SSI0CLK);
-	GPIOPinConfigure(GPIO_PA3_SSI0FSS);
-	GPIOPinConfigure(GPIO_PA4_SSI0RX);
-	GPIOPinConfigure(GPIO_PA5_SSI0TX);
+//	SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
+//	SysCtlPeripheralEnable(SYSCTL_PERIPH_SSI0);
+//	GPIOPinConfigure(GPIO_PA2_SSI0CLK);
+//	GPIOPinConfigure(GPIO_PA3_SSI0FSS);
+//	GPIOPinConfigure(GPIO_PA4_SSI0RX);
+//	GPIOPinConfigure(GPIO_PA5_SSI0TX);
+	SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOD);
+	SysCtlPeripheralEnable(SYSCTL_PERIPH_SSI1);
+	GPIOPinConfigure(GPIO_PD0_SSI1CLK);
+	GPIOPinConfigure(GPIO_PD1_SSI1FSS);
+	GPIOPinConfigure(GPIO_PD2_SSI1RX);
+	GPIOPinConfigure(GPIO_PD3_SSI1TX);
 
 	GPIOPinTypeSSI(GPIO_PORTA_BASE, GPIO_PIN_2 | GPIO_PIN_4 | GPIO_PIN_5);
 	// 8bit package, 2000000 bit  = 2Mhz rate, running at 2Mz/8 = ? frequency
@@ -76,10 +82,10 @@ int main(void)
     // Setup the system clock to run at 80 MHz from PLL with crystal reference
     SysCtlClockSet(SYSCTL_SYSDIV_2_5 | SYSCTL_USE_PLL | SYSCTL_XTAL_16MHZ | SYSCTL_OSC_MAIN);
 
-	ConfigUART();
+//	ConfigUART();
 
     // Print the welcome message to the terminal.
-    UARTprintf("SPI Testing\n\r");
+//    UARTprintf("SPI Testing\n\r");
 
 	ConfigSPI();
 	uint32_t garbage;
