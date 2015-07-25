@@ -71,6 +71,7 @@ uint64_t timestamp_now() {
 
     return time;
 }
+
 uint32_t millis() {
 	return(timestamp_now()/1000);
 }

@@ -1,13 +1,11 @@
 #ifndef LOOP_HPP_
 #define LOOP_HPP_
 
-#include <vector>
 #include <functional>
 #include <stdint.h>
 #include "runnables/Runnable.hpp"
 
-#include "SdCard.hpp"
-
+#define NUM_EVENT 5
 /**
  * @brief Class to handle timing events in a loop
  */
@@ -29,17 +27,18 @@ public:
 	 * @param fn function pointer to be run
 	 * @param periodMs the period for how often to run the function in milliseconds
 	 */
-	void addEvent(Runnable* task, int32_t periodMs);
+	void regEvent(Runnable* task, int32_t periodMs);
 
 	/**
 	 * @brief runs the loop that calls events at set times
 	 * will not return
 	 */
-	void run(SdCard* sdcard);
+	void run();
 
 private:
 
-	std::vector<Event> _events;
+	Event _events[NUM_EVENT];
+	uint32_t _eventCnt;
 
 };
 

@@ -2,7 +2,7 @@
 # Automatically-generated file. Do not edit!
 ################################################################################
 
-CG_TOOL_ROOT := /home/sajan/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.4
+CG_TOOL_ROOT := /home/sheldon/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.4
 
 ORDERED_OBJS += \
 "./main.obj" \
@@ -35,15 +35,16 @@ ORDERED_OBJS += \
 "./src/runnables/FlightModeRunnable.obj" \
 "./src/runnables/I2CRunnable.obj" \
 "./src/runnables/ImuRunnable.obj" \
+"./src/runnables/KillRunnable.obj" \
 "./src/runnables/OptSwitchRunnables.obj" \
 "./src/runnables/Px4Runnable.obj" \
 "./src/kalman/ExtendedKalmanFilter.obj" \
 "./src/kalman/KalmanFunctions.obj" \
 "./sdlib/ff.obj" \
 "./sdlib/mmc-dk-tm4c123g.obj" \
-"/home/sajan/ti/SW-TM4C-2.1.0.12573/driverlib/ccs/Debug/driverlib.lib" \
-"/home/sajan/maav-controls/libs/dsplib.lib" \
-"/home/sajan/ti/SW-TM4C-2.1.0.12573/sensorlib/ccs/Debug/sensorlib.lib" \
+"/home/sheldon/ti/SW-TM4C-2.1.0.12573/driverlib/ccs/Debug/driverlib.lib" \
+"/home/sheldon/maav-controls/libs/dsplib.lib" \
+"/home/sheldon/ti/SW-TM4C-2.1.0.12573/sensorlib/ccs/Debug/sensorlib.lib" \
 "../tm4c123gh6pm.cmd" \
 $(GEN_CMDS__FLAG) \
 -l"libc.a" \
@@ -177,22 +178,22 @@ all: maav.out
 maav.out: $(OBJS) $(CMD_SRCS) $(LIB_SRCS) $(GEN_CMDS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: ARM Linker'
-	"/home/sajan/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.4/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 --abi=eabi -me -Ooff --opt_for_speed=1 -g --c99 --c++03 --gcc --define=_LINKAGE --define=PART_TM4C1230C3PM --define=__GNUC__ --define=__FPU_PRESENT=1 --define=_CODE_ACCESS="" --define=_DATA_ACCESS="" --define=ARM_MATH_CM4 --define=TARGET_IS_TM4C123_RB1 --define=ccs="ccs" --define=PART_TM4C123GH6PM --display_error_number --diag_warning=225 --diag_wrap=off -z -m"maav.map" --heap_size=1536 --stack_size=16384 -i"/home/sajan/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.4/lib" -i"/home/sajan/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.4/include" -i"/home/sajan/maav-controls/include" --reread_libs --warn_sections --display_error_number --diag_wrap=off --xml_link_info="maav_linkInfo.xml" --rom_model -o "maav.out" $(ORDERED_OBJS)
+	"/home/sheldon/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.4/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 --abi=eabi -me -Ooff --opt_for_speed=1 -g --c99 --c++03 --gcc --define=_LINKAGE --define=PART_TM4C1230C3PM --define=__GNUC__ --define=__FPU_PRESENT=1 --define=_CODE_ACCESS="" --define=_DATA_ACCESS="" --define=ARM_MATH_CM4 --define=TARGET_IS_TM4C123_RB1 --define=ccs="ccs" --define=PART_TM4C123GH6PM --display_error_number --diag_warning=225 --diag_wrap=off -z -m"maav.map" --heap_size=1536 --stack_size=16384 -i"/home/sheldon/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.4/lib" -i"/home/sheldon/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.4/include" -i"/home/sheldon/maav-controls/include" --reread_libs --warn_sections --display_error_number --diag_wrap=off --xml_link_info="maav_linkInfo.xml" --rom_model -o "maav.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
 maav.hex: $(EXE_OUTPUTS)
 	@echo 'Invoking: ARM Hex Utility'
-	"/home/sajan/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.4/bin/armhex"  -o "maav.hex" $(EXE_OUTPUTS__QUOTED)
+	"/home/sheldon/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.4/bin/armhex"  -o "maav.hex" $(EXE_OUTPUTS__QUOTED)
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
 	-$(RM) $(EXE_OUTPUTS__QUOTED)$(BIN_OUTPUTS__QUOTED)
-	-$(RM) "main.pp" "src/Battery.pp" "src/Dof.pp" "src/FlightModeHw.pp" "src/I2CHw.pp" "src/Imu.pp" "src/ImuHw.pp" "src/Lidar.pp" "src/Loop.pp" "src/LowPass.pp" "src/Pid.pp" "src/ProgramState.pp" "src/Px4.pp" "src/SdCard.pp" "src/Vehicle.pp" "src/rc.pp" "src/servoIn.pp" "src/runnables/ControllerRunnable.pp" "src/runnables/DataLinkRunnables.pp" "src/runnables/DjiRunnable.pp" "src/runnables/FlightModeRunnable.pp" "src/runnables/I2CRunnable.pp" "src/runnables/ImuRunnable.pp" "src/runnables/OptSwitchRunnables.pp" "src/runnables/Px4Runnable.pp" "src/kalman/ExtendedKalmanFilter.pp" "src/kalman/KalmanFunctions.pp" 
+	-$(RM) "main.pp" "src/Battery.pp" "src/Dof.pp" "src/FlightModeHw.pp" "src/I2CHw.pp" "src/Imu.pp" "src/ImuHw.pp" "src/Lidar.pp" "src/Loop.pp" "src/LowPass.pp" "src/Pid.pp" "src/ProgramState.pp" "src/Px4.pp" "src/SdCard.pp" "src/Vehicle.pp" "src/rc.pp" "src/servoIn.pp" "src/runnables/ControllerRunnable.pp" "src/runnables/DataLinkRunnables.pp" "src/runnables/DjiRunnable.pp" "src/runnables/FlightModeRunnable.pp" "src/runnables/I2CRunnable.pp" "src/runnables/ImuRunnable.pp" "src/runnables/KillRunnable.pp" "src/runnables/OptSwitchRunnables.pp" "src/runnables/Px4Runnable.pp" "src/kalman/ExtendedKalmanFilter.pp" "src/kalman/KalmanFunctions.pp" 
 	-$(RM) "tm4c123gh6pm_startup_ccs.pp" "uartstdio.pp" "src/LED.pp" "src/PPM.pp" "src/switch.pp" "src/time_util.pp" "src/utility.pp" "sdlib/ff.pp" "sdlib/mmc-dk-tm4c123g.pp" 
-	-$(RM) "main.obj" "tm4c123gh6pm_startup_ccs.obj" "uartstdio.obj" "src/Battery.obj" "src/Dof.obj" "src/FlightModeHw.obj" "src/I2CHw.obj" "src/Imu.obj" "src/ImuHw.obj" "src/LED.obj" "src/Lidar.obj" "src/Loop.obj" "src/LowPass.obj" "src/PPM.obj" "src/Pid.obj" "src/ProgramState.obj" "src/Px4.obj" "src/SdCard.obj" "src/Vehicle.obj" "src/rc.obj" "src/servoIn.obj" "src/switch.obj" "src/time_util.obj" "src/utility.obj" "src/runnables/ControllerRunnable.obj" "src/runnables/DataLinkRunnables.obj" "src/runnables/DjiRunnable.obj" "src/runnables/FlightModeRunnable.obj" "src/runnables/I2CRunnable.obj" "src/runnables/ImuRunnable.obj" "src/runnables/OptSwitchRunnables.obj" "src/runnables/Px4Runnable.obj" "src/kalman/ExtendedKalmanFilter.obj" "src/kalman/KalmanFunctions.obj" "sdlib/ff.obj" "sdlib/mmc-dk-tm4c123g.obj" 
+	-$(RM) "main.obj" "tm4c123gh6pm_startup_ccs.obj" "uartstdio.obj" "src/Battery.obj" "src/Dof.obj" "src/FlightModeHw.obj" "src/I2CHw.obj" "src/Imu.obj" "src/ImuHw.obj" "src/LED.obj" "src/Lidar.obj" "src/Loop.obj" "src/LowPass.obj" "src/PPM.obj" "src/Pid.obj" "src/ProgramState.obj" "src/Px4.obj" "src/SdCard.obj" "src/Vehicle.obj" "src/rc.obj" "src/servoIn.obj" "src/switch.obj" "src/time_util.obj" "src/utility.obj" "src/runnables/ControllerRunnable.obj" "src/runnables/DataLinkRunnables.obj" "src/runnables/DjiRunnable.obj" "src/runnables/FlightModeRunnable.obj" "src/runnables/I2CRunnable.obj" "src/runnables/ImuRunnable.obj" "src/runnables/KillRunnable.obj" "src/runnables/OptSwitchRunnables.obj" "src/runnables/Px4Runnable.obj" "src/kalman/ExtendedKalmanFilter.obj" "src/kalman/KalmanFunctions.obj" "sdlib/ff.obj" "sdlib/mmc-dk-tm4c123g.obj" 
 	-@echo 'Finished clean'
 	-@echo ' '
 
