@@ -82,6 +82,8 @@ private:
 	float rpLimits[NUM_ANGLES];	// max roll and pitch limit
 	float lastPredTime; 		// time of the last ekf predict
 	float time;					// current time
+	float preYawSin;
+	float preYawCos;
 	
 	// State Estimator Specific Members	
 	ExtendedKalmanFilter *ekf;

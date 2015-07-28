@@ -178,7 +178,10 @@ void Vehicle::runFilter(const float x, const float y, const float z,
 	state[YAW][DOF_VAL]      = ekfState.pData[8];
 	state[YAW][DOF_RATE]     = 0;
 	state[YAW][DOF_ACCEL]    = 0;
-	setDofStates(state);	
+	setDofStates(state);
+
+	preYawCos = arm_cos_f32(ekfState.pData[8]);
+	preYawSin = arm_sin_f32(ekfState.pData[8]);
 }
 
 // Executes all PID control for all DOFs based on flight mode and calcs DJI vals
@@ -255,7 +258,6 @@ void Vehicle::calcDJIValues()
 	for (int i = 0; i < 3; ++i) forceVe[i] = dofs[i].getUval();
 	forceVe[Z_AXIS] += mass * GRAVITY;
 
-	float preYawCos = 0, preYawSin = 0;
 	// Convert earth frame forces to body frame, adding trim (which is already
 	// in the body frame)
 	forceVy[X_AXIS] =  (preYawCos * forceVe[X_AXIS]) + (preYawSin * forceVe[Y_AXIS]);
@@ -264,12 +266,15 @@ void Vehicle::calcDJIValues()
 
 	// calculate ||F|| = sqrt(Fx^2 + Fy^2 + Fz^2) (L2-Norm)
 	for (int i = 0; i < 3; ++i) forceMag += forceVy[i] * forceVy[i];
-	forceMag = sqrt(forceMag);
+	float tmp = forceMag;
+	arm_sqrt_f32(tmp, &forceMag);
 
 	// Calculate roll and pitch
 	angle[ROLL]  = -asin(forceVy[Y_AXIS] / forceMag);
-	angle[PITCH] =  asin(forceVy[X_AXIS] / 
-			sqrt((forceMag * forceMag) - (forceVy[Y_AXIS] * forceVy[Y_AXIS])));
+	tmp = (forceMag * forceMag) - (forceVy[Y_AXIS] * forceVy[Y_AXIS]);
+	float res = 0;
+	arm_sqrt_f32(tmp, &res);
+	angle[PITCH] =  asin(forceVy[X_AXIS] / res);
 
 	// cap roll and pitch
 	if (angle[ROLL]  >  rpLimits[ROLL])  angle[ROLL]  =  rpLimits[ROLL];
