@@ -194,9 +194,10 @@ int main()
 			  ekfInitState, ekfInitP, ekfQ, ekfNoCamR, ekfWithCamR);
 	Imu imu;
 	Lidar lidar;
-	Px4 px4;
+	Px4 px4ek
 	SdCard sdcard;
-	ProgramState pState(&v, &imu, &px4, &lidar, &sdcard, MANUAL);
+	Battery battery;
+	ProgramState pState(&v, &imu, &px4, &lidar, &sdcard, &battery, MANUAL);
 	
 	FlightModeRunnable flightModeRunnable(&pState);
 	DjiRunnable djiRunnable(&pState);
@@ -214,11 +215,11 @@ int main()
 	mainLoop.regEvent(&i2cRunnable, 0, 5);
 
 	// tricky way to get rid of the initial large values!
-	while(servoIn_getPulse(KILL_CHAN3) > 80000);
+	while(servoIn_getPulse(KILL_CHAN3) > 120000);
 
 	// check if the stick is up, PPM range(59660, 127400)
-	// might change after the calibration
-	while(servoIn_getPulse(KILL_CHAN3) < 80000);
+	// might change after the calibration (87552, 153108)
+	while(servoIn_getPulse(KILL_CHAN3) < 120000);
 
 	sdcard.createFile("log0.txt");
 

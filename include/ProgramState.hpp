@@ -7,6 +7,7 @@
 #include "Lidar.hpp"
 #include "FlightMode.hpp"
 #include "SdCard.hpp"
+#include "Battery.hpp"
 
 struct ProgramState
 {
@@ -15,9 +16,10 @@ struct ProgramState
 	Px4 	*px4;
 	Lidar 	*lidar;
 	SdCard	*sdcard;
+	Battery *battery;
 	FlightMode mode;
 
-	ProgramState(Vehicle *v, Imu *i, Px4 *p, Lidar *l, SdCard *s, FlightMode m);
+	ProgramState(Vehicle *v, Imu *i, Px4 *p, Lidar *l, SdCard *s, Battery *b, FlightMode m);
 };
 
 #endif /* PROGRAMSTATE_HPP_ */

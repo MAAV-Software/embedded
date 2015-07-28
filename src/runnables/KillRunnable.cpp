@@ -14,7 +14,7 @@ KillRunnable::KillRunnable(ProgramState *pState) : state(pState)
 
 void KillRunnable::run()
 {
-	if ((servoIn_getPulse(KILL_CHAN3)) < 80000)
+	if ((servoIn_getPulse(KILL_CHAN3)) < 120000)
 	{
 		state->sdcard->Sync();
 
@@ -22,7 +22,7 @@ void KillRunnable::run()
 		state->sdcard->closeFile();
 
 		// waiting for unkill signal
-		while((servoIn_getPulse(KILL_CHAN3)) < 80000);
+		while((servoIn_getPulse(KILL_CHAN3)) < 120000);
 
 		// Start a new file
 		snprintf(fileName, sizeof(fileName), "log%u.txt", fileNumber++);
