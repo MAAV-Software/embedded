@@ -17,30 +17,18 @@ int64_t __feedback_t_hash_recursive(const __lcm_hash_ptr *p)
         if (fp->v == __feedback_t_get_hash)
             return 0;
 
-    __lcm_hash_ptr cp;
-    cp.parent = p;
-    cp.v = (void*)__feedback_t_get_hash;
+    const __lcm_hash_ptr cp = { p, (void*)__feedback_t_get_hash };
     (void) cp;
 
-    int64_t hash = 0xfa1776c16a7f5b10LL
-         + __int32_hash_recursive(&cp)
-         + __int32_hash_recursive(&cp)
+    int64_t hash = 0x81ffe71d1aaf50b2LL
          + __float_hash_recursive(&cp)
          + __float_hash_recursive(&cp)
          + __float_hash_recursive(&cp)
          + __float_hash_recursive(&cp)
          + __float_hash_recursive(&cp)
          + __float_hash_recursive(&cp)
-         + __int32_hash_recursive(&cp)
-         + __float_hash_recursive(&cp)
-         + __float_hash_recursive(&cp)
-         + __float_hash_recursive(&cp)
-         + __float_hash_recursive(&cp)
-         + __float_hash_recursive(&cp)
-         + __float_hash_recursive(&cp)
-         + __float_hash_recursive(&cp)
-         + __float_hash_recursive(&cp)
-         + __float_hash_recursive(&cp)
+         + __int8_t_hash_recursive(&cp)
+         + __int64_t_hash_recursive(&cp)
         ;
 
     return (hash<<1) + ((hash>>63)&1);
@@ -62,58 +50,28 @@ int __feedback_t_encode_array(void *buf, int offset, int maxlen, const feedback_
 
     for (element = 0; element < elements; element++) {
 
-        thislen = __int32_encode_array(buf, offset + pos, maxlen - pos, &(p[element].cmd), 1);
+        thislen = __float_encode_array(buf, offset + pos, maxlen - pos, p[element].x, 3);
         if (thislen < 0) return thislen; else pos += thislen;
 
-        thislen = __int32_encode_array(buf, offset + pos, maxlen - pos, &(p[element].timestamp), 1);
+        thislen = __float_encode_array(buf, offset + pos, maxlen - pos, p[element].y, 3);
         if (thislen < 0) return thislen; else pos += thislen;
 
-        thislen = __float_encode_array(buf, offset + pos, maxlen - pos, &(p[element].xest), 1);
+        thislen = __float_encode_array(buf, offset + pos, maxlen - pos, p[element].z, 3);
         if (thislen < 0) return thislen; else pos += thislen;
 
-        thislen = __float_encode_array(buf, offset + pos, maxlen - pos, &(p[element].yest), 1);
+        thislen = __float_encode_array(buf, offset + pos, maxlen - pos, &(p[element].roll), 1);
         if (thislen < 0) return thislen; else pos += thislen;
 
-        thislen = __float_encode_array(buf, offset + pos, maxlen - pos, &(p[element].zest), 1);
+        thislen = __float_encode_array(buf, offset + pos, maxlen - pos, &(p[element].pitch), 1);
         if (thislen < 0) return thislen; else pos += thislen;
 
-        thislen = __float_encode_array(buf, offset + pos, maxlen - pos, &(p[element].rest), 1);
+        thislen = __float_encode_array(buf, offset + pos, maxlen - pos, &(p[element].yaw), 1);
         if (thislen < 0) return thislen; else pos += thislen;
 
-        thislen = __float_encode_array(buf, offset + pos, maxlen - pos, &(p[element].pest), 1);
+        thislen = __int8_t_encode_array(buf, offset + pos, maxlen - pos, &(p[element].flags), 1);
         if (thislen < 0) return thislen; else pos += thislen;
 
-        thislen = __float_encode_array(buf, offset + pos, maxlen - pos, &(p[element].hest), 1);
-        if (thislen < 0) return thislen; else pos += thislen;
-
-        thislen = __int32_encode_array(buf, offset + pos, maxlen - pos, &(p[element].status), 1);
-        if (thislen < 0) return thislen; else pos += thislen;
-
-        thislen = __float_encode_array(buf, offset + pos, maxlen - pos, &(p[element].xdot), 1);
-        if (thislen < 0) return thislen; else pos += thislen;
-
-        thislen = __float_encode_array(buf, offset + pos, maxlen - pos, &(p[element].ydot), 1);
-        if (thislen < 0) return thislen; else pos += thislen;
-
-        thislen = __float_encode_array(buf, offset + pos, maxlen - pos, &(p[element].zdot), 1);
-        if (thislen < 0) return thislen; else pos += thislen;
-
-        thislen = __float_encode_array(buf, offset + pos, maxlen - pos, &(p[element].Ax), 1);
-        if (thislen < 0) return thislen; else pos += thislen;
-
-        thislen = __float_encode_array(buf, offset + pos, maxlen - pos, &(p[element].Ay), 1);
-        if (thislen < 0) return thislen; else pos += thislen;
-
-        thislen = __float_encode_array(buf, offset + pos, maxlen - pos, &(p[element].Az), 1);
-        if (thislen < 0) return thislen; else pos += thislen;
-
-        thislen = __float_encode_array(buf, offset + pos, maxlen - pos, &(p[element].rdot), 1);
-        if (thislen < 0) return thislen; else pos += thislen;
-
-        thislen = __float_encode_array(buf, offset + pos, maxlen - pos, &(p[element].pdot), 1);
-        if (thislen < 0) return thislen; else pos += thislen;
-
-        thislen = __float_encode_array(buf, offset + pos, maxlen - pos, &(p[element].hdot), 1);
+        thislen = __int64_t_encode_array(buf, offset + pos, maxlen - pos, &(p[element].utime), 1);
         if (thislen < 0) return thislen; else pos += thislen;
 
     }
@@ -139,41 +97,21 @@ int __feedback_t_encoded_array_size(const feedback_t *p, int elements)
     int size = 0, element;
     for (element = 0; element < elements; element++) {
 
-        size += __int32_encoded_array_size(&(p[element].cmd), 1);
+        size += __float_encoded_array_size(p[element].x, 3);
 
-        size += __int32_encoded_array_size(&(p[element].timestamp), 1);
+        size += __float_encoded_array_size(p[element].y, 3);
 
-        size += __float_encoded_array_size(&(p[element].xest), 1);
+        size += __float_encoded_array_size(p[element].z, 3);
 
-        size += __float_encoded_array_size(&(p[element].yest), 1);
+        size += __float_encoded_array_size(&(p[element].roll), 1);
 
-        size += __float_encoded_array_size(&(p[element].zest), 1);
+        size += __float_encoded_array_size(&(p[element].pitch), 1);
 
-        size += __float_encoded_array_size(&(p[element].rest), 1);
+        size += __float_encoded_array_size(&(p[element].yaw), 1);
 
-        size += __float_encoded_array_size(&(p[element].pest), 1);
+        size += __int8_t_encoded_array_size(&(p[element].flags), 1);
 
-        size += __float_encoded_array_size(&(p[element].hest), 1);
-
-        size += __int32_encoded_array_size(&(p[element].status), 1);
-
-        size += __float_encoded_array_size(&(p[element].xdot), 1);
-
-        size += __float_encoded_array_size(&(p[element].ydot), 1);
-
-        size += __float_encoded_array_size(&(p[element].zdot), 1);
-
-        size += __float_encoded_array_size(&(p[element].Ax), 1);
-
-        size += __float_encoded_array_size(&(p[element].Ay), 1);
-
-        size += __float_encoded_array_size(&(p[element].Az), 1);
-
-        size += __float_encoded_array_size(&(p[element].rdot), 1);
-
-        size += __float_encoded_array_size(&(p[element].pdot), 1);
-
-        size += __float_encoded_array_size(&(p[element].hdot), 1);
+        size += __int64_t_encoded_array_size(&(p[element].utime), 1);
 
     }
     return size;
@@ -190,58 +128,28 @@ int __feedback_t_decode_array(const void *buf, int offset, int maxlen, feedback_
 
     for (element = 0; element < elements; element++) {
 
-        thislen = __int32_decode_array(buf, offset + pos, maxlen - pos, &(p[element].cmd), 1);
+        thislen = __float_decode_array(buf, offset + pos, maxlen - pos, p[element].x, 3);
         if (thislen < 0) return thislen; else pos += thislen;
 
-        thislen = __int32_decode_array(buf, offset + pos, maxlen - pos, &(p[element].timestamp), 1);
+        thislen = __float_decode_array(buf, offset + pos, maxlen - pos, p[element].y, 3);
         if (thislen < 0) return thislen; else pos += thislen;
 
-        thislen = __float_decode_array(buf, offset + pos, maxlen - pos, &(p[element].xest), 1);
+        thislen = __float_decode_array(buf, offset + pos, maxlen - pos, p[element].z, 3);
         if (thislen < 0) return thislen; else pos += thislen;
 
-        thislen = __float_decode_array(buf, offset + pos, maxlen - pos, &(p[element].yest), 1);
+        thislen = __float_decode_array(buf, offset + pos, maxlen - pos, &(p[element].roll), 1);
         if (thislen < 0) return thislen; else pos += thislen;
 
-        thislen = __float_decode_array(buf, offset + pos, maxlen - pos, &(p[element].zest), 1);
+        thislen = __float_decode_array(buf, offset + pos, maxlen - pos, &(p[element].pitch), 1);
         if (thislen < 0) return thislen; else pos += thislen;
 
-        thislen = __float_decode_array(buf, offset + pos, maxlen - pos, &(p[element].rest), 1);
+        thislen = __float_decode_array(buf, offset + pos, maxlen - pos, &(p[element].yaw), 1);
         if (thislen < 0) return thislen; else pos += thislen;
 
-        thislen = __float_decode_array(buf, offset + pos, maxlen - pos, &(p[element].pest), 1);
+        thislen = __int8_t_decode_array(buf, offset + pos, maxlen - pos, &(p[element].flags), 1);
         if (thislen < 0) return thislen; else pos += thislen;
 
-        thislen = __float_decode_array(buf, offset + pos, maxlen - pos, &(p[element].hest), 1);
-        if (thislen < 0) return thislen; else pos += thislen;
-
-        thislen = __int32_decode_array(buf, offset + pos, maxlen - pos, &(p[element].status), 1);
-        if (thislen < 0) return thislen; else pos += thislen;
-
-        thislen = __float_decode_array(buf, offset + pos, maxlen - pos, &(p[element].xdot), 1);
-        if (thislen < 0) return thislen; else pos += thislen;
-
-        thislen = __float_decode_array(buf, offset + pos, maxlen - pos, &(p[element].ydot), 1);
-        if (thislen < 0) return thislen; else pos += thislen;
-
-        thislen = __float_decode_array(buf, offset + pos, maxlen - pos, &(p[element].zdot), 1);
-        if (thislen < 0) return thislen; else pos += thislen;
-
-        thislen = __float_decode_array(buf, offset + pos, maxlen - pos, &(p[element].Ax), 1);
-        if (thislen < 0) return thislen; else pos += thislen;
-
-        thislen = __float_decode_array(buf, offset + pos, maxlen - pos, &(p[element].Ay), 1);
-        if (thislen < 0) return thislen; else pos += thislen;
-
-        thislen = __float_decode_array(buf, offset + pos, maxlen - pos, &(p[element].Az), 1);
-        if (thislen < 0) return thislen; else pos += thislen;
-
-        thislen = __float_decode_array(buf, offset + pos, maxlen - pos, &(p[element].rdot), 1);
-        if (thislen < 0) return thislen; else pos += thislen;
-
-        thislen = __float_decode_array(buf, offset + pos, maxlen - pos, &(p[element].pdot), 1);
-        if (thislen < 0) return thislen; else pos += thislen;
-
-        thislen = __float_decode_array(buf, offset + pos, maxlen - pos, &(p[element].hdot), 1);
+        thislen = __int64_t_decode_array(buf, offset + pos, maxlen - pos, &(p[element].utime), 1);
         if (thislen < 0) return thislen; else pos += thislen;
 
     }
@@ -253,41 +161,21 @@ int __feedback_t_decode_array_cleanup(feedback_t *p, int elements)
     int element;
     for (element = 0; element < elements; element++) {
 
-        __int32_decode_array_cleanup(&(p[element].cmd), 1);
+        __float_decode_array_cleanup(p[element].x, 3);
 
-        __int32_decode_array_cleanup(&(p[element].timestamp), 1);
+        __float_decode_array_cleanup(p[element].y, 3);
 
-        __float_decode_array_cleanup(&(p[element].xest), 1);
+        __float_decode_array_cleanup(p[element].z, 3);
 
-        __float_decode_array_cleanup(&(p[element].yest), 1);
+        __float_decode_array_cleanup(&(p[element].roll), 1);
 
-        __float_decode_array_cleanup(&(p[element].zest), 1);
+        __float_decode_array_cleanup(&(p[element].pitch), 1);
 
-        __float_decode_array_cleanup(&(p[element].rest), 1);
+        __float_decode_array_cleanup(&(p[element].yaw), 1);
 
-        __float_decode_array_cleanup(&(p[element].pest), 1);
+        __int8_t_decode_array_cleanup(&(p[element].flags), 1);
 
-        __float_decode_array_cleanup(&(p[element].hest), 1);
-
-        __int32_decode_array_cleanup(&(p[element].status), 1);
-
-        __float_decode_array_cleanup(&(p[element].xdot), 1);
-
-        __float_decode_array_cleanup(&(p[element].ydot), 1);
-
-        __float_decode_array_cleanup(&(p[element].zdot), 1);
-
-        __float_decode_array_cleanup(&(p[element].Ax), 1);
-
-        __float_decode_array_cleanup(&(p[element].Ay), 1);
-
-        __float_decode_array_cleanup(&(p[element].Az), 1);
-
-        __float_decode_array_cleanup(&(p[element].rdot), 1);
-
-        __float_decode_array_cleanup(&(p[element].pdot), 1);
-
-        __float_decode_array_cleanup(&(p[element].hdot), 1);
+        __int64_t_decode_array_cleanup(&(p[element].utime), 1);
 
     }
     return 0;
@@ -319,41 +207,21 @@ int __feedback_t_clone_array(const feedback_t *p, feedback_t *q, int elements)
     int element;
     for (element = 0; element < elements; element++) {
 
-        __int32_clone_array(&(p[element].cmd), &(q[element].cmd), 1);
+        __float_clone_array(p[element].x, q[element].x, 3);
 
-        __int32_clone_array(&(p[element].timestamp), &(q[element].timestamp), 1);
+        __float_clone_array(p[element].y, q[element].y, 3);
 
-        __float_clone_array(&(p[element].xest), &(q[element].xest), 1);
+        __float_clone_array(p[element].z, q[element].z, 3);
 
-        __float_clone_array(&(p[element].yest), &(q[element].yest), 1);
+        __float_clone_array(&(p[element].roll), &(q[element].roll), 1);
 
-        __float_clone_array(&(p[element].zest), &(q[element].zest), 1);
+        __float_clone_array(&(p[element].pitch), &(q[element].pitch), 1);
 
-        __float_clone_array(&(p[element].rest), &(q[element].rest), 1);
+        __float_clone_array(&(p[element].yaw), &(q[element].yaw), 1);
 
-        __float_clone_array(&(p[element].pest), &(q[element].pest), 1);
+        __int8_t_clone_array(&(p[element].flags), &(q[element].flags), 1);
 
-        __float_clone_array(&(p[element].hest), &(q[element].hest), 1);
-
-        __int32_clone_array(&(p[element].status), &(q[element].status), 1);
-
-        __float_clone_array(&(p[element].xdot), &(q[element].xdot), 1);
-
-        __float_clone_array(&(p[element].ydot), &(q[element].ydot), 1);
-
-        __float_clone_array(&(p[element].zdot), &(q[element].zdot), 1);
-
-        __float_clone_array(&(p[element].Ax), &(q[element].Ax), 1);
-
-        __float_clone_array(&(p[element].Ay), &(q[element].Ay), 1);
-
-        __float_clone_array(&(p[element].Az), &(q[element].Az), 1);
-
-        __float_clone_array(&(p[element].rdot), &(q[element].rdot), 1);
-
-        __float_clone_array(&(p[element].pdot), &(q[element].pdot), 1);
-
-        __float_clone_array(&(p[element].hdot), &(q[element].hdot), 1);
+        __int64_t_clone_array(&(p[element].utime), &(q[element].utime), 1);
 
     }
     return 0;

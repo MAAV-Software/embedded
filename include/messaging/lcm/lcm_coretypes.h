@@ -5,6 +5,7 @@
 #include <stdint.h>
 #include <string.h>
 #include <stdlib.h>
+#include "messaging/int32.h"
 
 #ifdef __cplusplus
 extern "C" {

@@ -111,6 +111,7 @@ SUBDIRS := \
 . \
 src \
 src/runnables \
+src/messaging \
 src/kalman \
 sdlib \
 include/runnables \

@@ -50,6 +50,10 @@
 #include "Vehicle.hpp"
 #include "Dof.hpp"
 #include "Pid.hpp"
+
+#include "messaging/DataLink.hpp"
+#include "DataLinkHw.hpp"
+
 //#include "tests/test_definitions.h"
 #include "runnables/DjiRunnable.hpp"
 #include "runnables/FlightModeRunnable.hpp"
@@ -195,8 +199,11 @@ int main()
 	Imu imu;
 	Lidar lidar;
 	Px4 px4;
+
+	DataLink dl(DataLinkUartSend);
+
 	SdCard sdcard;
-	ProgramState pState(&v, &imu, &px4, &lidar, &sdcard, MANUAL);
+	ProgramState pState(&v, &imu, &px4, &lidar, &sdcard, MANUAL, &dl);
 	
 	FlightModeRunnable flightModeRunnable(&pState);
 	DjiRunnable djiRunnable(&pState);

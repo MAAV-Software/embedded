@@ -18,13 +18,8 @@ extern "C" {
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdint.h>
-//#include "px4_kalman.h"
-//#include "QuadCtrl.hpp"
-#include "messaging/target_t.h"
-#include "messaging/tuning_t.h"
-#include "messaging/position_t.h"
-#include "messaging/feedback_t.h"
-#include "messaging/data_link.h"
+
+
 
 /************************* Utility (Global) Defines ***************************/
 

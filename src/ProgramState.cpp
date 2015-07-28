@@ -6,5 +6,6 @@
 #include "SdCard.hpp"
 #include "FlightMode.hpp"
 
-ProgramState::ProgramState(Vehicle *v, Imu *i, Px4 *p, Lidar *l, SdCard *s, FlightMode m)
-	: vehicle(v), imu(i), px4(p), lidar(l), sdcard(s), mode(m) {}
+ProgramState::ProgramState(Vehicle *v, Imu *i, Px4 *p, Lidar *l, SdCard *s,
+						   FlightMode m, DataLink *dl)
+	: vehicle(v), imu(i), px4(p), lidar(l), sdcard(s), mode(m), dLink(dl) {}

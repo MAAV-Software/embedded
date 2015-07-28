@@ -15,21 +15,30 @@
 extern "C" {
 #endif
 
-#define FEEDBACK_T_VAL 0
-#define FEEDBACK_T_RATE 1
-#define FEEDBACK_T_ACCEL 2
-
+#include "int32.h"
+#include "int32.h"
+#include "int32.h"
 typedef struct _feedback_t feedback_t;
 struct _feedback_t
 {
-    float      x[3];
-    float      y[3];
-    float      z[3];
-    float      roll;
-    float      pitch;
-    float      yaw;
-    int8_t     flags;
-    int64_t    utime;
+    int32      cmd;
+    int32      timestamp;
+    float      xest;
+    float      yest;
+    float      zest;
+    float      rest;
+    float      pest;
+    float      hest;
+    int32      status;
+    float      xdot;
+    float      ydot;
+    float      zdot;
+    float      Ax;
+    float      Ay;
+    float      Az;
+    float      rdot;
+    float      pdot;
+    float      hdot;
 };
 
 feedback_t   *feedback_t_copy(const feedback_t *p);

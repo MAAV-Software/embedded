@@ -29,6 +29,10 @@
  * the defines below.
  **/
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // Disable long packet reception by setting NUM BUFFERS to zero.
 // Total memory allocated is roughly:
 //
@@ -116,5 +120,9 @@ int lcmlite_publish(lcmlite_t *lcm, const char *channel, const void *_buf, int b
 // "channel" field does not support regular expressions, but ending
 // with ".*" is supported as a special case.
 void lcmlite_subscribe(lcmlite_t *lcm, lcmlite_subscription_t *sub);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

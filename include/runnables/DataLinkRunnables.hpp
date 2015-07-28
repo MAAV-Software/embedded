@@ -10,8 +10,6 @@
 #define DATALINKPROCESSDATARUNNABLE_HPP_
 
 #include "Runnable.hpp"
-#include "messaging/data_link.h"
-//#include "QuadCtrl.hpp"
 
 class ProcessReceivedDataRunnable : public Runnable {
 public:
