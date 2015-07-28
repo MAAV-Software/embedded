@@ -1,0 +1,1 @@
+"./I2C_hw.obj" "./Lidar.obj" "./Px4.obj" "./main.obj" "./tm4c123gh6pm_startup_ccs.obj" "./uartstdio.obj" "/home/sheldon/ti/SW-TM4C-2.1.0.12573/driverlib/ccs/Debug/driverlib.lib" "/home/sheldon/ti/SW-TM4C-2.1.0.12573/sensorlib/ccs/Debug/sensorlib.lib" "../tm4c123gh6pm.cmd" -l"libc.a" 
