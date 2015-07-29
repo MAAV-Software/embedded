@@ -8,12 +8,139 @@
 #include "kalman/ExtendedKalmanFilter.hpp"
 #include "kalman/KalmanFunctions.hpp"
 #include "arm_math.h"
+#include "time_util.h"
 
 using namespace std;
 
 // define pi and gravity
 //static const float PI = 3.14159265358979323846;
 static const float GRAVITY = 9.81;
+
+Vehicle::Vehicle(const float valueGains[NUM_DOFS][NUM_PID_GAINS],
+				 const float rateGains[NUM_DOFS][NUM_PID_GAINS])
+{
+	time 		 = (float)millis() / 1000.0f; // grab current time for initialization
+	mass 		 = 2.5f;
+	lastPredTime = 0;
+	dji.roll     = 0;
+	dji.pitch    = 0;
+	dji.yawRate  = 0;
+	dji.thrust   = 0;
+
+	// Ctrl Vals
+	// state and setpt will always be initialized the to 0 and time
+	float states[NUM_DOFS][NUM_DOF_STATES] = {
+		{0, 0, 0, time},
+		{0, 0, 0, time},
+		{0, 0, 0, time},
+		{0, 0, 0, time},
+	};
+	float setpts[NUM_DOFS][NUM_DOF_STATES] = {
+		{0, 0, 0, time},
+		{0, 0, 0, time},
+		{0, 0, 0, time},
+		{0, 0, 0, time},
+	};
+	uint8_t valueFlags[NUM_DOFS] = {
+		DERR_DT_MASK,
+		DERR_DT_MASK,
+		DERR_DT_MASK,
+		DERR_DT_MASK | DISC_DERIV_MASK | WRAP_AROUND_MASK,
+	};
+	uint8_t rateFlags[NUM_DOFS] = {
+		DERR_DT_MASK | DISC_DERIV_MASK,
+		DERR_DT_MASK | DISC_DERIV_MASK,
+		DERR_DT_MASK | DISC_DERIV_MASK,
+		DERR_DT_MASK | DISC_DERIV_MASK,
+	};
+	float stateBounds[4] = {0, 0, 0, PI};
+	float rateUpLims[4]  = {20, 20, 20, 20};
+	float rateLwLims[4]  = {-20, -20, -20, -20};
+	float accelUpLims[4] = {HUGE_VALF, HUGE_VALF, HUGE_VALF, HUGE_VALF};
+	float accelLwLims[4] = {-HUGE_VALF, -HUGE_VALF, -HUGE_VALF, -HUGE_VALF};
+
+	// todo for now, lp will be set to 0 and disabled.
+	float valueStateLpCoeffs[NUM_DOFS] = {0, 0, 0, 0};
+	float valueErrorLpCoeffs[NUM_DOFS] = {0, 0, 0, 0};
+	float rateStateLpCoeffs[NUM_DOFS]  = {0, 0, 0, 0};
+	float rateErrorLpCoeffs[NUM_DOFS]  = {0, 0, 0, 0};
+
+	for (int i = 0; i < NUM_ANGLES; ++i) rpLimits[i] = PI / 4.0f;
+	for (int i = 0; i < NUM_DOFS; ++i)
+	{
+		dofs[i] = Dof(states[i], setpts[i], valueGains[i], rateGains[i],
+					  valueFlags[i], rateFlags[i], 2.5f, stateBounds[i],
+					  rateUpLims[i], rateLwLims[i], accelUpLims[i],
+					  accelLwLims[i], valueStateLpCoeffs[i],
+					  valueErrorLpCoeffs[i], rateStateLpCoeffs[i],
+					  rateErrorLpCoeffs[i]);
+	}
+
+	// EKF values
+	float ekfInitState[9] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
+	float ekfInitP[81] = {
+		1, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 1, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 1, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 1, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 1, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 1, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 1, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 1, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 1,
+	};
+	float ekfQ[81] = {
+		1, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 1, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 1, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 1, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 1, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 1, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 1, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 1, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 1,
+	};
+	float ekfNoCamR[36] = {
+		1, 0, 0, 0, 0, 0,
+		0, 1, 0, 0, 0, 0,
+		0, 0, 1, 0, 0, 0,
+		0, 0, 0, 1, 0, 0,
+		0, 0, 0, 0, 1, 0,
+		0, 0, 0, 0, 0, 1,
+	};
+	float ekfWithCamR[64] = {
+		1, 0, 0, 0, 0, 0, 0, 0,
+		0, 1, 0, 0, 0, 0, 0, 0,
+		0, 0, 1, 0, 0, 0, 0, 0,
+		0, 0, 0, 1, 0, 0, 0, 0,
+		0, 0, 0, 0, 1, 0, 0, 0,
+		0, 0, 0, 0, 0, 1, 0, 0,
+		0, 0, 0, 0, 0, 0, 1, 0,
+		0, 0, 0, 0, 0, 0, 0, 1,
+	};
+
+	// ekfInitP is the ekfInitErrorCov
+	ekf = new ExtendedKalmanFilter(9, ekfInitState, ekfInitP);
+
+	arm_matrix_instance_f32 Q;
+	arm_mat_init_f32(&Q, 9, 9, ekfQ);
+	ekf->setPredictFunc(4, systemDeltaState, systemGetJacobian, &Q);
+
+	arm_matrix_instance_f32 RNoCam, RWithCam;
+	arm_mat_init_f32(&RNoCam, 6, 6, ekfNoCamR);
+	arm_mat_init_f32(&RWithCam, 8, 8, ekfWithCamR);
+	ekf->setUpdateFunc(0, 6, sensorPredict, sensorGetJacobian, &RNoCam);
+	ekf->setUpdateFunc(1, 8, sensorPredictWithCam, sensorGetJacobianWithCam, &RWithCam);
+
+	float controlInput[4] = {0, 0, 0, 0};
+	arm_mat_init_f32(&controlInputMat, 4, 1, controlInput);
+
+	float sensorMeasurement[6] = {0, 0, 0, 0, 0, 0};
+	arm_mat_init_f32(&sensorMeasurementMat, 6, 1, sensorMeasurement);
+
+	float sensorMeasurementWithCam[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+	arm_mat_init_f32(&sensorMeasurementMatWithCam, 8, 1, sensorMeasurementWithCam);
+}
 
 Vehicle::Vehicle()
 {

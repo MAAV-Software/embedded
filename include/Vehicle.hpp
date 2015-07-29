@@ -23,6 +23,8 @@ public:
 	// Public Methods
 	// Constructors
 	Vehicle();
+	Vehicle(const float valueGains[NUM_DOFS][NUM_PID_GAINS],
+			const float rateGains[NUM_DOFS][NUM_PID_GAINS]);
 	Vehicle(const float states[NUM_DOFS][NUM_DOF_STATES],
 			const float setpts[NUM_DOFS][NUM_DOF_STATES],
 			const float valueGains[NUM_DOFS][NUM_PID_GAINS],
@@ -74,6 +76,8 @@ public:
 	// Logging function
 	void prepareLog(VehicleLog &vlog, PidLog plogs[NUM_DOFS][2]);
 
+	void setDofStates(const float state[NUM_DOFS][NUM_DOF_STATES]);
+
 private:
 	// Controller specific Members
 	Dof dofs[NUM_DOFS]; 		// DOF classes for xyzh
@@ -95,7 +99,7 @@ private:
 	void calcDJIValues();
 
 	// Updates the states of the DOFS
-	void setDofStates(const float state[NUM_DOFS][NUM_DOF_STATES]);
+	//void setDofStates(const float state[NUM_DOFS][NUM_DOF_STATES]);
 };
 
 #endif /* VEHICLE_HPP_ */

@@ -13,7 +13,7 @@ public:
 private:
 //	Px4 	*px4;
 //	Lidar	*lidar;
-	ProgramState *state;
+	ProgramState *ps;
 };
 
 #endif /* I2CRUNNABLE_HPP_ */

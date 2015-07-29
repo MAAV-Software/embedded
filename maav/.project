@@ -221,6 +221,11 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
+			<name>include/sdlib</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
 			<name>include/servoIn.hpp</name>
 			<type>1</type>
 			<locationURI>REPO_LOC/include/servoIn.hpp</locationURI>
@@ -516,11 +521,6 @@
 			<locationURI>REPO_LOC/include/runnables/KillRunnable.hpp</locationURI>
 		</link>
 		<link>
-			<name>include/runnables/OptSwitchRunnables.hpp</name>
-			<type>1</type>
-			<locationURI>REPO_LOC/include/runnables/OptSwitchRunnables.hpp</locationURI>
-		</link>
-		<link>
 			<name>include/runnables/Px4Runnable.hpp</name>
 			<type>1</type>
 			<locationURI>REPO_LOC/include/runnables/Px4Runnable.hpp</locationURI>
@@ -529,6 +529,61 @@
 			<name>include/runnables/Runnable.hpp</name>
 			<type>1</type>
 			<locationURI>REPO_LOC/include/runnables/Runnable.hpp</locationURI>
+		</link>
+		<link>
+			<name>include/runnables/SwitchRunnable.hpp</name>
+			<type>1</type>
+			<locationURI>REPO_LOC/include/runnables/SwitchRunnable.hpp</locationURI>
+		</link>
+		<link>
+			<name>include/sdlib/00readme.txt</name>
+			<type>1</type>
+			<locationURI>REPO_LOC/include/sdlib/00readme.txt</locationURI>
+		</link>
+		<link>
+			<name>include/sdlib/diskio.c</name>
+			<type>1</type>
+			<locationURI>REPO_LOC/include/sdlib/diskio.c</locationURI>
+		</link>
+		<link>
+			<name>include/sdlib/diskio.h</name>
+			<type>1</type>
+			<locationURI>REPO_LOC/include/sdlib/diskio.h</locationURI>
+		</link>
+		<link>
+			<name>include/sdlib/ff.c</name>
+			<type>1</type>
+			<locationURI>REPO_LOC/include/sdlib/ff.c</locationURI>
+		</link>
+		<link>
+			<name>include/sdlib/ff.h</name>
+			<type>1</type>
+			<locationURI>REPO_LOC/include/sdlib/ff.h</locationURI>
+		</link>
+		<link>
+			<name>include/sdlib/ffconf.h</name>
+			<type>1</type>
+			<locationURI>REPO_LOC/include/sdlib/ffconf.h</locationURI>
+		</link>
+		<link>
+			<name>include/sdlib/history.txt</name>
+			<type>1</type>
+			<locationURI>REPO_LOC/include/sdlib/history.txt</locationURI>
+		</link>
+		<link>
+			<name>include/sdlib/integer.h</name>
+			<type>1</type>
+			<locationURI>REPO_LOC/include/sdlib/integer.h</locationURI>
+		</link>
+		<link>
+			<name>include/sdlib/mmc-dk-tm4c123g.c</name>
+			<type>1</type>
+			<locationURI>REPO_LOC/include/sdlib/mmc-dk-tm4c123g.c</locationURI>
+		</link>
+		<link>
+			<name>include/sdlib/option</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
 			<name>sdlib/option/cc932.c</name>
@@ -666,19 +721,54 @@
 			<locationURI>REPO_LOC/src/runnables/KillRunnable.cpp</locationURI>
 		</link>
 		<link>
-			<name>src/runnables/OptSwitchRunnables.cpp</name>
-			<type>1</type>
-			<locationURI>REPO_LOC/src/runnables/OptSwitchRunnables.cpp</locationURI>
-		</link>
-		<link>
 			<name>src/runnables/Px4Runnable.cpp</name>
 			<type>1</type>
 			<locationURI>REPO_LOC/src/runnables/Px4Runnable.cpp</locationURI>
 		</link>
 		<link>
+			<name>src/runnables/SwitchRunnable.cpp</name>
+			<type>1</type>
+			<locationURI>REPO_LOC/src/runnables/SwitchRunnable.cpp</locationURI>
+		</link>
+		<link>
 			<name>include/messaging/lcm/lcm_coretypes.h</name>
 			<type>1</type>
 			<locationURI>REPO_LOC/include/messaging/lcm/lcm_coretypes.h</locationURI>
+		</link>
+		<link>
+			<name>include/sdlib/option/cc932.c</name>
+			<type>1</type>
+			<locationURI>REPO_LOC/include/sdlib/option/cc932.c</locationURI>
+		</link>
+		<link>
+			<name>include/sdlib/option/cc936.c</name>
+			<type>1</type>
+			<locationURI>REPO_LOC/include/sdlib/option/cc936.c</locationURI>
+		</link>
+		<link>
+			<name>include/sdlib/option/cc949.c</name>
+			<type>1</type>
+			<locationURI>REPO_LOC/include/sdlib/option/cc949.c</locationURI>
+		</link>
+		<link>
+			<name>include/sdlib/option/cc950.c</name>
+			<type>1</type>
+			<locationURI>REPO_LOC/include/sdlib/option/cc950.c</locationURI>
+		</link>
+		<link>
+			<name>include/sdlib/option/ccsbcs.c</name>
+			<type>1</type>
+			<locationURI>REPO_LOC/include/sdlib/option/ccsbcs.c</locationURI>
+		</link>
+		<link>
+			<name>include/sdlib/option/syscall.c</name>
+			<type>1</type>
+			<locationURI>REPO_LOC/include/sdlib/option/syscall.c</locationURI>
+		</link>
+		<link>
+			<name>include/sdlib/option/unicode.c</name>
+			<type>1</type>
+			<locationURI>REPO_LOC/include/sdlib/option/unicode.c</locationURI>
 		</link>
 	</linkedResources>
 	<variableList>

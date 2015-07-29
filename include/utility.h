@@ -56,7 +56,7 @@ typedef union
 
 /****************** Serial Port/Kalman Debug Utility Functions ****************/
 // Configures UART serial port for communication to Atom
-void ConfigureUART(void);
+//void ConfigureUART(void);
 
 // Writes kalman filter data over the serial port to be logged by the Atom
 //void sendToSerialPort(kalman_t*, uint16_t);

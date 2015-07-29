@@ -2,9 +2,9 @@
 
 // GENERAL SWITCH FUNCTIONS
 void switchesInit(SwitchData_t sw[3]) {
-	initSwitch(SYSCTL_PERIPH_GPIOB, GPIO_PORTB_BASE, GPIO_PIN_1, &sw[0]);
-	initSwitch(SYSCTL_PERIPH_GPIOB, GPIO_PORTB_BASE, GPIO_PIN_2, &sw[1]);
-	initSwitch(SYSCTL_PERIPH_GPIOB, GPIO_PORTB_BASE, GPIO_PIN_3, &sw[2]);
+	initSwitch(SYSCTL_PERIPH_GPIOF, GPIO_PORTF_BASE, GPIO_PIN_4, &sw[0]);
+	initSwitch(SYSCTL_PERIPH_GPIOB, GPIO_PORTB_BASE, GPIO_PIN_0, &sw[1]);
+	initSwitch(SYSCTL_PERIPH_GPIOB, GPIO_PORTB_BASE, GPIO_PIN_1, &sw[2]);
 }
 
 void switchesUpdate(SwitchData_t sw[3]) {

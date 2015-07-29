@@ -1,11 +1,10 @@
 #ifndef LOOP_HPP_
 #define LOOP_HPP_
 
-#include <functional>
 #include <stdint.h>
 #include "runnables/Runnable.hpp"
 
-#define NUM_EVENT 6
+#define NUM_EVENT 7
 /**
  * @brief Class to handle timing events in a loop
  */

@@ -25,9 +25,9 @@ void systemDeltaState(const arm_matrix_instance_f32* currState,
 	assert(deltaState->numRows == 9);
 	assert(deltaState->numCols == 1);
 
-	deltaState->pData[0] = currState->pData[3];
-	deltaState->pData[1] = currState->pData[4];
-	deltaState->pData[2] = currState->pData[5];
+	deltaState->pData[0] = currState->pData[3]; // dx = xdot
+	deltaState->pData[1] = currState->pData[4]; // dy = ydot
+	deltaState->pData[2] = currState->pData[5]; // dz = zdot
 	deltaState->pData[3] = -controlInput->pData[0] 
 						   * arm_sin_f32(currState->pData[7]) / mass;
 	deltaState->pData[4] = controlInput->pData[0] 
