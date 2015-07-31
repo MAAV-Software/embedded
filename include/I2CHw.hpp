@@ -5,8 +5,8 @@
  *      Author: Zhengjie
  */
 
-#ifndef I2CHw_HPP_
-#define I2CHw_HPP_
+#ifndef I2CHW_HPP_
+#define I2CHW_HPP_
 
 #include <stdint.h>
 #include "sensorlib/i2cm_drv.h"
@@ -48,4 +48,4 @@ void ConfigI2C(const uint32_t sysctlPeriphI2C,
 			   const uint32_t i2cInterrupt,
 			   const bool useFastBus);
 
-#endif /* I2CHw.hpp */
+#endif /* I2CHW.hpp */

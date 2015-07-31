@@ -46,14 +46,14 @@ void ImuRunnable::run()
 	{
 		state->imu->parse(imuRawFinal);
 
-		// Log msg
-		char msg[100];
-		snprintf(msg, sizeof(msg), "IMU:Time:%d\tRow:%d\tPitch:%d\tYaw:%d\n",
-				(int32_t)state->imu->getTimer(),
-				(int32_t)(state->imu->getRoll()*1e7),
-				(int32_t)(state->imu->getPitch()*1e7),
-				(int32_t)(state->imu->getYaw()*1e7));
-		state->sdcard->write(msg, (uint32_t)strlen(msg));
+//		// Log msg
+//		char msg[100];
+//		snprintf(msg, sizeof(msg), "IMU:Time:%d\tRow:%d\tPitch:%d\tYaw:%d\n",
+//				(int32_t)state->imu->getTimer(),
+//				(int32_t)(state->imu->getRoll()*1e7),
+//				(int32_t)(state->imu->getPitch()*1e7),
+//				(int32_t)(state->imu->getYaw()*1e7));
+//		state->sdcard->write(msg, (uint32_t)strlen(msg));
 
 		imuDone = false;
 	}

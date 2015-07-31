@@ -34,7 +34,7 @@
 	<variableList>
 		<variable>
 			<name>TIVAWARE_INSTALL</name>
-			<value>file:/home/sheldon/ti/SW-TM4C-2.1.0.12573</value>
+			<value>file:/C:/ti/SW-TM4C-2.1.0.12573</value>
 		</variable>
 	</variableList>
 </projectDescription>

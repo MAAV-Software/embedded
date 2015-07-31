@@ -5,7 +5,7 @@
 <stringAttribute key="com.ti.ccstudio.debug.debugModel.ATTR_PROGRAM.Stellaris In-Circuit Debug Interface/CORTEX_M4_0" value="${build_artifact:Reader}"/>
 <stringAttribute key="com.ti.ccstudio.debug.debugModel.ATTR_PROJECT.Stellaris In-Circuit Debug Interface/CORTEX_M4_0" value="Reader"/>
 <stringAttribute key="com.ti.ccstudio.debug.debugModel.ATTR_TARGET_CONFIG" value="${target_config_active_default:Reader}"/>
-<stringAttribute key="com.ti.ccstudio.debug.debugModel.MRU_PROGRAM.Stellaris In-Circuit Debug Interface/CORTEX_M4_0" value="/home/sheldon/maav-controls/side_projects/Testing/Reader/Debug/Reader.out"/>
+<stringAttribute key="com.ti.ccstudio.debug.debugModel.MRU_PROGRAM.Stellaris In-Circuit Debug Interface/CORTEX_M4_0" value="C:/Users\MAAV\maav-controls\side_projects\Testing\Reader\Debug\Reader.out"/>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
 <listEntry value="/Reader"/>
 </listAttribute>

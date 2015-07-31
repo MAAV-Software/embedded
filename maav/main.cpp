@@ -57,6 +57,7 @@
 #include "runnables/I2CRunnable.hpp"
 #include "runnables/CtrlRunnable.hpp"
 #include "runnables/KillRunnable.hpp"
+#include "runnables/BatteryRunnable.hpp"
 
 //#include "messaging/data_link.h"
 
@@ -194,7 +195,7 @@ int main()
 			  ekfInitState, ekfInitP, ekfQ, ekfNoCamR, ekfWithCamR);
 	Imu imu;
 	Lidar lidar;
-	Px4 px4ek
+	Px4 px4;
 	SdCard sdcard;
 	Battery battery;
 	ProgramState pState(&v, &imu, &px4, &lidar, &sdcard, &battery, MANUAL);
@@ -205,14 +206,16 @@ int main()
 	ImuRunnable	imuRunnable(&pState);
 	I2CRunnable i2cRunnable(&pState);
 	CtrlRunnable ctrlRunnable(&pState);
+	BatteryRunnable batteryRunnable(&pState);
 
 	Loop mainLoop;
 	mainLoop.regEvent(&killRunnable, 0, 0);
 	mainLoop.regEvent(&flightModeRunnable, 10, 1);
-	mainLoop.regEvent(&ctrlRunnable, 10, 2);
-	mainLoop.regEvent(&djiRunnable, 10, 3);
-	mainLoop.regEvent(&imuRunnable, 0, 4);
-	mainLoop.regEvent(&i2cRunnable, 0, 5);
+	mainLoop.regEvent(&ctrlRunnable, 10, 4);
+	mainLoop.regEvent(&djiRunnable, 10, 5);
+	mainLoop.regEvent(&imuRunnable, 0, 2);
+	mainLoop.regEvent(&i2cRunnable, 0, 3);
+	mainLoop.regEvent(&batteryRunnable, 1000, 6);
 
 	// tricky way to get rid of the initial large values!
 	while(servoIn_getPulse(KILL_CHAN3) > 120000);

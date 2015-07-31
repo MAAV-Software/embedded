@@ -11,6 +11,7 @@ Battery::Battery(const float initVolts, const float minThresh,
 	volts = initVolts;
 	threshold = minThresh;
 	numCells = cellCount;
+	scaleFactor = 3.3f / 4096 /100 * (681 + 100);
 }
 
 float Battery::getVolts() const
@@ -23,7 +24,7 @@ bool Battery::isLow() const
 	return ((volts / (float)numCells) <= threshold) ? true : false;
 }
 
-void Battery::update(const uint32_t rawCode, const float scaleFactor)
+void Battery::update(const uint32_t rawCode)
 {
 	volts = (float)rawCode * scaleFactor;
 }

@@ -76,6 +76,11 @@
 			<locationURI>REPO_LOC/include/Battery.hpp</locationURI>
 		</link>
 		<link>
+			<name>include/BatteryHw.hpp</name>
+			<type>1</type>
+			<locationURI>REPO_LOC/include/BatteryHw.hpp</locationURI>
+		</link>
+		<link>
 			<name>include/CtrlLogs.hpp</name>
 			<type>1</type>
 			<locationURI>REPO_LOC/include/CtrlLogs.hpp</locationURI>
@@ -276,6 +281,11 @@
 			<locationURI>REPO_LOC/src/Battery.cpp</locationURI>
 		</link>
 		<link>
+			<name>src/BatteryHw.cpp</name>
+			<type>1</type>
+			<locationURI>REPO_LOC/src/BatteryHw.cpp</locationURI>
+		</link>
+		<link>
 			<name>src/Dof.cpp</name>
 			<type>1</type>
 			<locationURI>REPO_LOC/src/Dof.cpp</locationURI>
@@ -461,6 +471,11 @@
 			<locationURI>REPO_LOC/include/messaging/tuning_t.h</locationURI>
 		</link>
 		<link>
+			<name>include/runnables/BatteryRunnable.hpp</name>
+			<type>1</type>
+			<locationURI>REPO_LOC/include/runnables/BatteryRunnable.hpp</locationURI>
+		</link>
+		<link>
 			<name>include/runnables/CtrlRunnable.hpp</name>
 			<type>1</type>
 			<locationURI>REPO_LOC/include/runnables/CtrlRunnable.hpp</locationURI>
@@ -606,6 +621,11 @@
 			<locationURI>REPO_LOC/src/messaging/tuning_t.c</locationURI>
 		</link>
 		<link>
+			<name>src/runnables/BatteryRunnable.cpp</name>
+			<type>1</type>
+			<locationURI>REPO_LOC/src/runnables/BatteryRunnable.cpp</locationURI>
+		</link>
+		<link>
 			<name>src/runnables/CtrlRunnable.cpp</name>
 			<type>1</type>
 			<locationURI>REPO_LOC/src/runnables/CtrlRunnable.cpp</locationURI>
@@ -659,15 +679,15 @@
 	<variableList>
 		<variable>
 			<name>CMSIS_LOC</name>
-			<value>file:/home/sheldon/ti/CMSIS-SP-00300-r4p3-00rel0/CMSIS</value>
+			<value>file:/C:/ti/CMSIS-SP-00300-r4p3-00rel0/CMSIS</value>
 		</variable>
 		<variable>
 			<name>REPO_LOC</name>
-			<value>file:/home/sheldon/maav-controls</value>
+			<value>file:/C:/Users/MAAV/maav-controls</value>
 		</variable>
 		<variable>
 			<name>TIVAWARE_INSTALL</name>
-			<value>file:/home/sheldon/ti/SW-TM4C-2.1.0.12573</value>
+			<value>file:/C:/ti/SW-TM4C-2.1.0.12573</value>
 		</variable>
 	</variableList>
 </projectDescription>
