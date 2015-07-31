@@ -16,7 +16,7 @@ class RingBuffer
 {
 public:
     // Constructs RingBuffer with allocated memory of N bytes
-    RingBuffer() : data(new uint8_t[N]), writer(0), reader(0), mask(N - 1) {}
+    RingBuffer() : writer(0), reader(0), mask(N - 1) { data = new uint8_t[N]; }
     ~RingBuffer() { delete[] data; }
 
     //REQUIRES: If RINGBUF_NO_OVERWRITE is not defined, RingBuffer should have
@@ -47,7 +47,7 @@ public:
     void clear();
 	
 private:
-    uint8_t* const data;
+    uint8_t* data;
     uint32_t writer;
     uint32_t reader;
     const uint32_t mask;
