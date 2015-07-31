@@ -50,6 +50,8 @@
 #include "Vehicle.hpp"
 #include "Dof.hpp"
 #include "Pid.hpp"
+#include "EEPROM.h"
+
 //#include "tests/test_definitions.h"
 #include "runnables/DjiRunnable.hpp"
 #include "runnables/FlightModeRunnable.hpp"
@@ -87,6 +89,8 @@ int main()
 
 	ConfigureUART();
 	UARTprintf("\nTesting Uart Connection.\n\r");
+
+	Config_EEPROM();
 
 	time_init(SYSCTL_PERIPH_TIMER1, SYSCLOCK, TIMER1_BASE, INT_TIMER1A);	// Chose any open timer
 	PPM_init(SYSCTL_PERIPH_TIMER2, SYSCLOCK, TIMER2_BASE, INT_TIMER2A,		// Chose any open timer
@@ -224,7 +228,7 @@ int main()
 	// might change after the calibration (87552, 153108)
 	while(servoIn_getPulse(KILL_CHAN3) < 120000);
 
-	sdcard.createFile("log0.txt");
+	sdcard.createFile();
 
 	mainLoop.run();
 

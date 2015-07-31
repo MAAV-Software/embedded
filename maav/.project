@@ -96,6 +96,11 @@
 			<locationURI>REPO_LOC/include/Dof.hpp</locationURI>
 		</link>
 		<link>
+			<name>include/EEPROM.h</name>
+			<type>1</type>
+			<locationURI>REPO_LOC/include/EEPROM.h</locationURI>
+		</link>
+		<link>
 			<name>include/FlightMode.hpp</name>
 			<type>1</type>
 			<locationURI>REPO_LOC/include/FlightMode.hpp</locationURI>
@@ -289,6 +294,11 @@
 			<name>src/Dof.cpp</name>
 			<type>1</type>
 			<locationURI>REPO_LOC/src/Dof.cpp</locationURI>
+		</link>
+		<link>
+			<name>src/EEPROM.c</name>
+			<type>1</type>
+			<locationURI>REPO_LOC/src/EEPROM.c</locationURI>
 		</link>
 		<link>
 			<name>src/FlightModeHw.cpp</name>

@@ -1,3 +1,10 @@
+/*
+ * ImuHw.cpp
+ *
+ *  Created on: Jul 10, 2015
+ *      Author: Zhengjie
+ */
+
 #include <stdint.h>
 
 #include "ImuHw.hpp"

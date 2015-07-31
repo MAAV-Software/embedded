@@ -3,6 +3,7 @@
  *
  *  Created on: Mar 28, 2015
  *      Author: clark
+ *      Modified: Zhengjie
  */
 
 #include <cstdlib>
@@ -14,6 +15,7 @@
 #include "rc.hpp"
 #include "servoIn.hpp"
 #include "inc/hw_nvic.h"
+#include "EEPROM.h"
 
 using namespace std;
 
@@ -42,12 +44,19 @@ void Loop::run()
 	for (;;)
 	{
 		loopTime = millis();
+		float arrayIn[24] = {1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 3.0, 4.0};
+		float arrayOut[24] = {};
+//		float array2 = 190;
+
 		for (size_t i = 0; i < NUM_EVENT; ++i)
 		{
 			if ((loopTime - _events[i].lastTime) > _events[i].period)
 			{
 				_events[i].lastTime = loopTime;
 				_events[i].task->run();
+				Write_PID_EEPROM(arrayIn);
+				Read_PID_EEPROM(arrayOut);
+//				array2 = arrayOut[2];
 			}
 		}
 	}

@@ -12,8 +12,8 @@ public:
 
 private:
 	ProgramState *state;
-	uint32_t fileNumber;
-	char fileName[15];
+//	uint32_t fileNumber;
+//	char fileName[15];
 };
 
 #endif /* KILLRUNNABLE_HPP_ */

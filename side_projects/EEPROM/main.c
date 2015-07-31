@@ -62,6 +62,8 @@ int main(void)
 //
 //	EEPROMRead(dataout.buf, 0x0, sizeof(dataout.buf));
 
+	uint8_t len = sizeof(floatArray);
+
 	EEPROMProgram(floatArray, 0x0, sizeof(floatArray));
 
 	EEPROMRead(readArray, 0x0, sizeof(readArray));
