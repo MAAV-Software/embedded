@@ -40,10 +40,10 @@ class DataLink
 {
 public:
 	DataLink(void (*f)(const uint8_t*,uint32_t));
-	~DataLink() { delete rb; }
+	//~DataLink() { delete rb; }
 	
-	void recv(uint8_t datum) { rb->push(datum); }
-	void process_recv();
+	//void recv(uint8_t datum) { rb->push(datum); }
+	void processRecv(const uint8_t raw);
 	
 	// Msg senders
 	void send(emergency_t *msg);
@@ -68,8 +68,8 @@ private:
 	// Handler for sending lcm messages
 	TransmitHandler msgSender;
 	
-	uint8_t rbBack[256]; // data allocated for ringbuffer	
-	RingBuffer<256> *rb; // ringbuffer for incoming bytes
+	//uint8_t rbBack[256]; // data allocated for ringbuffer
+	//RingBuffer<256> *rb; // ringbuffer for incoming bytes
 	
 	// Decoder for Transport Layer
 	Decoder d;

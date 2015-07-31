@@ -45,6 +45,7 @@
 #include "DataLinkHw.hpp"
 #include "ProgramState.hpp"
 
+#include "runnables/DataLinkRunnable.hpp"
 #include "runnables/DjiRunnable.hpp"
 #include "runnables/FlightModeRunnable.hpp"
 #include "runnables/ImuRunnable.hpp"
@@ -102,15 +103,17 @@ int main()
 	I2CRunnable i2cRunnable(&pState);
 	CtrlRunnable ctrlRunnable(&pState);
 	SwitchRunnable switchRunnable(&pState);
+	DataLinkRunnable dlinkRunnable(&pState);
 
 	Loop mainLoop;
-	mainLoop.regEvent(&killRunnable, 0, 0);
-	mainLoop.regEvent(&flightModeRunnable, 10, 1);
-	mainLoop.regEvent(&imuRunnable, 0, 2);
-	mainLoop.regEvent(&i2cRunnable, 0, 3);
-	mainLoop.regEvent(&ctrlRunnable, 10, 4);
-	mainLoop.regEvent(&djiRunnable, 10, 5);
-	mainLoop.regEvent(&switchRunnable, 50, 6);
+	mainLoop.regEvent(&killRunnable, 		0, 		0);
+	mainLoop.regEvent(&flightModeRunnable, 	10, 	1);
+	mainLoop.regEvent(&imuRunnable, 		0, 		2);
+	mainLoop.regEvent(&i2cRunnable, 		0, 		3);
+	mainLoop.regEvent(&ctrlRunnable, 		10, 	4);
+	mainLoop.regEvent(&djiRunnable, 		10, 	5);
+	mainLoop.regEvent(&switchRunnable, 		50, 	6);
+	mainLoop.regEvent(&dlinkRunnable, 		10, 	7);
 
 	// tricky way to get rid of the initial large values!
 	while(servoIn_getPulse(KILL_CHAN3) > 120000);
@@ -120,6 +123,14 @@ int main()
 	while(servoIn_getPulse(KILL_CHAN3) < 120000);
 
 	sdcard.createFile("log0.txt");
+
+//	char buf[100];
+//	for (uint32_t i = 0; i < 50000; ++i)
+//	{
+//		uint32_t len = snprintf(buf, sizeof(buf), "Servo: %u\n\n", servoIn_getPulse(KILL_CHAN3));
+//		sdcard.write(buf, len);
+//	}
+//	sdcard.closeFile();
 
 	mainLoop.run();
 

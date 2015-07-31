@@ -15,11 +15,9 @@ template <uint32_t N>
 class RingBuffer
 {
 public:
-    //REQUIRES: backingArray is an array of size N. Please note that if the
-    //          array is destroyed or modified outside of RingBuffer, data
-    //          may be lost.
-    RingBuffer(uint8_t* backingArray) :
-        data(backingArray), writer(0), reader(0), mask(N - 1) {}
+    // Constructs RingBuffer with allocated memory of N bytes
+    RingBuffer() : data(new uint8_t[N]), writer(0), reader(0), mask(N - 1) {}
+    ~RingBuffer() { delete[] data; }
 
     //REQUIRES: If RINGBUF_NO_OVERWRITE is not defined, RingBuffer should have
     //          space remaining (check using the unwritten call) otherwise
@@ -75,7 +73,7 @@ bool RingBuffer<N>::push(uint8_t datum)
     data[writer] = datum;
 
     // Advance the write head
-    writer++;
+    ++writer;
 
     // Warparound the write head
     writer = writer & mask;
@@ -90,13 +88,14 @@ uint8_t RingBuffer<N>::pop()
     // We literally can't defend against the user trying to read more data than availabe
     // Since all returns values are valid (Yes we can use Exceptions, but possible performance hit?)
     // So all we can do is guard against incrementing the reader past the reader
-    if(reader == writer)    return 0;
+    if(reader == writer)
+    	return 0;
 
     // Read the data
     uint8_t ret = data[reader];
 
     // Advance the read head
-    reader++;
+    ++reader;
 
     // Warp around the read head
     reader = reader & mask;

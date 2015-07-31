@@ -74,10 +74,10 @@ void sender_uart_config_uart(void)
     UARTConfigSetExpClk(UART0_BASE, SysCtlClockGet(), 115200, (UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE | UART_CONFIG_PAR_NONE));
 
     // Register and Enable UART1 RX Interrupt.
-//    UARTIntRegister(UART1_BASE, reader_uart_int_handler);
-//    IntMasterEnable();
-//    IntEnable(INT_UART1);
-//    UARTIntEnable(UART1_BASE, UART_INT_RX | UART_INT_RT);
+    UARTIntRegister(UART1_BASE, sender_uart_int_handler);
+    IntMasterEnable();
+    IntEnable(INT_UART1);
+    UARTIntEnable(UART1_BASE, UART_INT_RX | UART_INT_RT);
 
 }
 //****************************************************************************************
@@ -98,14 +98,16 @@ int main(void)
 
     sender_uart_config_uart();
 
-    uint8_t cmd[] = {'a','b','c','\n','\r'};
+    uint8_t cmd[] = {'0','a','b','c','\n','\r'};
     // Main application loop.
     while(1)
     {
     	sender_uart_send(UART1_BASE, cmd, sizeof(cmd));
+    	++cmd[0];
+    	if (cmd[0] == '9') cmd[0] = '0';
     	SysCtlDelay(SysCtlClockGet()/3/1000*50);
-		sender_uart_send(UART0_BASE, cmd, sizeof(cmd));
-		SysCtlDelay(SysCtlClockGet()/3/1000*50);
+		//sender_uart_send(UART0_BASE, cmd, sizeof(cmd));
+		//SysCtlDelay(SysCtlClockGet()/3/1000*50);
     }
 
 }

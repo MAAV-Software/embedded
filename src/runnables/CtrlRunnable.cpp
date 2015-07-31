@@ -33,12 +33,7 @@ void CtrlRunnable::run()
 	ps->vehicle->runCtrl(ps->mode);
 	ps->vehicle->prepareLog(vlog, plogs);
 
-	uint32_t atime = millis(); // grab current time
-	uint32_t len = snprintf(buf, sizeof(buf), "\n\nTime Beofre: %d\t\tTime After: %d\t\tDiff: %d\n\n",
-							(int32_t)btime, (int32_t)atime, (int32_t)(atime - btime));
-	ps->sdcard->write(buf, len);
-
-	len = snprintf(buf, sizeof(buf), "\n\nZs: %f\tUz: %f\tZ: %f\n\n",
+	uint32_t len = snprintf(buf, sizeof(buf), "\n\nZs: %f\tUz: %f\tZ: %f\n\n",
 							plogs[Z_AXIS][0].setpt, vlog.zUval, vlog.zFilt);
 	ps->sdcard->write(buf, len);
 

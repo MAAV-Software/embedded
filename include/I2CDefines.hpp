@@ -9,7 +9,7 @@
 #define I2CDEFINES_HPP_
 
 /***************************Command, Register and Address**********************/
-#define PX4_I2C_ADDRESS			0x43		// Define PX4 Address
+#define PX4_I2C_ADDRESS			0x46		// Define PX4 Address
 #define PX4_MEA     			0x00		// Measurement Command
 #define LIDAR_I2C_ADDRESS      	0x62		// Define Lidar I2C Address.
 #define LIDAR_REG_MEA     		0x00        // Register to write to initiate ranging.

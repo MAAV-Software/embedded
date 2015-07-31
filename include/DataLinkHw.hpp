@@ -2,12 +2,9 @@
 #define DATALINKHW_HPP_
 
 #include <stdint.h>
+#include "messaging/RingBuffer.hpp"
 
-#define DLINK_UART_BUF_LEN 8
-
-extern bool DLINK_RX_DONE;
-extern uint8_t DLINK_RX_BUF[DLINK_UART_BUF_LEN];
-
+extern RingBuffer<256> DL_RBUFF;
 
 void DataLinkUartConfig(const uint32_t sysctlPeriphUart,
 						const uint32_t sysctlPeriphGPIO,
@@ -21,5 +18,6 @@ void DataLinkUartConfig(const uint32_t sysctlPeriphUart,
 
 void DataLinkUartSend(const uint8_t *buf, uint32_t len);
 
+void DataLinkUartIntHandler();
 
 #endif /* DataLinkHw.hpp */

@@ -3,10 +3,10 @@
 #include <cstring>
 
 #include "DataLinkHw.hpp"
+#include "messaging/RingBuffer.hpp"
 
 #include "inc/hw_memmap.h"
 #include "inc/hw_types.h"
-//#include "inc/hw_ints.h"
 #include "inc/tm4c123gh6pm.h"
 #include "driverlib/debug.h"
 #include "driverlib/gpio.h"
@@ -23,21 +23,15 @@
 
 using namespace std;
 
-// globals that are externed
-bool DLINK_RX_DONE = false;
-uint8_t DLINK_RX_BUF[DLINK_UART_BUF_LEN];
-uint8_t DLINK_RX_WORKING_BUF[DLINK_UART_BUF_LEN];
-volatile uint8_t RX_IDX = 0;
 
 // global that's not externed
-uint32_t UART_BASE = UART0_BASE;
+volatile uint32_t UART_BASE = UART0_BASE;
 
-// declare ISR
-static void DataLinkUartIntHandler();
-
+// globals that are externed
+RingBuffer<256> DL_RBUFF; // init rbuff with rbBack array
 
 // ISR definition
-static void DataLinkUartIntHandler()
+void DataLinkUartIntHandler()
 {
 	// Get the interrrupt status.
 	uint32_t status = MAP_UARTIntStatus(UART_BASE, true);
@@ -47,21 +41,7 @@ static void DataLinkUartIntHandler()
 
 	// Loop while there are characters in the receive FIFO.
 	while (MAP_UARTCharsAvail(UART_BASE))
-	{
-		DLINK_RX_WORKING_BUF[RX_IDX++] = MAP_UARTCharGetNonBlocking(UART_BASE);
-
-		if (RX_IDX >= DLINK_UART_BUF_LEN)
-		{
-			RX_IDX = 0;
-			memcpy(DLINK_RX_BUF, DLINK_RX_WORKING_BUF, DLINK_UART_BUF_LEN);
-			DLINK_RX_DONE = true;
-			break;
-		}
-		else
-			DLINK_RX_DONE = false;
-	}
-
-
+		DL_RBUFF.push(MAP_UARTCharGetNonBlocking(UART_BASE));
 }
 
 void DataLinkUartConfig(const uint32_t sysctlPeriphUart,
@@ -101,13 +81,11 @@ void DataLinkUartConfig(const uint32_t sysctlPeriphUart,
     MAP_UARTIntEnable(uartBase, UART_INT_RX | UART_INT_RT);
 
 	// delay for initialization
-	for (int i = 0; i < 3; ++i) Toggle_LED(BLUE_LED, SYSCLOCK / 3 / 2);//MAP_SysCtlDelay(SYSCLOCK / 3);
-
-	RX_IDX = 0;
-	DLINK_RX_DONE = false;
+	for (int i = 0; i < 3; ++i) Toggle_LED(RED_LED, SYSCLOCK / 3 / 2);
 }
 
 void DataLinkUartSend(const uint8_t *buf, uint32_t len)
 {
-	while (len-- > 0) MAP_UARTCharPut(UART_BASE, *buf++);
+	//while (len-- > 0) MAP_UARTCharPut(UART_BASE, *buf++);
+	for (uint32_t i = 0; i < len; ++i) MAP_UARTCharPut(UART_BASE, buf[i]);
 }

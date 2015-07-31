@@ -496,6 +496,11 @@
 			<locationURI>REPO_LOC/include/runnables/CtrlRunnable.hpp</locationURI>
 		</link>
 		<link>
+			<name>include/runnables/DataLinkRunnable.hpp</name>
+			<type>1</type>
+			<locationURI>REPO_LOC/include/runnables/DataLinkRunnable.hpp</locationURI>
+		</link>
+		<link>
 			<name>include/runnables/DjiRunnable.hpp</name>
 			<type>1</type>
 			<locationURI>REPO_LOC/include/runnables/DjiRunnable.hpp</locationURI>
@@ -694,6 +699,11 @@
 			<name>src/runnables/CtrlRunnable.cpp</name>
 			<type>1</type>
 			<locationURI>REPO_LOC/src/runnables/CtrlRunnable.cpp</locationURI>
+		</link>
+		<link>
+			<name>src/runnables/DataLinkRunnable.cpp</name>
+			<type>1</type>
+			<locationURI>REPO_LOC/src/runnables/DataLinkRunnable.cpp</locationURI>
 		</link>
 		<link>
 			<name>src/runnables/DjiRunnable.cpp</name>
