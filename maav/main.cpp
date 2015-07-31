@@ -83,7 +83,7 @@ int main()
 		{1, 0, 0},
 		{1, 0, 0},
 		{1, 0, 0},
-		{1, 0, 0}
+		{0, 0, 0}
 	};
 
 	Vehicle v(valueGains, rateGains);
@@ -112,8 +112,8 @@ int main()
 	mainLoop.regEvent(&i2cRunnable, 		0, 		3);
 	mainLoop.regEvent(&ctrlRunnable, 		10, 	4);
 	mainLoop.regEvent(&djiRunnable, 		10, 	5);
-	mainLoop.regEvent(&switchRunnable, 		50, 	6);
-	mainLoop.regEvent(&dlinkRunnable, 		10, 	7);
+	mainLoop.regEvent(&dlinkRunnable, 		20, 	6);
+	mainLoop.regEvent(&switchRunnable, 		50, 	7);
 
 	// tricky way to get rid of the initial large values!
 	while(servoIn_getPulse(KILL_CHAN3) > 120000);

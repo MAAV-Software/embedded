@@ -1,6 +1,11 @@
 /*
  * Read on UART1(PC4_Rx, PC5_Tx)
  * Send on UART0(PA0,PA1)
+ *
+ * Also...
+ *
+ * Read on UART0,
+ * Send on UART1
  */
 
 #include <stdbool.h>
@@ -45,6 +50,26 @@ void reader_uart_int_handler(void)
 
 }
 
+void sender_uart_int_handler(void)
+{
+    uint32_t ui32Status;
+
+    // Get the interrrupt status.
+    ui32Status = UARTIntStatus(UART0_BASE, true);
+
+    // Clear the asserted interrupts.
+    UARTIntClear(UART0_BASE, ui32Status);
+
+    // Loop while there are characters in the receive FIFO.
+    while(UARTCharsAvail(UART0_BASE))
+    {
+        // Read next data.
+        UARTCharPut(UART1_BASE, UARTCharGetNonBlocking(UART0_BASE));
+    }
+
+}
+
+
 //****************************************************************************************
 void reader_uart_config_uart(void)
 {
@@ -80,6 +105,11 @@ void reader_uart_config_uart(void)
     IntMasterEnable();
     IntEnable(INT_UART1);
     UARTIntEnable(UART1_BASE, UART_INT_RX | UART_INT_RT);
+
+    UARTIntRegister(UART0_BASE, sender_uart_int_handler);
+    IntMasterEnable();
+    IntEnable(INT_UART0);
+    UARTIntEnable(UART0_BASE, UART_INT_RX | UART_INT_RT);
 }
 
 

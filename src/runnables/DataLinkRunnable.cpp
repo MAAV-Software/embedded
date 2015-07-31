@@ -24,28 +24,35 @@ DataLinkRunnable::DataLinkRunnable(ProgramState *pState) : ps(pState)
 
 void DataLinkRunnable::run()
 {
-	/*
-	while (DL_RBUFF.unread() > 0) ps->dLink->processRecv(DL_RBUFF.pop());
+	char buf[200];
+	while (DL_RBUFF.unread() > 0)
+		ps->dLink->processRecv(DL_RBUFF.pop());
 
 	setpt_t setpt = ps->dLink->getSetptMsg();
 	uint32_t len = snprintf(buf, sizeof(buf),
-							"\nSetpt: %f %f %f %f %d %d %d %d\n",
+							"\n\nSetpt: %f %f %f %f %d %d %d %d\n\n",
 							setpt.x, setpt.y, setpt.z, setpt.yaw, setpt.flags,
 							setpt.setptType, setpt.utime, millis());
 	ps->sdcard->write(buf, len);
-	*/
+
+	/*
 	//char buf[256];
-	char sendBuff[258];
-	uint8_t idx = 0;
+	char sendBuff[3];
+	//uint8_t idx = 0;
 	while (DL_RBUFF.unread() > 0)
 	{
 		uint8_t byte = DL_RBUFF.pop();
 		//uint32_t len = snprintf(buf, sizeof(buf), "%c\t", (char)byte);
 		//ps->sdcard->write(buf, len);
-		if (idx < 256) sendBuff[idx++] = (char)byte;
+		//if (idx < 256) sendBuff[idx++] = (char)byte;
+		sendBuff[0] = (char)byte;
+		sendBuff[1] = '\n';
+		sendBuff[2] = '\r';
+		DataLinkUartSend((uint8_t*)sendBuff, 3);
 	}
-	while (idx < 256) sendBuff[idx++] = '0';
-	sendBuff[256] = '\n';
-	sendBuff[257] = '\r';
-	DataLinkUartSend((uint8_t*)sendBuff, sizeof(sendBuff));
+	//while (idx < 256) sendBuff[idx++] = '0';
+	//sendBuff[256] = '\n';
+	//sendBuff[257] = '\r';
+	//DataLinkUartSend((uint8_t*)sendBuff, sizeof(sendBuff));
+	*/
 }
