@@ -15,33 +15,40 @@
 
 #include "LED.h"
 
+char buf[200];
+
 DataLinkRunnable::DataLinkRunnable(ProgramState *pState) : ps(pState)
 {
 	DataLinkUartConfig(SYSCTL_PERIPH_UART0, SYSCTL_PERIPH_GPIOA, GPIO_PA0_U0RX,
 					   GPIO_PA1_U0TX, GPIO_PORTA_BASE, GPIO_PIN_0, GPIO_PIN_1,
 					   UART0_BASE, INT_UART0);
+//	DataLinkUartConfig(SYSCTL_PERIPH_UART1, SYSCTL_PERIPH_GPIOC, GPIO_PC4_U1RX,
+//					   GPIO_PC5_U1TX, GPIO_PORTC_BASE, GPIO_PIN_4, GPIO_PIN_5,
+//					   UART1_BASE, INT_UART1);
 }
 
 void DataLinkRunnable::run()
 {
-	char buf[200];
+
 	while (DL_RBUFF.unread() > 0)
 		ps->dLink->processRecv(DL_RBUFF.pop());
 
-	/*
+
 	setpt_t setpt = ps->dLink->getSetptMsg();
 	uint32_t len = snprintf(buf, sizeof(buf),
 							"\n\nSetpt: %f %f %f %f %d %d %d %d\n\n",
 							setpt.x, setpt.y, setpt.z, setpt.yaw, setpt.flags,
 							setpt.setptType, setpt.utime, millis());
 	ps->sdcard->write(buf, len);
-	*/
+
 	emergency_t msg;
 	for (int8_t i = 0; i < 3; ++i)
 	{
 		msg.status = i;
 		ps->dLink->send(&msg);
-		uint32_t len = snprintf(buf, sizeof(buf), "Sending Emergency Status: %d\n\r", msg.status);
+		//uint32_t len = snprintf(buf, sizeof(buf), "Sending Emergency Status: %d\n\r", msg.status);
+		//DataLinkUartSend((uint8_t*)buf, len);
+//		Toggle_LED(RED_LED, SYSCLOCK / 100);
 	}
 	/*
 	//char buf[256];
