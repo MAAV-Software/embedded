@@ -13,7 +13,7 @@ CtrlRunnable::CtrlRunnable(ProgramState* pState) : ps(pState) {}
 void CtrlRunnable::run()
 {
 	float time = ((float)millis()) / 1000.0f; // grab current time
-
+/*
 	if (ps->mode == ASSISTED) // set setpts here from rc pilot ctrl in assisted mode
 	{
 		float setpt[NUM_DOFS][NUM_DOF_STATES];
@@ -31,7 +31,7 @@ void CtrlRunnable::run()
 
 		ps->vehicle->setSetpt(setpt, ASSISTED);
 	}
-
+*/
 	// TODO add logic for determining when new camera measurement is ready, then call runFilter with
 	// updated arguments for x, y, yawImu, and set withCam to true
 	/*

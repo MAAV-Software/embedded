@@ -37,7 +37,6 @@ public:
 
 private:
 	Event _events[NUM_EVENT];
-	//uint32_t _eventCnt;
 };
 
 #endif /* LOOP_HPP_ */
