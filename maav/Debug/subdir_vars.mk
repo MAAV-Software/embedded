@@ -10,17 +10,13 @@ CMD_SRCS += \
 ../tm4c123gh6pm.cmd 
 
 LIB_SRCS += \
-C:/ti/SW-TM4C-2.1.0.12573/driverlib/ccs/Debug/driverlib.lib \
-<<<<<<< HEAD
-C:/Users/MAAV/sajanptl-maav-controls/maav-controls-sajanptl/libs/dsplib.lib \
-=======
-C:/Users/MAAV/maav-controls/libs/dsplib.lib \
->>>>>>> zjcui/cleanup
-C:/ti/SW-TM4C-2.1.0.12573/sensorlib/ccs/Debug/sensorlib.lib 
+/home/sajan/ti/SW-TM4C-2.1.0.12573/driverlib/ccs/Debug/driverlib.lib \
+/home/sajan/maav-controls/libs/dsplib.lib \
+/home/sajan/ti/SW-TM4C-2.1.0.12573/sensorlib/ccs/Debug/sensorlib.lib 
 
 C_SRCS += \
 ../tm4c123gh6pm_startup_ccs.c \
-C:/ti/SW-TM4C-2.1.0.12573/utils/uartstdio.c 
+/home/sajan/ti/SW-TM4C-2.1.0.12573/utils/uartstdio.c 
 
 OBJS += \
 ./main.obj \
@@ -51,6 +47,6 @@ CPP_SRCS__QUOTED += \
 
 C_SRCS__QUOTED += \
 "../tm4c123gh6pm_startup_ccs.c" \
-"C:/ti/SW-TM4C-2.1.0.12573/utils/uartstdio.c" 
+"/home/sajan/ti/SW-TM4C-2.1.0.12573/utils/uartstdio.c" 
 
 

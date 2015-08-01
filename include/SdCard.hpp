@@ -23,7 +23,6 @@ public:
 	SdCard();
 	bool mount();
 	bool open(char* Filename);
-	bool createFile(char* Filename);
 	bool createFile();
 	uint32_t read(char* BufferRead, uint32_t Readlen);
 	uint32_t write(char* BufferWrite, uint32_t Writelen);
@@ -40,6 +39,8 @@ private:
 	bool FileOpened;
 	char fileName[15];
 	uint32_t FileCounter;
+
+	bool createWithName(char* Filename);
 };
 
 #endif /* SD_HPP_ */

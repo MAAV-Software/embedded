@@ -44,24 +44,4 @@ void DataLinkRunnable::run()
 		msg.status = i;
 		ps->dLink->send(&msg);
 	}
-	/*
-	//char buf[256];
-	char sendBuff[3];
-	//uint8_t idx = 0;
-	while (DL_RBUFF.unread() > 0)
-	{
-		uint8_t byte = DL_RBUFF.pop();
-		//uint32_t len = snprintf(buf, sizeof(buf), "%c\t", (char)byte);
-		//ps->sdcard->write(buf, len);
-		//if (idx < 256) sendBuff[idx++] = (char)byte;
-		sendBuff[0] = (char)byte;
-		sendBuff[1] = '\n';
-		sendBuff[2] = '\r';
-		DataLinkUartSend((uint8_t*)sendBuff, 3);
-	}
-	//while (idx < 256) sendBuff[idx++] = '0';
-	//sendBuff[256] = '\n';
-	//sendBuff[257] = '\r';
-	//DataLinkUartSend((uint8_t*)sendBuff, sizeof(sendBuff));
-	*/
 }

@@ -79,7 +79,7 @@ bool SdCard::open(char* Filename)
 	return FileOpened;
 }
 
-bool SdCard::createFile(char* Filename)
+bool SdCard::createWithName(char* Filename)
 {
 	if (SDMounted)
 	{
@@ -95,17 +95,19 @@ bool SdCard::createFile(char* Filename)
 		}
 	}
 	return FileOpened;
-
 }
 
 bool SdCard::createFile()
 {
 	FileCounter = Read_LOG_EEPROM();
-	if (FileCounter >= 20) FileCounter = 0;
+	if (FileCounter >= 20)
+	{
+		FileCounter = 0;
+	}
 	snprintf(fileName, sizeof(fileName), "log%u.txt", FileCounter++);
-	createFile(fileName);
 	Write_LOG_EEPROM(FileCounter);
 
+	return createWithName(fileName);
 }
 
 void SdCard::closeFile()

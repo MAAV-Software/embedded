@@ -231,11 +231,6 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
-			<name>include/sdlib</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
 			<name>include/servoIn.hpp</name>
 			<type>1</type>
 			<locationURI>REPO_LOC/include/servoIn.hpp</locationURI>
@@ -249,11 +244,6 @@
 			<name>include/time_util.h</name>
 			<type>1</type>
 			<locationURI>REPO_LOC/include/time_util.h</locationURI>
-		</link>
-		<link>
-			<name>include/utility.h</name>
-			<type>1</type>
-			<locationURI>REPO_LOC/include/utility.h</locationURI>
 		</link>
 		<link>
 			<name>sdlib/diskio.h</name>
@@ -296,15 +286,14 @@
 			<locationURI>REPO_LOC/src/Battery.cpp</locationURI>
 		</link>
 		<link>
-<<<<<<< HEAD
-			<name>src/DataLinkHw.cpp</name>
-			<type>1</type>
-			<locationURI>REPO_LOC/src/DataLinkHw.cpp</locationURI>
-=======
 			<name>src/BatteryHw.cpp</name>
 			<type>1</type>
 			<locationURI>REPO_LOC/src/BatteryHw.cpp</locationURI>
->>>>>>> zjcui/cleanup
+		</link>
+		<link>
+			<name>src/DataLinkHw.cpp</name>
+			<type>1</type>
+			<locationURI>REPO_LOC/src/DataLinkHw.cpp</locationURI>
 		</link>
 		<link>
 			<name>src/Dof.cpp</name>
@@ -420,11 +409,6 @@
 			<name>src/time_util.c</name>
 			<type>1</type>
 			<locationURI>REPO_LOC/src/time_util.c</locationURI>
-		</link>
-		<link>
-			<name>src/utility.c</name>
-			<type>1</type>
-			<locationURI>REPO_LOC/src/utility.c</locationURI>
 		</link>
 		<link>
 			<name>include/kalman/ExtendedKalmanFilter.hpp</name>
@@ -565,56 +549,6 @@
 			<name>include/runnables/SwitchRunnable.hpp</name>
 			<type>1</type>
 			<locationURI>REPO_LOC/include/runnables/SwitchRunnable.hpp</locationURI>
-		</link>
-		<link>
-			<name>include/sdlib/00readme.txt</name>
-			<type>1</type>
-			<locationURI>REPO_LOC/include/sdlib/00readme.txt</locationURI>
-		</link>
-		<link>
-			<name>include/sdlib/diskio.c</name>
-			<type>1</type>
-			<locationURI>REPO_LOC/include/sdlib/diskio.c</locationURI>
-		</link>
-		<link>
-			<name>include/sdlib/diskio.h</name>
-			<type>1</type>
-			<locationURI>REPO_LOC/include/sdlib/diskio.h</locationURI>
-		</link>
-		<link>
-			<name>include/sdlib/ff.c</name>
-			<type>1</type>
-			<locationURI>REPO_LOC/include/sdlib/ff.c</locationURI>
-		</link>
-		<link>
-			<name>include/sdlib/ff.h</name>
-			<type>1</type>
-			<locationURI>REPO_LOC/include/sdlib/ff.h</locationURI>
-		</link>
-		<link>
-			<name>include/sdlib/ffconf.h</name>
-			<type>1</type>
-			<locationURI>REPO_LOC/include/sdlib/ffconf.h</locationURI>
-		</link>
-		<link>
-			<name>include/sdlib/history.txt</name>
-			<type>1</type>
-			<locationURI>REPO_LOC/include/sdlib/history.txt</locationURI>
-		</link>
-		<link>
-			<name>include/sdlib/integer.h</name>
-			<type>1</type>
-			<locationURI>REPO_LOC/include/sdlib/integer.h</locationURI>
-		</link>
-		<link>
-			<name>include/sdlib/mmc-dk-tm4c123g.c</name>
-			<type>1</type>
-			<locationURI>REPO_LOC/include/sdlib/mmc-dk-tm4c123g.c</locationURI>
-		</link>
-		<link>
-			<name>include/sdlib/option</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
 			<name>sdlib/option/cc932.c</name>
@@ -776,58 +710,19 @@
 			<type>1</type>
 			<locationURI>REPO_LOC/include/messaging/lcm/lcm_coretypes.h</locationURI>
 		</link>
-		<link>
-			<name>include/sdlib/option/cc932.c</name>
-			<type>1</type>
-			<locationURI>REPO_LOC/include/sdlib/option/cc932.c</locationURI>
-		</link>
-		<link>
-			<name>include/sdlib/option/cc936.c</name>
-			<type>1</type>
-			<locationURI>REPO_LOC/include/sdlib/option/cc936.c</locationURI>
-		</link>
-		<link>
-			<name>include/sdlib/option/cc949.c</name>
-			<type>1</type>
-			<locationURI>REPO_LOC/include/sdlib/option/cc949.c</locationURI>
-		</link>
-		<link>
-			<name>include/sdlib/option/cc950.c</name>
-			<type>1</type>
-			<locationURI>REPO_LOC/include/sdlib/option/cc950.c</locationURI>
-		</link>
-		<link>
-			<name>include/sdlib/option/ccsbcs.c</name>
-			<type>1</type>
-			<locationURI>REPO_LOC/include/sdlib/option/ccsbcs.c</locationURI>
-		</link>
-		<link>
-			<name>include/sdlib/option/syscall.c</name>
-			<type>1</type>
-			<locationURI>REPO_LOC/include/sdlib/option/syscall.c</locationURI>
-		</link>
-		<link>
-			<name>include/sdlib/option/unicode.c</name>
-			<type>1</type>
-			<locationURI>REPO_LOC/include/sdlib/option/unicode.c</locationURI>
-		</link>
 	</linkedResources>
 	<variableList>
 		<variable>
 			<name>CMSIS_LOC</name>
-			<value>file:/C:/ti/CMSIS-SP-00300-r4p3-00rel0/CMSIS</value>
+			<value>file:/home/sajan/ti/CMSIS-SP-00300-r4p3-00rel0/CMSIS</value>
 		</variable>
 		<variable>
 			<name>REPO_LOC</name>
-<<<<<<< HEAD
-			<value>file:/C:/Users/MAAV/sajanptl-maav-controls/maav-controls-sajanptl</value>
-=======
-			<value>file:/C:/Users/MAAV/maav-controls</value>
->>>>>>> zjcui/cleanup
+			<value>file:/home/sajan/maav-controls</value>
 		</variable>
 		<variable>
 			<name>TIVAWARE_INSTALL</name>
-			<value>file:/C:/ti/SW-TM4C-2.1.0.12573</value>
+			<value>file:/home/sajan/ti/SW-TM4C-2.1.0.12573</value>
 		</variable>
 	</variableList>
 </projectDescription>
