@@ -65,7 +65,7 @@ int main()
 	MAP_FPUEnable();
 
 	MAP_SysCtlClockSet(SYSCTL_SYSDIV_2_5 | SYSCTL_USE_PLL | SYSCTL_OSC_MAIN |
-				   SYSCTL_XTAL_16MHZ);
+					   SYSCTL_XTAL_16MHZ);
 
 	Config_LED();
 	Config_EEPROM();

@@ -12,10 +12,12 @@ struct MessageHandler
 	gains_t gains;
 	raw_pose_t rawPose;
 	setpt_t setpt;
+
+	MessageHandler();
 };
 
 
 void callback(lcmlite_t *lcm, const char *channel, const void *buf, 
-					int buf_len, void *user);
+			  int buf_len, void *user);
 
 #endif // MessageHandler.hpp
