@@ -29,6 +29,8 @@ extern "C" {
 
 void Config_LED();
 void Toggle_LED(uint32_t ledPin, uint32_t time);
+void TurnOn_LED(uint32_t ledPin);
+void TurnOff_LED(uint32_t ledPin);
 
 #ifdef __cplusplus
 }

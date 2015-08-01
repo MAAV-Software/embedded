@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 "./main.obj" "./tm4c123gh6pm_startup_ccs.obj" "/home/sajan/ti/SW-TM4C-2.1.0.12573/driverlib/ccs/Debug/driverlib.lib" "../tm4c123gh6pm.cmd" -l"libc.a" 
+=======
+"./main.obj" "./tm4c123gh6pm_startup_ccs.obj" "./uartstdio.obj" "C:/ti/SW-TM4C-2.1.0.12573/driverlib/ccs/Debug/driverlib.lib" "../tm4c123gh6pm.cmd" -l"libc.a" 
+>>>>>>> zjcui/cleanup

@@ -1,3 +1,10 @@
+/*
+ * KillRunnable.cpp
+ *
+ *  Created on: Jul 10, 2015
+ *      Author: Zhengjie
+ */
+
 #include "runnables/KillRunnable.hpp"
 
 #include <stdlib.h>
@@ -9,14 +16,14 @@
 
 KillRunnable::KillRunnable(ProgramState *pState) : state(pState)
 {
-	fileNumber = 1;
+//	fileNumber = 1;
 }
 
 void KillRunnable::run()
 {
 	if ((servoIn_getPulse(KILL_CHAN3)) < 120000)
 	{
-		state->sdcard->Sync();
+		state->sdcard->sync();
 
 		// close the file
 		state->sdcard->closeFile();
@@ -25,8 +32,9 @@ void KillRunnable::run()
 		while((servoIn_getPulse(KILL_CHAN3)) < 120000);
 
 		// Start a new file
-		snprintf(fileName, sizeof(fileName), "log%u.txt", fileNumber++);
-		state->sdcard->createFile(fileName);
+//		snprintf(fileName, sizeof(fileName), "log%u.txt", fileNumber++);
+//		state->sdcard->createFile(fileName);
+		state->sdcard->createFile();
 
 	}
 }

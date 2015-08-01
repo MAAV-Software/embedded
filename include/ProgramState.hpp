@@ -9,6 +9,7 @@
 #include "SdCard.hpp"
 #include "messaging/DataLink.hpp"
 #include "switch.h"
+#include "Battery.hpp"
 
 struct ProgramState
 {
@@ -17,12 +18,13 @@ struct ProgramState
 	Px4 	*px4;
 	Lidar 	*lidar;
 	SdCard	*sdcard;
+	Battery *battery;
 	FlightMode mode;
 	DataLink *dLink;
 	SwitchData_t *sw;
 
-	ProgramState(Vehicle *v, Imu *i, Px4 *p, Lidar *l, SdCard *s, FlightMode m,
-				 DataLink *dl, SwitchData_t *ls);
+	ProgramState(Vehicle *v, Imu *i, Px4 *p, Lidar *l, SdCard *s, Battery *b, 
+				 FlightMode m, DataLink *dl, SwitchData_t *ls);
 };
 
 #endif /* PROGRAMSTATE_HPP_ */

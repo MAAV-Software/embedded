@@ -44,6 +44,7 @@
 #include "messaging/DataLink.hpp"
 #include "DataLinkHw.hpp"
 #include "ProgramState.hpp"
+#include "EEPROM.h"
 
 #include "runnables/DataLinkRunnable.hpp"
 #include "runnables/DjiRunnable.hpp"
@@ -53,6 +54,7 @@
 #include "runnables/CtrlRunnable.hpp"
 #include "runnables/KillRunnable.hpp"
 #include "runnables/SwitchRunnable.hpp"
+#include "runnables/BatteryRunnable.hpp"
 
 using namespace std;
 
@@ -66,6 +68,7 @@ int main()
 				   SYSCTL_XTAL_16MHZ);
 
 	Config_LED();
+	Config_EEPROM();
 	time_init(SYSCTL_PERIPH_TIMER1, SYSCLOCK, TIMER1_BASE, INT_TIMER1A);	// Chose any open timer
 	PPM_init(SYSCTL_PERIPH_TIMER2, SYSCLOCK, TIMER2_BASE, INT_TIMER2A,		// Chose any open timer
 			 GPIO_PORTB_BASE, GPIO_PIN_6, 4);								// Chose any open port/pin
@@ -93,7 +96,8 @@ int main()
 	DataLink dl(DataLinkUartSend);
 	SdCard sdcard;
 	SwitchData_t sw[3];
-	ProgramState pState(&v, &imu, &px4, &lidar, &sdcard, MANUAL, &dl, sw);
+	Battery battery;
+	ProgramState pState(&v, &imu, &px4, &lidar, &sdcard, &battery, MANUAL, &dl, sw);
 	
 	// Constructing Runnables also initializes the hardware for them
 	FlightModeRunnable flightModeRunnable(&pState);
@@ -104,6 +108,7 @@ int main()
 	CtrlRunnable ctrlRunnable(&pState);
 	SwitchRunnable switchRunnable(&pState);
 	DataLinkRunnable dlinkRunnable(&pState);
+	BatteryRunnable batteryRunnable(&pState);
 
 	Loop mainLoop;
 	mainLoop.regEvent(&killRunnable, 		0, 		0);
@@ -114,15 +119,16 @@ int main()
 	mainLoop.regEvent(&djiRunnable, 		10, 	5);
 	mainLoop.regEvent(&dlinkRunnable, 		20, 	6);
 	mainLoop.regEvent(&switchRunnable, 		50, 	7);
+	mainLoop.regEvent(&batteryRunnable, 	1000, 	8);
 
 	// tricky way to get rid of the initial large values!
 	while (servoIn_getPulse(KILL_CHAN3) > 120000);
 
 	// check if the stick is up, PPM range(59660, 127400)
-	// might change after the calibration
+	// might change after the calibration (87552, 153108)
 	while (servoIn_getPulse(KILL_CHAN3) < 120000);
 
-	sdcard.createFile("log0.txt");
+	sdcard.createFile();
 
 //	char buf[100];
 //	for (uint32_t i = 0; i < 50000; ++i)

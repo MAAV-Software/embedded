@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include "runnables/Runnable.hpp"
 
-#define NUM_EVENT 8
+#define NUM_EVENT 9
 /**
  * @brief Class to handle timing events in a loop
  */

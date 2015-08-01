@@ -2,20 +2,30 @@
 # Automatically-generated file. Do not edit!
 ################################################################################
 
+<<<<<<< HEAD
 CG_TOOL_ROOT := /home/sajan/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.4
+=======
+SHELL = cmd.exe
+
+CG_TOOL_ROOT := C:/ti_v6_1/ccsv6/tools/compiler/ti-cgt-arm_5.2.4
+>>>>>>> zjcui/cleanup
 
 ORDERED_OBJS += \
 "./main.obj" \
 "./tm4c123gh6pm_startup_ccs.obj" \
+<<<<<<< HEAD
 "/home/sajan/ti/SW-TM4C-2.1.0.12573/driverlib/ccs/Debug/driverlib.lib" \
+=======
+"C:/home/sheldon/ti/SW-TM4C-2.1.0.12573/driverlib/ccs/Debug/driverlib.lib" \
+>>>>>>> zjcui/cleanup
 "../tm4c123gh6pm.cmd" \
 $(GEN_CMDS__FLAG) \
 -l"libc.a" \
 
 -include ../makefile.init
 
-RM := rm -rf
-RMDIR := rm -rf
+RM := DEL /F
+RMDIR := RMDIR /S/Q
 
 # All of the sources participating in the build are defined here
 -include sources.mk
@@ -133,13 +143,21 @@ all: Sender.out
 Sender.out: $(OBJS) $(CMD_SRCS) $(LIB_SRCS) $(GEN_CMDS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: ARM Linker'
+<<<<<<< HEAD
 	"/home/sajan/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.4/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 --abi=eabi -me -g --gcc --define=ccs="ccs" --define=PART_TM4C123GH6PM --display_error_number --diag_warning=225 --diag_wrap=off -z -m"Sender.map" --heap_size=0 --stack_size=512 -i"/home/sajan/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.4/lib" -i"/home/sajan/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.4/include" --reread_libs --warn_sections --display_error_number --diag_wrap=off --xml_link_info="Sender_linkInfo.xml" --rom_model -o "Sender.out" $(ORDERED_OBJS)
+=======
+	"C:/ti_v6_1/ccsv6/tools/compiler/ti-cgt-arm_5.2.4/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 --abi=eabi -me -g --gcc --define=ccs="ccs" --define=PART_TM4C123GH6PM --display_error_number --diag_warning=225 --diag_wrap=off -z -m"Sender.map" --heap_size=0 --stack_size=512 -i"C:/ti_v6_1/ccsv6/tools/compiler/ti-cgt-arm_5.2.4/lib" -i"C:/ti_v6_1/ccsv6/tools/compiler/ti-cgt-arm_5.2.4/include" --reread_libs --warn_sections --display_error_number --diag_wrap=off --xml_link_info="Sender_linkInfo.xml" --rom_model -o "Sender.out" $(ORDERED_OBJS)
+>>>>>>> zjcui/cleanup
 	@echo 'Finished building target: $@'
 	@echo ' '
 
 Sender.hex: $(EXE_OUTPUTS)
 	@echo 'Invoking: ARM Hex Utility'
+<<<<<<< HEAD
 	"/home/sajan/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.4/bin/armhex"  -o "Sender.hex" $(EXE_OUTPUTS__QUOTED)
+=======
+	"C:/ti_v6_1/ccsv6/tools/compiler/ti-cgt-arm_5.2.4/bin/armhex"  -o "Sender.hex" $(EXE_OUTPUTS__QUOTED)
+>>>>>>> zjcui/cleanup
 	@echo 'Finished building: $@'
 	@echo ' '
 

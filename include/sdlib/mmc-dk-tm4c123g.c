@@ -46,6 +46,7 @@
 
 /* Peripheral definitions for DK-TM4C123G board */
 // SSI port
+// Edited by Zhengjie
 //#define SDC_SSI_BASE            SSI0_BASE
 //#define SDC_SSI_SYSCTL_PERIPH   SYSCTL_PERIPH_SSI0
 #define SDC_SSI_BASE            SSI1_BASE

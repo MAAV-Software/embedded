@@ -76,6 +76,11 @@
 			<locationURI>REPO_LOC/include/Battery.hpp</locationURI>
 		</link>
 		<link>
+			<name>include/BatteryHw.hpp</name>
+			<type>1</type>
+			<locationURI>REPO_LOC/include/BatteryHw.hpp</locationURI>
+		</link>
+		<link>
 			<name>include/CtrlLogs.hpp</name>
 			<type>1</type>
 			<locationURI>REPO_LOC/include/CtrlLogs.hpp</locationURI>
@@ -94,6 +99,11 @@
 			<name>include/Dof.hpp</name>
 			<type>1</type>
 			<locationURI>REPO_LOC/include/Dof.hpp</locationURI>
+		</link>
+		<link>
+			<name>include/EEPROM.h</name>
+			<type>1</type>
+			<locationURI>REPO_LOC/include/EEPROM.h</locationURI>
 		</link>
 		<link>
 			<name>include/FlightMode.hpp</name>
@@ -286,14 +296,25 @@
 			<locationURI>REPO_LOC/src/Battery.cpp</locationURI>
 		</link>
 		<link>
+<<<<<<< HEAD
 			<name>src/DataLinkHw.cpp</name>
 			<type>1</type>
 			<locationURI>REPO_LOC/src/DataLinkHw.cpp</locationURI>
+=======
+			<name>src/BatteryHw.cpp</name>
+			<type>1</type>
+			<locationURI>REPO_LOC/src/BatteryHw.cpp</locationURI>
+>>>>>>> zjcui/cleanup
 		</link>
 		<link>
 			<name>src/Dof.cpp</name>
 			<type>1</type>
 			<locationURI>REPO_LOC/src/Dof.cpp</locationURI>
+		</link>
+		<link>
+			<name>src/EEPROM.c</name>
+			<type>1</type>
+			<locationURI>REPO_LOC/src/EEPROM.c</locationURI>
 		</link>
 		<link>
 			<name>src/FlightModeHw.cpp</name>
@@ -489,6 +510,11 @@
 			<name>include/messaging/setpt_t.h</name>
 			<type>1</type>
 			<locationURI>REPO_LOC/include/messaging/setpt_t.h</locationURI>
+		</link>
+		<link>
+			<name>include/runnables/BatteryRunnable.hpp</name>
+			<type>1</type>
+			<locationURI>REPO_LOC/include/runnables/BatteryRunnable.hpp</locationURI>
 		</link>
 		<link>
 			<name>include/runnables/CtrlRunnable.hpp</name>
@@ -696,6 +722,11 @@
 			<locationURI>REPO_LOC/src/messaging/setpt_t.c</locationURI>
 		</link>
 		<link>
+			<name>src/runnables/BatteryRunnable.cpp</name>
+			<type>1</type>
+			<locationURI>REPO_LOC/src/runnables/BatteryRunnable.cpp</locationURI>
+		</link>
+		<link>
 			<name>src/runnables/CtrlRunnable.cpp</name>
 			<type>1</type>
 			<locationURI>REPO_LOC/src/runnables/CtrlRunnable.cpp</locationURI>
@@ -788,7 +819,11 @@
 		</variable>
 		<variable>
 			<name>REPO_LOC</name>
+<<<<<<< HEAD
 			<value>file:/C:/Users/MAAV/sajanptl-maav-controls/maav-controls-sajanptl</value>
+=======
+			<value>file:/C:/Users/MAAV/maav-controls</value>
+>>>>>>> zjcui/cleanup
 		</variable>
 		<variable>
 			<name>TIVAWARE_INSTALL</name>

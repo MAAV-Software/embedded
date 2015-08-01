@@ -7,12 +7,27 @@
 #define BATTERY_HPP_
 
 #include <stdint.h>
+#include <cstdlib>
+#include <cstdio>
+
+#include "inc/hw_i2c.h"
+#include "inc/hw_memmap.h"
+#include "inc/hw_types.h"
+#include "inc/tm4c123gh6pm.h"
+
+#include "driverlib/gpio.h"
+#include "driverlib/fpu.h"
+#include "driverlib/pin_map.h"
+#include "driverlib/sysctl.h"
+#include "driverlib/adc.h"
+#include "driverlib/rom.h"
+#include "driverlib/rom_map.h"
 
 class Battery
 {
 public:
 	Battery(const float initVolts = 14.8f, const float minThresh = 3.2f, const uint8_t cellCount = 4);
-	void update(const uint32_t rawCode, const float scaleFactor);
+	void update(const uint32_t rawCode);
 	float getVolts() const;
 	bool isLow() const;
 
@@ -20,6 +35,7 @@ private:
 	float volts;
 	float threshold;
 	uint8_t numCells;
+	float scaleFactor;
 };
 
 /*

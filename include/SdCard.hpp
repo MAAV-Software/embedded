@@ -24,11 +24,13 @@ public:
 	bool mount();
 	bool open(char* Filename);
 	bool createFile(char* Filename);
+	bool createFile();
 	uint32_t read(char* BufferRead, uint32_t Readlen);
 	uint32_t write(char* BufferWrite, uint32_t Writelen);
 	void closeFile();
 	void unmount();
-	void Sync();
+	void sync();
+	uint32_t getCounter();
 
 private:
 	FATFS FatFs;			// FatFs work area needed for each volume
@@ -36,6 +38,8 @@ private:
 	FRESULT FResult;
 	bool SDMounted;
 	bool FileOpened;
+	char fileName[15];
+	uint32_t FileCounter;
 };
 
 #endif /* SD_HPP_ */

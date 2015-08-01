@@ -1,3 +1,10 @@
+/*
+ * I2CRunnable.cpp
+ *
+ *  Created on: Jul 10, 2015
+ *      Author: Zhengjie
+ */
+
 #include "runnables/I2CRunnable.hpp"
 #include "I2CHw.hpp"
 
@@ -57,10 +64,6 @@ void I2CRunnable::run(void)
 				if ((getTime - LidarTime) > (sysClock / 1000.0 * 20.0)) // wait for 20ms after lidar1 done
 				{
 					ps->px4->parse(rawPx4);
-					// Log msg
-					char msg[100];
-					snprintf(msg, sizeof(msg), "PX4(mm):\tDis:%u\n",(uint32_t)(ps->px4->getZDist()*1.0e3));
-					ps->sdcard->write(msg, (uint32_t)strlen(msg));
 
 					LidarTime = getTime; // the time of lidar2 start
 					I2CMDone = false;
@@ -72,10 +75,6 @@ void I2CRunnable::run(void)
 				if ((getTime - LidarTime) > (sysClock / 1000.0 * 0.1)) //wait for 0.1ms after lidar2 done
 				{
 					ps->lidar->parse(rawLidar, LIDAR_DIST_SIZE);
-					// Log msg
-					char msg[100];
-					snprintf(msg, sizeof(msg), "Lidar(cm):\tDis:%u\n",(uint32_t)(ps->lidar->getDist()*1.0e2));
-					ps->sdcard->write(msg, (uint32_t)strlen(msg));
 
 					LidarTime = getTime; // the time of lidar start
 					I2CMDone = false;

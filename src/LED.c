@@ -1,19 +1,9 @@
-//#include <stdint.h>
-//#include <stdlib.h>
-//#include <stdbool.h>
-//#include <stdio.h>
-//
-//#include "inc/hw_ints.h"
-//#include "inc/hw_memmap.h"
-//#include "inc/hw_types.h"
-//#include "inc/tm4c123gh6pm.h"
-//
-//#include "driverlib/sysctl.h"
-//#include "driverlib/gpio.h"
-//#include "driverlib/pin_map.h"
-//#include "driverlib/rom.h"
-//#include "driverlib/rom_map.h"
-//#include "driverlib/timer.h"
+/*
+ * LED.c
+ *
+ *  Created on: Jul 10, 2015
+ *      Author: Zhengjie
+ */
 
 #include "LED.h"
 
@@ -33,11 +23,21 @@ void Config_LED()
 //****************************************************************************************
 void Toggle_LED(uint32_t ledPin, uint32_t time)
 {
-	// Turn off LED.
-	ROM_GPIOPinWrite(GPIO_PORTF_BASE, ledPin, ledPin);
+	TurnOff_LED( ledPin);
 	ROM_SysCtlDelay(time);
 
+	TurnOn_LED(ledPin);
+	ROM_SysCtlDelay(time);
+}
+
+void TurnOn_LED(uint32_t ledPin)
+{
 	// Turn on LED.
 	ROM_GPIOPinWrite(GPIO_PORTF_BASE, ledPin, 0);
-	ROM_SysCtlDelay(time);
+}
+
+void TurnOff_LED(uint32_t ledPin)
+{
+	// Turn off LED.
+	ROM_GPIOPinWrite(GPIO_PORTF_BASE, ledPin, ledPin);
 }

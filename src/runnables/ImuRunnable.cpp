@@ -1,3 +1,10 @@
+/*
+ * ImuRunnable.cpp
+ *
+ *  Created on: Jul 10, 2015
+ *      Author: Zhengjie
+ */
+
 #include <stdint.h>
 #include <string.h>
 #include <stdio.h>
@@ -5,7 +12,6 @@
 #include "runnables/ImuRunnable.hpp"
 #include "ImuHw.hpp"
 
-//#include "inc/hw_ints.h"
 #include "inc/hw_memmap.h"
 #include "inc/hw_types.h"
 #include "inc/tm4c123gh6pm.h"
@@ -45,16 +51,6 @@ void ImuRunnable::run()
 	if (imuDone)
 	{
 		state->imu->parse(imuRawFinal);
-
-		// Log msg
-		char msg[100];
-		snprintf(msg, sizeof(msg), "IMU:\tTime:%d\tRow:%d\tPitch:%d\tYaw:%d\n",
-				(int32_t)state->imu->getTimer(),
-				(int32_t)(state->imu->getRoll()*1e7),
-				(int32_t)(state->imu->getPitch()*1e7),
-				(int32_t)(state->imu->getYaw()*1e7));
-		state->sdcard->write(msg, (uint32_t)strlen(msg));
-
 		imuDone = false;
 	}
 }

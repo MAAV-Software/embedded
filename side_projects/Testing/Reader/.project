@@ -30,11 +30,25 @@
 			<type>1</type>
 			<locationURI>TIVAWARE_INSTALL/driverlib/ccs/Debug/driverlib.lib</locationURI>
 		</link>
+		<link>
+			<name>uartstdio.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-TIVAWARE_INSTALL/TivaWare_C_Series-2.1.0.12573/utils/uartstdio.c</locationURI>
+		</link>
+		<link>
+			<name>uartstdio.h</name>
+			<type>1</type>
+			<locationURI>PARENT-1-TIVAWARE_INSTALL/TivaWare_C_Series-2.1.0.12573/utils/uartstdio.h</locationURI>
+		</link>
 	</linkedResources>
 	<variableList>
 		<variable>
 			<name>TIVAWARE_INSTALL</name>
+<<<<<<< HEAD
 			<value>file:/home/sajan/ti/SW-TM4C-2.1.0.12573</value>
+=======
+			<value>file:/C:/ti/SW-TM4C-2.1.0.12573</value>
+>>>>>>> zjcui/cleanup
 		</variable>
 	</variableList>
 </projectDescription>

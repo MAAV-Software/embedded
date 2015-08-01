@@ -5,7 +5,9 @@
  *      Author: Zhengjie
  */
 
+#include <stdlib.h>
 #include "SdCard.hpp"
+#include "EEPROM.h"
 
 SdCard::SdCard()
 {
@@ -20,6 +22,7 @@ SdCard::SdCard()
 	FileOpened = false;
 	FResult = FR_OK;
 	mount();
+	FileCounter = Read_LOG_EEPROM();
 }
 
 bool SdCard::mount()
@@ -95,6 +98,16 @@ bool SdCard::createFile(char* Filename)
 
 }
 
+bool SdCard::createFile()
+{
+	FileCounter = Read_LOG_EEPROM();
+	if (FileCounter >= 20) FileCounter = 0;
+	snprintf(fileName, sizeof(fileName), "log%u.txt", FileCounter++);
+	createFile(fileName);
+	Write_LOG_EEPROM(FileCounter);
+
+}
+
 void SdCard::closeFile()
 {
 	f_close(&FileObject);
@@ -120,7 +133,7 @@ uint32_t SdCard::write(char* BufferWrite, uint32_t WriteLen)
 	return ActualWriteLen;
 }
 
-void SdCard::Sync()
+void SdCard::sync()
 {
 	f_sync(&FileObject);
 }

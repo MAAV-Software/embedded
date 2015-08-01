@@ -11,7 +11,11 @@ CMD_SRCS += \
 
 LIB_SRCS += \
 C:/ti/SW-TM4C-2.1.0.12573/driverlib/ccs/Debug/driverlib.lib \
+<<<<<<< HEAD
 C:/Users/MAAV/sajanptl-maav-controls/maav-controls-sajanptl/libs/dsplib.lib \
+=======
+C:/Users/MAAV/maav-controls/libs/dsplib.lib \
+>>>>>>> zjcui/cleanup
 C:/ti/SW-TM4C-2.1.0.12573/sensorlib/ccs/Debug/sensorlib.lib 
 
 C_SRCS += \
