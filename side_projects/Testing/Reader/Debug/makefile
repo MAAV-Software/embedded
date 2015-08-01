@@ -9,6 +9,7 @@ CG_TOOL_ROOT := C:/ti_v6_1/ccsv6/tools/compiler/ti-cgt-arm_5.2.4
 ORDERED_OBJS += \
 "./main.obj" \
 "./tm4c123gh6pm_startup_ccs.obj" \
+"./uartstdio.obj" \
 "C:/ti/SW-TM4C-2.1.0.12573/driverlib/ccs/Debug/driverlib.lib" \
 "../tm4c123gh6pm.cmd" \
 $(GEN_CMDS__FLAG) \
@@ -148,8 +149,8 @@ Reader.hex: $(EXE_OUTPUTS)
 # Other Targets
 clean:
 	-$(RM) $(EXE_OUTPUTS__QUOTED)$(BIN_OUTPUTS__QUOTED)
-	-$(RM) "main.pp" "tm4c123gh6pm_startup_ccs.pp" 
-	-$(RM) "main.obj" "tm4c123gh6pm_startup_ccs.obj" 
+	-$(RM) "main.pp" "tm4c123gh6pm_startup_ccs.pp" "uartstdio.pp" 
+	-$(RM) "main.obj" "tm4c123gh6pm_startup_ccs.obj" "uartstdio.obj" 
 	-@echo 'Finished clean'
 	-@echo ' '
 

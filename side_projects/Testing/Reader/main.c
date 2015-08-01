@@ -18,6 +18,8 @@
 #include "driverlib/sysctl.h"
 #include "driverlib/uart.h"
 
+#include "utils/uartstdio.h"
+
 void reader_uart_config_sys_clock(void)
 {
     // Set the clocking to run from the PLL at 50MHz
@@ -68,12 +70,14 @@ void reader_uart_config_uart(void)
 	GPIOPinTypeUART(GPIO_PORTA_BASE, GPIO_PIN_0 | GPIO_PIN_1);
 
 	// Configure UART Clock.
-	UARTClockSourceSet(UART1_BASE, UART_CLOCK_SYSTEM);
-	UARTClockSourceSet(UART0_BASE, UART_CLOCK_SYSTEM);
+	UARTClockSourceSet(UART1_BASE, UART_CLOCK_PIOSC);
+	UARTClockSourceSet(UART0_BASE, UART_CLOCK_PIOSC);
 
 	//Configure UART for operation in the specified data format.
-    UARTConfigSetExpClk(UART1_BASE, SysCtlClockGet(), 115200, (UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE | UART_CONFIG_PAR_NONE));
-    UARTConfigSetExpClk(UART0_BASE, SysCtlClockGet(), 115200, (UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE | UART_CONFIG_PAR_NONE));
+//    UARTConfigSetExpClk(UART1_BASE, SysCtlClockGet(), 115200, (UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE | UART_CONFIG_PAR_NONE));
+//    UARTConfigSetExpClk(UART0_BASE, SysCtlClockGet(), 115200, (UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE | UART_CONFIG_PAR_NONE));
+
+	UARTStdioConfig(0, 115200, 16000000);
 
     // Register and Enable UART1 RX Interrupt.
 //    UARTIntRegister(UART1_BASE, reader_uart_int_handler);
@@ -81,10 +85,10 @@ void reader_uart_config_uart(void)
 //    IntEnable(INT_UART1);
 //    UARTIntEnable(UART1_BASE, UART_INT_RX | UART_INT_RT);
 
-    UARTIntRegister(UART0_BASE, reader_uart_int_handler);
-    IntMasterEnable();
-    IntEnable(INT_UART0);
-    UARTIntEnable(UART0_BASE, UART_INT_RX | UART_INT_RT);
+//    UARTIntRegister(UART0_BASE, reader_uart_int_handler);
+//    IntMasterEnable();
+//    IntEnable(INT_UART0);
+//    UARTIntEnable(UART0_BASE, UART_INT_RX | UART_INT_RT);
 }
 
 
@@ -95,9 +99,12 @@ int main(void)
 
     reader_uart_config_uart();
 
+    uint8_t i = 0;
+
     // Main application loop.
     while(1)
     {
+    	UARTprintf("counter:%u", i++);
     }
 
 }

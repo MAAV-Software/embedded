@@ -21,6 +21,8 @@ main.obj: C:/ti/SW-TM4C-2.1.0.12573/driverlib/interrupt.h
 main.obj: C:/ti/SW-TM4C-2.1.0.12573/driverlib/pin_map.h
 main.obj: C:/ti/SW-TM4C-2.1.0.12573/driverlib/sysctl.h
 main.obj: C:/ti/SW-TM4C-2.1.0.12573/driverlib/uart.h
+main.obj: C:/ti/SW-TM4C-2.1.0.12573/utils/uartstdio.h
+main.obj: C:/ti_v6_1/ccsv6/tools/compiler/ti-cgt-arm_5.2.4/include/stdarg.h
 
 ../main.c: 
 C:/ti_v6_1/ccsv6/tools/compiler/ti-cgt-arm_5.2.4/include/stdbool.h: 
@@ -43,3 +45,5 @@ C:/ti/SW-TM4C-2.1.0.12573/driverlib/interrupt.h:
 C:/ti/SW-TM4C-2.1.0.12573/driverlib/pin_map.h: 
 C:/ti/SW-TM4C-2.1.0.12573/driverlib/sysctl.h: 
 C:/ti/SW-TM4C-2.1.0.12573/driverlib/uart.h: 
+C:/ti/SW-TM4C-2.1.0.12573/utils/uartstdio.h: 
+C:/ti_v6_1/ccsv6/tools/compiler/ti-cgt-arm_5.2.4/include/stdarg.h: 
