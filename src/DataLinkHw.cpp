@@ -81,11 +81,12 @@ void DataLinkUartConfig(const uint32_t sysctlPeriphUart,
     MAP_UARTIntEnable(uartBase, UART_INT_RX | UART_INT_RT);
 
 	// delay for initialization
-	for (int i = 0; i < 3; ++i) Toggle_LED(RED_LED, SYSCLOCK / 3 / 2);
+	for (int i = 0; i < 3; ++i)
+		Toggle_LED(RED_LED, SYSCLOCK / 3 / 2);
 }
 
 void DataLinkUartSend(const uint8_t *buf, uint32_t len)
 {
-	//while (len-- > 0) MAP_UARTCharPut(UART_BASE, *buf++);
-	for (uint32_t i = 0; i < len; ++i) MAP_UARTCharPut(UART_BASE, buf[i]);
+	while (len--)
+		MAP_UARTCharPut(UART_BASE, *buf++);
 }

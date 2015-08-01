@@ -30,12 +30,12 @@
 #define KILL_CHAN5 GPIO_PORTE_BASE,1
 #define KILL_CHAN6 GPIO_PORTE_BASE,0
 
-
+/*
 typedef struct _RC_CHAN 
 {
 	uint32_t gpioPortBase;
 } RC_CHAN;
-
+*/
 
 // Returns true if the pulse is longer than 1.66ms
 bool pulseUpperThird(volatile uint32_t pulseWidth);

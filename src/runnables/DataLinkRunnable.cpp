@@ -41,7 +41,6 @@ void DataLinkRunnable::run()
 	{
 		msg.status = i;
 		ps->dLink->send(&msg);
-		uint32_t len = snprintf(buf, sizeof(buf), "Sending Emergency Status: %d\n\r", msg.status);
 	}
 	/*
 	//char buf[256];

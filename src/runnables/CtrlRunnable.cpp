@@ -14,6 +14,24 @@ void CtrlRunnable::run()
 {
 	float time = ((float)millis()) / 1000.0f; // grab current time
 
+	if (ps->mode == ASSISTED) // set setpts here from rc pilot ctrl in assisted mode
+	{
+		float setpt[NUM_DOFS][NUM_DOF_STATES];
+		for (uint8_t d = 0; d < NUM_DOFS; ++d)
+		{
+			for (uint8_t s = 0; s < (NUM_DOF_STATES - 1); ++s)
+			{
+				setpt[d][s] = 0;
+			}
+			setpt[d][DOF_TIME] = time;
+		}
+		setpt[X_AXIS][DOF_RATE] = ms2XY_rate(pulse2ms(servoIn_getPulse(RC_CHAN1)));
+		setpt[Y_AXIS][DOF_RATE] = ms2XY_rate(pulse2ms(servoIn_getPulse(RC_CHAN2)));
+		setpt[Z_AXIS][DOF_VAL] = ms2height(pulse2ms(servoIn_getPulse(RC_CHAN3)));
+
+		ps->vehicle->setSetpt(setpt, ASSISTED);
+	}
+
 	// TODO add logic for determining when new camera measurement is ready, then call runFilter with
 	// updated arguments for x, y, yawImu, and set withCam to true
 	ps->vehicle->runFilter(0, 0, ps->lidar->getDist(),
