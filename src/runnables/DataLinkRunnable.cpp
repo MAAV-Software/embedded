@@ -15,6 +15,8 @@
 
 #include "LED.h"
 
+char buf[200];
+
 DataLinkRunnable::DataLinkRunnable(ProgramState *pState) : ps(pState)
 {
 	DataLinkUartConfig(SYSCTL_PERIPH_UART0, SYSCTL_PERIPH_GPIOA, GPIO_PA0_U0RX,
@@ -24,18 +26,18 @@ DataLinkRunnable::DataLinkRunnable(ProgramState *pState) : ps(pState)
 
 void DataLinkRunnable::run()
 {
-	char buf[200];
+
 	while (DL_RBUFF.unread() > 0)
 		ps->dLink->processRecv(DL_RBUFF.pop());
 
-	/*
+
 	setpt_t setpt = ps->dLink->getSetptMsg();
 	uint32_t len = snprintf(buf, sizeof(buf),
 							"\n\nSetpt: %f %f %f %f %d %d %d %d\n\n",
 							setpt.x, setpt.y, setpt.z, setpt.yaw, setpt.flags,
 							setpt.setptType, setpt.utime, millis());
 	ps->sdcard->write(buf, len);
-	*/
+
 	emergency_t msg;
 	for (int8_t i = 0; i < 3; ++i)
 	{

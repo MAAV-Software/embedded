@@ -25,7 +25,7 @@ using namespace std;
 
 
 // global that's not externed
-volatile uint32_t UART_BASE = UART0_BASE;
+uint32_t UART_BASE;
 
 // globals that are externed
 RingBuffer<256> DL_RBUFF; // init rbuff with rbBack array
@@ -41,7 +41,11 @@ void DataLinkUartIntHandler()
 
 	// Loop while there are characters in the receive FIFO.
 	while (MAP_UARTCharsAvail(UART_BASE))
-		DL_RBUFF.push(MAP_UARTCharGetNonBlocking(UART_BASE));
+	{
+		uint8_t byte = MAP_UARTCharGetNonBlocking(UART_BASE);
+		//DL_RBUFF.push(MAP_UARTCharGetNonBlocking(UART_BASE));
+		DL_RBUFF.push(byte);
+	}
 }
 
 void DataLinkUartConfig(const uint32_t sysctlPeriphUart,
@@ -71,6 +75,12 @@ void DataLinkUartConfig(const uint32_t sysctlPeriphUart,
 	//Configure UART for operation in the specified data format.
     MAP_UARTConfigSetExpClk(uartBase, SYSCLOCK, 115200,
 			(UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE | UART_CONFIG_PAR_NONE));
+
+//    UARTDisable(UART0_BASE);
+//	UARTIntClear(UART0_BASE, UART_INT_RX);
+//	UARTFIFODisable(UART0_BASE);
+//	UARTIntDisable(UART0_BASE, UART_INT_RX);
+//	UARTIntDisable(UART0_BASE, UART_INT_RT);
 
     MAP_UARTEnable(uartBase);
 

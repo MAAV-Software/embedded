@@ -116,11 +116,11 @@ int main()
 	mainLoop.regEvent(&switchRunnable, 		50, 	7);
 
 	// tricky way to get rid of the initial large values!
-	while(servoIn_getPulse(KILL_CHAN3) > 120000);
+	while (servoIn_getPulse(KILL_CHAN3) > 120000);
 
 	// check if the stick is up, PPM range(59660, 127400)
 	// might change after the calibration
-	while(servoIn_getPulse(KILL_CHAN3) < 120000);
+	while (servoIn_getPulse(KILL_CHAN3) < 120000);
 
 	sdcard.createFile("log0.txt");
 

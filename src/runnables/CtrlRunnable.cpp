@@ -6,7 +6,7 @@
 using namespace std;
 
 //static float lastTime = 0;
-static char buf[128];
+//static char buf[128];
 
 CtrlRunnable::CtrlRunnable(ProgramState* pState) : ps(pState) {}
 
@@ -34,10 +34,12 @@ void CtrlRunnable::run()
 
 	// TODO add logic for determining when new camera measurement is ready, then call runFilter with
 	// updated arguments for x, y, yawImu, and set withCam to true
+	/*
 	ps->vehicle->runFilter(0, 0, ps->lidar->getDist(),
 						   ps->px4->getXFlow(), ps->px4->getYFlow(),
 						   ps->imu->getRoll(), ps->imu->getPitch(),
 						   ps->imu->getYaw(), 0, time, false, ps->mode);
+						   */
 
 	/*
 	float states[NUM_DOFS][NUM_DOF_STATES];
@@ -47,13 +49,14 @@ void CtrlRunnable::run()
 	lastTime = time;
 	ps->vehicle->setDofStates(states);
 	*/
-
+/*
 	ps->vehicle->runCtrl(ps->mode);
 	ps->vehicle->prepareLog(vlog, plogs);
 
 	uint32_t len = snprintf(buf, sizeof(buf), "\n\nZs: %f\tUz: %f\tZ: %f\n\n",
 							plogs[Z_AXIS][0].setpt, vlog.zUval, vlog.zFilt);
 	ps->sdcard->write(buf, len);
+*/
 
 	/* Call the following to generate log info:
 		ps->vehicle->prepareLog(vlog, plogs)
