@@ -17,6 +17,26 @@ void systemDeltaState(const arm_matrix_instance_f32* currState,
 					  const float mass,
 					  arm_matrix_instance_f32* deltaState) 
 {
+//    assert(currState->numRows == 6);
+//    assert(currState->numCols == 1);
+//    assert(controlInput->numRows == 4);
+//    assert(controlInput->numCols == 1);
+//    assert(deltaState->numRows == 6);
+//    assert(deltaState->numCols == 1);
+//
+//    deltaState->pData[0] = currState->pData[3]; // dx = xdot
+//    deltaState->pData[1] = currState->pData[4]; // dy = ydot
+//    deltaState->pData[2] = currState->pData[5]; // dz = zdot
+//    deltaState->pData[3] = -controlInput->pData[0]
+//                         * arm_sin_f32(currState->pData[7]) / mass;
+//    deltaState->pData[4] = controlInput->pData[0]
+//                         * arm_sin_f32(currState->pData[6])
+//                         * arm_cos_f32(currState->pData[7]) / mass;
+//    deltaState->pData[5] = controlInput->pData[0]
+//                         * arm_cos_f32(currState->pData[6])
+//                         * arm_cos_f32(currState->pData[7]) / mass;
+
+/*** Old code ***/
 	// sanity checks
 	assert(currState->numRows == 9);
 	assert(currState->numCols == 1);
@@ -28,13 +48,13 @@ void systemDeltaState(const arm_matrix_instance_f32* currState,
 	deltaState->pData[0] = currState->pData[3]; // dx = xdot
 	deltaState->pData[1] = currState->pData[4]; // dy = ydot
 	deltaState->pData[2] = currState->pData[5]; // dz = zdot
-	deltaState->pData[3] = -controlInput->pData[0] 
+	deltaState->pData[3] = -controlInput->pData[0]
 						   * arm_sin_f32(currState->pData[7]) / mass;
-	deltaState->pData[4] = controlInput->pData[0] 
-						   * arm_sin_f32(currState->pData[6]) 
+	deltaState->pData[4] = controlInput->pData[0]
+						   * arm_sin_f32(currState->pData[6])
 						   * arm_cos_f32(currState->pData[7]) / mass;
-	deltaState->pData[5] = controlInput->pData[0] 
-						   * arm_cos_f32(currState->pData[6]) 
+	deltaState->pData[5] = controlInput->pData[0]
+						   * arm_cos_f32(currState->pData[6])
 						   * arm_cos_f32(currState->pData[7]) / mass;
 	deltaState->pData[6] = 0;
 	deltaState->pData[7] = 0;

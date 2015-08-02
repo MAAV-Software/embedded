@@ -28,6 +28,10 @@ void KillRunnable::run()
 		// close the file
 		state->sdcard->closeFile();
 
+		emergency_t msg;
+		msg.status = (int8_t)EMERGENCY_T_KILL;
+		state->dLink->send(&msg);
+
 		// waiting for unkill signal
 		while((servoIn_getPulse(KILL_CHAN3)) < 120000);
 
@@ -36,5 +40,7 @@ void KillRunnable::run()
 //		state->sdcard->createFile(fileName);
 		state->sdcard->createFile();
 
+		msg.status = (int8_t)EMERGENCY_T_NORMAL;
+		state->dLink->send(&msg);
 	}
 }

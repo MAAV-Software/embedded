@@ -75,19 +75,35 @@ int main()
 	servoIn_init(SYSCTL_PERIPH_TIMER4, TIMER4_BASE); 						// Chose timer4 until encapsulated
 	servoIn_attachPin();
 
-	// todo read in gains from eeprom here
-	float valueGains[NUM_DOFS][NUM_PID_GAINS] = {
-		{1, 0, 0},
-		{1, 0, 0},
-		{1, 0, 0},
-		{1, 0, 0}
-	};
-	float rateGains[NUM_DOFS][NUM_PID_GAINS] = {
-		{1, 0, 0},
-		{1, 0, 0},
-		{1, 0, 0},
-		{0, 0, 0}
-	};
+	float valueGains[NUM_DOFS][NUM_PID_GAINS];
+	float rateGains[NUM_DOFS][NUM_PID_GAINS];
+	float pidEeprom[NUM_FLOAT];
+	Read_PID_EEPROM(pidEeprom);
+
+	valueGains[X_AXIS][KP] = pidEeprom[0];
+	valueGains[X_AXIS][KI] = pidEeprom[1];
+	valueGains[X_AXIS][KD] = pidEeprom[2];
+    valueGains[Y_AXIS][KP] = pidEeprom[3];
+    valueGains[Y_AXIS][KI] = pidEeprom[4];
+    valueGains[Y_AXIS][KD] = pidEeprom[5];
+    valueGains[Z_AXIS][KP] = pidEeprom[6];
+    valueGains[Z_AXIS][KI] = pidEeprom[7];
+    valueGains[Z_AXIS][KD] = pidEeprom[8];
+    valueGains[YAW][KP]    = pidEeprom[9];
+    valueGains[YAW][KI]    = pidEeprom[10];
+    valueGains[YAW][KD]    = pidEeprom[11];
+    rateGains[X_AXIS][KP]  = pidEeprom[12];
+    rateGains[X_AXIS][KI]  = pidEeprom[13];
+    rateGains[X_AXIS][KD]  = pidEeprom[14];
+    rateGains[Y_AXIS][KP]  = pidEeprom[15];
+    rateGains[Y_AXIS][KI]  = pidEeprom[16];
+    rateGains[Y_AXIS][KD]  = pidEeprom[17];
+    rateGains[Z_AXIS][KP]  = pidEeprom[18];
+    rateGains[Z_AXIS][KI]  = pidEeprom[19];
+    rateGains[Z_AXIS][KD]  = pidEeprom[20];
+    rateGains[YAW][KP]     = pidEeprom[21];
+    rateGains[YAW][KI]     = pidEeprom[22];
+    rateGains[YAW][KD]     = pidEeprom[23];
 
 	Vehicle v(valueGains, rateGains);
 	Imu imu;
@@ -97,7 +113,8 @@ int main()
 	SdCard sdcard;
 	SwitchData_t sw[3];
 	Battery battery;
-	ProgramState pState(&v, &imu, &px4, &lidar, &sdcard, &battery, MANUAL, &dl, sw);
+	feedback_t fbMsg;
+	ProgramState pState(&v, &imu, &px4, &lidar, &sdcard, &battery, MANUAL, &dl, sw, &fbMsg);
 	
 	// Constructing Runnables also initializes the hardware for them
 	FlightModeRunnable flightModeRunnable(&pState);
@@ -137,6 +154,9 @@ int main()
 //		sdcard.write(buf, len);
 //	}
 //	sdcard.closeFile();
+	emergency_t ems;
+	ems.status = (int8_t)EMERGENCY_T_NORMAL;
+	dl.send(&ems);
 
 	mainLoop.run();
 

@@ -51,7 +51,25 @@ void CtrlRunnable::run()
 	*/
 /*
 	ps->vehicle->runCtrl(ps->mode);
+*/
+/*
 	ps->vehicle->prepareLog(vlog, plogs);
+
+    ps->feedback->utime = time;
+    ps->feedback->roll  = vlog.rollFilt;
+    ps->feedback->pitch = vlog.pitchFilt;
+    ps->feedback->yaw   = vlog.yawFilt;
+    ps->feedback->x[0]  = vlog.xFilt;
+    ps->feedback->x[1]  = vlog.xdotFilt;
+    ps->feedback->x[2]  = 0;
+    ps->feedback->y[0]  = vlog.yFilt;
+    ps->feedback->y[1]  = vlog.ydotFilt;
+    ps->feedback->y[2]  = 0;
+    ps->feedback->z[0]  = vlog.zFilt;
+    ps->feedback->z[1]  = vlog.zdotFilt;
+    ps->feedback->z[2]  = 0;
+    ps->feedback->flags = ps->dLink->getSetptMsg().flags;
+    ps->dLink->send(ps->feedback);
 */
 
 /* Log msg structure

@@ -7,6 +7,7 @@
 #include "FlightMode.hpp"
 
 ProgramState::ProgramState(Vehicle *v, Imu *i, Px4 *p, Lidar *l, SdCard *s,
-						   Battery *b, FlightMode m, DataLink *dl, SwitchData_t *ls)
+						   Battery *b, FlightMode m, DataLink *dl, SwitchData_t *ls,
+						   feedback_t *fb)
 	: vehicle(v), imu(i), px4(p), lidar(l), sdcard(s), battery(b), mode(m), 
-	  dLink(dl), sw(ls) {}
+	  dLink(dl), sw(ls), feedback(fb) {}

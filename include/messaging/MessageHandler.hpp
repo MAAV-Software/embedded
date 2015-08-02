@@ -16,6 +16,8 @@ struct MessageHandler
 	MessageHandler();
 };
 
+void setptCallback(lcmlite_t *lcm, const char *channel, const void *buf, int buf_len, void *user);
+
 
 void callback(lcmlite_t *lcm, const char *channel, const void *buf, 
 			  int buf_len, void *user);

@@ -10,6 +10,8 @@
 #include "BatteryHw.hpp"
 #include "LED.h"
 #include "time_util.h"
+#include "messaging/emergency_t.h"
+#include "messaging/DataLink.hpp"
 
 BatteryRunnable::BatteryRunnable(ProgramState *pState): state(pState)
  {
@@ -23,6 +25,10 @@ void BatteryRunnable::run()
 	if (state->battery->isLow())
 	{
 		Toggle_LED(RED_LED, SYSCLOCK/1000/2);
+
+		emergency_t msg;
+		msg.status = (int8_t)EMERGENCY_T_LOW_BATTERY;
+		state->dLink->send(&msg);
 	}
 }
 

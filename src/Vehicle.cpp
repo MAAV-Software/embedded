@@ -350,7 +350,8 @@ void Vehicle::setSetpt(const float setpt[NUM_DOFS][NUM_DOF_STATES],
 			dofs[X_AXIS].setSetpt(setpt[X_AXIS], true);
 			dofs[Y_AXIS].setSetpt(setpt[Y_AXIS], true);
 			break;
-		case MANUAL: break;
+		case MANUAL:
+		    return; // don't set any setpts since we're passing RC Pilot direclty to DJI
 		default: 	 break;
 	}
 	
@@ -385,8 +386,7 @@ void Vehicle::calcDJIValues()
 	for (int i = 0; i < 3; ++i) forceVe[i] = dofs[i].getUval();
 	forceVe[Z_AXIS] += mass * GRAVITY;
 
-	// Convert earth frame forces to body frame, adding trim (which is already
-	// in the body frame)
+	// Convert earth frame forces to body frame
 	forceVy[X_AXIS] =  (preYawCos * forceVe[X_AXIS]) + (preYawSin * forceVe[Y_AXIS]);
 	forceVy[Y_AXIS] = -(preYawSin * forceVe[X_AXIS]) + (preYawCos * forceVe[Y_AXIS]);
 	forceVy[Z_AXIS] = forceVe[Z_AXIS];

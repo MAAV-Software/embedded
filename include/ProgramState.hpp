@@ -8,6 +8,7 @@
 #include "FlightMode.hpp"
 #include "SdCard.hpp"
 #include "messaging/DataLink.hpp"
+#include "messaging/feedback_t.h"
 #include "switch.h"
 #include "Battery.hpp"
 
@@ -22,9 +23,10 @@ struct ProgramState
 	FlightMode mode;
 	DataLink *dLink;
 	SwitchData_t *sw;
+	feedback_t *feedback;
 
 	ProgramState(Vehicle *v, Imu *i, Px4 *p, Lidar *l, SdCard *s, Battery *b, 
-				 FlightMode m, DataLink *dl, SwitchData_t *ls);
+				 FlightMode m, DataLink *dl, SwitchData_t *ls, feedback_t *fb);
 };
 
 #endif /* PROGRAMSTATE_HPP_ */

@@ -40,7 +40,7 @@ public:
 	//           packet has not been decoded, the pointer is invalid and
 	//           should NOT be used. Check whether a full packet has been
 	//           decoded using isDone()
-	const uint8_t* packetData() const { return buffer; }
+	const uint8_t* packetData() { return buffer; }
 
 	// REQUIRES: The decoding is done. Check with isDone().
 	// EFFECTS:  Returns the size of the packet. Note that this size is

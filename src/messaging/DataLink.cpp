@@ -16,6 +16,7 @@
 #include "messaging/Decoder.hpp"
 #include "messaging/MessageHandler.hpp"
 #include "messaging/TransmitHandler.hpp"
+#include "messaging/feedback_t.h"
 
 //LCM Sender Address (we don't use UDP, it just has to be something)
 static const uint64_t ATOM_ADDR = 9001;
@@ -35,9 +36,9 @@ DataLink::DataLink(void (*f)(const uint8_t*, uint32_t))
     rawPoseSub.callback = callback;
     rawPoseSub.channel = "RWP";
     rawPoseSub.user = &msgHandler;
-    setptSub.callback = callback;
+    setptSub.callback = setptCallback;
     setptSub.channel = "SET";
-    setptSub.user = &msgHandler;
+    setptSub.user = &msgHandler.setpt;
 
     //Subscribe LCM subscriptions
     lcmlite_subscribe(&lcm, &gainsSub);
@@ -47,12 +48,16 @@ DataLink::DataLink(void (*f)(const uint8_t*, uint32_t))
 
 void DataLink::send(emergency_t *msg)
 {
-	lcmlite_publish(&lcm, "EMS", msg, sizeof(emergency_t));	
+    char buf[128];
+    int len = emergency_t_encode(buf, 0, 128, msg);
+	lcmlite_publish(&lcm, "EMS", msg, len);
 }
 
 void DataLink::send(feedback_t *msg)
 {
-	lcmlite_publish(&lcm, "FEB", msg, sizeof(feedback_t));
+    char buf[128];
+    int len = feedback_t_encode(buf, 0, 128, msg);
+	lcmlite_publish(&lcm, "FEB", buf, len);
 }
 
 void DataLink::processRecv(const uint8_t raw)
