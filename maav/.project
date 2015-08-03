@@ -714,15 +714,15 @@
 	<variableList>
 		<variable>
 			<name>CMSIS_LOC</name>
-			<value>file:/C:/ti/CMSIS-SP-00300-r4p3-00rel0/CMSIS</value>
+			<value>file:/home/sheldon/ti/CMSIS-SP-00300-r4p3-00rel0/CMSIS</value>
 		</variable>
 		<variable>
 			<name>REPO_LOC</name>
-			<value>file:/C:/Users/MAAV/sajanptl-maav-controls/maav-controls-sajanptl</value>
+			<value>file:/home/sheldon/maav-controls</value>
 		</variable>
 		<variable>
 			<name>TIVAWARE_INSTALL</name>
-			<value>file:/C:/ti/SW-TM4C-2.1.0.12573</value>
+			<value>file:/home/sheldon/ti/SW-TM4C-2.1.0.12573</value>
 		</variable>
 	</variableList>
 </projectDescription>

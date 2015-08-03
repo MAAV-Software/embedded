@@ -5,7 +5,7 @@
 
 #include <stdint.h>
 #include <stdlib.h>
-#include "lcm_coretypes.h"
+#include "lcm/lcm_coretypes.h"
 
 #ifndef _setpt_t_h
 #define _setpt_t_h

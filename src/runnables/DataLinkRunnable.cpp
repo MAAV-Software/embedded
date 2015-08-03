@@ -35,9 +35,8 @@ void DataLinkRunnable::run()
 
 	char buf[200];
 	uint32_t len = snprintf(buf, sizeof(buf),
-							"\n\nSetpt: %f %f %f %f %d %d %d %d\n\n",
-							setpt.x, setpt.y, setpt.z, setpt.yaw, setpt.flags,
-							setpt.setptType, setpt.utime, millis());
+							"\n\nSetpt: %f %f %f %f %d %d %d\n\n",
+							setpt.x, setpt.y, setpt.z, setpt.yaw, setpt.flags, setpt.utime, millis());
 	ps->sdcard->write(buf, len);
 
 	// Logic for dealing with messages depends on the last time they were received
@@ -117,7 +116,6 @@ void DataLinkRunnable::updateVehicleGains()
 void DataLinkRunnable::updateVehicleSetpt()
 {
     if ((ps->mode != AUTONOMOUS)
-            || (setpt.setptType != (int8_t)SETPT_T_POSE_SETPT)
             || (setpt.flags == (int8_t)SETPT_T_IDLE))
     {
         return; // in these cases, we don't want to set vehicle setpt
@@ -138,7 +136,7 @@ void DataLinkRunnable::updateVehicleSetpt()
 
     switch (setpt.flags)
     {
-        case SETPT_T_NORMAL:
+        case SETPT_T_POSE:
             spArr[X_AXIS][DOF_VAL] = setpt.x;
             spArr[Y_AXIS][DOF_VAL] = setpt.y;
             spArr[Z_AXIS][DOF_VAL] = setpt.z;

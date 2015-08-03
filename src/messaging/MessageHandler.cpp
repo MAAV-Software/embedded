@@ -11,7 +11,7 @@ MessageHandler::MessageHandler()
 	for (uint8_t i = 0; i < 3; ++i)
 		gains.yawGains[i] = 0;
 
-	setpt.flags = setpt.setptType = 0;
+	setpt.flags = 0;
 	setpt.utime = 0;
 	setpt.x = setpt.y = setpt.yaw = setpt.z = 0;
 
@@ -41,7 +41,6 @@ void callback(lcmlite_t *lcm, const char *channel, const void *buf, int buf_len,
     original.yaw = 40;
     original.utime = 50;
     original.flags = 1;
-    original.setptType = 0;
 
     uint8_t origBuf[128];
     int err2 = setpt_t_encode(origBuf, 0, 128, &original);

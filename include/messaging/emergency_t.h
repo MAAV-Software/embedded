@@ -5,7 +5,7 @@
 
 #include <stdint.h>
 #include <stdlib.h>
-#include "lcm_coretypes.h"
+#include "lcm/lcm_coretypes.h"
 
 #ifndef _emergency_t_h
 #define _emergency_t_h

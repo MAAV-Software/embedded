@@ -5,7 +5,7 @@
 
 #include <stdint.h>
 #include <stdlib.h>
-#include "lcm_coretypes.h"
+#include "lcm/lcm_coretypes.h"
 
 #ifndef _raw_pose_t_h
 #define _raw_pose_t_h
