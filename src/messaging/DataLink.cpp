@@ -36,9 +36,9 @@ DataLink::DataLink(void (*f)(const uint8_t*, uint32_t))
     rawPoseSub.callback = callback;
     rawPoseSub.channel = "RWP";
     rawPoseSub.user = &msgHandler;
-    setptSub.callback = setptCallback;
+    setptSub.callback = callback;
     setptSub.channel = "SET";
-    setptSub.user = &msgHandler.setpt;
+    setptSub.user = &msgHandler;
 
     //Subscribe LCM subscriptions
     lcmlite_subscribe(&lcm, &gainsSub);
