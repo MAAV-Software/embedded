@@ -1,0 +1,7 @@
+struct raw_pose_t
+{
+	float x;
+	float y;
+	float yaw;
+	int64_t utime;
+}
