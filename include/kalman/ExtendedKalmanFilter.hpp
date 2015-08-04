@@ -48,10 +48,15 @@ public:
 						void (*deltaState)(const arm_matrix_instance_f32*,
 										   const arm_matrix_instance_f32*, 
 										   const float,
+										   const float,
+										   const float,
+										   const float,
+										   const float,
+										   const float,
+										   const float,
 										   arm_matrix_instance_f32*),
 						void (*getJacobian)(const arm_matrix_instance_f32*,
 											const arm_matrix_instance_f32*, 
-											const float,
 											arm_matrix_instance_f32*),
 						const arm_matrix_instance_f32* covariance);
 
@@ -79,7 +84,14 @@ public:
 	 * @param deltaTime time past since last predict or update
 	 * @param controlInput control input going into system
 	 */
-	void predict(const float deltaTime, const float mass,
+	void predict(const float deltaTime,
+				 const float mass,
+			  	 const float sinR,
+				 const float cosR,
+				 const float sinP,
+				 const float cosP,
+				 const float sinY,
+				 const float cosY,
 				 const arm_matrix_instance_f32* controlInput);
 
 	/**
@@ -105,10 +117,15 @@ private:
 	void (*_deltaState)(const arm_matrix_instance_f32*,
 						const arm_matrix_instance_f32*, 
 						const float,
+						const float,
+						const float,
+						const float,
+						const float,
+						const float,
+						const float,
 						arm_matrix_instance_f32*);
 	void (*_getJacobian)(const arm_matrix_instance_f32*,
-						 const arm_matrix_instance_f32*, 
-						 const float,
+						 const arm_matrix_instance_f32*,
 						 arm_matrix_instance_f32*);
 	arm_matrix_instance_f32 _systemJacobian; // n by n matrix
 	arm_matrix_instance_f32 _systemCovariance;

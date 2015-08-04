@@ -33,11 +33,11 @@ void DataLinkRunnable::run()
 	setpt = ps->dLink->getSetptMsg();
 	gains = ps->dLink->getGainsMsg();
 
-	char buf[200];
-	uint32_t len = snprintf(buf, sizeof(buf),
-							"\n\nSetpt: %f %f %f %f %d %d %d\n\n",
-							setpt.x, setpt.y, setpt.z, setpt.yaw, setpt.flags, setpt.utime, millis());
-	ps->sdcard->write(buf, len);
+//	char buf[200];
+//	uint32_t len = snprintf(buf, sizeof(buf),
+//							"\n\nSetpt: %f %f %f %f %d %d %d\n\n",
+//							setpt.x, setpt.y, setpt.z, setpt.yaw, setpt.flags, setpt.utime, millis());
+//	ps->sdcard->write(buf, len);
 
 	// Logic for dealing with messages depends on the last time they were received
 	// Note that the raw_pose_t message is handled in the CtrlRunnable rather than
@@ -45,27 +45,27 @@ void DataLinkRunnable::run()
 	if (setpt.utime > lastSetptTime)
 	{
 	    lastSetptTime = setpt.utime;
-	    Toggle_LED(BLUE_LED, SYSCLOCK / 1000); // for debug only
+	    //Toggle_LED(BLUE_LED, SYSCLOCK / 1000); // for debug only
 
-	    updateVehicleSetpt();
+	    //updateVehicleSetpt();
 	}
 
 	if (gains.utime > lastGainsTime) // update vehicle gains
 	{
 	    lastGainsTime = gains.utime;
-	    updateVehicleGains();
+	    //updateVehicleGains();
 	}
 
 
-	// This is for test only!
-	feedback_t msg;
-	msg.flags = setpt.flags;
-	msg.pitch = msg.roll = msg.yaw = 0;
-	msg.x[0] = 10;  msg.x[1] = 1; msg.x[2] = 0;
-	msg.y[0] = 20;  msg.y[1] = 0; msg.y[2] = 0;
-	msg.z[0] = 1.5; msg.z[1] = 0; msg.z[2] = 0;
-	msg.utime = millis();
-	ps->dLink->send(&msg);
+//	// This is for test only!
+//	feedback_t msg;
+//	msg.flags = setpt.flags;
+//	msg.pitch = msg.roll = msg.yaw = 0;
+//	msg.x[0] = 10;  msg.x[1] = 1; msg.x[2] = 0;
+//	msg.y[0] = 20;  msg.y[1] = 0; msg.y[2] = 0;
+//	msg.z[0] = 1.5; msg.z[1] = 0; msg.z[2] = 0;
+//	msg.utime = millis();
+//	ps->dLink->send(&msg);
 
 
 //	emergency_t msg;

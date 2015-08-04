@@ -29,8 +29,9 @@ void DjiRunnable::run()
 		case ASSISTED:
 			PPM_setPulse(0, servoIn_getPulse(RC_CHAN1)); // for testing only, directly pass through roll and pitch
 			PPM_setPulse(1, servoIn_getPulse(RC_CHAN2));
+			PPM_setPulse(2, servoIn_getPulse(RC_CHAN3));	// Z Accel
 
-			PPM_setPulse(2, ms2pulse(PID_XY_2ms(state->vehicle->getDjiVals().thrust)));
+			//PPM_setPulse(2, ms2pulse(PID_XY_2ms(state->vehicle->getDjiVals().thrust)));
 
 			PPM_setPulse(3, servoIn_getPulse(RC_CHAN4)); // directly pass through yaw ratr
 			break;

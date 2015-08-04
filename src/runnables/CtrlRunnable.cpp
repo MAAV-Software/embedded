@@ -8,12 +8,16 @@
 
 using namespace std;
 
-CtrlRunnable::CtrlRunnable(ProgramState* pState) : ps(pState) {}
+CtrlRunnable::CtrlRunnable(ProgramState* pState)
+{
+	ps = pState;
+	lastPoseTime = 0;
+}
 
 void CtrlRunnable::run()
 {
 	float time = ((float)millis()) / 1000.0f; // grab current time
-/*
+
 	if (ps->mode == ASSISTED) // set setpts here from rc pilot ctrl in assisted mode
 	{
 		float setpt[NUM_DOFS][NUM_DOF_STATES];
@@ -27,19 +31,45 @@ void CtrlRunnable::run()
 		}
 		setpt[X_AXIS][DOF_RATE] = ms2XY_rate(pulse2ms(servoIn_getPulse(RC_CHAN1)));
 		setpt[Y_AXIS][DOF_RATE] = ms2XY_rate(pulse2ms(servoIn_getPulse(RC_CHAN2)));
-		setpt[Z_AXIS][DOF_VAL] = ms2height(pulse2ms(servoIn_getPulse(RC_CHAN3)));
+		setpt[Z_AXIS][DOF_VAL]  = ms2height(pulse2ms(servoIn_getPulse(RC_CHAN3)));
 
 		ps->vehicle->setSetpt(setpt, ASSISTED);
 	}
-*/
-	// TODO add logic for determining when new camera measurement is ready, then call runFilter with
-	// updated arguments for x, y, yawImu, and set withCam to true
-	/*
-	ps->vehicle->runFilter(0, 0, ps->lidar->getDist(),
-						   ps->px4->getXFlow(), ps->px4->getYFlow(),
-						   ps->imu->getRoll(), ps->imu->getPitch(),
-						   ps->imu->getYaw(), 0, time, false, ps->mode);
-	 */
+
+	if ((ps->mode == AUTONOMOUS) && (ps->dLink->getRawPoseMsg().utime > lastPoseTime))
+	{
+		lastPoseTime = ps->dLink->getRawPoseMsg().utime;
+
+		// filter with camera data
+		ps->vehicle->runFilter(ps->dLink->getRawPoseMsg().x,
+							   ps->dLink->getRawPoseMsg().y,
+							   ps->lidar->getDist(),
+							   ps->px4->getXFlow(),
+							   ps->px4->getYFlow(),
+							   ps->imu->getRoll(),
+							   ps->imu->getPitch(),
+							   ps->imu->getYaw(),
+							   ps->dLink->getRawPoseMsg().yaw,
+							   time,
+							   true,
+							   ps->mode);
+	}
+	else
+	{
+		// filter without camera data
+		ps->vehicle->runFilter(0,
+							   0,
+							   ps->lidar->getDist(),
+							   ps->px4->getXFlow(),
+							   ps->px4->getYFlow(),
+							   ps->imu->getRoll(),
+							   ps->imu->getPitch(),
+							   ps->imu->getYaw(),
+							   0,
+							   time,
+							   false,
+							   ps->mode);
+	}
 
 	/*
 	float states[NUM_DOFS][NUM_DOF_STATES];
@@ -49,16 +79,16 @@ void CtrlRunnable::run()
 	lastTime = time;
 	ps->vehicle->setDofStates(states);
 	*/
-/*
+
 	ps->vehicle->runCtrl(ps->mode);
-*/
-/*
+
 	ps->vehicle->prepareLog(vlog, plogs);
 
+	/*
     ps->feedback->utime = time;
-    ps->feedback->roll  = vlog.rollFilt;
-    ps->feedback->pitch = vlog.pitchFilt;
-    ps->feedback->yaw   = vlog.yawFilt;
+    ps->feedback->roll  = ps->imu->getRoll();
+    ps->feedback->pitch = ps->imu->getPitch();
+    ps->feedback->yaw   = ps->imu->getYaw();
     ps->feedback->x[0]  = vlog.xFilt;
     ps->feedback->x[1]  = vlog.xdotFilt;
     ps->feedback->x[2]  = 0;
@@ -70,7 +100,24 @@ void CtrlRunnable::run()
     ps->feedback->z[2]  = 0;
     ps->feedback->flags = ps->dLink->getSetptMsg().flags;
     ps->dLink->send(ps->feedback);
-*/
+	*/
+
+    ps->feedback->utime = time;
+    ps->feedback->roll  = ps->imu->getRoll();
+    ps->feedback->pitch = ps->imu->getPitch();
+    ps->feedback->yaw   = ps->imu->getYaw();
+    ps->feedback->x[0]  = 0;
+    ps->feedback->x[1]  = ps->px4->getXFlow();
+    ps->feedback->x[2]  = 0;
+    ps->feedback->y[0]  = 0;
+    ps->feedback->y[1]  = ps->px4->getYFlow();
+    ps->feedback->y[2]  = 0;
+    ps->feedback->z[0]  = ps->lidar->getDist();
+    ps->feedback->z[1]  = 0;
+    ps->feedback->z[2]  = 0;
+    ps->feedback->flags = ps->dLink->getSetptMsg().flags;
+    ps->dLink->send(ps->feedback);
+
 
 /* Log msg structure
  * Time: 		t
@@ -92,7 +139,6 @@ void CtrlRunnable::run()
  * battery:		vols
  * DJI:			roll pitch dyaw Fz
  */
-
 	float RotMat[NUM_M_VAL];
 	ps->imu->getRotMat(RotMat);
 
@@ -121,7 +167,8 @@ void CtrlRunnable::run()
 			"%f\t%f\t%f\t%f\t"
 			"%u\t%u\t%u\t%u\t%u\t%u\t%u\t"
 			"%f\t"
-			"%f\t%f\t%f\t%f\n",
+			"%u\t%u\t%u\t%u\t"
+			"%d\n",
 			time,
 			ps->mode,
 			ps->imu->getAccX(), ps->imu->getAccY(), ps->imu->getAccZ(),
@@ -130,8 +177,10 @@ void CtrlRunnable::run()
 			RotMat[0], RotMat[1], RotMat[2], RotMat[3], RotMat[4], RotMat[5], RotMat[6], RotMat[7], RotMat[8],
 			ps->px4->getXFlow(), ps->px4->getYFlow(), ps->px4->getQual(),
 			ps->lidar->getDist(),
-			1.0f, 2.0f, 3.0f, 4.0f,
-			vlog.xFilt, vlog.yFilt, vlog.zFilt, vlog.xdotFilt, vlog.ydotFilt, vlog.zdotFilt, vlog.rollFilt, vlog.pitchFilt, vlog.yawFilt,
+			//1.0f, 2.0f, 3.0f, 4.0f,
+			ps->dLink->getRawPoseMsg().x, ps->dLink->getRawPoseMsg().y, ps->dLink->getRawPoseMsg().yaw, time, // this last time value is our tiva time
+			//vlog.xFilt, vlog.yFilt, vlog.zFilt, vlog.xdotFilt, vlog.ydotFilt, vlog.zdotFilt, vlog.rollFilt, vlog.pitchFilt, vlog.yawFilt,
+			vlog.xFilt, vlog.yFilt, vlog.zFilt, vlog.xdotFilt, vlog.ydotFilt, vlog.zdotFilt, ps->imu->getRoll(), ps->imu->getPitch(), ps->imu->getYaw(),
 			plogs[X_AXIS][DOF_VAL].kp, plogs[X_AXIS][DOF_VAL].ki, plogs[X_AXIS][DOF_VAL].kd,
 			plogs[Y_AXIS][DOF_VAL].kp, plogs[Y_AXIS][DOF_VAL].ki, plogs[Y_AXIS][DOF_VAL].kd,
 			plogs[Z_AXIS][DOF_VAL].kp, plogs[Z_AXIS][DOF_VAL].ki, plogs[Z_AXIS][DOF_VAL].kd,
@@ -140,7 +189,8 @@ void CtrlRunnable::run()
 			plogs[Y_AXIS][DOF_RATE].kd, plogs[Y_AXIS][DOF_RATE].ki, plogs[Y_AXIS][DOF_RATE].kd,
 			plogs[Z_AXIS][DOF_RATE].kd, plogs[Z_AXIS][DOF_RATE].ki, plogs[Z_AXIS][DOF_RATE].kd,
 			plogs[YAW][DOF_RATE].kd, plogs[YAW][DOF_RATE].ki, plogs[YAW][DOF_RATE].kd,
-			plogs[X_AXIS][DOF_VAL].setpt, plogs[Y_AXIS][DOF_VAL].setpt, plogs[Z_AXIS][DOF_VAL].setpt, plogs[YAW][DOF_VAL].setpt,
+			ps->dLink->getSetptMsg().x, ps->dLink->getSetptMsg().y, ps->dLink->getSetptMsg().z, ps->dLink->getSetptMsg().yaw,
+			//plogs[X_AXIS][DOF_VAL].setpt, plogs[Y_AXIS][DOF_VAL].setpt, plogs[Z_AXIS][DOF_VAL].setpt, plogs[YAW][DOF_VAL].setpt,
 			plogs[X_AXIS][DOF_RATE].setpt, plogs[Y_AXIS][DOF_RATE].setpt, plogs[Z_AXIS][DOF_RATE].setpt,
 			vlog.xUval, vlog.yUval, vlog.zUval, plogs[YAW][DOF_RATE].setpt,
 			plogs[X_AXIS][DOF_VAL].flags, plogs[Y_AXIS][DOF_VAL].flags, plogs[Z_AXIS][DOF_VAL].flags,
@@ -149,7 +199,8 @@ void CtrlRunnable::run()
 			servoIn_getPulse(RC_CHAN2),
 			servoIn_getPulse(RC_CHAN1),
 			servoIn_getPulse(RC_CHAN4),
-			servoIn_getPulse(RC_CHAN3));
+			servoIn_getPulse(RC_CHAN3),
+			ps->dLink->getSetptMsg().flags);
 	ps->sdcard->write(msg, len);
 }
 

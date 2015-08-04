@@ -91,15 +91,20 @@ ExtendedKalmanFilter::~ExtendedKalmanFilter()
 }
 
 void ExtendedKalmanFilter::setPredictFunc(const uint16_t controlInputSize,
-						void (*deltaState)(const arm_matrix_instance_f32*,
-										   const arm_matrix_instance_f32*, 
-										   const float,
-										   arm_matrix_instance_f32*),
-						void (*getJacobian)(const arm_matrix_instance_f32*,
-											const arm_matrix_instance_f32*, 
-											const float,
-											arm_matrix_instance_f32*),
-						const arm_matrix_instance_f32* covariance) 
+										  void (*deltaState)(const arm_matrix_instance_f32*,
+															 const arm_matrix_instance_f32*,
+															 const float,
+															 const float,
+															 const float,
+															 const float,
+															 const float,
+															 const float,
+															 const float,
+															 arm_matrix_instance_f32*),
+											void (*getJacobian)(const arm_matrix_instance_f32*,
+																const arm_matrix_instance_f32*,
+																arm_matrix_instance_f32*),
+										    const arm_matrix_instance_f32* covariance)
 {
 	_deltaState = deltaState;
 	_getJacobian = getJacobian;
@@ -115,8 +120,8 @@ void ExtendedKalmanFilter::setPredictFunc(const uint16_t controlInputSize,
 
 void ExtendedKalmanFilter::setUpdateFunc(const uint16_t id, 
 										 const uint16_t sensorSize,
-	void (*predictSensor)(const arm_matrix_instance_f32*, arm_matrix_instance_f32*),
-	void (*getJacobian)(const arm_matrix_instance_f32*, arm_matrix_instance_f32*),
+										 void (*predictSensor)(const arm_matrix_instance_f32*, arm_matrix_instance_f32*),
+										 void (*getJacobian)(const arm_matrix_instance_f32*, arm_matrix_instance_f32*),
 										 const arm_matrix_instance_f32* covariance) 
 {
 	assert(sensorSize != 0);
@@ -155,19 +160,26 @@ void ExtendedKalmanFilter::setUpdateFunc(const uint16_t id,
 		   sensorSize * sensorSize * sizeof(float)); // init R with given covariance
 }
 
-void ExtendedKalmanFilter::predict(const float deltaTime, const float mass,
+void ExtendedKalmanFilter::predict(const float deltaTime,
+								   const float mass,
+								   const float sinR,
+								   const float cosR,
+								   const float sinP,
+								   const float cosP,
+								   const float sinY,
+								   const float cosY,
 								   const arm_matrix_instance_f32* controlInput) 
 {
 	assert(controlInput->numRows == _controlInputSize);
 	assert(controlInput->numCols == 1);
 
 	// x = x + deltaTime * f(x, u)
-	_deltaState(&_state, controlInput, mass, &_n1_0);
+	_deltaState(&_state, controlInput, mass, sinR, cosR, sinP, cosP, sinY, cosY, &_n1_0);
 	arm_mat_scale_f32(&_n1_0, deltaTime, &_n1_0);
 	arm_mat_add_f32(&_state, &_n1_0, &_state);
 
 	// P = P + deltaTime * (A * P + P * A' + Q)
-	_getJacobian(&_state, controlInput, mass, &_systemJacobian);
+	_getJacobian(&_state, controlInput, &_systemJacobian);
 	arm_mat_trans_f32(&_systemJacobian, &_nn_0); 			// _nn_0 = A^T
 	arm_mat_mult_f32(&_P, &_nn_0, &_nn_1); 					// _nn_1 = PA^T
 	arm_mat_mult_f32(&_systemJacobian, &_P, &_nn_0); 		// _nn_0 = AP

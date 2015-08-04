@@ -22,7 +22,7 @@ class Vehicle
 public:
 	// Public Methods
 	// Constructors
-	Vehicle();
+	//Vehicle();
 	Vehicle(const float valueGains[NUM_DOFS][NUM_PID_GAINS],
 			const float rateGains[NUM_DOFS][NUM_PID_GAINS]);
 	Vehicle(const float states[NUM_DOFS][NUM_DOF_STATES],
