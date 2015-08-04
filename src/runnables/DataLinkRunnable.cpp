@@ -47,13 +47,13 @@ void DataLinkRunnable::run()
 	    lastSetptTime = setpt.utime;
 	    //Toggle_LED(BLUE_LED, SYSCLOCK / 1000); // for debug only
 
-	    //updateVehicleSetpt();
+	    updateVehicleSetpt();
 	}
 
 	if (gains.utime > lastGainsTime) // update vehicle gains
 	{
 	    lastGainsTime = gains.utime;
-	    //updateVehicleGains();
+	    updateVehicleGains();
 	}
 
 

@@ -5,6 +5,7 @@
 #include "ImuDefines.hpp"
 #include "servoIn.hpp"
 #include "rc.hpp"
+#include "arm_math.h"
 
 using namespace std;
 
@@ -12,12 +13,13 @@ CtrlRunnable::CtrlRunnable(ProgramState* pState)
 {
 	ps = pState;
 	lastPoseTime = 0;
+	lastTime = 0;
 }
 
 void CtrlRunnable::run()
 {
 	float time = ((float)millis()) / 1000.0f; // grab current time
-
+/*
 	if (ps->mode == ASSISTED) // set setpts here from rc pilot ctrl in assisted mode
 	{
 		float setpt[NUM_DOFS][NUM_DOF_STATES];
@@ -70,18 +72,19 @@ void CtrlRunnable::run()
 							   false,
 							   ps->mode);
 	}
-
-	/*
+*/
+	// for debug only
 	float states[NUM_DOFS][NUM_DOF_STATES];
-	states[Z_AXIS][DOF_VAL] = ps->lidar->getDist();
+	states[Z_AXIS][DOF_VAL] = ps->lidar->getDist()
+							  * arm_cos_f32(ps->imu->getPitch())
+							  * arm_cos_f32(ps->imu->getRoll());
 	states[Z_AXIS][DOF_RATE] = ps->lidar->getDist() / (time - lastTime);
 	states[Z_AXIS][DOF_TIME] = time;
 	lastTime = time;
 	ps->vehicle->setDofStates(states);
-	*/
+	// end for debug only
 
 	ps->vehicle->runCtrl(ps->mode);
-
 	ps->vehicle->prepareLog(vlog, plogs);
 
 	/*
@@ -153,7 +156,7 @@ void CtrlRunnable::run()
 			"%f\t%f\t%f\t%f\t%f\t%f\t%f\t%f\t%f\t"
 			"%f\t%f\t%f\t"
 			"%f\t"
-			"%f\t%f\t%f\t%f\t"
+			"%f\t%f\t%f\t%lu\t"
 			"%f\t%f\t%f\t%f\t%f\t%f\t%f\t%f\t%f\t"
 			"%f\t%f\t%f\t"
 			"%f\t%f\t%f\t"
@@ -178,7 +181,7 @@ void CtrlRunnable::run()
 			ps->px4->getXFlow(), ps->px4->getYFlow(), ps->px4->getQual(),
 			ps->lidar->getDist(),
 			//1.0f, 2.0f, 3.0f, 4.0f,
-			ps->dLink->getRawPoseMsg().x, ps->dLink->getRawPoseMsg().y, ps->dLink->getRawPoseMsg().yaw, time, // this last time value is our tiva time
+			ps->dLink->getRawPoseMsg().x, ps->dLink->getRawPoseMsg().y, ps->dLink->getRawPoseMsg().yaw, ps->dLink->getRawPoseMsg().utime, // this last time value is our tiva time
 			//vlog.xFilt, vlog.yFilt, vlog.zFilt, vlog.xdotFilt, vlog.ydotFilt, vlog.zdotFilt, vlog.rollFilt, vlog.pitchFilt, vlog.yawFilt,
 			vlog.xFilt, vlog.yFilt, vlog.zFilt, vlog.xdotFilt, vlog.ydotFilt, vlog.zdotFilt, ps->imu->getRoll(), ps->imu->getPitch(), ps->imu->getYaw(),
 			plogs[X_AXIS][DOF_VAL].kp, plogs[X_AXIS][DOF_VAL].ki, plogs[X_AXIS][DOF_VAL].kd,

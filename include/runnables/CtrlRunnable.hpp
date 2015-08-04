@@ -15,6 +15,7 @@ private:
 	VehicleLog vlog;
 	PidLog plogs[NUM_DOFS][2];
 	int64_t lastPoseTime;
+	float lastTime;
 };
 
 #endif /* CtrlRunnable.hpp */
