@@ -19,8 +19,8 @@ CtrlRunnable::CtrlRunnable(ProgramState* pState)
 void CtrlRunnable::run()
 {
 	float time = ((float)millis()) / 1000.0f; // grab current time
-/*
-	if (ps->mode == ASSISTED) // set setpts here from rc pilot ctrl in assisted mode
+
+	if (ps->mode != AUTONOMOUS) // set setpts here from rc pilot ctrl in assisted mode
 	{
 		float setpt[NUM_DOFS][NUM_DOF_STATES];
 		for (uint8_t d = 0; d < NUM_DOFS; ++d)
@@ -38,6 +38,7 @@ void CtrlRunnable::run()
 		ps->vehicle->setSetpt(setpt, ASSISTED);
 	}
 
+	/*
 	if ((ps->mode == AUTONOMOUS) && (ps->dLink->getRawPoseMsg().utime > lastPoseTime))
 	{
 		lastPoseTime = ps->dLink->getRawPoseMsg().utime;
@@ -171,7 +172,8 @@ void CtrlRunnable::run()
 			"%u\t%u\t%u\t%u\t%u\t%u\t%u\t"
 			"%f\t"
 			"%u\t%u\t%u\t%u\t"
-			"%d\n",
+			"%d\t"
+			"%f\t%f\t%f\t%f\n",
 			time,
 			ps->mode,
 			ps->imu->getAccX(), ps->imu->getAccY(), ps->imu->getAccZ(),
@@ -203,7 +205,8 @@ void CtrlRunnable::run()
 			servoIn_getPulse(RC_CHAN1),
 			servoIn_getPulse(RC_CHAN4),
 			servoIn_getPulse(RC_CHAN3),
-			ps->dLink->getSetptMsg().flags);
+			ps->dLink->getSetptMsg().flags,
+			ps->vehicle->getDjiVals().pitch, ps->vehicle->getDjiVals().roll, ps->vehicle->getDjiVals().thrust, ps->vehicle->getDjiVals().yawRate);
 	ps->sdcard->write(msg, len);
 }
 

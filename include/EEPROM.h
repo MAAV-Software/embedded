@@ -22,7 +22,7 @@ extern "C" {
 #include "driverlib/eeprom.h"
 
 #define NUM_FLOAT 			24
-#define MAX_FILE_COUNT	20
+#define MAX_FILE_COUNT	100
 extern float floatDate[NUM_FLOAT];
 
 void Config_EEPROM();

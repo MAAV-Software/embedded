@@ -1,4 +1,4 @@
-log = load('log0.txt');
+log = load('rclog/LOG1.TXT');
 
 % parsing the data
 Time          = log(:,1);
@@ -72,12 +72,16 @@ Flag_Xrate    = log(:,76);
 Flag_Yrate    = log(:,77);
 Flag_Zrate    = log(:,78);
 Flag_Yawl     = log(:,79);
-% atom flag
 Battery       = log(:,80);
 DJI_Roll      = log(:,81);
 DJI_Pitch     = log(:,82);
 DJI_Yawdot    = log(:,83);
 DJI_Fz        = log(:,84);
+AtomFlag          = log(:,85);
+DJI_Roll_RAW      = log(:,86);
+DJI_Pitch_RAW     = log(:,87);
+DJI_Yawdot_RAW    = log(:,88);
+DJI_Fz_RAW        = log(:,89);
 
 %% plot
 % figure 1 values
@@ -140,6 +144,25 @@ xlabel('Time')
 ylabel('Battery')
 plot(Time, Battery, 'b')
 
+
+% figure 3 DJI
+figure(5)
+subplot(221)
+xlabel('Time')
+ylabel('DJI Roll Raw')
+plot(Time, DJI_Roll_RAW, 'b')
+subplot(222)
+xlabel('Time')
+ylabel('DJI Pitch Raw')
+plot(Time, DJI_Roll_RAW, 'b')
+subplot(223)
+xlabel('Time')
+ylabel('DJI Yaw Dot Raw')
+plot(Time, DJI_Yawdot_RAW, 'b')
+subplot(224)
+xlabel('Time')
+ylabel('DJI Fz Raw')
+plot(Time, DJI_Fz_RAW, 'b')
 
 
 
