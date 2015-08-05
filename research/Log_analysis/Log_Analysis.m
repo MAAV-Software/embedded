@@ -1,4 +1,4 @@
-log = load('4AugF1/LOG8.TXT');
+log = load('newRcIdle/LOG26.TXT');
 
 % parsing the data
 Time          = log(:,1);
@@ -146,23 +146,23 @@ plot(Time, Battery, 'b')
 
 
 % figure 5 DJI RAW
-%figure(5)
-%subplot(221)
-%xlabel('Time')
-%ylabel('DJI Roll Raw')
-%plot(Time, DJI_Roll_RAW, 'b')
-%subplot(222)
-%xlabel('Time')
-%ylabel('DJI Pitch Raw')
-%plot(Time, DJI_Roll_RAW, 'b')
-%subplot(223)
-%xlabel('Time')
-%ylabel('DJI Yaw Dot Raw')
-%plot(Time, DJI_Yawdot_RAW, 'b')
-%subplot(224)
-%xlabel('Time')
-%ylabel('DJI Fz Raw')
-%plot(Time, DJI_Fz_RAW, 'b')
+figure(5)
+subplot(221)
+xlabel('Time')
+ylabel('DJI Roll Raw')
+plot(Time, DJI_Roll_RAW, 'b')
+subplot(222)
+xlabel('Time')
+ylabel('DJI Pitch Raw')
+plot(Time, DJI_Roll_RAW, 'b')
+subplot(223)
+xlabel('Time')
+ylabel('DJI Yaw Dot Raw')
+plot(Time, DJI_Yawdot_RAW, 'b')
+subplot(224)
+xlabel('Time')
+ylabel('DJI Fz Raw')
+plot(Time, DJI_Fz_RAW, 'b')
 
 
 

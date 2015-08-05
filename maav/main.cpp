@@ -173,12 +173,12 @@ int main()
 	// might change after the calibration (87552, 153108)
 	while (servoIn_getPulse(KILL_CHAN3) < 120000);
 
-	/*
+/*
 	while (!sw[2].readState)
 	{
 		switchesUpdate(sw);
 	}
-	*/
+*/
 
 	sdcard.createFile();
 

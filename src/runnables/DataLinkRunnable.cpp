@@ -160,8 +160,8 @@ void DataLinkRunnable::updateVehicleSetpt()
         	uint32_t curTime = millis();
         	while ((millis() - curTime) < 4000)
         	{
-        		PPM_setPulse(0, 87694);    // Chan 1
-        		PPM_setPulse(1, 152654);    // Chan 2
+        		PPM_setPulse(0, 86588);    // Chan 1
+        		PPM_setPulse(1, 153372);    // Chan 2
         		PPM_setPulse(2, 71602);    // Chan 3
         		PPM_setPulse(3, 87068);    // Chan 4
         	}
