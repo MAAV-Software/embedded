@@ -86,7 +86,6 @@ void CtrlRunnable::run()
 	ps->vehicle->setDofStates(states);
 	// end for debug only
 
-
 	ps->vehicle->runCtrl(ps->mode);
 	ps->vehicle->prepareLog(vlog, plogs);
 

@@ -167,16 +167,18 @@ int main()
 	mainLoop.regEvent(&batteryRunnable, 	1000, 	8);
 
 	// tricky way to get rid of the initial large values!
-	//while (servoIn_getPulse(KILL_CHAN3) > 120000);
+	while (servoIn_getPulse(KILL_CHAN3) > 120000);
 
 	// check if the stick is up, PPM range(59660, 127400)
 	// might change after the calibration (87552, 153108)
-	//while (servoIn_getPulse(KILL_CHAN3) < 120000);
+	while (servoIn_getPulse(KILL_CHAN3) < 120000);
 
+	/*
 	while (!sw[2].readState)
 	{
 		switchesUpdate(sw);
 	}
+	*/
 
 	sdcard.createFile();
 
