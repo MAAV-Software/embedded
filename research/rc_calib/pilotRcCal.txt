@@ -1,0 +1,8 @@
+All vertical trims down, all horizontal trims right.
+
+Roll   - Chan 2 - min: 87026 - max: 152654 - mid: 119735
+Pitch  - Chan 1 - min: 86794 - max: 153210 - mid: 120364
+YawDot - Chan 4 - min: 87068 - max: 152888
+Thrust - Chan 3 - min: 71602 - max: 153326
+
+10% of Chan 3: 75688
