@@ -1,4 +1,4 @@
-log = load('rclog/LOG1.TXT');
+log = load('4AugF1/LOG8.TXT');
 
 % parsing the data
 Time          = log(:,1);

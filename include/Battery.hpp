@@ -26,7 +26,7 @@
 class Battery
 {
 public:
-	Battery(const float initVolts = 14.8f, const float minThresh = 3.2f, const uint8_t cellCount = 4);
+	Battery(const float initVolts = 14.8f, const float minThresh = 3.25f, const uint8_t cellCount = 4);
 	void update(const uint32_t rawCode);
 	float getVolts() const;
 	bool isLow() const;

@@ -1,4 +1,6 @@
 #include "switch.h"
+#include "driverlib/rom.h"
+#include "driverlib/rom_map.h"
 
 // GENERAL SWITCH FUNCTIONS
 void switchesInit(SwitchData_t sw[3]) {
@@ -24,20 +26,20 @@ void initSwitch(uint32_t periph, uint32_t base, uint32_t pin,
 	sData->portBase = base;
 	sData->pinNum = pin;
 
-	SysCtlPeripheralEnable(sData->periph);
-	GPIOPinTypeGPIOInput(sData->portBase, sData->pinNum);
-	GPIOPadConfigSet(sData->portBase, sData->pinNum, GPIO_STRENGTH_2MA,
+	ROM_SysCtlPeripheralEnable(sData->periph);
+	ROM_GPIOPinTypeGPIOInput(sData->portBase, sData->pinNum);
+	ROM_GPIOPadConfigSet(sData->portBase, sData->pinNum, GPIO_STRENGTH_2MA,
 					 GPIO_PIN_TYPE_STD_WPU);
 
-	SysCtlDelay(10); // wait a few clock cycles for the switch signal to settle.
+	ROM_SysCtlDelay(10); // wait a few clock cycles for the switch signal to settle.
 
 	// Sample the port with mask
-	sData->readState = GPIOPinRead(sData->portBase, sData->pinNum) ? 1 : 0;
+	sData->readState = ROM_GPIOPinRead(sData->portBase, sData->pinNum) ? 1 : 0;
 	sData->driveState = sData->readState;
-	GPIOPinTypeGPIOOutput(sData->portBase, sData->pinNum);
+	ROM_GPIOPinTypeGPIOOutput(sData->portBase, sData->pinNum);
 
 	uint8_t mask = sData->driveState ? sData->pinNum : 0;
-	GPIOPinWrite(sData->portBase, sData->pinNum, mask);
+	ROM_GPIOPinWrite(sData->portBase, sData->pinNum, mask);
 
 	return;
 }
@@ -45,18 +47,18 @@ void initSwitch(uint32_t periph, uint32_t base, uint32_t pin,
 // Reads the switch position
 void readSwitch(SwitchData_t *sData)
 {
-	GPIOPinTypeGPIOInput(sData->portBase, sData->pinNum);// Set GPIO to input
-	GPIOPadConfigSet(sData->portBase, sData->pinNum, GPIO_STRENGTH_2MA,
+	ROM_GPIOPinTypeGPIOInput(sData->portBase, sData->pinNum);// Set GPIO to input
+	ROM_GPIOPadConfigSet(sData->portBase, sData->pinNum, GPIO_STRENGTH_2MA,
 					 GPIO_PIN_TYPE_STD_WPU);// I may not need this
 
-	SysCtlDelay(5);	// wait a few clock cycles for the switch signal to settle.
+	ROM_SysCtlDelay(5);	// wait a few clock cycles for the switch signal to settle.
 
 	// Sample the port with mask
-	sData->readState = GPIOPinRead(sData->portBase, sData->pinNum) ? 1 : 0;
-	GPIOPinTypeGPIOOutput(sData->portBase, sData->pinNum);
+	sData->readState = ROM_GPIOPinRead(sData->portBase, sData->pinNum) ? 1 : 0;
+	ROM_GPIOPinTypeGPIOOutput(sData->portBase, sData->pinNum);
 
 	uint8_t mask = sData->driveState ? sData->pinNum : 0;
-	GPIOPinWrite(sData->portBase, sData->pinNum, mask);
+	ROM_GPIOPinWrite(sData->portBase, sData->pinNum, mask);
 
 	return;
 }
@@ -66,7 +68,7 @@ void driveSwitch(SwitchData_t *sData, uint8_t direction)
 {
 	sData->driveState = direction;
 	uint8_t mask = sData->driveState ? sData->pinNum : 0;
-	GPIOPinWrite(sData->portBase, sData->pinNum, mask);
+	ROM_GPIOPinWrite(sData->portBase, sData->pinNum, mask);
 
 	return;
 }

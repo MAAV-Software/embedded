@@ -100,7 +100,7 @@ bool SdCard::createWithName(char* Filename)
 bool SdCard::createFile()
 {
 	FileCounter = Read_LOG_EEPROM();
-	if (FileCounter >= 20)
+	if (FileCounter >= 	MAX_FILE_COUNT)
 	{
 		FileCounter = 0;
 	}

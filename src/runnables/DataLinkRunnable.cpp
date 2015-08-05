@@ -14,6 +14,8 @@
 #include "messaging/raw_pose_t.h"
 #include "messaging/setpt_t.h"
 
+#include "PPM.h"
+
 #include "LED.h"
 
 DataLinkRunnable::DataLinkRunnable(ProgramState *pState)
@@ -115,12 +117,9 @@ void DataLinkRunnable::updateVehicleGains()
 
 void DataLinkRunnable::updateVehicleSetpt()
 {
-    if ((ps->mode != AUTONOMOUS)
-            || (setpt.flags == (int8_t)SETPT_T_IDLE))
+    if (ps->mode != AUTONOMOUS)
     {
-        return; // in these cases, we don't want to set vehicle setpt
-        // IDLE will be taked care of in DJI runnable and rate setpts in CtrlRunnable
-        // done by RC and not this message
+    	return;
     }
 
     float time = (float)millis() / 1000.0f;
@@ -141,22 +140,37 @@ void DataLinkRunnable::updateVehicleSetpt()
             spArr[Y_AXIS][DOF_VAL] = setpt.y;
             spArr[Z_AXIS][DOF_VAL] = setpt.z;
             spArr[YAW][DOF_VAL]    = setpt.yaw;
+            ps->vehicle->setSetpt(spArr, AUTONOMOUS);
             break;
         case SETPT_T_TAKEOFF:
             spArr[X_AXIS][DOF_VAL] = ps->feedback->x[FEEDBACK_T_VAL];
             spArr[Y_AXIS][DOF_VAL] = ps->feedback->y[FEEDBACK_T_VAL];
             spArr[Z_AXIS][DOF_VAL] = 1.5f;
             spArr[YAW][DOF_VAL]    = ps->feedback->yaw;
+            ps->vehicle->setSetpt(spArr, AUTONOMOUS);
             break;
         case SETPT_T_LAND:
             spArr[X_AXIS][DOF_VAL] = ps->feedback->x[FEEDBACK_T_VAL];
             spArr[Y_AXIS][DOF_VAL] = ps->feedback->y[FEEDBACK_T_VAL];
             spArr[Z_AXIS][DOF_VAL] = 0.0f;
             spArr[YAW][DOF_VAL]    = ps->feedback->yaw;
+            ps->vehicle->setSetpt(spArr, AUTONOMOUS);
             break;
+        case SETPT_T_IDLE:
+        	uint32_t curTime = millis();
+        	while ((millis() - curTime) < 4000)
+        	{
+        		PPM_setPulse(0, 87694);    // Chan 1
+        		PPM_setPulse(1, 152654);    // Chan 2
+        		PPM_setPulse(2, 71602);    // Chan 3
+        		PPM_setPulse(3, 87068);    // Chan 4
+        	}
+        	PPM_setPulse(0, 120364);    // Chan 1
+			PPM_setPulse(1, 119735);    // Chan 2
+			PPM_setPulse(2, 75700);    // Chan 3
+			PPM_setPulse(3, 119784);    // Chan 4
+        	break;
         default:
-            return;
+            break;
     }
-
-    ps->vehicle->setSetpt(spArr, AUTONOMOUS);
 }

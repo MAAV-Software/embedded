@@ -21,7 +21,8 @@ KillRunnable::KillRunnable(ProgramState *pState) : state(pState)
 
 void KillRunnable::run()
 {
-	if ((servoIn_getPulse(KILL_CHAN3)) < 120000)
+	//if ((servoIn_getPulse(KILL_CHAN3)) < 120000)
+	if (!state->sw[2].readState)
 	{
 		state->sdcard->sync();
 
@@ -33,7 +34,11 @@ void KillRunnable::run()
 		state->dLink->send(&msg);
 
 		// waiting for unkill signal
-		while((servoIn_getPulse(KILL_CHAN3)) < 120000);
+		//while((servoIn_getPulse(KILL_CHAN3)) < 120000);
+		while (!state->sw[2].readState)
+		{
+			switchesUpdate(state->sw);
+		}
 
 		// Start a new file
 //		snprintf(fileName, sizeof(fileName), "log%u.txt", fileNumber++);

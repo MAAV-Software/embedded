@@ -20,7 +20,7 @@ void CtrlRunnable::run()
 {
 	float time = ((float)millis()) / 1000.0f; // grab current time
 
-	if (ps->mode != AUTONOMOUS) // set setpts here from rc pilot ctrl in assisted mode
+	if (ps->mode == ASSISTED) // set setpts here from rc pilot ctrl in assisted mode
 	{
 		float setpt[NUM_DOFS][NUM_DOF_STATES];
 		for (uint8_t d = 0; d < NUM_DOFS; ++d)
@@ -74,6 +74,7 @@ void CtrlRunnable::run()
 							   ps->mode);
 	}
 */
+
 	// for debug only
 	float states[NUM_DOFS][NUM_DOF_STATES];
 	states[Z_AXIS][DOF_VAL] = ps->lidar->getDist()
@@ -84,6 +85,7 @@ void CtrlRunnable::run()
 	lastTime = time;
 	ps->vehicle->setDofStates(states);
 	// end for debug only
+
 
 	ps->vehicle->runCtrl(ps->mode);
 	ps->vehicle->prepareLog(vlog, plogs);

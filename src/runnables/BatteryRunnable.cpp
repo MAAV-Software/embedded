@@ -12,6 +12,7 @@
 #include "time_util.h"
 #include "messaging/emergency_t.h"
 #include "messaging/DataLink.hpp"
+#include "Vehicle.hpp"
 
 BatteryRunnable::BatteryRunnable(ProgramState *pState): state(pState)
  {
@@ -24,11 +25,20 @@ void BatteryRunnable::run()
 	state->battery->update(getADC(ADC0_BASE));
 	if (state->battery->isLow())
 	{
-		Toggle_LED(RED_LED, SYSCLOCK/1000/2);
+		//Toggle_LED(RED_LED, SYSCLOCK/1000/2);
 
 		emergency_t msg;
 		msg.status = (int8_t)EMERGENCY_T_LOW_BATTERY;
 		state->dLink->send(&msg);
+
+		// create and landing setpt
+		float spArr[NUM_DOFS][NUM_DOF_STATES];
+        spArr[X_AXIS][DOF_VAL] = state->feedback->x[FEEDBACK_T_VAL];
+        spArr[Y_AXIS][DOF_VAL] = state->feedback->y[FEEDBACK_T_VAL];
+        spArr[Z_AXIS][DOF_VAL] = 0.0f;
+        spArr[YAW][DOF_VAL]    = state->feedback->yaw;
+
+        state->vehicle->setSetpt(spArr, AUTONOMOUS);
 	}
 }
 
