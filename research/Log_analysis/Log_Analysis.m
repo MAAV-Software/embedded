@@ -1,7 +1,7 @@
 close all
 clc
 
-log = load('Aug6Tunning/LOG49.TXT');
+log = load('Aug6Tunning/LOG74.TXT');
 
 % parsing the data
 Time          = log(:,1);
@@ -92,36 +92,42 @@ clf
 % figure 1 values
 figure(1)
 subplot(221)
+plot(Time, Filter_X, 'b', Time, Setpt_X, 'g')
 xlabel('Time')
 ylabel('Value X')
-plot(Time, Filter_X, 'b', Time, Setpt_X, 'g')
+
 subplot(222)
+plot(Time, Filter_Y, 'b', Time, Setpt_Y, 'g')
 xlabel('Time')
 ylabel('Value Y')
-plot(Time, Filter_Y, 'b', Time, Setpt_Y, 'g')
+
 subplot(223)
+plot(Time, Lidar_Dist, 'b', Time, Setpt_Z, 'g')
 xlabel('Time')
 ylabel('Value Z')
-plot(Time, Lidar_Dist, 'b', Time, Setpt_Z, 'g')
+
 subplot(224)
+plot(Time, Filter_Yaw, 'b', Time, Setpt_Yaw, 'g')
 xlabel('Time')
 ylabel('Value Yaw')
-plot(Time, Filter_Yaw, 'b', Time, Setpt_Yaw, 'g')
 
 % figure 2 rates
 figure(2)
 subplot(221)
+plot(Time, Filter_Xdot, 'b', Time, Setpt_Xdot, 'g')
 xlabel('Time')
 ylabel('Rate X')
-plot(Time, Filter_Xdot, 'b', Time, Setpt_Xdot, 'g')
+
 subplot(222)
 xlabel('Time')
 ylabel('Rate Y')
 plot(Time, Filter_Ydot, 'b', Time, Setpt_Ydot, 'g')
+
+
 subplot(223)
+plot(Time, Filter_Zdot, 'b', Time, Setpt_Zdot, 'g')
 xlabel('Time')
 ylabel('Rate Z')
-plot(Time, Filter_Zdot, 'b', Time, Setpt_Zdot, 'g')
 
 % figure 3 DJI
 %figure(3)
@@ -168,48 +174,53 @@ plot(Time, Filter_Zdot, 'b', Time, Setpt_Zdot, 'g')
 %xlabel('Time')
 %ylabel('DJI Fz Raw')
 %plot(Time, DJI_Fz_RAW, 'b')
-%
-%
-%% figure 5 DJI RAW
-%figure(6)
-%subplot(221)
-%xlabel('Time')
-%ylabel('PID Uz')
-%plot(Time, -PID_Uz, 'b')
-%
-%
+
+
+figure(6)
+subplot(221)
+plot(Time, PID_Uz, 'b')
+xlabel('time')
+ylabel('pid uz')
+
+
 %figure(7)
+%
 %plot(Time, Rate_P_Z, 'b')
 
 % figure 6 PID 
 figure(80)
 subplot(231)
+plot(Time, Val_P_Z, 'b')
 xlabel('Time')
 ylabel('VAL P')
-plot(Time, Val_P_Z, 'b')
 grid on
+
 subplot(232)
+plot(Time, Val_I_Z, 'b')
 xlabel('Time')
 ylabel('VAL I')
-plot(Time, Val_I_Z, 'b')
 grid on
+
 subplot(233)
+plot(Time, Val_D_Z, 'b')
 xlabel('Time')
 ylabel('VAL D')
-plot(Time, Val_D_Z, 'b')
 grid on
+
 subplot(234)
+plot(Time, Rate_P_Z, 'b')
 xlabel('Time')
 ylabel('Rate P')
-plot(Time, Rate_P_Z, 'b')
 grid on
+
 subplot(235)
+plot(Time, Rate_I_Z, 'b')
 xlabel('Time')
 ylabel('Rate I')
-plot(Time, Rate_I_Z, 'b')
 grid on
+
 subplot(236)
+plot(Time, Rate_D_Z, 'b')
 xlabel('Time')
 ylabel('Rate D')
-plot(Time, Rate_D_Z, 'b')
 grid on
