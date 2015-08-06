@@ -20,7 +20,7 @@ void CtrlRunnable::run()
 {
 	float time = ((float)millis()) / 1000.0f; // grab current time
 
-	if (ps->mode == ASSISTED) // set setpts here from rc pilot ctrl in assisted mode
+	if ((ps->mode == ASSISTED) || (ps->mode == MANUAL)) // set setpts here from rc pilot ctrl in assisted mode
 	{
 		float setpt[NUM_DOFS][NUM_DOF_STATES];
 		for (uint8_t d = 0; d < NUM_DOFS; ++d)

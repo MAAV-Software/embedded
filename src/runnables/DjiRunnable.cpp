@@ -30,11 +30,18 @@ void DjiRunnable::run()
 
 //			//PPM_setPulse(2, servoIn_getPulse(RC_CHAN3));	// Z Accel
 //			uint32_t throttle = ms2pulse(PID_XY_2ms(state->vehicle->getDjiVals().thrust));
-            throttle = servoIn_getPulse(RC_CHAN3);
-			if (throttle < 80000)
-				throttle = 80000;
+//            throttle = servoIn_getPulse(RC_CHAN3);
+//			if (throttle < 80000)
+//				throttle = 80000;
+
+			throttle = (uint32_t)map(dji.thrust, -125.0, 125.0, 75700, 153300);
+			if (throttle < 75700)
+				throttle = 75700;
+			else if (throttle > 153300)
+				throttle = 153300;
 
             PPM_setPulse(2, throttle);    // Z Accel
+
             PPM_setPulse(3, servoIn_getPulse(RC_CHAN4));    // Yaw Rate
 		    break;
 		case ASSISTED:
@@ -43,7 +50,7 @@ void DjiRunnable::run()
 
 			//PPM_setPulse(2, servoIn_getPulse(RC_CHAN3));	// Z Accel
 			//throttle = ms2pulse(thrust2ms(dji.thrust));
-			throttle = map(dji.thrust, -10, 10, 75700, 153300);
+			throttle = (uint32_t)map(dji.thrust, -125.0, 125.0, 75700, 153300);
 			if (throttle < 75700)
 				throttle = 75700;
 			else if (throttle > 153300)

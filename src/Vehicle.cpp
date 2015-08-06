@@ -56,8 +56,8 @@ Vehicle::Vehicle(const float valueGains[NUM_DOFS][NUM_PID_GAINS],
 	float stateBounds[4] = {0, 0, 0, PI};
 	float rateUpLims[4]  = {20, 20, 20, 20};
 	float rateLwLims[4]  = {-20, -20, -20, -20};
-	float accelUpLims[4] = {HUGE_VALF, HUGE_VALF, 10, HUGE_VALF};
-	float accelLwLims[4] = {-HUGE_VALF, -HUGE_VALF, -10, -HUGE_VALF};
+	float accelUpLims[4] = {HUGE_VALF, HUGE_VALF, 50, HUGE_VALF};
+	float accelLwLims[4] = {-HUGE_VALF, -HUGE_VALF, -50, -HUGE_VALF};
 
 	// todo for now, lp will be set to 0 and disabled.
 	float valueStateLpCoeffs[NUM_DOFS] = {0, 0, 0, 0};
@@ -199,6 +199,7 @@ Vehicle::Vehicle(const float states[NUM_DOFS][NUM_DOF_STATES],
 	dji.thrust  = 0;
 	
 	for (int i = 0; i < NUM_ANGLES; ++i) rpLimits[i] = rpLims[i];
+
 	for (int i = 0; i < NUM_DOFS; ++i)
 	{
 		dofs[i] = Dof(states[i], setpts[i], valueGains[i], rateGains[i],
@@ -404,9 +405,10 @@ void Vehicle::calcDJIValues()
 	// assign DJI values
 	dji.roll    = angle[ROLL];
 	dji.pitch   = angle[PITCH];
-	//dji.thrust = dofs[Z_AXIS].getUval();
-	dji.thrust  = forceVe[Z_AXIS];
-	dji.thrust = dofs[Z_AXIS].getRate();
+	dji.thrust = dofs[Z_AXIS].getUval();
+	//dji.thrust = dofs[Z_AXIS].getRate();
+	//dji.thrust  = forceVe[Z_AXIS];
+
 	dji.yawRate = dofs[YAW].getRate();
 }
 

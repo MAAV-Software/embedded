@@ -47,7 +47,8 @@ float ms2XY_rate(float ms)
 // Calculates height pass-through from pulse width
 float ms2height(const float ms)
 {
-	return map(ms, 1.0, 2.0, 0, 3.0);
+	//return map(ms, 1.0, 2.0, 0, 3.0);
+	return map(ms, 0.89, 1.92, 0.0, 3.0);
 }
 
 // Calcualtes PID XY setpoints from pulse width

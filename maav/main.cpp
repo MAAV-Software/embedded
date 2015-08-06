@@ -114,9 +114,9 @@ int main()
 //    valueGains[Y_AXIS][KP] = 0.1;
 //    valueGains[Y_AXIS][KI] = 0;
 //    valueGains[Y_AXIS][KD] = 0;
-//    valueGains[Z_AXIS][KP] = 1;
-//    valueGains[Z_AXIS][KI] = 0;
-//    valueGains[Z_AXIS][KD] = 0;
+//    valueGains[Z_AXIS][KP] = 5;
+//    valueGains[Z_AXIS][KI] = 0.2;
+//    valueGains[Z_AXIS][KD] = 0.3;
 //    valueGains[YAW][KP]    = 0.1;
 //    valueGains[YAW][KI]    = 0;
 //    valueGains[YAW][KD]    = 0;
@@ -127,8 +127,8 @@ int main()
 //    rateGains[Y_AXIS][KI]  = 0;
 //    rateGains[Y_AXIS][KD]  = 0;
 //    rateGains[Z_AXIS][KP]  = 1;
-//    rateGains[Z_AXIS][KI]  = 0;
-//    rateGains[Z_AXIS][KD]  = 0;
+//    rateGains[Z_AXIS][KI]  = 0.1;
+//    rateGains[Z_AXIS][KD]  = 0.01;
 //    rateGains[YAW][KP]     = 0.1;
 //    rateGains[YAW][KI]     = 0;
 //    rateGains[YAW][KD]     = 0;
