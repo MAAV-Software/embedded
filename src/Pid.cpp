@@ -85,6 +85,10 @@ Pid::Pid(const float initState[NUM_PID_STATES],
 	
 void Pid::setState(const float val, const float deriv, const float time)
 {
+	// record previous state
+	for (uint8_t i = 0; i < NUM_PID_STATES; ++i)
+		prevState[i] = state[i];
+
 	// assign state feedback
 	state[VAL]   = val;
 	state[DERIV] = deriv;

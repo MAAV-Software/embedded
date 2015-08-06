@@ -536,11 +536,6 @@
 			<locationURI>REPO_LOC/include/runnables/KillRunnable.hpp</locationURI>
 		</link>
 		<link>
-			<name>include/runnables/Px4Runnable.hpp</name>
-			<type>1</type>
-			<locationURI>REPO_LOC/include/runnables/Px4Runnable.hpp</locationURI>
-		</link>
-		<link>
 			<name>include/runnables/Runnable.hpp</name>
 			<type>1</type>
 			<locationURI>REPO_LOC/include/runnables/Runnable.hpp</locationURI>
@@ -694,11 +689,6 @@
 			<name>src/runnables/KillRunnable.cpp</name>
 			<type>1</type>
 			<locationURI>REPO_LOC/src/runnables/KillRunnable.cpp</locationURI>
-		</link>
-		<link>
-			<name>src/runnables/Px4Runnable.cpp</name>
-			<type>1</type>
-			<locationURI>REPO_LOC/src/runnables/Px4Runnable.cpp</locationURI>
 		</link>
 		<link>
 			<name>src/runnables/SwitchRunnable.cpp</name>

@@ -55,9 +55,27 @@ void DataLinkRunnable::run()
 	if (gains.utime > lastGainsTime) // update vehicle gains
 	{
 	    lastGainsTime = gains.utime;
+	    Toggle_LED(GREEN_LED, SYSCLOCK / 1000); // for debug only
 	    updateVehicleGains();
 	}
 
+//	switchesUpdate(ps->sw);
+//	if (ps->sw[2].readState)
+//	{
+//		uint32_t curTime = millis();
+//		while ((millis() - curTime) < 1000)
+//		{
+//			PPM_setPulse(0, 153372);    // Chan 1 - max
+//			PPM_setPulse(1, 86588);    	// Chan 2 - min
+//			PPM_setPulse(2, 71602);		// Chan 3 - min
+//			PPM_setPulse(3, 152888);    // Chan 4 - max
+//		}
+//
+//		PPM_setPulse(0, 120364);    // Chan 1 - mid
+//		PPM_setPulse(1, 119735);    // Chan 2 - mid
+//		PPM_setPulse(2, 100000);    // Chan 3
+//		PPM_setPulse(3, 119784);    // Chan 4 - mid
+//	}
 
 //	// This is for test only!
 //	feedback_t msg;
@@ -158,17 +176,18 @@ void DataLinkRunnable::updateVehicleSetpt()
             break;
         case SETPT_T_IDLE:
         	uint32_t curTime = millis();
-        	while ((millis() - curTime) < 4000)
+        	while ((millis() - curTime) < 1000)
         	{
-        		PPM_setPulse(0, 86588);    // Chan 1
-        		PPM_setPulse(1, 153372);    // Chan 2
-        		PPM_setPulse(2, 71602);    // Chan 3
-        		PPM_setPulse(3, 87068);    // Chan 4
+        		PPM_setPulse(0, 153372);    // Chan 1 - max
+        		PPM_setPulse(1, 86588);    	// Chan 2 - min
+        		PPM_setPulse(2, 71602);		// Chan 3 - min
+        		PPM_setPulse(3, 152888);    // Chan 4 - max
         	}
-        	PPM_setPulse(0, 120364);    // Chan 1
-			PPM_setPulse(1, 119735);    // Chan 2
-			PPM_setPulse(2, 75700);    // Chan 3
-			PPM_setPulse(3, 119784);    // Chan 4
+
+        	PPM_setPulse(0, 120364);    // Chan 1 - mid
+        	PPM_setPulse(1, 119735);    // Chan 2 - mid
+        	PPM_setPulse(2, 90000);    	// Chan 3
+        	PPM_setPulse(3, 119784);    // Chan 4 - mid
         	break;
         default:
             break;

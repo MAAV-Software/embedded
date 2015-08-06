@@ -1,4 +1,7 @@
-log = load('newRcIdle/LOG26.TXT');
+close all
+clc
+
+log = load('Aug6Tunning/LOG49.TXT');
 
 % parsing the data
 Time          = log(:,1);
@@ -83,6 +86,8 @@ DJI_Pitch_RAW     = log(:,87);
 DJI_Yawdot_RAW    = log(:,88);
 DJI_Fz_RAW        = log(:,89);
 
+clf
+
 %% plot
 % figure 1 values
 figure(1)
@@ -97,7 +102,7 @@ plot(Time, Filter_Y, 'b', Time, Setpt_Y, 'g')
 subplot(223)
 xlabel('Time')
 ylabel('Value Z')
-plot(Time, Filter_Z, 'b', Time, Setpt_Z, 'g')
+plot(Time, Lidar_Dist, 'b', Time, Setpt_Z, 'g')
 subplot(224)
 xlabel('Time')
 ylabel('Value Yaw')
@@ -119,52 +124,92 @@ ylabel('Rate Z')
 plot(Time, Filter_Zdot, 'b', Time, Setpt_Zdot, 'g')
 
 % figure 3 DJI
-figure(3)
-subplot(221)
-xlabel('Time')
-ylabel('DJI Roll')
-plot(Time, DJI_Roll, 'b')
-subplot(222)
-xlabel('Time')
-ylabel('DJI Pitch')
-plot(Time, DJI_Pitch, 'b')
-subplot(223)
-xlabel('Time')
-ylabel('DJI Yaw Dot')
-plot(Time, DJI_Yawdot, 'b')
-subplot(224)
-xlabel('Time')
-ylabel('DJI Fz')
-plot(Time, DJI_Fz, 'b')
+%figure(3)
+%subplot(221)
+%xlabel('Time')
+%ylabel('DJI Roll')
+%plot(Time, DJI_Roll, 'b')
+%subplot(222)
+%xlabel('Time')
+%ylabel('DJI Pitch')
+%plot(Time, DJI_Pitch, 'b')
+%subplot(223)
+%xlabel('Time')
+%ylabel('DJI Yaw Dot')
+%plot(Time, DJI_Yawdot, 'b')
+%subplot(224)
+%xlabel('Time')
+%ylabel('DJI Fz')
+%plot(Time, DJI_Fz, 'b')
+%
+%% figure 4 others
+%figure(4)
+%subplot(221)
+%xlabel('Time')
+%ylabel('Battery')
+%plot(Time, Battery, 'b')
+%
+%
+%% figure 5 DJI RAW
+%figure(5)
+%subplot(221)
+%xlabel('Time')
+%ylabel('DJI Roll Raw')
+%plot(Time, DJI_Roll_RAW, 'b')
+%subplot(222)
+%xlabel('Time')
+%ylabel('DJI Pitch Raw')
+%plot(Time, DJI_Roll_RAW, 'b')
+%subplot(223)
+%xlabel('Time')
+%ylabel('DJI Yaw Dot Raw')
+%plot(Time, DJI_Yawdot_RAW, 'b')
+%subplot(224)
+%xlabel('Time')
+%ylabel('DJI Fz Raw')
+%plot(Time, DJI_Fz_RAW, 'b')
+%
+%
+%% figure 5 DJI RAW
+%figure(6)
+%subplot(221)
+%xlabel('Time')
+%ylabel('PID Uz')
+%plot(Time, -PID_Uz, 'b')
+%
+%
+%figure(7)
+%plot(Time, Rate_P_Z, 'b')
 
-% figure 4 others
-figure(4)
-subplot(221)
+% figure 6 PID 
+figure(80)
+subplot(231)
 xlabel('Time')
-ylabel('Battery')
-plot(Time, Battery, 'b')
-
-
-% figure 5 DJI RAW
-figure(5)
-subplot(221)
+ylabel('VAL P')
+plot(Time, Val_P_Z, 'b')
+grid on
+subplot(232)
 xlabel('Time')
-ylabel('DJI Roll Raw')
-plot(Time, DJI_Roll_RAW, 'b')
-subplot(222)
+ylabel('VAL I')
+plot(Time, Val_I_Z, 'b')
+grid on
+subplot(233)
 xlabel('Time')
-ylabel('DJI Pitch Raw')
-plot(Time, DJI_Roll_RAW, 'b')
-subplot(223)
+ylabel('VAL D')
+plot(Time, Val_D_Z, 'b')
+grid on
+subplot(234)
 xlabel('Time')
-ylabel('DJI Yaw Dot Raw')
-plot(Time, DJI_Yawdot_RAW, 'b')
-subplot(224)
+ylabel('Rate P')
+plot(Time, Rate_P_Z, 'b')
+grid on
+subplot(235)
 xlabel('Time')
-ylabel('DJI Fz Raw')
-plot(Time, DJI_Fz_RAW, 'b')
-
-
-
-
-
+ylabel('Rate I')
+plot(Time, Rate_I_Z, 'b')
+grid on
+subplot(236)
+xlabel('Time')
+ylabel('Rate D')
+plot(Time, Rate_D_Z, 'b')
+grid on

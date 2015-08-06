@@ -1,7 +1,6 @@
 #ifndef RC_HPP_
 #define RC_HPP_
 
-#include <stdbool.h>
 #include <stdint.h>
 
 #include "inc/hw_memmap.h"
@@ -62,5 +61,8 @@ float ms2height(float ms);
 
 // Calcualtes PID XY setpoints from pulse width
 float PID_XY_2ms(float val);
+
+// calculates pulse width from thrust
+float thrust2ms(const float val);
 
 #endif /* RC_H_ */
