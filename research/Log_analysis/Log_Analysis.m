@@ -1,7 +1,7 @@
 close all
 clc
 
-log = load('fzLog/LOG33.TXT');
+log = load('Aug6Tunning/LOG74.TXT');
 
 % parsing the data
 Time          = log(:,1);

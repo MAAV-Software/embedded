@@ -47,6 +47,8 @@ public:
 	// runs the PID algorithm
 	void run(bool rateOnly);
 
+	void runZeroVel();
+
 	// return the velocity output of the value PID
 	float getRate() const;
 

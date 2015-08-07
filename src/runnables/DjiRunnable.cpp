@@ -25,8 +25,8 @@ void DjiRunnable::run()
 	switch(state->mode)
 	{
 		case AUTONOMOUS: // currently do this for safety
-            PPM_setPulse(0, servoIn_getPulse(RC_CHAN1));    // Y Accel
-            PPM_setPulse(1, servoIn_getPulse(RC_CHAN2));    // X Accel
+            PPM_setPulse(0, servoIn_getPulse(RC_CHAN1));    // X Accel
+            PPM_setPulse(1, servoIn_getPulse(RC_CHAN2));    // Y Accel
 
 //			//PPM_setPulse(2, servoIn_getPulse(RC_CHAN3));	// Z Accel
 //			uint32_t throttle = ms2pulse(PID_XY_2ms(state->vehicle->getDjiVals().thrust));
@@ -34,7 +34,8 @@ void DjiRunnable::run()
 //			if (throttle < 80000)
 //				throttle = 80000;
 
-			throttle = (uint32_t)map(dji.thrust, -125.0, 125.0, 75700, 153300);
+			//throttle = (uint32_t)map(dji.thrust, -125.0, 125.0, 75700, 153300);
+            throttle = (uint32_t)map(dji.thrust, 0, 46, 75690, 169110);
 			if (throttle < 75700)
 				throttle = 75700;
 			else if (throttle > 153300)
@@ -50,7 +51,8 @@ void DjiRunnable::run()
 
 			//PPM_setPulse(2, servoIn_getPulse(RC_CHAN3));	// Z Accel
 			//throttle = ms2pulse(thrust2ms(dji.thrust));
-			throttle = (uint32_t)map(dji.thrust, -125.0, 125.0, 75700, 153300);
+			//throttle = (uint32_t)map(dji.thrust, -125.0, 125.0, 75700, 153300);
+			throttle = (uint32_t)map(dji.thrust, 0, 46, 75690, 169110);
 			if (throttle < 75700)
 				throttle = 75700;
 			else if (throttle > 153300)
@@ -61,8 +63,8 @@ void DjiRunnable::run()
 			PPM_setPulse(3, servoIn_getPulse(RC_CHAN4)); // directly pass through yaw ratr
 			break;
 		case MANUAL:
-			PPM_setPulse(0, servoIn_getPulse(RC_CHAN1));	// Y Accel
-			PPM_setPulse(1, servoIn_getPulse(RC_CHAN2));	// X Accel
+			PPM_setPulse(0, servoIn_getPulse(RC_CHAN1));	// X Accel
+			PPM_setPulse(1, servoIn_getPulse(RC_CHAN2));	// Y Accel
 			PPM_setPulse(2, servoIn_getPulse(RC_CHAN3));	// Z Accel
 			PPM_setPulse(3, servoIn_getPulse(RC_CHAN4));	// Yaw Rate
 			break;

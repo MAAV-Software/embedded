@@ -100,6 +100,15 @@ void Dof::run(bool rateOnly)
 	Uval = inertia * ratePid.getOutput();
 }
 
+void Dof::runZeroVel()
+{
+	ratePid.setSetpt(0, setptTime);
+	valuePid.run();
+	ratePid.run();
+
+	Uval = inertia * (valuePid.getOutput() + ratePid.getOutput());
+}
+
 // return the velocity output of the value PID
 float Dof::getRate() const
 {
