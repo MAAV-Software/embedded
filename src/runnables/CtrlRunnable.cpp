@@ -74,7 +74,7 @@ void CtrlRunnable::run()
 							   false,
 							   ps->mode);
 	}
-*/
+	*/
 
 	// for debug only
 	float states[NUM_DOFS][NUM_DOF_STATES];
@@ -84,6 +84,12 @@ void CtrlRunnable::run()
 	states[Z_AXIS][DOF_RATE] = ps->lidar->getDist() / (time - lastTime);
 	states[Z_AXIS][DOF_ACCEL] = 0;
 	states[Z_AXIS][DOF_TIME] = time;
+
+	states[YAW][DOF_VAL] = ps->imu->getYaw();
+	states[YAW][DOF_RATE] = ps->imu->getYaw() / (time - lastTime);
+	states[YAW][DOF_ACCEL] = 0;
+	states[YAW][DOF_TIME] = time;
+
 	lastTime = time;
 	ps->vehicle->setDofStates(states);
 	// end for debug only
@@ -151,12 +157,13 @@ void CtrlRunnable::run()
 
 	Dji dji = ps->vehicle->getDjiVals();
 
-	uint32_t throttle = (uint32_t)map(dji.thrust, 0, 46, 75690, 169110);
+	uint32_t throttle = (uint32_t)map(dji.thrust, 0, 46.6956, 114000, 124000);
 	if (throttle < 75700)
 		throttle = 75700;
 	else if (throttle > 153300)
 		throttle = 153300;
 
+	uint32_t ppmYawRate = (uint32_t)map(dji.yawRate, -1, 1, 113000, 120400);
 
 	char msg[1024];
 	// time, IMU, px4, lidar, camera
@@ -226,7 +233,7 @@ void CtrlRunnable::run()
 			servoIn_getPulse(RC_CHAN3),
 			ps->dLink->getSetptMsg().flags,
 			dji.pitch, dji.roll, dji.thrust, dji.yawRate,
-			0, 0, throttle, 0,
+			0, 0, throttle, ppmYawRate,
 			msTime);
 	ps->sdcard->write(msg, len);
 }

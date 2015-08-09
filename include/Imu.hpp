@@ -33,6 +33,8 @@ public:
 	void getRotMat(float dest[NUM_M_VAL]);
 
 private:
+	float refYaw;
+	bool first;
 	float AccX;
 	float AccY;
 	float AccZ;

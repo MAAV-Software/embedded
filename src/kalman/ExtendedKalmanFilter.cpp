@@ -185,7 +185,7 @@ void ExtendedKalmanFilter::predict(const float deltaTime,
 	arm_mat_mult_f32(&_systemJacobian, &_P, &_nn_0); 		// _nn_0 = AP
 	arm_mat_add_f32(&_nn_0, &_nn_1, &_nn_0);  				// _nn_0 = AP + PA^T
 	arm_mat_add_f32(&_nn_0, &_systemCovariance, &_nn_0); 	// _nn_0 = AP + PA^T + Q
-	arm_mat_scale_f32(&_nn_0, deltaTime, &_nn_0);			// _nn_0 = dt * (AP + PA^T) + Q
+	arm_mat_scale_f32(&_nn_0, deltaTime, &_nn_0);			// _nn_0 = dt * (AP + PA^T + Q)
 	arm_mat_add_f32(&_P, &_nn_0, &_P);						// P = P + dt * (AP + PA^T) + Q
 }
 

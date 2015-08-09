@@ -30,12 +30,14 @@ void systemDeltaState(const arm_matrix_instance_f32* currState,
     assert(deltaState->numRows == 6);
     assert(deltaState->numCols == 1);
 
+    const float gravity = 9.81;
+
     deltaState->pData[0] = currState->pData[3]; // dx = xdot
     deltaState->pData[1] = currState->pData[4]; // dy = ydot
     deltaState->pData[2] = currState->pData[5]; // dz = zdot
     deltaState->pData[3] = controlInput->pData[0] / mass * ((cosY * sinP * cosR) + (sinY * sinR));
     deltaState->pData[4] = controlInput->pData[0] / mass * ((sinY * sinP * cosR) - (cosY * sinR));
-    deltaState->pData[5] = controlInput->pData[0] / mass * (cosP * cosR);
+    deltaState->pData[5] = controlInput->pData[0] / mass * (cosP * cosR) + gravity;
 
 /*** Old code ***/
 //	// sanity checks

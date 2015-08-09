@@ -14,6 +14,8 @@ using namespace std;
 
 Imu::Imu()
 {
+	refYaw = 0;
+	first = false;
 	AccX = 0;
 	AccY = 0;
 	AccZ = 0;
@@ -59,6 +61,12 @@ void Imu::parse(const uint8_t* data)
 */
 
 	Timer = Bytes2Int(data, 73);
+
+	if (!first)
+	{
+		first = true;
+		refYaw = atan2(M[1], M[0]);
+	}
 }
 
 void Imu::getRotMat(float dest[NUM_M_VAL])
@@ -94,7 +102,7 @@ float Imu::getPitch() const
 
 float Imu::getYaw() const
 {
-	return atan2(M[1], M[0]);
+	return atan2(M[1], M[0]) - refYaw;
 }
 
 float Imu::getAngRateX() const
