@@ -126,9 +126,9 @@ int main()
 //    rateGains[Y_AXIS][KP]  = 0.1;
 //    rateGains[Y_AXIS][KI]  = 0;
 //    rateGains[Y_AXIS][KD]  = 0;
-//    rateGains[Z_AXIS][KP]  = 1;
+//    rateGains[Z_AXIS][KP]  = 0.01;
 //    rateGains[Z_AXIS][KI]  = 0.1;
-//    rateGains[Z_AXIS][KD]  = 0.01;
+//    rateGains[Z_AXIS][KD]  = 0.001;
 //    rateGains[YAW][KP]     = 0.1;
 //    rateGains[YAW][KI]     = 0;
 //    rateGains[YAW][KD]     = 0;

@@ -18,7 +18,8 @@ CtrlRunnable::CtrlRunnable(ProgramState* pState)
 
 void CtrlRunnable::run()
 {
-	float time = ((float)millis()) / 1000.0f; // grab current time
+	uint32_t msTime = millis();
+	float time = ((float)msTime) / 1000.0f; // grab current time
 
 	if ((ps->mode == ASSISTED) || (ps->mode == MANUAL)) // set setpts here from rc pilot ctrl in assisted mode
 	{
@@ -150,6 +151,13 @@ void CtrlRunnable::run()
 
 	Dji dji = ps->vehicle->getDjiVals();
 
+	uint32_t throttle = (uint32_t)map(dji.thrust, 0, 46, 75690, 169110);
+	if (throttle < 75700)
+		throttle = 75700;
+	else if (throttle > 153300)
+		throttle = 153300;
+
+
 	char msg[1024];
 	// time, IMU, px4, lidar, camera
 	uint32_t len = snprintf(msg, sizeof(msg),
@@ -177,7 +185,9 @@ void CtrlRunnable::run()
 			"%f\t"
 			"%u\t%u\t%u\t%u\t"
 			"%d\t"
-			"%f\t%f\t%f\t%f\n",
+			"%f\t%f\t%f\t%f\t"
+			"%u\t%u\t%u\t%u\t"
+			"%u\n",
 			time,
 			ps->mode,
 			ps->imu->getAccX(), ps->imu->getAccY(), ps->imu->getAccZ(),
@@ -215,7 +225,9 @@ void CtrlRunnable::run()
 			servoIn_getPulse(RC_CHAN4),
 			servoIn_getPulse(RC_CHAN3),
 			ps->dLink->getSetptMsg().flags,
-			dji.pitch, dji.roll, dji.thrust, dji.yawRate);
+			dji.pitch, dji.roll, dji.thrust, dji.yawRate,
+			0, 0, throttle, 0,
+			msTime);
 	ps->sdcard->write(msg, len);
 }
 

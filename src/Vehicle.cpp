@@ -54,10 +54,10 @@ Vehicle::Vehicle(const float valueGains[NUM_DOFS][NUM_PID_GAINS],
 		DERR_DT_MASK | DISC_DERIV_MASK,
 	};
 	float stateBounds[4] = {0, 0, 0, PI};
-	float rateUpLims[4]  = {20, 20, 20, 20};
-	float rateLwLims[4]  = {-20, -20, -20, -20};
-	float accelUpLims[4] = {HUGE_VALF, HUGE_VALF, 50, HUGE_VALF};
-	float accelLwLims[4] = {-HUGE_VALF, -HUGE_VALF, -50, -HUGE_VALF};
+	float rateUpLims[4]  = {20, 20, 10, 20};
+	float rateLwLims[4]  = {-20, -20, -10, -20};
+	float accelUpLims[4] = {HUGE_VALF, HUGE_VALF, 10, HUGE_VALF};
+	float accelLwLims[4] = {-HUGE_VALF, -HUGE_VALF, -10, -HUGE_VALF};
 
 	// todo for now, lp will be set to 0 and disabled.
 	float valueStateLpCoeffs[NUM_DOFS] = {0, 0, 0, 0};
@@ -322,6 +322,8 @@ void Vehicle::runCtrl(const FlightMode mode)
 	
 	// always do full cascade for z and yaw
 	dofs[Z_AXIS].run(false);
+	//dofs[Z_AXIS].runZeroVel();
+
 	dofs[YAW].run(false);
 
 	// finally get dji values
@@ -376,8 +378,12 @@ void Vehicle::calcDJIValues()
 	float angle[NUM_ANGLES]; // roll and pitch setpoint for dji
 
 	// get earth frame vehicle forces
-	for (int i = 0; i < 3; ++i) forceVe[i] = dofs[i].getUval();
-	forceVe[Z_AXIS] += mass * GRAVITY;
+	//for (int i = 0; i < 3; ++i) forceVe[i] = dofs[i].getUval();
+	//forceVe[Z_AXIS] += mass * GRAVITY;
+
+	for (int i = 0; i < 2; ++i) forceVe[i] = dofs[i].getUval();
+
+	forceVe[Z_AXIS] = (dofs[Z_AXIS].getRate() * mass) + (mass * GRAVITY);
 
 	// Convert earth frame forces to body frame
 	forceVy[X_AXIS] =  (preYawCos * forceVe[X_AXIS]) + (preYawSin * forceVe[Y_AXIS]);
@@ -403,11 +409,11 @@ void Vehicle::calcDJIValues()
 	if (angle[PITCH] < -rpLimits[PITCH]) angle[PITCH] = -rpLimits[PITCH];
 
 	// assign DJI values
-	dji.roll    = angle[ROLL];
-	dji.pitch   = angle[PITCH];
-	dji.thrust = dofs[Z_AXIS].getUval();
+	dji.roll   = angle[ROLL];
+	dji.pitch  = angle[PITCH];
+	//dji.thrust = dofs[Z_AXIS].getUval();
 	//dji.thrust = dofs[Z_AXIS].getRate();
-	//dji.thrust  = forceVe[Z_AXIS];
+	dji.thrust  = forceVe[Z_AXIS];
 
 	dji.yawRate = dofs[YAW].getRate();
 }
@@ -429,7 +435,7 @@ void Vehicle::prepareLog(VehicleLog &vlog, PidLog plogs[NUM_DOFS][2])
 	// fill vehicle log
 	vlog.xUval	   = dofs[X_AXIS].getUval();
 	vlog.yUval     = dofs[Y_AXIS].getUval();
-	vlog.zUval     = dofs[Z_AXIS].getUval();
+	vlog.zUval     = dofs[Z_AXIS].getRate() * mass;
 	vlog.xFilt     = ekfState.pData[0];
 	vlog.yFilt     = ekfState.pData[1];
 	vlog.zFilt     = ekfState.pData[2];
