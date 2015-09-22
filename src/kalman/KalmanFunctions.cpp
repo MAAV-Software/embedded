@@ -37,7 +37,7 @@ void systemDeltaState(const arm_matrix_instance_f32* currState,
     deltaState->pData[2] = currState->pData[5]; // dz = zdot
     deltaState->pData[3] = controlInput->pData[0] / mass * ((cosY * sinP * cosR) + (sinY * sinR));
     deltaState->pData[4] = controlInput->pData[0] / mass * ((sinY * sinP * cosR) - (cosY * sinR));
-    deltaState->pData[5] = controlInput->pData[0] / mass * (cosP * cosR) + gravity;
+    deltaState->pData[5] = (controlInput->pData[0] / mass * (cosP * cosR)) + gravity;
 
 /*** Old code ***/
 //	// sanity checks
@@ -114,10 +114,10 @@ void sensorPredict(const arm_matrix_instance_f32* currState,
 	assert(sensor->numRows == 3);
 	assert(sensor->numCols == 1);
 
-	// sensor indecies are: xdot, ydot, z
-	sensor->pData[0] = currState->pData[3];
-	sensor->pData[1] = currState->pData[4];
-	sensor->pData[2] = currState->pData[2];
+	// sensor indecies are: z, xdot, ydot
+	sensor->pData[0] = currState->pData[2];
+	sensor->pData[1] = currState->pData[3];
+	sensor->pData[2] = currState->pData[4];
 
 //	// sanity checks
 //	assert(currState->numRows == 9);
@@ -143,9 +143,9 @@ void sensorGetJacobian(const arm_matrix_instance_f32* currState,
 	assert(jacobian->numCols == 6);
 	memset(jacobian->pData, 0, sizeof(float) * jacobian->numRows * jacobian->numCols);
 
-	jacobian->pData[3]  = 1;
-	jacobian->pData[10] = 1;
-	jacobian->pData[14] = 1;
+	jacobian->pData[2]  = 1;
+	jacobian->pData[9]  = 1;
+	jacobian->pData[16] = 1;
 
 //	// sanity checks
 //	assert(currState->numRows == 9);

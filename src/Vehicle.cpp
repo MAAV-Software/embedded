@@ -65,7 +65,9 @@ Vehicle::Vehicle(const float valueGains[NUM_DOFS][NUM_PID_GAINS],
 	float rateStateLpCoeffs[NUM_DOFS]  = {0, 0, 0, 0};
 	float rateErrorLpCoeffs[NUM_DOFS]  = {0, 0, 0, 0};
 
-	for (int i = 0; i < NUM_ANGLES; ++i) rpLimits[i] = PI / 4.0f;
+	//for (int i = 0; i < NUM_ANGLES; ++i) rpLimits[i] = PI / 4.0f;
+	for (int i = 0; i < NUM_ANGLES; ++i) rpLimits[i] = 0.5;
+
 	for (int i = 0; i < NUM_DOFS; ++i)
 	{
 		dofs[i] = Dof(states[i], setpts[i], valueGains[i], rateGains[i],
@@ -79,32 +81,32 @@ Vehicle::Vehicle(const float valueGains[NUM_DOFS][NUM_PID_GAINS],
 	// EKF values
 	float ekfInitState[6] = {0, 0, 0, 0, 0, 0};
 	float ekfInitP[36] = {
-		1, 0, 0, 0, 0, 0,
-		0, 1, 0, 0, 0, 0,
-		0, 0, 1, 0, 0, 0,
-		0, 0, 0, 1, 0, 0,
-		0, 0, 0, 0, 1, 0,
-		0, 0, 0, 0, 0, 1
+		0.1, 0, 0, 0, 0, 0,
+		0, 0.1, 0, 0, 0, 0,
+		0, 0, 0.1, 0, 0, 0,
+		0, 0, 0, 0.1, 0, 0,
+		0, 0, 0, 0, 0.1, 0,
+		0, 0, 0, 0, 0, 0.1
 	};
 	float ekfQ[36] = {
-		0.001, 0, 0, 0, 0, 0,
-		0, 0.001, 0, 0, 0, 0,
-		0, 0, 0.001, 0, 0, 0,
-		0, 0, 0, 0.001, 0, 0,
-		0, 0, 0, 0, 0.001, 0,
-		0, 0, 0, 0, 0, 0.001
+		0.1, 0, 0, 0, 0, 0,
+		0, 0.1, 0, 0, 0, 0,
+		0, 0, 0.9, 0, 0, 0,
+		0, 0, 0, 0.01, 0, 0,
+		0, 0, 0, 0, 0.01, 0,
+		0, 0, 0, 0, 0, 0.01
 	};
 	float ekfNoCamR[9] = {
-		0.01, 0, 0,
-		0, 0.01, 0,
-		0, 0, 0.01
+		0.04, 0, 0,
+		0, 0.5, 0,
+		0, 0, 0.5
 	};
 	float ekfWithCamR[25] = {
-		0.01, 0, 0, 0, 0,
+		0.05, 0, 0, 0, 0,
 		0, 0.01, 0, 0, 0,
-		0, 0, 0.01, 0, 0,
-		0, 0, 0, 0.01, 0,
-		0, 0, 0, 0, 0.01
+		0, 0, 0.04, 0, 0,
+		0, 0, 0, 0.5, 0,
+		0, 0, 0, 0, 0.5
 	};
 
 	// ekfInitP is the ekfInitErrorCov
@@ -267,17 +269,17 @@ void Vehicle::runFilter(const float x, const float y, const float z,
 		sensorMeasurementMatWithCam.pData[0] = x;
 		sensorMeasurementMatWithCam.pData[1] = y;
 		sensorMeasurementMatWithCam.pData[2] = z * pitchCos * rollCos;
-		sensorMeasurementMatWithCam.pData[3] = (xdot * preYawCos) - (ydot * preYawSin);
-		sensorMeasurementMatWithCam.pData[4] = (xdot * preYawSin) + (ydot * preYawCos);
+		sensorMeasurementMatWithCam.pData[3] = (xdot * preYawCos) + (ydot * preYawSin);
+		sensorMeasurementMatWithCam.pData[4] = -(xdot * preYawSin) + (ydot * preYawCos);
 
 		ekf->update(dt, 1, &sensorMeasurementMatWithCam); // update with camera vals
 	}
 	else
 	{
 		// assign input to sensor vector
-		sensorMeasurementMat.pData[0] = (xdot * preYawCos) + (ydot * preYawSin);
-		sensorMeasurementMat.pData[1] = -(xdot * preYawSin) + (ydot * preYawCos);
-		sensorMeasurementMat.pData[2] = z * pitchCos * rollCos;
+		sensorMeasurementMat.pData[0] = z * pitchCos * rollCos;
+		sensorMeasurementMat.pData[1] = (xdot * preYawCos) + (ydot * preYawSin);
+		sensorMeasurementMat.pData[2] = -(xdot * preYawSin) + (ydot * preYawCos);
 
 		ekf->update(dt, 0, &sensorMeasurementMat); // update without camera vals
 	}

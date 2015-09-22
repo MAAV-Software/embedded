@@ -39,7 +39,6 @@ void CtrlRunnable::run()
 		ps->vehicle->setSetpt(setpt, ASSISTED);
 	}
 
-	/*
 	if ((ps->mode == AUTONOMOUS) && (ps->dLink->getRawPoseMsg().utime > lastPoseTime))
 	{
 		lastPoseTime = ps->dLink->getRawPoseMsg().utime;
@@ -74,8 +73,7 @@ void CtrlRunnable::run()
 							   false,
 							   ps->mode);
 	}
-	*/
-
+/*
 	// for debug only
 	float states[NUM_DOFS][NUM_DOF_STATES];
 	states[Z_AXIS][DOF_VAL] = ps->lidar->getDist()
@@ -93,11 +91,12 @@ void CtrlRunnable::run()
 	lastTime = time;
 	ps->vehicle->setDofStates(states);
 	// end for debug only
+*/
 
 	ps->vehicle->runCtrl(ps->mode);
 	ps->vehicle->prepareLog(vlog, plogs);
 
-	/*
+
     ps->feedback->utime = time;
     ps->feedback->roll  = ps->imu->getRoll();
     ps->feedback->pitch = ps->imu->getPitch();
@@ -113,8 +112,8 @@ void CtrlRunnable::run()
     ps->feedback->z[2]  = 0;
     ps->feedback->flags = ps->dLink->getSetptMsg().flags;
     ps->dLink->send(ps->feedback);
-	*/
 
+/*
     ps->feedback->utime = time;
     ps->feedback->roll  = ps->imu->getRoll();
     ps->feedback->pitch = ps->imu->getPitch();
@@ -130,7 +129,7 @@ void CtrlRunnable::run()
     ps->feedback->z[2]  = 0;
     ps->feedback->flags = ps->dLink->getSetptMsg().flags;
     ps->dLink->send(ps->feedback);
-
+*/
 
 /* Log msg structure
  * Time: 		t
@@ -164,6 +163,8 @@ void CtrlRunnable::run()
 		throttle = 153300;
 
 	uint32_t ppmYawRate = (uint32_t)map(dji.yawRate, -1, 1, 113000, 120400);
+	uint32_t ppmPitch = (uint32_t)map(dji.pitch, -0.5, 0.5, 105600, 135000);
+	uint32_t ppmRoll  = (uint32_t)map(dji.roll, -0.5, 0.5, 104200, 135000);
 
 	char msg[1024];
 	// time, IMU, px4, lidar, camera
@@ -233,7 +234,7 @@ void CtrlRunnable::run()
 			servoIn_getPulse(RC_CHAN3),
 			ps->dLink->getSetptMsg().flags,
 			dji.pitch, dji.roll, dji.thrust, dji.yawRate,
-			0, 0, throttle, ppmYawRate,
+			ppmRoll, ppmPitch, throttle, ppmYawRate,
 			msTime);
 	ps->sdcard->write(msg, len);
 }

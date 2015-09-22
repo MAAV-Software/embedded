@@ -25,10 +25,11 @@ void DjiRunnable::run()
 	switch(state->mode)
 	{
 		case AUTONOMOUS: // currently do this for safety
-			//PPM_setPulse(0, (uint32_t)map(dji.pitch, -0.7854, 0.7854, 86790, 153930);
+			//PPM_setPulse(0, (uint32_t)map(dji.pitch, -0.5, 0.5, 105600, 135000));
             PPM_setPulse(0, servoIn_getPulse(RC_CHAN1));    // X Accel
-			//PPM_setPulse(0, (uint32_t)map(dji.roll, -0.7854, 0.7854, 87026, 152444);
-            PPM_setPulse(1, servoIn_getPulse(RC_CHAN2));    // Y Accel
+
+            PPM_setPulse(1, (uint32_t)map(dji.roll, -0.5, 0.5, 104200, 135000)); // Y Accel
+            //PPM_setPulse(1, servoIn_getPulse(RC_CHAN2));    // Y Accel
 
 //			//PPM_setPulse(2, servoIn_getPulse(RC_CHAN3));	// Z Accel
 //			uint32_t throttle = ms2pulse(PID_XY_2ms(state->vehicle->getDjiVals().thrust));
@@ -49,10 +50,11 @@ void DjiRunnable::run()
 
 		    break;
 		case ASSISTED:
-			//PPM_setPulse(0, (uint32_t)map(dji.pitch, -0.7854, 0.7854, 86790, 153930));
+			//PPM_setPulse(0, (uint32_t)map(dji.pitch, -0.5, 0.5, 105600, 135000));
             PPM_setPulse(0, servoIn_getPulse(RC_CHAN1));    // X Accel
-			//PPM_setPulse(0, (uint32_t)map(dji.roll, -0.7854, 0.7854, 87026, 152444);
-            PPM_setPulse(1, servoIn_getPulse(RC_CHAN2));    // Y Accel
+
+            PPM_setPulse(1, (uint32_t)map(dji.roll, -0.5, 0.5, 104200, 135000)); // Y Accel
+            //PM_setPulse(1, servoIn_getPulse(RC_CHAN2));    // Y Accel
 
 			//PPM_setPulse(2, servoIn_getPulse(RC_CHAN3));	// Z Accel
 			//throttle = ms2pulse(thrust2ms(dji.thrust));
