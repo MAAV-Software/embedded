@@ -71,6 +71,11 @@
 			<locationURI>TIVAWARE_INSTALL/utils/uartstdio.h</locationURI>
 		</link>
 		<link>
+			<name>include/Apeshit.hpp</name>
+			<type>1</type>
+			<locationURI>REPO_LOC/include/Apeshit.hpp</locationURI>
+		</link>
+		<link>
 			<name>include/Battery.hpp</name>
 			<type>1</type>
 			<locationURI>REPO_LOC/include/Battery.hpp</locationURI>
@@ -279,6 +284,11 @@
 			<name>sdlib/option</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>src/Apeshit.cpp</name>
+			<type>1</type>
+			<locationURI>REPO_LOC/src/Apeshit.cpp</locationURI>
 		</link>
 		<link>
 			<name>src/Battery.cpp</name>
@@ -704,15 +714,15 @@
 	<variableList>
 		<variable>
 			<name>CMSIS_LOC</name>
-			<value>file:/home/sheldon/ti/CMSIS-SP-00300-r4p3-00rel0/CMSIS</value>
+			<value>file:/C:/Users/Sasawat/Desktop/CMSIS-SP-00300-r3p1-00rel0/CMSIS</value>
 		</variable>
 		<variable>
 			<name>REPO_LOC</name>
-			<value>file:/home/sheldon/maav-controls</value>
+			<value>file:/C:/Users/Sasawat/3workspace/ctrl</value>
 		</variable>
 		<variable>
 			<name>TIVAWARE_INSTALL</name>
-			<value>file:/home/sheldon/ti/SW-TM4C-2.1.0.12573</value>
+			<value>file:/C:/ti/TivaWare_C_Series-2.1.0.12573</value>
 		</variable>
 	</variableList>
 </projectDescription>

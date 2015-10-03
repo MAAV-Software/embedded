@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include "SdCard.hpp"
 #include "EEPROM.h"
+#include "Apeshit.hpp"
 
 SdCard::SdCard()
 {
@@ -21,7 +22,10 @@ SdCard::SdCard()
 	SDMounted = false;
 	FileOpened = false;
 	FResult = FR_OK;
-	mount();
+	if(!mount())
+	{
+	    goApeshit();
+	}
 	FileCounter = Read_LOG_EEPROM();
 }
 
@@ -35,17 +39,17 @@ bool SdCard::mount()
 //			UARTprintf("SD Card mounted successfully\n");
 			SDMounted = true;
 			break;
-//		case FR_INVALID_DRIVE:
+		case FR_INVALID_DRIVE:
 //			fatalError("ERROR: Invalid drive number\n");
 //			break;
-//		case FR_DISK_ERR:
+		case FR_DISK_ERR:
 //			fatalError("ERROR: DiskIO error - Check hardware!\n");
 //			break;
-//		case FR_NOT_READY:
+		case FR_NOT_READY:
 //			ROM_GPIOPinWrite(GPIO_PORTF_BASE, LED_RED|LED_GREEN|LED_BLUE, LED_RED);
 //			fatalError("ERROR: Medium removal or disk_initialize\n");
 //			break;
-//		case FR_NO_FILESYSTEM:
+		case FR_NO_FILESYSTEM:
 //			fatalError("ERROR: No valid FAT volume on drive\n");
 //			break;
 		default:
