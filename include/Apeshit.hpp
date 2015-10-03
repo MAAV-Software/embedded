@@ -5,9 +5,9 @@
 
 #include "LED.h"
 
-#define APESHIT_CYCLE_TIME_DEFAULT 2000
+#define APESHIT_CYCLE_TIME_DEFAULT 300000
 
-void goApeshit(void);
+void goApeshit();
 
 void goApeshit(uint32_t);
 

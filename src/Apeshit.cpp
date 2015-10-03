@@ -1,3 +1,4 @@
+#include <stdint.h>
 #include "driverlib/sysctl.h"
 #include "driverlib/rom.h"
 
@@ -27,7 +28,7 @@ void goApeshit(uint32_t time)
     }
 }
 
-void goApeshit(void)
+void goApeshit()
 {
     goApeshit(APESHIT_CYCLE_TIME_DEFAULT);
 }
