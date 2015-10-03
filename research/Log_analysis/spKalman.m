@@ -1,7 +1,7 @@
 close all
 clc 
 clf
-log = load('px4Log/LOG29.TXT');
+log = load('9-29-why-height-exploded/LOG57.TXT');
 
 % parsing the data
 Time          = log(:,1);
@@ -104,14 +104,14 @@ dx = zeros(6,1);          % [xdot ydot zdot xddot yddot zddot]
                         % which is [x_4 x_5 x_6 Fx/m Fy/m Fz/m] where
                         % forces are obtained from decomposing u_1 =
                         % Fz_body
-P = eye(6);
+P = 0.1 * eye(6);
 Q = zeros(6);
-Q(1,1) = 1;
-Q(2,2) = 1;
-Q(3,3) = 10;
-Q(4,4) = 0.01;
-Q(5,5) = 0.01;
-Q(6,6) = 0.01;
+Q(1,1) = 0.1;
+Q(2,2) = 0.1;
+Q(3,3) = 0.9;
+Q(4,4) = 0.001;
+Q(5,5) = 0.001;
+Q(6,6) = 0.001;
 
 u = zeros(4,1);           % [Fz roll pitch yawRate] (to dji)
 
@@ -125,9 +125,9 @@ A = [[0 0 0 1 0 0];
 %sensor_1 = zeros(3,1);    % [z xdot ydot]
 %y_1 = zeros(3,1);         % [x_3 x_4 x_5]
 R_1 = zeros(3);  
-R_1(1,1) = 0.01;
-R_1(2,2) = 1;
-R_1(3,3) = 1;
+R_1(1,1) = 0.04;
+R_1(2,2) = 0.1;
+R_1(3,3) = 0.1;
 
 C_1 = [[0 0 1 0 0 0];   
        [0 0 0 1 0 0];   
@@ -135,7 +135,13 @@ C_1 = [[0 0 1 0 0 0];
 
 %sensor_2 = zeros(5,1);    % [x y z xdot ydot]
 %y_2 = zeros(5,1);         % [x_1 x_2 x_3 x_4 x_5]
-R_2 = eye(5);           
+R_2 = zeros(5);
+R_2(1,1) = 0.1;
+R_2(2,2) = 0.1;
+R_3(3,3) = 0.01;
+R_4(4,4) = 0.1;
+R_5(5,5) = 0.1;
+
 C_2 = [[1 0 0 0 0 0];
        [0 1 0 0 0 0];
        [0 0 1 0 0 0];
@@ -150,6 +156,7 @@ dx_vec = [];
 
 px4_xdot = [];
 px4_ydot = [];
+Zdist = [];
 
 for i = 2:length(Time)
    % fill in u, dt, dx
@@ -186,6 +193,7 @@ for i = 2:length(Time)
    sensor_1 = [-Lidar_Dist(i) * cos(pitch(i)) * cos(roll(i));
                 (Px4_Xdot(i) * cos(yaw(i))) + (Px4_Ydot(i) * sin(yaw(i)));
                 -(Px4_Xdot(i) * sin(yaw(i))) + (Px4_Ydot(i) * sin(yaw(i)))];
+   Zdist = [Zdist, -Lidar_Dist(i) * cos(pitch(i)) * cos(roll(i))];
    px4_xdot = [px4_xdot, (Px4_Xdot(i) * cos(yaw(i))) + (Px4_Ydot(i) * sin(yaw(i)))];
    px4_ydot = [px4_ydot, -(Px4_Xdot(i) * sin(yaw(i))) + (Px4_Ydot(i) * sin(yaw(i)))];
             
@@ -211,7 +219,7 @@ end
 figure(1)
 plot(Time(2:end), -xCorr(3,:), 'b', ...
      Time(2:end), -xPred(3,:), '--b', ...
-     Time(2:end), Lidar_Dist(2:end), 'g', ...
+     Time(2:end), -Zdist, 'g', ...
      Time(2:end), -(xCorr(3,:) + 3 * sqrt(P_Corr(3,:))), '--r', ...
      Time(2:end), -(xCorr(3,:) - 3 * sqrt(P_Corr(3,:))), '--r');
 xlabel('Time');

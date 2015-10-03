@@ -1,7 +1,7 @@
 close all
 clc
 
-log = load('px4Log/LOG23.TXT');
+log = load('9-29-why-height-exploded/LOG57.TXT');
 
 % parsing the data
 Time          = log(:,1);

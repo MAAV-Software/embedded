@@ -2,7 +2,7 @@
 # Automatically-generated file. Do not edit!
 ################################################################################
 
-CG_TOOL_ROOT := /home/sajan/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.2
+CG_TOOL_ROOT := /home/sheldon/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.2
 
 ORDERED_OBJS += \
 "./main.obj" \
@@ -135,13 +135,13 @@ all: heartbeat.out
 heartbeat.out: $(OBJS) $(CMD_SRCS) $(LIB_SRCS) $(GEN_CMDS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: ARM Linker'
-	"/home/sajan/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.2/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 --abi=eabi -me -g --gcc --define=PART_TM4C1230C3PM --define=ccs="ccs" --define=PART_TM4C123GH6PM --display_error_number --diag_warning=225 --diag_wrap=off -z -m"heartbeat.map" --heap_size=0 --stack_size=512 -i"/home/sajan/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.2/lib" -i"/home/sajan/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.2/include" --reread_libs --warn_sections --display_error_number --diag_wrap=off --xml_link_info="heartbeat_linkInfo.xml" --rom_model -o "heartbeat.out" $(ORDERED_OBJS)
+	"/home/sheldon/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.2/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 --abi=eabi -me -g --gcc --define=PART_TM4C1230C3PM --define=ccs="ccs" --define=PART_TM4C123GH6PM --display_error_number --diag_warning=225 --diag_wrap=off -z -m"heartbeat.map" --heap_size=0 --stack_size=512 -i"/home/sheldon/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.2/lib" -i"/home/sheldon/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.2/include" --reread_libs --warn_sections --display_error_number --diag_wrap=off --xml_link_info="heartbeat_linkInfo.xml" --rom_model -o "heartbeat.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
 heartbeat.hex: $(EXE_OUTPUTS)
 	@echo 'Invoking: ARM Hex Utility'
-	"/home/sajan/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.2/bin/armhex"  -o "heartbeat.hex" $(EXE_OUTPUTS__QUOTED)
+	"/home/sheldon/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.2/bin/armhex"  -o "heartbeat.hex" $(EXE_OUTPUTS__QUOTED)
 	@echo 'Finished building: $@'
 	@echo ' '
 
