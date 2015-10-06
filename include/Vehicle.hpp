@@ -85,8 +85,9 @@ private:
 	float mass;					// Mass of the Vehicle
 	float rpLimits[NUM_ANGLES];	// max roll and pitch limit
 	float lastPredTime; 		// time of the last ekf predict
+	float lastCorrTime;			// time of the last ekf correct
 	float time;					// current time
-	float preYawSin;
+	float preYawSin;			// precaculated sin and cos (in next line) of current vehicle yaw
 	float preYawCos;
 	
 	// State Estimator Specific Members	

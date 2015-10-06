@@ -1,7 +1,7 @@
 close all
 clc
 
-log = load('9-29-why-height-exploded/LOG57.TXT');
+log = load('10-5-ekfRateFix/LOG61.TXT');
 
 % parsing the data
 Time          = log(:,1);
@@ -121,6 +121,11 @@ subplot(224)
 plot(Time, Filter_Yaw, 'b', Time, Setpt_Yaw, 'g')
 xlabel('Time')
 ylabel('Value Yaw')
+
+figure(200)
+plot(Time, Filter_Z, 'b');
+ylabel('Z Filter')
+xlabel('Time')
 
 % figure 2 rates
 figure(2)

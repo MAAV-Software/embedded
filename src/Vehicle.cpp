@@ -22,6 +22,7 @@ Vehicle::Vehicle(const float valueGains[NUM_DOFS][NUM_PID_GAINS],
 	time 		 = (float)millis() / 1000.0f; // grab current time for initialization
 	mass 		 = 2.38f;
 	lastPredTime = 0;
+	lastCorrTime = 0;
 	dji.roll     = 0;
 	dji.pitch    = 0;
 	dji.yawRate  = 0;
@@ -97,16 +98,16 @@ Vehicle::Vehicle(const float valueGains[NUM_DOFS][NUM_PID_GAINS],
 		0, 0, 0, 0, 0, 0.01
 	};
 	float ekfNoCamR[9] = {
-		0.04, 0, 0,
-		0, 0.5, 0,
-		0, 0, 0.5
+		0.02, 0, 0,
+		0, 0.1, 0,
+		0, 0, 0.1
 	};
 	float ekfWithCamR[25] = {
-		0.05, 0, 0, 0, 0,
-		0, 0.01, 0, 0, 0,
-		0, 0, 0.04, 0, 0,
-		0, 0, 0, 0.5, 0,
-		0, 0, 0, 0, 0.5
+		0.1, 0, 0, 0, 0,
+		0, 0.1, 0, 0, 0,
+		0, 0, 0.02, 0, 0,
+		0, 0, 0, 0.1, 0,
+		0, 0, 0, 0, 0.1
 	};
 
 	// ekfInitP is the ekfInitErrorCov
@@ -195,6 +196,7 @@ Vehicle::Vehicle(const float states[NUM_DOFS][NUM_DOF_STATES],
 	mass = totalMass;
 	time = initTime;
 	lastPredTime = 0;
+	lastCorrTime = 0;
 	dji.roll    = 0;
 	dji.pitch   = 0; 
 	dji.yawRate = 0;
@@ -247,6 +249,7 @@ void Vehicle::runFilter(const float x, const float y, const float z,
 	time = timestamp;
 	float dt = time - lastPredTime;
 
+
 	// get sin/cos of Euler angles
 	preYawCos = arm_cos_f32(yawImu);
 	preYawSin = arm_sin_f32(yawImu);
@@ -262,28 +265,34 @@ void Vehicle::runFilter(const float x, const float y, const float z,
 	controlInputMat.pData[3] = dji.yawRate;
 
 	// run filter
-	ekf->predict(dt, mass, rollSin, rollCos, pitchSin, pitchCos,
-				 preYawSin, preYawCos, &controlInputMat); // always predict
-	if ((mode == AUTONOMOUS) && withCam)
+	if ((time - lastCorrTime) < 0.02) // predict if corrDt < 20 ms (rate of Lidar)
 	{
-		sensorMeasurementMatWithCam.pData[0] = x;
-		sensorMeasurementMatWithCam.pData[1] = y;
-		sensorMeasurementMatWithCam.pData[2] = z * pitchCos * rollCos;
-		sensorMeasurementMatWithCam.pData[3] = (xdot * preYawCos) + (ydot * preYawSin);
-		sensorMeasurementMatWithCam.pData[4] = -(xdot * preYawSin) + (ydot * preYawCos);
-
-		ekf->update(dt, 1, &sensorMeasurementMatWithCam); // update with camera vals
+		ekf->predict(dt, mass, rollSin, rollCos, pitchSin, pitchCos,
+					 preYawSin, preYawCos, &controlInputMat);
 	}
-	else
+	else // run correction bcz we have Lidar
 	{
-		// assign input to sensor vector
-		sensorMeasurementMat.pData[0] = z * pitchCos * rollCos;
-		sensorMeasurementMat.pData[1] = (xdot * preYawCos) + (ydot * preYawSin);
-		sensorMeasurementMat.pData[2] = -(xdot * preYawSin) + (ydot * preYawCos);
+		lastCorrTime = time;
+		if ((mode == AUTONOMOUS) && withCam)
+		{
+			sensorMeasurementMatWithCam.pData[0] = x;
+			sensorMeasurementMatWithCam.pData[1] = y;
+			sensorMeasurementMatWithCam.pData[2] = z * pitchCos * rollCos;
+			sensorMeasurementMatWithCam.pData[3] = (xdot * preYawCos) + (ydot * preYawSin);
+			sensorMeasurementMatWithCam.pData[4] = -(xdot * preYawSin) + (ydot * preYawCos);
 
-		ekf->update(dt, 0, &sensorMeasurementMat); // update without camera vals
+			ekf->update(dt, 1, &sensorMeasurementMatWithCam); // update with camera vals
+		}
+		else
+		{
+			// assign input to sensor vector
+			sensorMeasurementMat.pData[0] = z * pitchCos * rollCos;
+			sensorMeasurementMat.pData[1] = (xdot * preYawCos) + (ydot * preYawSin);
+			sensorMeasurementMat.pData[2] = -(xdot * preYawSin) + (ydot * preYawCos);
+
+			ekf->update(dt, 0, &sensorMeasurementMat); // update without camera vals
+		}
 	}
-	
 	// extract state and send to dofs
 	arm_matrix_instance_f32 ekfState = ekf->getState();
 	float state[NUM_DOFS][NUM_DOF_STATES];

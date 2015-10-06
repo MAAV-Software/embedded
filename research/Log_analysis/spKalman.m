@@ -1,7 +1,7 @@
 close all
 clc 
 clf
-log = load('9-29-why-height-exploded/LOG57.TXT');
+log = load('10-5-ekfRateFix/LOG61.TXT');
 
 % parsing the data
 Time          = log(:,1);
@@ -80,11 +80,11 @@ DJI_Roll      = log(:,81);
 DJI_Pitch     = log(:,82);
 DJI_Yawdot    = log(:,83);
 DJI_Fz        = log(:,84);
-AtomFlag          = log(:,85);
-DJI_Roll_RAW      = log(:,86);
-DJI_Pitch_RAW     = log(:,87);
+AtomFlag      = log(:,85);
+DJI_Roll_RAW  = log(:,86);
+DJI_Pitch_RAW = log(:,87);
 DJI_Fz_RAW    = log(:,88);
-DJI_YawRate_RAW        = log(:,89);
+DJI_YawRate_RAW = log(:,89);
 
 PPM_1 = log(:, 90);
 PPM_2 = log(:, 91);
@@ -109,9 +109,9 @@ Q = zeros(6);
 Q(1,1) = 0.1;
 Q(2,2) = 0.1;
 Q(3,3) = 0.9;
-Q(4,4) = 0.001;
-Q(5,5) = 0.001;
-Q(6,6) = 0.001;
+Q(4,4) = 0.01;
+Q(5,5) = 0.01;
+Q(6,6) = 0.01;
 
 u = zeros(4,1);           % [Fz roll pitch yawRate] (to dji)
 
@@ -121,7 +121,8 @@ A = [[0 0 0 1 0 0];
      [0 0 0 0 0 0];
      [0 0 0 0 0 0];
      [0 0 0 0 0 0]];
-
+     
+     
 %sensor_1 = zeros(3,1);    % [z xdot ydot]
 %y_1 = zeros(3,1);         % [x_3 x_4 x_5]
 R_1 = zeros(3);  
@@ -147,102 +148,164 @@ C_2 = [[1 0 0 0 0 0];
        [0 0 1 0 0 0];
        [0 0 0 1 0 0];
        [0 0 0 0 1 0]];
-xPred = [];
-P_pred = [];
-xCorr = [];
-P_Corr = [];
+%xPred = [];
+%P_pred = [];
+%xCorr = [];
+%P_Corr = [];
 
 dx_vec = [];
 
 px4_xdot = [];
 px4_ydot = [];
 Zdist = [];
+%predTime = [];
+%corrTime = [];
+xFlt = [];
+pFlt = [];
 
 for i = 2:length(Time)
-   % fill in u, dt, dx
-   u = [-DJI_Fz_RAW(i); DJI_Roll_RAW(i); DJI_Pitch_RAW(i); DJI_YawRate_RAW(i)];
-   dt = Time(i) - Time(i-1);
-   dx = [x(4);
-         x(5); 
-         x(6); 
-         u(1) / mass * ( (cos(yaw(i)) * sin(pitch(i)) * cos(roll(i))) + (sin(yaw(i)) * sin(roll(i))) );
-         u(1) / mass * ( (sin(yaw(i)) * sin(pitch(i)) * cos(roll(i))) - (cos(yaw(i)) * sin(roll(i))) );
-         (u(1) / mass * (cos(pitch(i)) * cos(roll(i))))]; 
-    dx_vec = [dx_vec, dx];
-   
-   % debug
-   dx(6);
+     Zdist = [Zdist, -Lidar_Dist(i) * cos(pitch(i)) * cos(roll(i))];
+     px4_xdot = [px4_xdot, (Px4_Xdot(i) * cos(yaw(i))) + (Px4_Ydot(i) * sin(yaw(i)))];
+     px4_ydot = [px4_ydot, -(Px4_Xdot(i) * sin(yaw(i))) + (Px4_Ydot(i) * sin(yaw(i)))];
+
+  if ((Time(i) - Time(i-1)) < 0.020)
+  %if (true)
+     % fill in u, dt, dx
+     u = [-DJI_Fz_RAW(i); DJI_Roll_RAW(i); DJI_Pitch_RAW(i); DJI_YawRate_RAW(i)];
+     dt = Time(i) - Time(i-1);
+     dx = [x(4);
+           x(5); 
+           x(6); 
+           u(1) / mass * ( (cos(yaw(i)) * sin(pitch(i)) * cos(roll(i))) + (sin(yaw(i)) * sin(roll(i))) );
+           u(1) / mass * ( (sin(yaw(i)) * sin(pitch(i)) * cos(roll(i))) - (cos(yaw(i)) * sin(roll(i))) );
+           (u(1) / mass * (cos(pitch(i)) * cos(roll(i))))]; 
+      dx_vec = [dx_vec, dx];
      
-   % Run prediction step
-   x = x + dt * dx;
-   
-   %debug
-   x(6);
-   
-   P = P + (dt * ((A * P) + (P * A') + Q));
-   xPred = [xPred, x];
-   P_pred = [P_pred, [P(1, 1);
-                      P(2, 2);
-                      P(3, 3);
-                      P(4, 4);
-                      P(5, 5);
-                      P(6, 6)]];
-                  
-   % set up correction step 1
-   y_1 = [x(3); x(4); x(5)];
-   sensor_1 = [-Lidar_Dist(i) * cos(pitch(i)) * cos(roll(i));
-                (Px4_Xdot(i) * cos(yaw(i))) + (Px4_Ydot(i) * sin(yaw(i)));
-                -(Px4_Xdot(i) * sin(yaw(i))) + (Px4_Ydot(i) * sin(yaw(i)))];
-   Zdist = [Zdist, -Lidar_Dist(i) * cos(pitch(i)) * cos(roll(i))];
-   px4_xdot = [px4_xdot, (Px4_Xdot(i) * cos(yaw(i))) + (Px4_Ydot(i) * sin(yaw(i)))];
-   px4_ydot = [px4_ydot, -(Px4_Xdot(i) * sin(yaw(i))) + (Px4_Ydot(i) * sin(yaw(i)))];
-            
-   L = P * C_1' * inv(R_1 + (C_1 * P * C_1'));
-   P = (eye(6) - (L * C_1)) * P;
-   
-   x = x + (L * (-y_1 + sensor_1));
-   
-   %debug
-   sensor_1(1);
-   x(6);
-   
-   xCorr = [xCorr, x];
-   P_Corr = [P_Corr, [P(1, 1);
-                      P(2, 2);
-                      P(3, 3);
-                      P(4, 4);
-                      P(5, 5);
-                      P(6, 6)]]; 
+     % debug
+     dx(6);
+       
+     % Run prediction step
+     x = x + dt * dx;
+     
+     %debug
+     x(6);
+     
+     P = P + (dt * ((A * P) + (P * A') + Q));
+     %xPred = [xPred, x];
+     %P_pred = [P_pred, [P(1, 1);
+     %                   P(2, 2);
+     %                   P(3, 3);
+     %                   P(4, 4);
+     %                   P(5, 5);
+     %                   P(6, 6)]];
+     %predTime = [predTime, Time(i)];     
+  else
+     % set up correction step 1
+     y_1 = [x(3); x(4); x(5)];
+     sensor_1 = [-Lidar_Dist(i) * cos(pitch(i)) * cos(roll(i));
+                  (Px4_Xdot(i) * cos(yaw(i))) + (Px4_Ydot(i) * sin(yaw(i)));
+                  -(Px4_Xdot(i) * sin(yaw(i))) + (Px4_Ydot(i) * sin(yaw(i)))];
+     
+              
+     L = P * C_1' * inv(R_1 + (C_1 * P * C_1'));
+     P = (eye(6) - (L * C_1)) * P;
+     
+     x = x + (L * (-y_1 + sensor_1));
+     
+     %debug
+     sensor_1(1);
+     x(6);
+     
+     %xCorr = [xCorr, x];
+     %P_Corr = [P_Corr, [P(1, 1);
+     %                   P(2, 2);
+     %                   P(3, 3);
+     %                   P(4, 4);
+     %                   P(5, 5);
+     %                   P(6, 6)]]; 
+     %corrTime = [corrTime, Time(i)];    
+  end
+  
+  xFlt = [xFlt, x];
+  pFlt = [pFlt, [P(1, 1);
+                 P(2, 2);
+                 P(3, 3);
+                 P(4, 4);
+                 P(5, 5);
+                 P(6, 6)]];
 end
 
 
 figure(1)
-plot(Time(2:end), -xCorr(3,:), 'b', ...
-     Time(2:end), -xPred(3,:), '--b', ...
-     Time(2:end), -Zdist, 'g', ...
-     Time(2:end), -(xCorr(3,:) + 3 * sqrt(P_Corr(3,:))), '--r', ...
-     Time(2:end), -(xCorr(3,:) - 3 * sqrt(P_Corr(3,:))), '--r');
+hold on;
+%plot(corrTime, -xCorr(3,:), 'b');
+%plot(predTime, -xPred(3,:), '--k');
+plot(Time(2:end), -xFlt(3,:), 'b');
+plot(Time(2:end), -Zdist, 'g');
+plot(Time(2:end), -(xFlt(3,:) + 3 * sqrt(pFlt(3,:))), '--r');
+plot(Time(2:end), -(xFlt(3,:) - 3 * sqrt(pFlt(3,:))), '--r');
+%plot(corrTime, -(xCorr(3,:) + 3 * sqrt(P_Corr(3,:))), '--r');
+%plot(corrTime, -(xCorr(3,:) - 3 * sqrt(P_Corr(3,:))), '--r');
 xlabel('Time');
 ylabel('Z');
+hold off;
 
 figure(2)
-plot(Time(2:end), xCorr(4,:), 'b', ...
-     Time(2:end), xPred(4,:), '--b', ...
-     Time(2:end), px4_xdot, 'g', ...
-     Time(2:end), (xCorr(4,:) + 3 * sqrt(P_Corr(4,:))), '--r', ...
-     Time(2:end), (xCorr(4,:) - 3 * sqrt(P_Corr(4,:))), '--r', ...
-     Time(2:end), Setpt_Xdot(2:end), 'k');
+hold on;
+%plot(corrTime, xCorr(4,:), 'b');
+%plot(predTime, xPred(4,:), '--b');
+plot(Time(2:end), xFlt(4,:), 'b');
+plot(Time(2:end), px4_xdot, 'g');
+plot(Time(2:end), -(xFlt(4,:) + 3 * sqrt(pFlt(4,:))), '--r');
+plot(Time(2:end), -(xFlt(4,:) - 3 * sqrt(pFlt(4,:))), '--r');
+%plot(corrTime, (xCorr(4,:) + 3 * sqrt(P_Corr(4,:))), '--r')
+%plot(corrTime, (xCorr(4,:) - 3 * sqrt(P_Corr(4,:))), '--r');
+%plot(Time(2:end), Setpt_Xdot(2:end), 'k');
 xlabel('Time');
 ylabel('Xdot');
+hold off;
 
 figure(3)
-plot(Time(2:end), xCorr(5,:), 'b', ...
-     Time(2:end), xPred(5,:), '--b', ...
-     Time(2:end), px4_ydot, 'g', ...
-     Time(2:end), (xCorr(5,:) + 3 * sqrt(P_Corr(5,:))), '--r', ...
-     Time(2:end), (xCorr(5,:) - 3 * sqrt(P_Corr(5,:))), '--r');
+hold on;
+%plot(corrTime, xCorr(5,:), 'b');
+%plot(predTime, xPred(5,:), '--b');
+plot(Time(2:end), xFlt(5,:), 'b');
+plot(Time(2:end), px4_ydot, 'g');
+plot(Time(2:end), -(xFlt(5,:) + 3 * sqrt(pFlt(5,:))), '--r');
+plot(Time(2:end), -(xFlt(5,:) - 3 * sqrt(pFlt(5,:))), '--r');
+%plot(corrTime, (xCorr(5,:) + 3 * sqrt(P_Corr(5,:))), '--r');
+%plot(corrTime, (xCorr(5,:) - 3 * sqrt(P_Corr(5,:))), '--r');
 xlabel('Time');
 ylabel('Ydot');
+hold off;
+
+%figure(1)
+%plot(Time(2:end), -xCorr(3,:), 'b', ...
+%     Time(2:end), -xPred(3,:), '--b', ...
+%     Time(2:end), -Zdist, 'g', ...
+%     Time(2:end), -(xCorr(3,:) + 3 * sqrt(P_Corr(3,:))), '--r', ...
+%     Time(2:end), -(xCorr(3,:) - 3 * sqrt(P_Corr(3,:))), '--r');
+%xlabel('Time');
+%ylabel('Z');
+
+%figure(2)
+%plot(Time(2:end), xCorr(4,:), 'b', ...
+%     Time(2:end), xPred(4,:), '--b', ...
+%     Time(2:end), px4_xdot, 'g', ...
+%     Time(2:end), (xCorr(4,:) + 3 * sqrt(P_Corr(4,:))), '--r', ...
+%     Time(2:end), (xCorr(4,:) - 3 * sqrt(P_Corr(4,:))), '--r', ...
+%     Time(2:end), Setpt_Xdot(2:end), 'k');
+%xlabel('Time');
+%ylabel('Xdot');
+
+%figure(3)
+%plot(Time(2:end), xCorr(5,:), 'b', ...
+%     Time(2:end), xPred(5,:), '--b', ...
+%     Time(2:end), px4_ydot, 'g', ...
+%     Time(2:end), (xCorr(5,:) + 3 * sqrt(P_Corr(5,:))), '--r', ...
+%     Time(2:end), (xCorr(5,:) - 3 * sqrt(P_Corr(5,:))), '--r');
+%xlabel('Time');
+%ylabel('Ydot');
 
 %      Time(2:end), px4_ydot, 'g', ...
 %      Time(2:end), (xCorr(5,:) + 3 * sqrt(P_Corr(5,:))), '--r', ...
