@@ -1,0 +1,14 @@
+CMEIGEN
+-------
+
+By Sasawat
+
+Eigen and CMath implementation of CMSIS DSPLib's matrix math (and other things).
+
+Reimplements the 32-bit floating point matrix math from the set of functions found 
+in arm_math.h. When using Linux, include cmeigen.hpp rather than arm_math.hpp.
+
+Dependency: Eigen (version 3) needs to be installed. Change the path in the Makefile
+to reflect where the headers are installed on your machine.
+
+All you need to do after is make this and link the object file to your project.
