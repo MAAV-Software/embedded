@@ -21,8 +21,8 @@ Vehicle::Vehicle(const float valueGains[NUM_DOFS][NUM_PID_GAINS],
 {
 	time 		 = (float)millis() / 1000.0f; // grab current time for initialization
 	mass 		 = 2.38f;
-	lastPredTime = 0;
-	lastCorrTime = 0;
+	lastPredTime = time;
+	lastCorrTime = time;
 	dji.roll     = 0;
 	dji.pitch    = 0;
 	dji.yawRate  = 0;
@@ -195,8 +195,8 @@ Vehicle::Vehicle(const float states[NUM_DOFS][NUM_DOF_STATES],
 {
 	mass = totalMass;
 	time = initTime;
-	lastPredTime = 0;
-	lastCorrTime = 0;
+	lastPredTime = initTime;
+	lastCorrTime = initTime;
 	dji.roll    = 0;
 	dji.pitch   = 0; 
 	dji.yawRate = 0;
@@ -242,7 +242,8 @@ Vehicle::Vehicle(const float states[NUM_DOFS][NUM_DOF_STATES],
 void Vehicle::runFilter(const float x, const float y, const float z,
 				  	    const float xdot, const float ydot, const float roll,
 						const float pitch, const float yawImu, const float yawCam,
-						const float timestamp, const bool withCam, const FlightMode mode)
+						const float timestamp, const bool withCam, const FlightMode mode,
+						const bool usePredict)
 {
 	// record time and calc filter dt
 	lastPredTime = time;
@@ -259,13 +260,15 @@ void Vehicle::runFilter(const float x, const float y, const float z,
 	float pitchSin = arm_sin_f32(pitch);
 
 	// assign input to control vector
-	controlInputMat.pData[0] = dji.thrust;
-	controlInputMat.pData[1] = dji.roll;
-	controlInputMat.pData[2] = dji.pitch;
-	controlInputMat.pData[3] = dji.yawRate;
+	controlInputMat.pData[0] = (mode == MANUAL) ? 0.0 : dji.thrust;
+	controlInputMat.pData[1] = (mode == MANUAL) ? 0.0 : dji.roll;
+	controlInputMat.pData[2] = (mode == MANUAL) ? 0.0 : dji.pitch;
+	controlInputMat.pData[3] = (mode == MANUAL) ? 0.0 : dji.yawRate;
 
 	// run filter
-	if ((time - lastCorrTime) < 0.02) // predict if corrDt < 20 ms (rate of Lidar)
+	//if ((time - lastCorrTime) < 0.02) // predict if corrDt < 20 ms (rate of Lidar)
+	//if (dt < 0.015)
+	if (usePredict)
 	{
 		ekf->predict(dt, mass, rollSin, rollCos, pitchSin, pitchCos,
 					 preYawSin, preYawCos, &controlInputMat);
@@ -338,7 +341,7 @@ void Vehicle::runCtrl(const FlightMode mode)
 	dofs[YAW].run(false);
 
 	// finally get dji values
-	calcDJIValues();
+	calcDJIValues(mode);
 }
 
 // Assigns setpoints based on the controller mode
@@ -381,7 +384,7 @@ void Vehicle::setDofStates(const float state[NUM_DOFS][NUM_DOF_STATES])
 }
 
 
-void Vehicle::calcDJIValues()
+void Vehicle::calcDJIValues(const FlightMode mode)
 {
 	float forceVe[3];        // vehicle force in the earth frame (in R^3)
 	float forceVy[3];        // vehicle force in the yaw frame (in R^3)
@@ -420,13 +423,13 @@ void Vehicle::calcDJIValues()
 	if (angle[PITCH] < -rpLimits[PITCH]) angle[PITCH] = -rpLimits[PITCH];
 
 	// assign DJI values
-	dji.roll   = angle[ROLL];
-	dji.pitch  = angle[PITCH];
+	dji.roll    = (mode == MANUAL) ? 0.0 : angle[ROLL];
+	dji.pitch   = (mode == MANUAL) ? 0.0 : angle[PITCH];
 	//dji.thrust = dofs[Z_AXIS].getUval();
 	//dji.thrust = dofs[Z_AXIS].getRate();
-	dji.thrust  = forceVe[Z_AXIS];
+	dji.thrust  = (mode == MANUAL) ? 0.0 : forceVe[Z_AXIS];
 
-	dji.yawRate = dofs[YAW].getRate();
+	dji.yawRate = (mode == MANUAL) ? 0.0 : dofs[YAW].getRate();
 }
 
 

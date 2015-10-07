@@ -68,7 +68,8 @@ public:
 	void runFilter(const float x, const float y, const float z,
 				   const float xdot, const float ydot, const float roll, 
 				   const float pitch, const float yawImu, const float yawCam,
-				   const float time, const bool withCam, const FlightMode mode);
+				   const float time, const bool withCam, const FlightMode mode,
+				   const bool usePredict);
 	
 	// returns the DJI values needed to send to it
 	Dji getDjiVals() const;
@@ -97,7 +98,7 @@ private:
 	arm_matrix_instance_f32 sensorMeasurementMatWithCam;
 	
 	// Calculates Roll, Pitch, Z Force, and Yaw Rate to send to the DJI
-	void calcDJIValues();
+	void calcDJIValues(const FlightMode mode);
 
 	// Updates the states of the DOFS
 	//void setDofStates(const float state[NUM_DOFS][NUM_DOF_STATES]);

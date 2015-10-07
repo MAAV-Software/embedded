@@ -195,6 +195,43 @@ void ExtendedKalmanFilter::update(const float deltaTime, const uint16_t id,
 	assert(sensorMeasurement->numRows == _updateArr[id].sensorSize);
 	assert(sensorMeasurement->numCols == 1);
 
+	arm_matrix_instance_f32 *jacobian  = &_updateArr[id].jacobian;
+	arm_matrix_instance_f32 *covMatrix = &_updateArr[id].covMatrix;
+	arm_matrix_instance_f32 *ns_0 	   = &_updateArr[id].ns_0;
+	arm_matrix_instance_f32 *ns_1      = &_updateArr[id].ns_1;
+	arm_matrix_instance_f32 *ss_0      = &_updateArr[id].ss_0;
+	arm_matrix_instance_f32 *ss_1      = &_updateArr[id].ss_1;
+	arm_matrix_instance_f32 *s1_0      = &_updateArr[id].s1_0;
+
+	// P * C'
+	_updateArr[id].getJacobian(&_state, jacobian);
+	arm_mat_trans_f32(jacobian, ns_0);
+	arm_mat_mult_f32(&_P, ns_0, ns_1);
+
+	// C * P * C'
+	arm_mat_mult_f32(jacobian, ns_1, ss_0);
+
+	// inv(R + (C * P * C'))
+	arm_mat_add_f32(ss_0, covMatrix, ss_0);
+	arm_mat_inverse_f32(ss_0, ss_1);
+
+	// L = P * C' * inv(R + (C*P*C'))
+	arm_mat_mult_f32(ns_1, ss_1, ns_0);
+
+	// x = x + L * (y - c(x))
+	_updateArr[id].predictSensor(&_state, s1_0);
+	arm_mat_sub_f32(sensorMeasurement, s1_0, s1_0);
+	arm_mat_mult_f32(ns_0, s1_0, &_n1_0);
+	arm_mat_add_f32(&_state, &_n1_0, &_state);
+
+	// P = (I - L * C) * P
+	arm_mat_mult_f32(ns_0, jacobian, &_nn_0);
+	arm_mat_sub_f32(&_nn_identity, &_nn_0, &_nn_1);
+	arm_mat_mult_f32(&_nn_1, &_P, &_nn_0);
+	memcpy(_P.pData, _nn_0.pData, sizeof(float) * _stateSize * _stateSize);
+
+
+	/*
 	arm_matrix_instance_f32& jacobian = _updateArr[id].jacobian;
 	arm_matrix_instance_f32& covMatrix = _updateArr[id].covMatrix;
 	arm_matrix_instance_f32& ns_0 = _updateArr[id].ns_0;
@@ -211,11 +248,11 @@ void ExtendedKalmanFilter::update(const float deltaTime, const uint16_t id,
 	// C * P * C'
 	arm_mat_mult_f32(&jacobian, &ns_1, &ss_0);
 
-	// inv(R + C * P * C')
+	// inv(R + (C * P * C'))
 	arm_mat_add_f32(&ss_0, &covMatrix, &ss_0);
 	arm_mat_inverse_f32(&ss_0, &ss_1);
 
-	// L = P * C' * inv(R + C*P*C')
+	// L = P * C' * inv(R + (C*P*C'))
 	arm_mat_mult_f32(&ns_1, &ss_1, &ns_0);
 
 	// x = x + L * (y - c(x))
@@ -229,4 +266,5 @@ void ExtendedKalmanFilter::update(const float deltaTime, const uint16_t id,
 	arm_mat_sub_f32(&_nn_identity, &_nn_0, &_nn_1);
 	arm_mat_mult_f32(&_nn_1, &_P, &_nn_0);
 	memcpy(_P.pData, _nn_0.pData, sizeof(float) * _stateSize * _stateSize);
+	*/
 }

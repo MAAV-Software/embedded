@@ -1,7 +1,7 @@
 close all
 clc
 
-log = load('10-5-ekfRateFix/LOG61.TXT');
+log = load('benchtop/LOG77.TXT');
 
 % parsing the data
 Time          = log(:,1);
@@ -122,10 +122,7 @@ plot(Time, Filter_Yaw, 'b', Time, Setpt_Yaw, 'g')
 xlabel('Time')
 ylabel('Value Yaw')
 
-figure(200)
-plot(Time, Filter_Z, 'b');
-ylabel('Z Filter')
-xlabel('Time')
+
 
 % figure 2 rates
 figure(2)
@@ -315,6 +312,11 @@ ylabel('Az');
 figure(100)
 plot(Time, Lidar_Dist, 'b');
 ylabel('Lidar');
+
+figure(200)
+plot(Time, Filter_Z, 'b');
+ylabel('Z Filter')
+xlabel('Time')
 
 %%
 Real_Time_for_this_log = (Time(end) - Time(1)) / 60

@@ -1,7 +1,7 @@
 close all
 clc 
 clf
-log = load('10-5-ekfRateFix/LOG61.TXT');
+log = load('benchtop/LOG75.TXT');
 
 % parsing the data
 Time          = log(:,1);
@@ -168,17 +168,18 @@ for i = 2:length(Time)
      px4_xdot = [px4_xdot, (Px4_Xdot(i) * cos(yaw(i))) + (Px4_Ydot(i) * sin(yaw(i)))];
      px4_ydot = [px4_ydot, -(Px4_Xdot(i) * sin(yaw(i))) + (Px4_Ydot(i) * sin(yaw(i)))];
 
-  if ((Time(i) - Time(i-1)) < 0.020)
-  %if (true)
+  %if ((Time(i) - Time(i-1)) < 0.015)
+  if (false)
      % fill in u, dt, dx
      u = [-DJI_Fz_RAW(i); DJI_Roll_RAW(i); DJI_Pitch_RAW(i); DJI_YawRate_RAW(i)];
      dt = Time(i) - Time(i-1);
      dx = [x(4);
            x(5); 
            x(6); 
-           u(1) / mass * ( (cos(yaw(i)) * sin(pitch(i)) * cos(roll(i))) + (sin(yaw(i)) * sin(roll(i))) );
-           u(1) / mass * ( (sin(yaw(i)) * sin(pitch(i)) * cos(roll(i))) - (cos(yaw(i)) * sin(roll(i))) );
-           (u(1) / mass * (cos(pitch(i)) * cos(roll(i))))]; 
+           u(1) / mass * ( (cos(yaw(i))   * sin(pitch(i)) * cos(roll(i))) + (sin(yaw(i)) * sin(roll(i))) );
+           u(1) / mass * ( (sin(yaw(i))   * sin(pitch(i)) * cos(roll(i))) - (cos(yaw(i)) * sin(roll(i))) );
+           u(1) / mass * (  cos(pitch(i)) * cos(roll(i)) )];
+           %0 / mass * cos(pitch(i)) * cos(roll(i))]; 
       dx_vec = [dx_vec, dx];
      
      % debug
@@ -250,35 +251,45 @@ xlabel('Time');
 ylabel('Z');
 hold off;
 
-figure(2)
-hold on;
+%figure(2)
+%hold on;
+
 %plot(corrTime, xCorr(4,:), 'b');
 %plot(predTime, xPred(4,:), '--b');
-plot(Time(2:end), xFlt(4,:), 'b');
-plot(Time(2:end), px4_xdot, 'g');
-plot(Time(2:end), -(xFlt(4,:) + 3 * sqrt(pFlt(4,:))), '--r');
-plot(Time(2:end), -(xFlt(4,:) - 3 * sqrt(pFlt(4,:))), '--r');
+
+%plot(Time(2:end), xFlt(4,:), 'b');
+%plot(Time(2:end), px4_xdot, 'g');
+%plot(Time(2:end), -(xFlt(4,:) + 3 * sqrt(pFlt(4,:))), '--r');
+%plot(Time(2:end), -(xFlt(4,:) - 3 * sqrt(pFlt(4,:))), '--r');
+
 %plot(corrTime, (xCorr(4,:) + 3 * sqrt(P_Corr(4,:))), '--r')
 %plot(corrTime, (xCorr(4,:) - 3 * sqrt(P_Corr(4,:))), '--r');
 %plot(Time(2:end), Setpt_Xdot(2:end), 'k');
-xlabel('Time');
-ylabel('Xdot');
-hold off;
 
-figure(3)
-hold on;
+%xlabel('Time');
+%ylabel('Xdot');
+%hold off;
+%
+%figure(3)
+%hold on;
+
 %plot(corrTime, xCorr(5,:), 'b');
 %plot(predTime, xPred(5,:), '--b');
-plot(Time(2:end), xFlt(5,:), 'b');
-plot(Time(2:end), px4_ydot, 'g');
-plot(Time(2:end), -(xFlt(5,:) + 3 * sqrt(pFlt(5,:))), '--r');
-plot(Time(2:end), -(xFlt(5,:) - 3 * sqrt(pFlt(5,:))), '--r');
+
+%plot(Time(2:end), xFlt(5,:), 'b');
+%plot(Time(2:end), px4_ydot, 'g');
+%plot(Time(2:end), -(xFlt(5,:) + 3 * sqrt(pFlt(5,:))), '--r');
+%plot(Time(2:end), -(xFlt(5,:) - 3 * sqrt(pFlt(5,:))), '--r');
+
 %plot(corrTime, (xCorr(5,:) + 3 * sqrt(P_Corr(5,:))), '--r');
 %plot(corrTime, (xCorr(5,:) - 3 * sqrt(P_Corr(5,:))), '--r');
-xlabel('Time');
-ylabel('Ydot');
-hold off;
+%xlabel('Time');
+%ylabel('Ydot');
+%hold off;
 
+figure(4)
+%plot(Time(2:end), DJI_Fz_RAW(2:end), '-k');
+plot(Time(2:end), Time(2:end) - Time(1:end-1), '-k');
 %figure(1)
 %plot(Time(2:end), -xCorr(3,:), 'b', ...
 %     Time(2:end), -xPred(3,:), '--b', ...

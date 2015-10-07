@@ -21,6 +21,12 @@ void CtrlRunnable::run()
 	uint32_t msTime = millis();
 	float time = ((float)msTime) / 1000.0f; // grab current time
 
+	bool usePredict = false;
+	//if ((time - lastTime) < 0.015)
+	//	usePredict = true;
+
+	//lastTime = time;
+
 	if ((ps->mode == ASSISTED) || (ps->mode == MANUAL)) // set setpts here from rc pilot ctrl in assisted mode
 	{
 		float setpt[NUM_DOFS][NUM_DOF_STATES];
@@ -55,7 +61,8 @@ void CtrlRunnable::run()
 							   ps->dLink->getRawPoseMsg().yaw,
 							   time,
 							   true,
-							   ps->mode);
+							   ps->mode,
+							   usePredict);
 	}
 	else
 	{
@@ -71,7 +78,8 @@ void CtrlRunnable::run()
 							   0,
 							   time,
 							   false,
-							   ps->mode);
+							   ps->mode,
+							   usePredict);
 	}
 /*
 	// for debug only
