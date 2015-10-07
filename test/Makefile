@@ -6,7 +6,7 @@ CFLAGS = -std=c++03 $(WFLAGS)
 WFLAGS = -Wall -Wno-unused-parameter -Wno-unused-function -Wextra \
 		 -Wno-format-zero-length -Werror -Wconversion -Wvla -pedantic
 
-ROOT_DIR = ~/maav-controls
+ROOT_DIR = ../.
 PROJ_DIR = $(ROOT_DIR)/maav
 INC_DIR = $(ROOT_DIR)/include
 SRC_DIR = $(ROOT_DIR)/src
@@ -25,7 +25,7 @@ setup:
 	mkdir -p $(BUILD_DIR)
 	@echo "Setup Done, Building Code"
 
-#test: LidarSwTest Px4SwTest pidTest dofTest sampleTest
+#test: LidarSwTest Px4SwTest LowPassTest pidTest dofTest sampleTest
 test: BatteryTest LidarSwTest Px4SwTest LowPassTest pidTest dofTest
 
 sampleTest: sampleTest.o

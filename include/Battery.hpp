@@ -8,20 +8,6 @@
 
 #include <stdint.h>
 #include <cstdlib>
-#include <cstdio>
-
-#include "inc/hw_i2c.h"
-#include "inc/hw_memmap.h"
-#include "inc/hw_types.h"
-#include "inc/tm4c123gh6pm.h"
-
-#include "driverlib/gpio.h"
-#include "driverlib/fpu.h"
-#include "driverlib/pin_map.h"
-#include "driverlib/sysctl.h"
-#include "driverlib/adc.h"
-#include "driverlib/rom.h"
-#include "driverlib/rom_map.h"
 
 class Battery
 {
