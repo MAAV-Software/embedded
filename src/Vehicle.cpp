@@ -7,8 +7,14 @@
 #include "FlightMode.hpp"
 #include "kalman/ExtendedKalmanFilter.hpp"
 #include "kalman/KalmanFunctions.hpp"
-#include "arm_math.h"
 #include "time_util.h"
+
+#ifdef LINUX
+#include "cmeigen.hpp"
+#else
+#include "arm_math.h"
+#endif
+
 
 using namespace std;
 

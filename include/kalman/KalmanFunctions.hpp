@@ -8,7 +8,12 @@
 #ifndef KALMANFUNCTIONS_HPP_
 #define KALMANFUNCTIONS_HPP_
 
+/* temporary hack to let us use our own implementation of a subset of arm_math.h */
+#ifdef LINUX
+#include "cmeigen.hpp"
+#else
 #include "arm_math.h"
+#endif
 
 void systemDeltaState(const arm_matrix_instance_f32* currState,
 					  const arm_matrix_instance_f32* controlInput,

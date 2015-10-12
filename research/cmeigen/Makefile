@@ -2,6 +2,7 @@ EIGEN_INC = /usr/include/eigen3/
 CFLAGS = -std=c++03 -pedantic -Werror -Wall
 
 all: test
+for_use: cmeigen.o
 
 cmeigen.o: cmeigen.cpp cmeigen.hpp
 	g++ -c ${CFLAGS} cmeigen.cpp -I ${EIGEN_INC}

@@ -1,7 +1,13 @@
 #ifndef EXTENDED_KALMAN_FILTER_HPP
 #define EXTENDED_KALMAN_FILTER_HPP
 
+/* temporary hack to let us use our own implementation of a subset of arm_math.h */
+#ifdef LINUX
+#include "cmeigen.hpp"
+#else
 #include "arm_math.h"
+#endif
+
 #include <stdint.h>
 
 #define NUM_UPDATE_SLOTS 2

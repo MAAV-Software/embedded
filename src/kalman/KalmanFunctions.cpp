@@ -7,6 +7,7 @@
 
 #include "kalman/KalmanFunctions.hpp"
 #include <cassert>
+#include <cstring>
 
 using namespace std;
 

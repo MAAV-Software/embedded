@@ -2,9 +2,10 @@
 
 CXX = g++
 LD = g++
-CFLAGS = -std=c++03 $(WFLAGS)
+CFLAGS = -std=c++03 $(WFLAGS) -g
 WFLAGS = -Wall -Wno-unused-parameter -Wno-unused-function -Wextra \
-		 -Wno-format-zero-length -Werror -Wconversion -Wvla -pedantic
+		 -Wno-format-zero-length -Werror -Wconversion -Wvla -pedantic \
+		 -Wno-unused-variable
 
 ROOT_DIR = ../.
 PROJ_DIR = $(ROOT_DIR)/maav
@@ -14,8 +15,12 @@ TEST_DIR = $(ROOT_DIR)/test
 BIN_DIR = $(TEST_DIR)/bin
 BUILD_DIR = $(TEST_DIR)/build
 
-LIBS = -lm -lboost_unit_test_framework
+CMEIGEN_DIR = $(ROOT_DIR)/research/cmeigen
 
+LIBS = -lm -lboost_unit_test_framework
+LIBS_NO_BOOST = -lm
+
+ekf: setup KalmanTest
 all: setup test
 
 setup:
@@ -27,6 +32,27 @@ setup:
 
 #test: LidarSwTest Px4SwTest LowPassTest pidTest dofTest sampleTest
 test: BatteryTest LidarSwTest Px4SwTest LowPassTest pidTest dofTest
+
+
+ExtendedKalmanFilter.o: $(SRC_DIR)/kalman/ExtendedKalmanFilter.cpp $(INC_DIR)/kalman/ExtendedKalmanFilter.hpp
+	@echo ""
+	@echo "Building ExtendedKalmanFilter"
+	$(CXX) -c $(CFLAGS) $(SRC_DIR)/kalman/ExtendedKalmanFilter.cpp -I $(INC_DIR) -I $(CMEIGEN_DIR) -DLINUX=1 -o $(BUILD_DIR)/ExtendedKalmanFilter.o
+
+KalmanFunctions.o: $(SRC_DIR)/kalman/KalmanFunctions.cpp $(INC_DIR)/kalman/KalmanFunctions.hpp
+	@echo ""
+	@echo "Building KalmanFunctions"
+	$(CXX) -c $(CFLAGS) $(SRC_DIR)/kalman/KalmanFunctions.cpp -I $(INC_DIR) -I $(CMEIGEN_DIR) -DLINUX=1 -o $(BUILD_DIR)/KalmanFunctions.o
+
+KalmanTest.o: KalmanTest.cpp $(INC_DIR)/kalman/ExtendedKalmanFilter.hpp $(INC_DIR)/kalman/KalmanFunctions.hpp
+	@echo ""
+	@echo "Building KalmanTest"
+	$(CXX) -c $(CFLAGS) KalmanTest.cpp -I $(INC_DIR) -I $(CMEIGEN_DIR) -DLINUX=1 -o $(BUILD_DIR)/KalmanTest.o
+
+KalmanTest: ExtendedKalmanFilter.o KalmanFunctions.o KalmanTest.o
+	@echo ""
+	@echo "Liking KalmanTest"
+	$(CXX) $(CFLAGS) $(BUILD_DIR)/ExtendedKalmanFilter.o $(BUILD_DIR)/KalmanFunctions.o $(BUILD_DIR)/KalmanTest.o $(CMEIGEN_DIR)/cmeigen.o $(LIBS_NO_BOOST) -o $(BIN_DIR)/KalmanTest
 
 sampleTest: sampleTest.o
 	@echo ""

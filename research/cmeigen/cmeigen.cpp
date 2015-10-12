@@ -217,7 +217,7 @@ arm_status arm_mat_trans_f32(const arm_matrix_instance_f32* pSrc,
 	{
 		for(int j = 0; j < pDst->numCols; ++j)
 		{
-			pDst->pData[pDst->numRows * i + j] = R(i,j);
+			pDst->pData[pDst->numCols * i + j] = R(i,j); // SASAWAT!!!! THIS WAS psDist->numRows...I fixed it!!!
 		}
 	}
 	return ARM_MATH_SUCCESS;

@@ -3,9 +3,6 @@
 #define CMEIGEN_HPP_
 
 #include <stdint.h>
-//#include <cstdint>
-//#include <cfloat>
-//#include <Eigen/Dense>
 
 typedef float float32_t;
 
