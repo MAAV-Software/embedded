@@ -1,7 +1,7 @@
 close all
 clc
 
-log = load('benchtop/LOG77.TXT');
+log = load('fixedEkf/LOG79.TXT');
 
 % parsing the data
 Time          = log(:,1);
@@ -310,11 +310,10 @@ plot(Time, Imu_AccZ, 'b');
 ylabel('Az');
 
 figure(100)
-plot(Time, Lidar_Dist, 'b');
-ylabel('Lidar');
-
-figure(200)
-plot(Time, Filter_Z, 'b');
+hold on;
+plot(Time, Lidar_Dist, 'g');
+plot(Time, -Filter_Z, '--b');
+hold off;
 ylabel('Z Filter')
 xlabel('Time')
 
