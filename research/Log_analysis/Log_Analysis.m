@@ -1,7 +1,9 @@
 close all
+clear all
 clc
 
-log = load('fixedEkf/LOG79.TXT');
+%log = load('fixedEkf/LOG79.TXT');
+log = load('testing_11-10/LOG10.TXT');
 
 % parsing the data
 Time          = log(:,1);
@@ -312,7 +314,8 @@ ylabel('Az');
 figure(100)
 hold on;
 plot(Time, Lidar_Dist, 'g');
-plot(Time, -Filter_Z, '--b');
+plot(Time, -Filter_Z, 'b');
+plot(Time, -Setpt_Z, 'r');
 hold off;
 ylabel('Z Filter')
 xlabel('Time')
