@@ -1,11 +1,14 @@
 MAAV CONTROLS REPO
 
-by Sajan Patel, Clark Zhang, Zhengjie Cui
------------------------------------------
+by Sajan Patel, Clark Zhang, Zhengjie Cui, Sasawat Prapanka
+-----------------------------------------------------------
 
 This is the repository for MAAV's controls subteam.
 All controls code, documentation, and other important products/resources will go here.
 
+
+
+Update: Added SD Card Failure Handling by Sasawati
 
 
 maav CCS Project Instructions
