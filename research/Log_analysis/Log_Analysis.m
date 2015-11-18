@@ -3,7 +3,7 @@ clear all
 clc
 
 %log = load('fixedEkf/LOG79.TXT');
-log = load('testing_11-10/LOG10.TXT');
+log = load('testing_11-17/LOG19.TXT');
 
 % parsing the data
 Time          = log(:,1);
