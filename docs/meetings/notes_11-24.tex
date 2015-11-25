@@ -1,0 +1,154 @@
+\documentclass{article}
+\usepackage{enumerate, amsfonts, amsmath, amssymb, amsthm}
+\usepackage[margin=1in, top=.5in]{geometry}
+
+\begin{document}
+
+\title{Controls Subteam Meeting Notes}
+\author{Sajan Patel}
+\date{24 November 2015}
+\maketitle
+
+\section{Admin Updates}
+\begin{enumerate}
+\item 2 people still need to complete Basic 2 and get access.
+\item Attendance: 8
+\end{enumerate}
+
+\section{Subteam Updates}
+Vehicle Class Test Cases - Lixing and Ashish
+\begin{enumerate}
+    \item What is your deliverable for this week?
+
+    Make test case for the setGains and setSetpt functions.
+
+    \item Regarding that deliverable, what have you accomplished and how did
+        you accomplish it?
+
+    No. Still working on getting it to compile.
+
+    \item What are you stuck on?
+
+    Vehicle default ctor doesn't exist.
+
+    \item What will you work on for the next week?
+    
+    Continuing with making it compile and run the simple tests.
+
+    \item What is the high-level design you are thinking of for next week's
+        deliverable?
+    
+    Start using ekf scripts to generate answers to test cases.
+
+\end{enumerate}
+
+
+\noindent{}EKF Class Test Cases - Nathan, Nick, Anthony
+\begin{enumerate}
+    \item What is your deliverable for this week?
+
+    Complete set of test cases for ekf.
+
+    \item Regarding that deliverable, what have you accomplished and how did
+        you accomplish it?
+
+    Parts are done. Modified Matlab script for generating test case answers 
+    and continuing to learn and understand the 
+    EKF math. Also learned boost unit test framework and working on setting up 
+    unit tests.
+
+    \item What are you stuck on?
+
+    EKF math and theory.
+
+    \item What will you work on for the next week?
+    
+    Four compiled and running unit test cases.
+
+    \item What is the high-level design you are thinking of for next week's
+        deliverable?
+    
+    Getting basic and some edge test cases designed.
+\end{enumerate}
+
+
+\noindent{}EKF Simulation - Sasawat
+\begin{enumerate}
+    \item What is your deliverable for this week?
+
+    Visualize plots of C++ version of ekf running on log data.
+
+    \item Regarding that deliverable, what have you accomplished and how did
+        you accomplish it?
+
+    Made program that simulates calls to ekf algorithm running on log data.
+
+    \item What are you stuck on?
+
+    Program shows output that is different from spKalman Matlab script.
+
+    \item What will you work on for the next week?
+    
+    Continuing the simulation and find the differnces between Matlab and C++
+    (flying on vehicle) versions of EKF.
+
+    \item What is the high-level design you are thinking of for next week's
+        deliverable?
+    
+    N/A. Focussing on implementation details.
+\end{enumerate}
+
+
+\noindent{}EKF Documentation - Steven 
+\begin{enumerate}
+    \item What is your deliverable for this week?
+
+    Completed documentation.
+
+    \item Regarding that deliverable, what have you accomplished and how did
+        you accomplish it?
+
+    Part of it is done following guidelines in vehicle.tex. 
+
+    \item What are you stuck on?
+
+    Need guidance on how the math works.
+
+    \item What will you work on for the next week?
+    
+    Continuing to write up math in vehicle.tex.
+
+    \item What is the high-level design you are thinking of for next week's
+        deliverable?
+    
+        Making clear English explanations about the math and algorithm.
+\end{enumerate}
+
+
+\noindent{}Sensor Documentation - Sajan
+\begin{enumerate}
+    \item What is your deliverable for this week?
+    
+    Finding the location of pre-existing sensor noise data and sensor datasheets.
+
+    \item Regarding that deliverable, what have you accomplished and how did
+        you accomplish it?
+
+    Found the redmine issues and emails that the data was saved in.
+
+    \item What are you stuck on?
+
+    Nothing.
+
+    \item What will you work on for the next week?
+    
+    Moving pre-existing documentation on sensor noise to vehicle.tex in infra repo.
+
+    \item What is the high-level design you are thinking of for next week's
+        deliverable?
+
+        N/A. It's just documentation.
+
+\end{enumerate}
+
+\end{document}

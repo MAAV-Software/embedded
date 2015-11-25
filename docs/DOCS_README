@@ -1,4 +1,5 @@
 MAAV CONTROLS DOCUMENTATION
 
-This directory contians the documentation for all of MAAV's controls code and
-the math and controls theory that is the basis for the flight controller.
+Documentation for controls (theory, algorithms, api, meetings, etc).
+
+Meeting notes go in meetings directory. All notes are in latex.
