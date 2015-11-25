@@ -1,0 +1,172 @@
+\documentclass{article}
+
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{mathtools}
+
+\setcounter{tocdepth}{2}
+
+\begin{document}
+
+\title{MAAV Kalman Filter Documentation}
+\author{MAAV}
+\date{}
+\maketitle
+
+\section{Variables}
+
+\begin{table}[h]
+    \begin{tabular}{ll}
+	    x & final vehicle state\\
+	    df(x,u) & TODO: what exactly is this?\\
+	    dt & change in time between iterations\\
+	    P & final covariance\\
+	    A & mapping of state to P\\
+	    Q & covariance of the state\\
+	    $L_1$ & gain TODO: more detail (without camera data)\\
+	    $L_2$ & gain "               " (with camera data)\\
+	    $y_1$ & sensor inputs (without camera data)\\
+	    $y_2$ & sensor inputs (with camera data)\\
+	    $R_1$ & covariance of the sensor data (without camera data)\\
+	    $R_2$ & covariance of the sensor data (with camera data)\\
+	    $c_1(x)$ & mapping that extracts the states for y (without camera data)\\
+	    $c_2(x)$ & mapping that extracts the states for y (with camera data)\\
+	\end{tabular}
+\end{table}
+
+% Here's the matrices.
+\[
+	x=
+	\left[ {\begin{array}{cccccc}
+				x\\
+				y\\
+				z\\
+				\dot x\\
+				\dot y\\
+				\dot z\\
+	\end{array} } \right]
+\]
+
+\[
+	A= 
+	\left[ {\begin{array}{cccccc}
+				0 & 0 & 0 & 1 & 0 & 0\\
+				0 & 0 & 0 & 0 & 1 & 0\\
+				0 & 0 & 0 & 0 & 0 & 1\\
+				0 & 0 & 0 & 0 & 0 & 0\\
+				0 & 0 & 0 & 0 & 0 & 0\\
+				0 & 0 & 0 & 0 & 0 & 0\\
+	\end{array} } \right]
+\]
+
+\[
+	Q= 
+	\left[ {\begin{array}{cccccc}
+				Q_{11} & 0 & 0 & 0 & 0 & 0\\
+				0 & Q_{22} & 0 & 0 & 0 & 0\\
+				0 & 0 & Q_{33} & 0 & 0 & 0\\
+				0 & 0 & 0 & Q_{44} & 0 & 0\\
+				0 & 0 & 0 & 0 & Q_{55} & 0\\
+				0 & 0 & 0 & 0 & 0 & Q_{66}\\
+	\end{array} } \right]
+\]
+
+\[
+	c_1(x_t)=
+	\left[ {\begin{array}{ccc}
+				x_3\\
+				x_4\\
+				x_5\\
+	\end{array} } \right]_t
+\]
+
+\[
+	c_2(x_t)=
+	\left[ {\begin{array}{ccccc}
+				x_1\\
+				x_2\\
+				x_3\\
+				x_4\\
+				x_5\\
+	\end{array} } \right]_t
+\]
+
+\[
+	R_1=
+	\left[ {\begin{array}{ccc}
+				R_{11} & 0 & 0\\
+				0 & R_{22} & 0\\
+				0 & 0 & R_{33}\\
+	\end{array} } \right]
+\]
+
+\[
+	R_2=
+	\left[ {\begin{array}{ccccc}
+				R_{11} & 0 & 0 & 0 & 0\\
+				0 & R_{22} & 0 & 0 & 0\\
+				0 & 0 & R_{33} & 0 & 0\\
+				0 & 0 & 0 & R_{44} & 0\\
+				0 & 0 & 0 & 0 & R_{55}\\
+	\end{array} } \right]
+\]
+
+
+
+\[
+	df(x,u)=
+	\left[ {\begin{array}{cccccc}
+				x_4\\
+				x_5\\
+				x_6\\
+				u_x\\
+				u_y\\
+				u_z\\
+	\end{array} } \right]
+\]
+
+\[
+	y_{1_t}=
+	\left[ {\begin{array}{ccc}
+				z_{lidar}\\
+				\dot x_{px4}\\
+				\dot y_{px4}\\
+	\end{array} } \right]_t
+\]
+
+\[
+	y_{2_t}=
+	\left[ {\begin{array}{ccccc}
+				x_c\\
+				y_c\\
+				z_{lidar}\\
+				\dot x_{px4}\\
+				\dot y_{px4}\\
+	\end{array} } \right]_t
+\]
+
+\section{Prediction}
+The prediction estimates the current state by taking the most recently measured state and adding the TODO:what exactly is f(x,u)? multiplied by the elapsed time).
+\begin{align}
+	x_{t+1} = x_t + dt * df(x,u)
+\end{align}
+The prediction does a similar estimation for the current covariance. TODO: find out more about this
+\begin{align}
+	P_{t+1} = P_t + dt * (AP + PA^T + Q)
+\end{align}
+
+\section{Correction Step}
+When current sensor data is available, the correction step sets the current state.
+\begin{align}
+	L_1 = P_tC_1^T(R + C_1P_tC_1^T)^{-1}
+\end{align}
+
+\begin{align}
+	X_{t+1} = X_t + L_1(y_t-c_1(x_2))
+\end{align}
+
+\begin{align}
+	P_{t+1} = (I-L_1C_1)P_t
+\end{align}
+
+\end{document}
