@@ -2,7 +2,6 @@
  *
  * Note: Compiling with -std=c++03 to match Ti's settings
  */
-#define BOOST_TEST_DYN_LINK
 #define BOOST_TEST_MODULE "Pid Test"
 #include <boost/test/unit_test.hpp>
 #include <stdint.h>

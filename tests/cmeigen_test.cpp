@@ -179,4 +179,5 @@ int main(void)
 	test_mult();
 	test_inv();
 	test_trans();
+	return 0;
 }
