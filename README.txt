@@ -7,8 +7,41 @@ This is the repository for MAAV's controls subteam.
 All controls code, documentation, and other important products/resources will go here.
 
 
+Installation Instructions (for test cases for hardware-independent code)
+------------------------------------------------------------------------
+Ensure that you have cmake, eigen3, lcm, and boost installed. Make a build 
+directory:
 
-Update: Added SD Card Failure Handling by Sasawati
+	mkdir build
+
+Then go into the build directory:
+
+	cd build
+
+Run cmake to initialize the build environment:
+
+	cmake ../
+
+and address and correct any errors it might tell you (e.g. missing packages or 
+files are in incorrect places...HINT: use Google to help you out). Now you are 
+ready to build the hardware-independent controller code, cmeigen, and test 
+cases:
+	
+	make -j7
+
+Note that the -j7 is optional to enable faster, parallelized build, and that you 
+can choose any number (but we suggest 7 or 8 usually).
+
+To run the test cases automatically:
+
+	make test
+
+If you need to clean anything up or remove the built files:
+
+	make clean
+
+Any other questions should first be addressed to Google (if it's about make, 
+cmake, or Linux terminal commands) or the team leads (anything and everything).
 
 
 maav CCS Project Instructions
@@ -28,12 +61,8 @@ Repo Structure
 maav		This is the main Code Composer Studio project for the flight controller running on the Tiva. 
 		main.cpp, interrupt vector table, and Tiva build files live here in this directory.
 
-include		This folder holds all of the header files for the custom flight controller code used in 
-		the maav project. This is only for the flight controller, but other side projects may 
-		include headers from here (but may not add non-maav project code).
-
 src		This folder holds all of the source files for the custome flight controller code used in
-		the maav project. As with include, this is also only for the flight controller project but
+		the maav project. This is only for the flight controller project but
 		can be used in other projects.
 
 test		This folder holds all of the Boost Unit Test Framework automated test cases for non-Tiva-dependent
@@ -41,6 +70,13 @@ test		This folder holds all of the Boost Unit Test Framework automated test case
 		these test cases separately from the maav project with g++ rather than Ti's compiler (since 
 		we're using Boost for the test cases and non-hardware dependent code should function in the
 		same way regardless of compilation).
+
+cmeigen		This directory contains the eigen implementation of the CMSIS-DspLib
+		matrix math and other functions used in our code. Note this is not a complete
+		re-implementation of the entire CMSIS-DspLib; it is just the bare necessity for 
+		us to run test cases in Linux for code that requires these functions. CMSIS itself 
+		is designed only for ARM microcontrollers, and the original DspLib is used on the 
+		Tiva.
 
 research	This directory contains all research for control theory, state estimation, and data processing of 
 		flight and sensor logs. Any simulation code in C/C++/Matlab/Python/etc (not full CCS projects) and
@@ -52,6 +88,8 @@ side_projects	This directory contains all Code Composer Studio projects used for
 		the include directory but may not change any code or add new code to include or src.
 
 docs		All documentation for MAAV Controls (infrastructure, main flight controller, side projects, etc) goes here.
+
+cmake 	Contains the cmake pakage searching scripts.
 
 lcmtypes	All lcm message specification files and auto-generated code goes here.
 

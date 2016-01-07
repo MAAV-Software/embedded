@@ -1,6 +1,13 @@
 CMEIGEN
 -------
 
+Revisions:
+
+1.1: sajanptl; 6 Jan 2016; upgrade build process to using cmake, update readme,
+	 move test.cpp to ../tests/cmeigen_test.cpp
+1.0: psasawat; before 6 Jan 2016; original
+
+-------
 By Sasawat
 
 Eigen and CMath implementation of CMSIS DSPLib's matrix math (and other things).
@@ -8,7 +15,4 @@ Eigen and CMath implementation of CMSIS DSPLib's matrix math (and other things).
 Reimplements the 32-bit floating point matrix math from the set of functions found 
 in arm_math.h. When using Linux, include cmeigen.hpp rather than arm_math.hpp.
 
-Dependency: Eigen (version 3) needs to be installed. Change the path in the Makefile
-to reflect where the headers are installed on your machine.
-
-All you need to do after is make this and link the object file to your project.
+Dependency: Eigen (version 3) needs to be installed. CMake will find it for you.
