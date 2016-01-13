@@ -119,6 +119,14 @@ Rot_AccY = 9.81 * AccVec_Rot(2,:);
 Rot_AccZ = 9.81 * (AccVec_Rot(3,:) + 1);
 Lidar_Dist_Dot = Lidar_Dist(2:end) - Lidar_Dist(1:end - 1);
 
+DJI_Calc_Roll = (DJI_Roll - 104200)/(135000 - 104200) - 0.5;
+DJI_Calc_Pitch = (DJI_Pitch - 105600)/(135000 - 105600) - 0.5;
+DJI_RP_Rot = []
+for i = 1:length(RotMat(1,1,:))
+  %Transpose for RotMat to map from local frame to fixedearth frame
+  DJI_RP_Rot = [DJI_RP_Rot, RotMat(:,:,i)' * [DJI_Calc_Pitch(i), DJI_Calc_Roll(i), 0]'];
+end
+
 size(Lidar_Dist_Dot)
 Lidar_Dist_Dot = [0; Lidar_Dist_Dot];
 
@@ -135,13 +143,13 @@ P = 0.001 * eye(9);
 Q = zeros(9);
 Q(1,1) = 0.1;
 Q(2,2) = 0.1;
-Q(3,3) = 0.9;
+Q(3,3) = 0.07;
 Q(4,4) = 0.01;
 Q(5,5) = 0.01;
 Q(6,6) = 0.9; 
 Q(7,7) = 0.1;
 Q(8,8) = 0.1;
-Q(9,9) = 0.9;
+Q(9,9) = 0.1;
 
 u = zeros(4,1);           % [Fz roll pitch yawRate] (to dji)
 
@@ -163,9 +171,9 @@ R_1(1,1) = 0.47236; %z
 R_1(2,2) = 0.1; %xdot
 R_1(3,3) = 0.1; %ydot
 R_1(4,4) = 0.47236; %zdot from lidar derivative
-R_1(5,5) = 0.1; %zddot from Imu Rotated Z Acceleration cov
-R_1(6,6) = 0.1; %xddot
-R_2(7,7) = 0.1; %yddot
+R_1(5,5) = 0.01; %zddot from Imu Rotated Z Acceleration cov
+R_1(6,6) = 0.01; %xddot
+R_2(7,7) = 0.01; %yddot
 
 %state space into sensor space
 C_1 = [[0 0 1 0 0 0 0 0 0];   
@@ -242,14 +250,17 @@ for i = 2:length(Time)
      dx = [x(4);
            x(5); 
            x(6); 
-           x(7) + 0* u(1) / mass * ( (cos(yaw(i))   * sin(pitch(i)) * cos(roll(i))) + (sin(yaw(i)) * sin(roll(i))) );
-           x(8) + 0* u(1) / mass * ( (sin(yaw(i))   * sin(pitch(i)) * cos(roll(i))) - (cos(yaw(i)) * sin(roll(i))) );
+           %Rot_AccX(i);
+           x(7);
+           x(8);
+           %Rot_AccY(i);
            %u(1) / mass * (  cos(pitch(i)) * cos(roll(i)) );%Fz based Zdot ctrl input
            %0 / mass * cos(pitch(i)) * cos(roll(i));%No Zdot ctrl input
-           x(9);%Acceleration based Zdot ctrl input
+           %x(9);%Acceleration based Zdot ctrl input
+           Rot_AccZ(i);
            0;
            0;
-           0]; 
+           -0]; 
      dx_vec = [dx_vec, dx];
      
      % debug
@@ -357,7 +368,7 @@ hold on;
 %plot(corrTime, xCorr(4,:), 'b');
 %plot(predTime, xPred(4,:), '--b');
 
-plot(Time(2:end), px4_xdot, 'g');
+plot(Time(2:end), px4_xdot, '*g');
 plot(tslow(2:end), (xFltslow(4,2:end) + 3 * sqrt(pFltslow(4,2:end))), '--r');
 plot(tslow(2:end), (xFltslow(4,2:end) - 3 * sqrt(pFltslow(4,2:end))), '--r');
 plot(tslow(2:end), xFltslow(4,2:end), '*b');
@@ -381,12 +392,13 @@ hold on;
 %plot(corrTime, xCorr(5,:), 'b');
 %plot(predTime, xPred(5,:), '--b');
 
-plot(Time(2:end), px4_ydot, 'g');
+plot(Time(2:end), px4_ydot, '*g');
 plot(Time(2:end), (xFlt(5,:) + 3 * sqrt(pFlt(5,:))), '--r');
 plot(Time(2:end), (xFlt(5,:) - 3 * sqrt(pFlt(5,:))), '--r');
 plot(tslow(2:end), xFltslow(5,2:end), '*b');
 %plot(corrTime, (xCorr(5,:) + 3 * sqrt(P_Corr(5,:))), '--r');
 %plot(corrTime, (xCorr(5,:) - 3 * sqrt(P_Corr(5,:))), '--r');
+%plot(Time(2:end), Rot_AccY(2:end), 'ok');
 xlabel('Time');
 ylabel('Ydot');
 %hold off;
