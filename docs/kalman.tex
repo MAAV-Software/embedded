@@ -17,20 +17,22 @@
 
 \begin{table}[h]
     \begin{tabular}{ll}
-	    x & final vehicle state\\
-	    df(x,u) & TODO: what exactly is this?\\
+        x & vehicle state matrix (with x, y, z position and velocity)\\ 
+	    f(x,u) & function that maps and combines state data and control input data\\
 	    dt & change in time between iterations\\
-	    P & final covariance\\
+	    P & final covariances\\
 	    A & mapping of state to P\\
-	    Q & covariance of the state\\
-	    $L_1$ & gain TODO: more detail (without camera data)\\
-	    $L_2$ & gain "               " (with camera data)\\
+	    Q & pre-measured matrix measuring how the system covariances are expected to increase\\
+	    $L_1$ & Kalman gain (without camera data)\\
+	    $L_2$ & Kalman gain (with camera data)\\
 	    $y_1$ & sensor inputs (without camera data)\\
 	    $y_2$ & sensor inputs (with camera data)\\
 	    $R_1$ & covariance of the sensor data (without camera data)\\
 	    $R_2$ & covariance of the sensor data (with camera data)\\
-	    $c_1(x)$ & mapping that extracts the states for y (without camera data)\\
-	    $c_2(x)$ & mapping that extracts the states for y (with camera data)\\
+	    $g_1(x)$ & function that extracts the states for y (without camera data)\\
+	    $g_2(x)$ & function that extracts the states for y (with camera data)\\
+        $C_1$ & matrix that maps state values to the sensor space (without camera data)\\
+        $C_2$ & matrix that maps state to the sensor space (with camera data)\\
 	\end{tabular}
 \end{table}
 
@@ -72,22 +74,36 @@
 \]
 
 \[
-	c_1(x_t)=
+	g_1(x_t)=
 	\left[ {\begin{array}{ccc}
 				x_3\\
 				x_4\\
 				x_5\\
 	\end{array} } \right]_t
+	=
+	\left[ {\begin{array}{ccc}
+				z\\
+				\dot x\\
+				\dot y\\
+	\end{array} } \right]_t
 \]
 
 \[
-	c_2(x_t)=
+	g_2(x_t)=
 	\left[ {\begin{array}{ccccc}
 				x_1\\
 				x_2\\
 				x_3\\
 				x_4\\
 				x_5\\
+	\end{array} } \right]_t
+	=
+	\left[ {\begin{array}{ccccc}
+				x\\
+				y\\
+				z\\
+				\dot x\\
+				\dot y\\
 	\end{array} } \right]_t
 \]
 
@@ -123,6 +139,15 @@
 				u_y\\
 				u_z\\
 	\end{array} } \right]
+	= 
+	\left[ {\begin{array}{cccccc}
+				\dot x\\
+				\dot y\\
+				\dot z\\
+				u_x\\
+				u_y\\
+				u_z\\
+	\end{array} } \right]
 \]
 
 \[
@@ -145,26 +170,55 @@
 	\end{array} } \right]_t
 \]
 
+\[
+	C_1= 
+	\left[ {\begin{array}{cccccc}
+				0 & 0 & 1 & 0 & 0 & 0\\
+				0 & 0 & 0 & 1 & 0 & 0\\
+				0 & 0 & 0 & 0 & 1 & 0\\
+	\end{array} } \right]
+\]
+
+\[
+	C_2= 
+	\left[ {\begin{array}{cccccc}
+				1 & 0 & 0 & 0 & 0 & 0\\
+				0 & 1 & 0 & 0 & 0 & 0\\
+				0 & 0 & 1 & 0 & 0 & 0\\
+				0 & 0 & 0 & 1 & 0 & 0\\
+				0 & 0 & 0 & 0 & 1 & 0\\
+	\end{array} } \right]
+\]
+
 \section{Prediction}
-The prediction estimates the current state by taking the most recently measured state and adding the TODO:what exactly is f(x,u)? multiplied by the elapsed time).
+The prediction estimates the current state by taking the most recently measured state and adding the mapped current state with input multiplied by the elapsed time.
 \begin{align}
-	x_{t+1} = x_t + dt * df(x,u)
+	x_{t+1} = x_t + dt \cdot df(x,u)
 \end{align}
-The prediction does a similar estimation for the current covariance. TODO: find out more about this
+The prediction does a similar estimation for the current covariance. The current covariances are given by the most recently measured covariance state plus the elapsed time times how the covariances of x, y and z are expected to change in time (given by mapping the covariances of $\dot x$, $\dot y$, and $\dot z$ to x, y and z, respectively) plus Q, as uncertainty increases the longer it has been since the correction step occurred. %correct? 
+
 \begin{align}
-	P_{t+1} = P_t + dt * (AP + PA^T + Q)
+	P_{t+1} = P_t + dt(AP + PA^T + Q)
 \end{align}
 
 \section{Correction Step}
-When current sensor data is available, the correction step sets the current state.
+When current sensor data is available, the correction step sets the current state. Note: two different methods for updates are employed due to the less frequent availability of camera information.
+
+The following are the equations for the Kalman gain (with and without camera data). The Kalman gain is a matrix of measures of trust in the sensors compared to trust in the state model. A Kalman gain near 0 indicates that the sensors are untrustworthy and the state model is more accurate, whereas a gain near 1 indicates that the measured value is accurate and the state model is less trustworthy. The Kalman gain allows the correction step to account for the fact that the sensors may be inaccurate and noisy and vehicle's movement may be imperfect by finding the most likely state and covariance given what we know.
 \begin{align}
-	L_1 = P_tC_1^T(R + C_1P_tC_1^T)^{-1}
+	L_1 = P_tC_1^T(R_1 + C_1P_tC_1^T)^{-1}
 \end{align}
 
 \begin{align}
-	X_{t+1} = X_t + L_1(y_t-c_1(x_2))
+	L_2 = P_tC_2^T(R_2 + C_2P_tC_2^T)^{-1}
 \end{align}
 
+The correction step updates the state by changing the current state to account for the sensor data. It takes the difference between the sensor data and the current state mapped to the sensor space. This difference is multiplied by the Kalman gain matrix.
+\begin{align}
+	X_{t+1} = X_t + L_1(y_t-g_1(x_2))
+\end{align}
+
+The correction step updates P by adjusting the covariances based on the Kalman gain.
 \begin{align}
 	P_{t+1} = (I-L_1C_1)P_t
 \end{align}
