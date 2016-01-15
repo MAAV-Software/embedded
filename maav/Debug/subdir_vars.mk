@@ -11,7 +11,7 @@ CMD_SRCS += \
 
 LIB_SRCS += \
 /home/sheldon/ti/SW-TM4C-2.1.0.12573/driverlib/ccs/Debug/driverlib.lib \
-/home/sheldon/maav-controls/libs/dsplib.lib \
+/home/sheldon/ctrl-sajanptl/libs/dsplib.lib \
 /home/sheldon/ti/SW-TM4C-2.1.0.12573/sensorlib/ccs/Debug/sensorlib.lib 
 
 C_SRCS += \
