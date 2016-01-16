@@ -17,17 +17,25 @@
 #include "arm_math.h"
 #endif
 
+//added
+//#ifndef PI
+//#define PI 3.14159265358979f
+//#endif
 
 using namespace std;
 
 // define pi and gravity
-//static const float PI = 3.14159265358979323846;
+static const float PI = 3.14159265358979323846;
 static const float GRAVITY = 9.81;
 
 Vehicle::Vehicle(const float valueGains[NUM_DOFS][NUM_PID_GAINS],
 				 const float rateGains[NUM_DOFS][NUM_PID_GAINS])
 {
-	time 		 = (float)millis() / 1000.0f; // grab current time for initialization
+	#ifdef LINUX
+		time = 0.0f;
+	#else
+		time 		 = (float)millis() / 1000.0f; // grab current time for initialization
+	#endif
 	mass 		 = 2.38f;
 	lastPredTime = time;
 	lastCorrTime = time;

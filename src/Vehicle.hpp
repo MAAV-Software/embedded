@@ -22,7 +22,7 @@ class Vehicle
 public:
 	// Public Methods
 	// Constructors
-	//Vehicle();
+	//Vehicle(){};
 	Vehicle(const float valueGains[NUM_DOFS][NUM_PID_GAINS],
 			const float rateGains[NUM_DOFS][NUM_PID_GAINS]);
 	Vehicle(const float states[NUM_DOFS][NUM_DOF_STATES],
@@ -44,11 +44,12 @@ public:
 			const float totalMass,
 			const float initTime,
 			const float rpLims[NUM_ANGLES],
-			const float ekfInitState[9],
-			const float ekfInitP[81],
-			float ekfQ[81],
-			float ekfNoCamR[36],
-			float ekfWithCamR[64]);
+			/* 24/11/2015 changed by hlx*/
+			const float ekfInitState[6],
+			const float ekfInitP[36],
+			float ekfQ[46],
+			float ekfNoCamR[9],
+			float ekfWithCamR[25]);
 	
 	// Destructor (will need to free memory allocation for EKF)
 	~Vehicle();
