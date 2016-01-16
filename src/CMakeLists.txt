@@ -12,6 +12,7 @@ add_library(ctrl_sw SHARED
 			Imu
 			Px4
 			Lidar
+            Vehicle
 			messaging/DataLinkDefines
 			messaging/Encoder
 			messaging/Decoder

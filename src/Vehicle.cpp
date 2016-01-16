@@ -7,13 +7,13 @@
 #include "FlightMode.hpp"
 #include "kalman/ExtendedKalmanFilter.hpp"
 #include "kalman/KalmanFunctions.hpp"
-#include "time_util.h"
-#include "servoIn.hpp"
-#include "rc.hpp"
+//#include "servoIn.hpp"
+//#include "rc.hpp"
 
 #ifdef LINUX
 #include "cmeigen.hpp"
 #else
+#include "time_util.h"
 #include "arm_math.h"
 #endif
 
@@ -276,8 +276,9 @@ void Vehicle::runFilter(const float x, const float y, const float z,
 	float pitchSin = arm_sin_f32(pitch);
 
 	// assign input to control vector
-	controlInputMat.pData[0] = (mode == MANUAL) ? map(servoIn_getPulse(RC_CHAN3), 114000, 124000, 0, 46.6956) : dji.thrust;
-	controlInputMat.pData[1] = (mode == MANUAL) ? 0.0 : dji.roll;
+	//controlInputMat.pData[0] = (mode == MANUAL) ? map(servoIn_getPulse(RC_CHAN3), 114000, 124000, 0, 46.6956) : dji.thrust;
+    controlInputMat.pData[0] = (mode == MANUAL) ? 0.0 : dji.thrust;
+    controlInputMat.pData[1] = (mode == MANUAL) ? 0.0 : dji.roll;
 	controlInputMat.pData[2] = (mode == MANUAL) ? 0.0 : dji.pitch;
 	controlInputMat.pData[3] = (mode == MANUAL) ? 0.0 : dji.yawRate;
 
