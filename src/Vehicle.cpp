@@ -24,7 +24,7 @@
 
 using namespace std;
 
-// define pi and gravity
+// define pi and gravity only if not yet defined
 #ifndef PI
 static const float PI = 3.14159265358979323846;
 #endif //PI
