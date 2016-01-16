@@ -35,6 +35,7 @@ set(TESTS
 	LidarSwTest
 	BatteryTest
 	KalmanTest
+	VehicleSwTest
     )
 
 foreach(test ${TESTS})
