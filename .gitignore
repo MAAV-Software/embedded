@@ -25,4 +25,8 @@ build
 *.bbl
 *.syntex.gz
 
+# genereated docs
+*.pdf
+
+# other
 *octave-workspace
