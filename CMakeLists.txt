@@ -36,7 +36,7 @@ set(CMAKE_AUTOMOC ON)
 # Find required libs
 find_package(Boost REQUIRED COMPONENTS program_options system)
 find_package(Eigen3 REQUIRED)
-find_package(LCM REQUIRED)
+#find_package(LCM REQUIRED) #Not actually needed other than for building message file
 
 add_subdirectory(src)
 add_subdirectory(cmeigen)
