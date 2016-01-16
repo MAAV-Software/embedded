@@ -1,4 +1,4 @@
-#define BOOST_TEST_DYN_LINK
+//#define BOOST_TEST_DYN_LINK
 #define BOOST_TEST_MODULE "VehicleSoftwareTest"
 #define PI 3.14159265358979f
 #include <boost/test/unit_test.hpp>
@@ -95,9 +95,10 @@ struct Fixture
 			for(j = 0; j < NUM_DOF_STATES; j++)
 			{
 				states[i][j] = 0;
-				setpts2[i][j] = (float)i;
+				setpts2[i][j] = setpts[i][j];
 			}
 		}
+		setpts2[3][0] = 3*PI;
 		/* above means:
 		states[NUM_DOFS][NUM_DOF_STATES] =
 			{{0, 0, 0, 0},
@@ -262,7 +263,6 @@ BOOST_AUTO_TEST_CASE(ctorTest)
 	BOOST_CHECK_EQUAL(temp.thrust, 0);
 	f.v1->prepareLog(f.vlog, f.plog);
 
-	//std::cout<<f.plog[0][1].kp<<'\n';
 	for (int i = 0; i < NUM_DOFS; i++)
 	{
 		BOOST_CHECK_CLOSE(f.plog[i][0].kp, f.valueGains[i][0], 0.01);
@@ -276,16 +276,6 @@ BOOST_AUTO_TEST_CASE(ctorTest)
 		BOOST_CHECK_CLOSE(f.plog[i][0].flags, (float)f.valueFlags[i], 0.01);
 		BOOST_CHECK_CLOSE(f.plog[i][1].flags, (float)f.rateFlags[i], 0.01);
 	}
-	/*
-	for (int i = 0; i< NUM_DOFS * 2; i++)
-	{
-		BOOST_CHECK_EQUAL(*(plog + i).kp, 3 * i);
-		BOOST_CHECK_EQUAL(*(plog + i).ki, 3 * i + 1);
-		BOOST_CHECK_EQUAL(*(plog + i).kd, 3 * i + 2);
-		BOOST_CHECK_EQUAL(*(plog + i).setpt, 0);
-		BOOST_CHECK_EQUAL(*(plog + i).flags, 0);
-	}
-	*/
 }
 
 BOOST_AUTO_TEST_CASE(ctor2Test)
@@ -313,7 +303,7 @@ BOOST_AUTO_TEST_CASE(ctor2Test)
 	}
 }
 
-BOOST_AUTO_TEST_CASE(setptTest1)
+BOOST_AUTO_TEST_CASE(setptTest_AUTONOMOUS)
 {
 	Fixture f;
 	f.v1->setSetpt(f.setpts, AUTONOMOUS);
@@ -331,20 +321,9 @@ BOOST_AUTO_TEST_CASE(setptTest1)
 		BOOST_CHECK_CLOSE(f.plog[i][0].flags, (float)f.valueFlags[i], 0.01);
 		BOOST_CHECK_CLOSE(f.plog[i][1].flags, (float)f.rateFlags[i], 0.01);
 	}
-	/*
-	for (int i = 0; i< NUM_DOFS * 2; i++)
-	{
-		BOOST_CHECK_EQUAL(*(plog + i).kp, 0);
-		BOOST_CHECK_EQUAL(*(plog + i).ki, 0);
-		BOOST_CHECK_EQUAL(*(plog + i).kd, 0);
-		BOOST_CHECK_EQUAL(*(plog + i).setpt, i + 1);
-		BOOST_CHECK_EQUAL(*(plog + i).flags, 0);
-	}
-	*/
-	//BOOST_CHECK_EQUAL(vlog., 0);
 }
 
-BOOST_AUTO_TEST_CASE(setptTest2)
+BOOST_AUTO_TEST_CASE(setptTest_ASSISTED)
 {
 	Fixture f;
 	f.v1->setSetpt(f.setpts, ASSISTED);
@@ -368,17 +347,14 @@ BOOST_AUTO_TEST_CASE(setptTest2)
 		BOOST_CHECK_CLOSE(f.plog[i][0].flags, (float)f.valueFlags[i], 0.01);
 		BOOST_CHECK_CLOSE(f.plog[i][1].flags, (float)f.rateFlags[i], 0.01);
 	}
-	/*
-	for (int i = 0; i< NUM_DOFS * 2; i++)
-	{
-		BOOST_CHECK_EQUAL(*(plog + i).kp, 0);
-		BOOST_CHECK_EQUAL(*(plog + i).ki, 0);
-		BOOST_CHECK_EQUAL(*(plog + i).kd, 0);
-		BOOST_CHECK_EQUAL(*(plog + i).setpt, i + 1);
-		BOOST_CHECK_EQUAL(*(plog + i).flags, 0);
-	}
-	*/
-	//BOOST_CHECK_EQUAL(vlog., 0);
+}
+
+BOOST_AUTO_TEST_CASE(setptTest_Bound)
+{
+	Fixture f;
+	f.v1->setSetpt(f.setpts2, ASSISTED);
+	f.v1->prepareLog(f.vlog, f.plog);
+	BOOST_CHECK_CLOSE(f.plog[3][0].setpt, (float)PI, 0.01);
 }
 
 BOOST_AUTO_TEST_CASE(setgTest)
@@ -388,7 +364,6 @@ BOOST_AUTO_TEST_CASE(setgTest)
 	f.v1->prepareLog(f.vlog, f.plog);
 	for (int i = 0; i < NUM_DOFS; i++)
 	{
-
 		BOOST_CHECK_CLOSE(f.plog[i][0].kp, f.valueGains[i][0], 0.01);
 		BOOST_CHECK_CLOSE(f.plog[i][0].ki, f.valueGains[i][1], 0.01);
 		BOOST_CHECK_CLOSE(f.plog[i][0].kd, f.valueGains[i][2], 0.01);
@@ -400,16 +375,6 @@ BOOST_AUTO_TEST_CASE(setgTest)
 		BOOST_CHECK_CLOSE(f.plog[i][0].flags, (float)f.valueFlags[i], 0.01);
 		BOOST_CHECK_CLOSE(f.plog[i][1].flags, (float)f.rateFlags[i], 0.01);
 	}
-	/*
-	for (int i = 0; i< NUM_DOFS * 2; i++)
-	{
-		BOOST_CHECK_EQUAL(*(plog + i).kp, 3 * i);
-		BOOST_CHECK_EQUAL(*(plog + i).ki, 3 * i + 1);
-		BOOST_CHECK_EQUAL(*(plog + i).kd, 3 * i + 2);
-		BOOST_CHECK_EQUAL(*(plog + i).setpt, 0);
-		BOOST_CHECK_EQUAL(*(plog + i).flags, 0);
-	}
-	*/
 }
 
 BOOST_AUTO_TEST_CASE(filterTest)
