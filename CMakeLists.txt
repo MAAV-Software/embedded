@@ -34,6 +34,9 @@ endif()
 set(CMAKE_AUTOMOC ON)
 
 # Find required libs
+if(CAEN)
+	set(BOOST_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/../boost")
+endif()
 find_package(Boost REQUIRED COMPONENTS program_options system)
 find_package(Eigen3 REQUIRED)
 #find_package(LCM REQUIRED) #Not actually needed other than for building message file

@@ -9,6 +9,8 @@ All controls code, documentation, and other important products/resources will go
 
 Installation Instructions (for test cases for hardware-independent code)
 ------------------------------------------------------------------------
+If working on CAEN, please followed the specialized CAEN instructions below
+
 Ensure that you have cmake, eigen3, lcm, and boost installed. Make a build 
 directory:
 
@@ -18,7 +20,7 @@ Then go into the build directory:
 
 	cd build
 
-Run cmake to initialize the build environment:
+Run cmake to initialize the build environment: 
 
 	cmake ../
 
@@ -42,6 +44,76 @@ If you need to clean anything up or remove the built files:
 
 Any other questions should first be addressed to Google (if it's about make, 
 cmake, or Linux terminal commands) or the team leads (anything and everything).
+
+CAEN Installation Instructions (for test cases for hardware-independent code)
+------------------------------------------------------------------------
+If working on CAEN, please followed the specialized CAEN instructions below
+
+Starting in the repository directory (by default "ctrl"), go up one level:
+
+	cd ..
+
+Download and unzip eigen3 into "Eigen"
+
+Download and unzip boost into "boost" 
+
+Go into the boost directory
+
+	cd boost
+
+Install boost (this will take some time)
+
+	./bootstrap.sh
+
+	./b2
+
+Check that everything is in the right place. From the dir that contains the
+cloned respository, run:
+
+	ls
+
+If it is set up right, and the repository is in a folder named ctrl, 
+the output should look somewhat like:
+	
+	> boost ctrl Eigen
+
+Go into the repository:
+	
+	cd ctrl
+
+Make a build directory:
+
+	mkdir build
+
+Then go into the build directory:
+
+	cd build
+
+Run cmake to initialize the build environment: 
+
+	cmake -D CAEN ../
+
+and address and correct any errors it might tell you (e.g. missing packages or 
+files are in incorrect places...HINT: use Google to help you out). Now you are 
+ready to build the hardware-independent controller code, cmeigen, and test 
+cases:
+	
+	make -j7
+
+Note that the -j7 is optional to enable faster, parallelized build, and that you 
+can choose any number (but we suggest 7 or 8 usually).
+
+To run the test cases automatically:
+
+	make test
+
+If you need to clean anything up or remove the built files:
+
+	make clean
+
+Any other questions should first be addressed to Google (if it's about make, 
+cmake, or Linux terminal commands) or the team leads (anything and everything).
+
 
 
 maav CCS Project Instructions
