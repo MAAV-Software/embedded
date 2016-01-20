@@ -27,6 +27,7 @@ using namespace std;
 // define pi and gravity
 #ifndef PI
 static const float PI = 3.14159265358979323846;
+<<<<<<< HEAD
 #endif //PI
 static const float GRAVITY = 9.81;
 
