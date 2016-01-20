@@ -25,7 +25,9 @@
 using namespace std;
 
 // define pi and gravity
+#ifndef PI
 static const float PI = 3.14159265358979323846;
+#endif
 static const float GRAVITY = 9.81;
 
 Vehicle::Vehicle(const float valueGains[NUM_DOFS][NUM_PID_GAINS],
