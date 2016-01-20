@@ -6,6 +6,7 @@
 *.out
 *.o
 test/bin/*
+maav/Debug/*
 
 build
 
