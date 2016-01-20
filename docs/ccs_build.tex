@@ -26,10 +26,6 @@ In the left hand sidebar, navigate to "Resource" $\rightarrow$ "Linked Resources
 \item CMSIS\_LOC to the root directory of your CMSIS install. For example C:/Sasawat/CMSIS/CMSIS. This folder should contain the subdirectories /DPS\_Lib and /Include. 
 \end{itemize}
 
-\section{Changes required in the CCS Build Section}
-
-In the left hand sidebar, navigate to "CCS Build". In the "CCS Build" screen, open the "Variables" tab. Double click the TIVAWARE\_INSTALL variable and change it to the root directory of your TivaWare install. For example C:/ti/TivaWare\_C\_Series. This directory should contain the subdirectories /utils and /driverlib. 
-
 \section{On Linked Source Folders}
 
 From the main CCS screen, go to the Project Explorer pane, under the maav project, delete the include, src, and sdlib linked folders if they exist. CCS should note that "Link target will remain unchanged". This operation only deletes the possibly faulty link to the resources. \\

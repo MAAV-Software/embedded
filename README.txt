@@ -118,15 +118,15 @@ cmake, or Linux terminal commands) or the team leads (anything and everything).
 
 maav CCS Project Instructions
 -----------------------------
-The following paths need to be set up in order to open the "maav" project in CCS.
+You will have to copy maav/.project.bak to maav/.project before importing the
+project
+
+Once the project is imported, the following paths need to be set up in order to
+open the "maav" project in CCS. Refer to docs/ccs_build.tex for how to setup 
+these paths.
 
 REPO_LOC: this is the path to the maav-controls/repo on your computer
 TIVAWARE_INSTALL: this is the path to your installation of Ti's TivaWare software library
-
-In the Include Options, you need to add ${REPO_LOC}/include and ${REPO_LOC}/src in order to 
-use maav's custom code in the project.
-
-
 
 Repo Structure
 --------------
