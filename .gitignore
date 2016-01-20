@@ -10,6 +10,9 @@ maav/Debug/*
 
 build
 
+#Linked Resources file
+.project
+
 # folders
 #Debug
 #targetConfigs
