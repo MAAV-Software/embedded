@@ -6,6 +6,7 @@
  */
 
 #include "Px4.hpp"
+#include "time_util.h"
 
 using namespace std;
 
@@ -16,6 +17,7 @@ Px4::Px4()
 
 void Px4::parse(const uint8_t *raw)
 {
+	timestamp = (float)millis() / 1000.0f;
 	for (uint32_t i = 0; i < sizeof(px4Frame); ++i) fb.raw[i] = raw[i];
 }
 
@@ -77,6 +79,11 @@ float Px4::getGyroZRate()
 float Px4::getZDist()
 {
 	return (float)fb.data.ground_distance / 1000.0f;
+}
+
+float Px4::getTimestamp() const
+{
+	return timestamp;
 }
 
 // End of File
