@@ -251,4 +251,3 @@ void CtrlRunnable::run()
 			poseTimestamp);
 	ps->sdcard->write(msg, len);
 }
-
