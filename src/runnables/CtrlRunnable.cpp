@@ -244,3 +244,4 @@ void CtrlRunnable::run()
 			msTime);
 	ps->sdcard->write(msg, len);
 }
+
