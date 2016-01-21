@@ -31,7 +31,6 @@ public:
 	float getMagZ() const;
 	uint32_t getTimer() const;
 	void getRotMat(float dest[NUM_M_VAL]);
-	float getTimestamp() const;
 
 private:
 	float refYaw;
@@ -46,7 +45,6 @@ private:
 	float MagY;
 	float MagZ;
 	float M[NUM_M_VAL];
-	float timestamp;
 	uint32_t Timer;
 
 	/*

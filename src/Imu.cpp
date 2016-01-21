@@ -7,7 +7,6 @@
 
 
 #include "Imu.hpp"
-#include "time_util.h"
 #include <stdint.h>
 #include <cmath>
 
@@ -32,7 +31,6 @@ Imu::Imu()
 
 void Imu::parse(const uint8_t* data)
 {
-	timestamp = (float)millis() / 1000.0f;
 	// Check checksum
 	int16_t tChksum = 0;
 	for (unsigned int i = 0; i < 77; ++i) tChksum += data[i];
@@ -174,7 +172,3 @@ float Bytes2Float(const uint8_t *raw, const unsigned int i)
 	return data.number;
 }
 
-float Imu::getTimestamp() const
-{
-	return timestamp;
-}

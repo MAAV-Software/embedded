@@ -20,7 +20,6 @@ void CtrlRunnable::run()
 {
 	uint32_t msTime = millis();
 	float time = ((float)msTime) / 1000.0f; // grab current time
-	float poseTimestamp = (float)millis() / 1000.0f;
 
 	bool usePredict = false;
 	if ((time - lastTime) < 0.015) usePredict = true;
@@ -47,7 +46,6 @@ void CtrlRunnable::run()
 	if ((ps->mode == AUTONOMOUS) && (ps->dLink->getRawPoseMsg().utime > lastPoseTime))
 	{
 		lastPoseTime = ps->dLink->getRawPoseMsg().utime;
-		poseTimestamp = (float)millis() / 1000.0f;
 
 		// filter with camera data
 		ps->vehicle->runFilter(ps->dLink->getRawPoseMsg().x,
@@ -203,8 +201,7 @@ void CtrlRunnable::run()
 			"%d\t"
 			"%f\t%f\t%f\t%f\t"
 			"%u\t%u\t%u\t%u\t"
-			"%u\t"
-			"%f\t%f\t%f\t%f\n",
+			"%u\n",
 			time,
 			ps->mode,
 			ps->imu->getAccX(), ps->imu->getAccY(), ps->imu->getAccZ(),
@@ -244,10 +241,6 @@ void CtrlRunnable::run()
 			ps->dLink->getSetptMsg().flags,
 			dji.pitch, dji.roll, dji.thrust, dji.yawRate,
 			ppmRoll, ppmPitch, throttle, ppmYawRate,
-			msTime,
-			ps->lidar->getTimestamp,
-			ps->px4->getTimestamp,
-			ps->imu->getTimestamp,
-			poseTimestamp);
+			msTime);
 	ps->sdcard->write(msg, len);
 }

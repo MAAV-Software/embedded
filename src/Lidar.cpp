@@ -7,7 +7,6 @@
 
 #include "Lidar.hpp"
 #include "LidarDefines.hpp"
-#include "time_util.h"
 
 Lidar::Lidar() 
 {
@@ -27,7 +26,6 @@ float Lidar::getVel() const
 
 void Lidar::parse(uint8_t* raw, const uint8_t size) 
 {
-	timestamp = (float)millis() / 1000.0f;
 	switch (size)
 	{
 		case LIDAR_DIST_SIZE:
@@ -44,9 +42,3 @@ void Lidar::parse(uint8_t* raw, const uint8_t size)
 			break;
 	}
 }
-
-float Lidar::getTimestamp() const
-{
-	return timestamp;
-}
-
