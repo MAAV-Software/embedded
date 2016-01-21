@@ -22,13 +22,10 @@ public:
 	// getters for distance and velocity
 	float getDist() const;
 	float getVel() const;
-	// getters for timestamp
-	float getTimestamp() const;
 
 private:
 	float dist; // distance measurement in meters
 	float vel;	// velocity measurement in m/s
-	float timestamp;	//timestamp when parsing
 };
 
 #endif /* LIDAR_HPP_ */

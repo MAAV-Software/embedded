@@ -34,11 +34,9 @@ public:
 	float getGyroYRate();				// in rad/s
 	float getGyroZRate();				// in rad/s
 	float getZDist();					// ground distance in meters
-	float getTimestamp() const;
 
 private:
 	px4FrameBuffer fb; // frame buffer of PX4 message that is being parsed
-	float timestamp;   // timestamp when parsing
 };
 
 #endif /* PX4_HPP_ */
