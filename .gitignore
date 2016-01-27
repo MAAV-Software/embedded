@@ -28,6 +28,7 @@ build
 *.blg
 *.bbl
 *.syntex.gz
+*.synctex.gz
 
 # genereated docs
 *.pdf
