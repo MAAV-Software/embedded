@@ -1,0 +1,177 @@
+
+\documentclass[12pt]{article}
+
+% This first part of the file is called the PREAMBLE. It includes
+% customizations and command definitions. The preamble is everything
+% between \documentclass and \begin{document}.
+
+\usepackage[margin=1in]{geometry}  % set the margins to 1in on all sides
+\usepackage{graphicx}              % to include figures
+\usepackage{amsmath}               % great math stuff
+\usepackage{amsfonts}              % for blackboard bold, etc
+\usepackage{amsthm}                % better theorem environments
+
+
+% various theorems, numbered by section
+
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{conj}[thm]{Conjecture}
+
+\DeclareMathOperator{\id}{id}
+
+\newcommand{\bd}[1]{\mathbf{#1}}  % for bolding symbols
+\newcommand{\RR}{\mathbb{R}}      % for Real numbers
+\newcommand{\ZZ}{\mathbb{Z}}      % for Integers
+\newcommand{\col}[1]{\left[\begin{matrix} #1 \end{matrix} \right]}
+\newcommand{\comb}[2]{\binom{#1^2 + #2^2}{#1+#2}}
+
+
+\begin{document}
+
+
+\title{MAAV Kalman Filter Documentation}
+
+\author{Clark Zhang, Sajan Patel, Sasawat Prankprakma\\
+University Of Michigan, Ann Arbor}
+
+\maketitle
+\begin{abstract}
+A simple kalman filter to track the position and velocity of the vehicle. This document assumes basic knowledge of what a kalman filter is and how it works.
+\end{abstract}
+
+\begin{section}{Introduction}
+In previous iterations of our filter to track position and velocity, we have chosen to go through a complex nonlinear filter that will contains information about the vehicles orientation as well as position, velocity, acceleration, etc. We ended up with a filter that seemed to work in our basic tests, but was hard to reason about. We also had to use some hacks as we never actually estimated our orientation but got it from an IMU unit that ran its own filter.
+So, we decided to take the orientation information out of the filter and use normal(linear) kalman filter instead. The benefits for this are
+\begin{enumerate}
+\item Easier to reason about and tune a simpler filter
+\item Completely discrete filter that follows normal Kalman Filter equations that are more widely documented (not Beard's Continuous-Discrete version)
+\item Faster processing time (processing time was not an issue before, but still this filter will run a lot faster)
+\end{enumerate}
+
+\end{section}
+
+\begin{section}{Kalman Filter}
+\begin{subsection}{Definitions and Notation}
+In the following equations, the variables are defined as
+\begin{enumerate}
+\item $\vec{x}$: current state vector
+\item $\vec{x}^+$: next state vector
+\item $P$: covariance matrix
+\item $P^+$: next covariance matrix
+\item $A$: system update matrix
+\item $Q$: system noise matrix
+\item $B$: control input update matrix
+\item $\vec{u}$: control input
+\item $\vec{z}$: measurement from a sensor
+\item $H$: sensor model matrix
+\item $R$: sensor noise matrix
+\end{enumerate}
+Update Step Equations:
+\begin{equation}
+\vec{x}^+ = A\vec{x} + B\vec{u}
+\end{equation}
+\begin{equation}
+P^+ = APA^T + Q
+\end{equation}
+Correction Step Equations:
+\begin{equation}
+\vec{y} = \vec{z} - H\vec{x}
+\end{equation}
+\begin{equation}
+K = PH^T(HPH^T+R)^{-1}
+\end{equation}
+\begin{equation}
+\vec{x}^+ = \vec{x} + K\vec{y}
+\end{equation}
+\begin{equation}
+P^+ = (I - KH)P
+\end{equation}
+
+
+The state vector we will be using is
+\begin{equation}
+\vec{x} = [x,\dot{x},y,\dot{y},z,\dot{z}]^T
+\end{equation}
+Where $x,y,z$ are the coordinates of the vehicle in the field's frame of reference.
+
+
+\end{subsection}
+
+\begin{subsection}{Update Step}
+In our update step, our System Update Matrix, $A$ is 
+\begin{equation}
+A = \begin{Bmatrix}
+1 & \delta{t} & 0 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 & 0 & 0\\
+0 & 0 & 1 & \delta{t} & 0 & 0 \\
+0 & 0 & 0 & 1 & 0 & 0\\
+0 & 0 & 0 & 0 & 1 & \delta{t}\\
+0 & 0 & 0 & 0 & 0 & 1\\
+\end{Bmatrix}
+\end{equation}
+Our controller input will be accelerometer values rotated into field frame.
+\begin{equation}
+\vec{u} = \begin{Bmatrix}
+\ddot{x}\\
+\ddot{y}\\
+\ddot{z}\\
+\end{Bmatrix}
+\end{equation}
+The Control Input Update Matrix, $B$, is
+\begin{equation}
+B = \begin{Bmatrix}
+0 & 0 & 0\\
+\delta{t} & 0 & 0\\
+0 & 0 & 0\\
+0 & \delta{t} & 0\\
+0 & 0 & 0\\
+0 & 0 & \delta{t}\\
+\end{Bmatrix}
+\end{equation}
+\end{subsection}
+
+\begin{subsection}{Lidar Correction Step}
+From our lidar, we can get height of the vehicle in the the field's frame. We can differentiate those to also get a velocity measurement.
+\begin{equation}
+\vec{z} = \begin{Bmatrix}
+z\\
+\dot{z}
+\end{Bmatrix}
+\end{equation}
+
+The $H$ matrix is
+\begin{equation}
+H = \begin{Bmatrix}
+0 & 0 & 0 & 0 & 1 & 0\\
+0 & 0 & 0 & 0 & 0 & 1\\
+\end{Bmatrix}
+\end{equation}
+
+\end{subsection}
+
+\begin{subsection}{Px4 Correction Step}
+From the Px4, we can get
+
+\begin{equation}
+\vec{z} = \begin{Bmatrix}
+\dot{x}\\
+\dot{y}\\
+\end{Bmatrix}
+\end{equation}
+
+The $H$ matrix is
+\begin{equation}
+H = \begin{Bmatrix}
+0 & 1 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 1 & 0 & 0\\
+\end{Bmatrix}
+\end{equation}
+\end{subsection}
+
+\end{section}
+
+
+\end{document}
