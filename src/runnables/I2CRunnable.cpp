@@ -63,6 +63,7 @@ void I2CRunnable::run(void)
 			case PX4_1: // have sent px4 command, ready to parse px4 and send 2nd lidar command
 				if ((getTime - LidarTime) > (sysClock / 1000.0 * 20.0)) // wait for 20ms after lidar1 done
 				{
+					ps->px4->RecordTime();
 					ps->px4->parse(rawPx4);
 
 					LidarTime = getTime; // the time of lidar2 start
@@ -74,6 +75,7 @@ void I2CRunnable::run(void)
 			case Lidar_2: // have sent the 2nd lidar command, ready to parse lidar and send 1st lidar command
 				if ((getTime - LidarTime) > (sysClock / 1000.0 * 0.1)) //wait for 0.1ms after lidar2 done
 				{
+					ps->lidar->RecordTime();
 					ps->lidar->parse(rawLidar, LIDAR_DIST_SIZE);
 
 					LidarTime = getTime; // the time of lidar start

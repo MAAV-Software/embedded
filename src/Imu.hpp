@@ -32,6 +32,7 @@ public:
 	uint32_t getTimer() const;
 	void getRotMat(float dest[NUM_M_VAL]);
 	float getTimestamp() const;
+	void RecordTime();
 
 private:
 	float refYaw;

@@ -50,6 +50,7 @@ void ImuRunnable::run()
 
 	if (imuDone)
 	{
+		state->imu->RecordTime;
 		state->imu->parse(imuRawFinal);
 		imuDone = false;
 	}

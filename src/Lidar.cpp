@@ -27,7 +27,6 @@ float Lidar::getVel() const
 
 void Lidar::parse(uint8_t* raw, const uint8_t size) 
 {
-	timestamp = (float)millis() / 1000.0f;
 	switch (size)
 	{
 		case LIDAR_DIST_SIZE:
@@ -50,3 +49,7 @@ float Lidar::getTimestamp() const
 	return timestamp;
 }
 
+void Lidar::RecordTime()
+{
+	timestamp = (float)millis() / 1000.0f;
+}
