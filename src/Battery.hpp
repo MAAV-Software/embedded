@@ -3,6 +3,12 @@
 
 // See page 124 of Lab 5: ADC of the Getting Started with the Tiva TM4C123G LaunchPad Workshop
 // for a list of the include files below:
+
+/**
+ * @brief Information about the Battery
+ *
+ * @details Things like voltage, minimum voltage, cell count, ect.
+ */
 #ifndef BATTERY_HPP_
 #define BATTERY_HPP_
 
@@ -13,15 +19,21 @@ class Battery
 {
 public:
 	Battery(const float initVolts = 14.8f, const float minThresh = 3.25f, const uint8_t cellCount = 4);
+	/**
+	 * @brief test3
+	 * @details some more details about this here update functions
+	 * @param rawCode the raw adc value for battery voltage
+	 *
+	 */
 	void update(const uint32_t rawCode);
 	float getVolts() const;
 	bool isLow() const;
 
 private:
-	float volts;
-	float threshold;
-	uint8_t numCells;
-	float scaleFactor;
+	float volts; /**< @brief voltage of the battery*/
+	float threshold; /**<  @brief minimum acceptable voltage*/
+	uint8_t numCells; /**< @brief number of cells in our battery*/
+	float scaleFactor; /**< @brief UNKNOWN */
 };
 
 /*

@@ -1,3 +1,10 @@
+
+/**
+ * @brief The function to call when something goes horribly wrong
+ * @author unknown
+ *
+ * @details **update details**
+ */
 #ifndef APESHIT_HPP
 #define APESHIT_HPP
 
