@@ -1,8 +1,8 @@
 /*
  * Lidar.hpp
- * 
- * Created on: May 21, 2015
- * Author: James Connolly
+ *
+ *  Created on: May 21, 2015
+ *      Author: James Connolly
  */
 
 #ifndef LIDAR_HPP_
@@ -24,7 +24,7 @@ public:
 	float getVel() const;
 	// getters for timestamp
 	float getTimestamp() const;
-	void RecordTime();
+	void RecordTime(float time);
 private:
 	float dist; // distance measurement in meters
 	float vel;	// velocity measurement in m/s

@@ -40,6 +40,7 @@ void ImuRunnable::run()
 {
 	uint32_t getTime = MAP_TimerValueGet(TIMER4_BASE, TIMER_A);
 	float sysClock = (float)SYSCLOCK;
+	float time;	
 
 	// Run at 100Hz 10ms
 	if (!imuDone && ((getTime - imuTime) > (sysClock / 1000.0 * 10.0)))
@@ -50,7 +51,8 @@ void ImuRunnable::run()
 
 	if (imuDone)
 	{
-		state->imu->RecordTime;
+		time = (float)millis() / 1000.0f;
+		state->imu->RecordTime(time);
 		state->imu->parse(imuRawFinal);
 		imuDone = false;
 	}

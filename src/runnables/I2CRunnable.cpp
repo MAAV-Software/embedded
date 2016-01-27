@@ -46,6 +46,7 @@ void I2CRunnable::run(void)
 {
 	uint32_t getTime = MAP_TimerValueGet(TIMER4_BASE, TIMER_A);
 	float sysClock = (float)SYSCLOCK;
+	float time;
 
 	if (I2CMDone)
 	{
@@ -63,7 +64,8 @@ void I2CRunnable::run(void)
 			case PX4_1: // have sent px4 command, ready to parse px4 and send 2nd lidar command
 				if ((getTime - LidarTime) > (sysClock / 1000.0 * 20.0)) // wait for 20ms after lidar1 done
 				{
-					ps->px4->RecordTime();
+					time = (float)millis() / 1000.0f;
+					ps->px4->RecordTime(time);
 					ps->px4->parse(rawPx4);
 
 					LidarTime = getTime; // the time of lidar2 start
@@ -75,7 +77,8 @@ void I2CRunnable::run(void)
 			case Lidar_2: // have sent the 2nd lidar command, ready to parse lidar and send 1st lidar command
 				if ((getTime - LidarTime) > (sysClock / 1000.0 * 0.1)) //wait for 0.1ms after lidar2 done
 				{
-					ps->lidar->RecordTime();
+					time = (float)millis() / 1000.0f;
+					ps->lidar->RecordTime(time);
 					ps->lidar->parse(rawLidar, LIDAR_DIST_SIZE);
 
 					LidarTime = getTime; // the time of lidar start

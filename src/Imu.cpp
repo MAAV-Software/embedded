@@ -178,7 +178,7 @@ float Imu::getTimestamp() const
 	return timestamp;
 }
 
-void Imu::RecordTime()
+void Imu::RecordTime(float time)
 {
-	timestamp = (float)millis() / 1000.0f;
+	timestamp = time;
 }

@@ -35,7 +35,7 @@ public:
 	float getGyroZRate();				// in rad/s
 	float getZDist();					// ground distance in meters
 	float getTimestamp() const;
-	void RecordTime();
+	void RecordTime(float time);
 private:
 	px4FrameBuffer fb; // frame buffer of PX4 message that is being parsed
 	float timestamp;   // timestamp when parsing

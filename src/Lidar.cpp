@@ -49,7 +49,7 @@ float Lidar::getTimestamp() const
 	return timestamp;
 }
 
-void Lidar::RecordTime()
+void Lidar::RecordTime(float time)
 {
-	timestamp = (float)millis() / 1000.0f;
+	timestamp = time;
 }

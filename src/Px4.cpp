@@ -85,9 +85,9 @@ float Px4::getTimestamp() const
 	return timestamp;
 }
 
-void Px4::RecordTime()
+void Px4::RecordTime(float time)
 {
-	timestamp = (float)millis() / 1000.0f;
+	timestamp = time;
 }
 
 // End of File
