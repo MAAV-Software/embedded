@@ -245,9 +245,9 @@ void CtrlRunnable::run()
 			dji.pitch, dji.roll, dji.thrust, dji.yawRate,
 			ppmRoll, ppmPitch, throttle, ppmYawRate,
 			msTime,
-			ps->lidar->getTimestamp,
-			ps->px4->getTimestamp,
-			ps->imu->getTimestamp,
+			ps->lidar->getTimestamp(),
+			ps->px4->getTimestamp(),
+			ps->imu->getTimestamp(),
 			poseTimestamp);
 	ps->sdcard->write(msg, len);
 }
