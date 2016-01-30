@@ -1,4 +1,4 @@
-MAAV CONTROLS REPO
+MAAV CONTROLS REPOSITORY
 
 by Sajan Patel, Clark Zhang, Zhengjie Cui, Sasawat Prapanka
 -----------------------------------------------------------
