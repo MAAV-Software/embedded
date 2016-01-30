@@ -145,22 +145,24 @@ ylabel('Rate Z')
 
 % figure 3 DJI
 figure(3)
+title('RC Pilot Input (R, P, Y, T)');
 subplot(221)
-xlabel('Time')
-ylabel('DJI Roll')
 plot(Time, DJI_Roll, 'b')
+xlabel('Time');
+ylabel('DJI Roll PWM');
 subplot(222)
-xlabel('Time')
-ylabel('DJI Pitch')
 plot(Time, DJI_Pitch, 'b')
+xlabel('Time');
+ylabel('DJI Pitch PWM');
 subplot(223)
-xlabel('Time')
-ylabel('DJI Yaw Dot')
 plot(Time, DJI_Yawdot, 'b')
+xlabel('Time');
+ylabel('DJI Yaw Dot PWM');
 subplot(224)
-xlabel('Time')
-ylabel('DJI Fz')
 plot(Time, DJI_Fz, 'b')
+xlabel('Time');
+ylabel('DJI Fz PWM');
+
 %
 %% figure 4 others
 figure(4)
@@ -267,6 +269,10 @@ grid on
 figure(22)
 plot(Time, PPM_3, 'b');
 ylabel('Chan 3 PPM')
+
+figure(124)
+plot(Time, PPM_1, Time, PPM_2, Time, PPM_3, Time, PPM_4);
+title('PPM Values')
 
 figure(23)
 subplot(221)
