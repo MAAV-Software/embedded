@@ -43,6 +43,7 @@ find_package(Eigen3 REQUIRED)
 
 add_subdirectory(src)
 add_subdirectory(cmeigen)
+add_subdirectory(doc)
 
 enable_testing()
 add_subdirectory(tests)
