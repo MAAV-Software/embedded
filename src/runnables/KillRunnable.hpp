@@ -14,6 +14,7 @@ private:
 	ProgramState *state;
 //	uint32_t fileNumber;
 //	char fileName[15];
+	float getYawOffset();
 };
 
 #endif /* KILLRUNNABLE_HPP_ */

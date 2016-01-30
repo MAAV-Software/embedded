@@ -13,6 +13,7 @@
 #include "time_util.h"
 #include "servoIn.hpp"
 #include "rc.hpp"
+#include "ImuHw.hpp"
 
 KillRunnable::KillRunnable(ProgramState *pState) : state(pState)
 {
@@ -36,6 +37,13 @@ void KillRunnable::run()
 		// waiting for unkill signal
 		while((servoIn_getPulse(KILL_CHAN3)) < 120000);
 
+		float yoff = 0;
+		for(int i = 0; i < 3; ++i)
+		{
+		    yoff = 1.0/3.0 * getYawOffset();
+		}
+		state->imu->setRefYaw(yoff);
+
 		/*
 		while (!state->sw[2].readState)
 		{
@@ -50,5 +58,21 @@ void KillRunnable::run()
 
 		msg.status = (int8_t)EMERGENCY_T_NORMAL;
 		state->dLink->send(&msg);
+
+		//Signal ready
+		Toggle_LED(BLUE_LED, SYSCLOCK / 3 / 2);
 	}
+}
+
+float getYawOffset()
+{
+    Imu imu;
+    imuDone = false;
+    imuUartSend(&imuCmd, 1);
+    while(!imuDone)
+    {
+        imu.parse(imuRawFinal);
+        imuDone = false;
+    }
+    return imu.getYaw();
 }
