@@ -38,6 +38,10 @@ To run the test cases automatically:
 
 	make test
 
+To build the HTML documentation:
+    
+    make doc
+
 If you need to clean anything up or remove the built files:
 
 	make clean
@@ -159,7 +163,7 @@ side_projects	This directory contains all Code Composer Studio projects used for
 		the Tiva. Any project that is not the main maav project goes here. Projects here can access headers from
 		the include directory but may not change any code or add new code to include or src.
 
-docs		All documentation for MAAV Controls (infrastructure, main flight controller, side projects, etc) goes here.
+doc		All documentation or Doxygen config files for MAAV Controls (infrastructure, main flight controller, side projects, etc) goes here.
 
 cmake 	Contains the cmake pakage searching scripts.
 
