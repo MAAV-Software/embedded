@@ -5,7 +5,7 @@ add_custom_target(doc)
 
 if(GRAPHVIZ_FOUND)
 	add_custom_target(doc_graphviz)
-	set(GRAPHVIZ_INPUTS hlsys)
+	set(GRAPHVIZ_INPUTS )
 
 	foreach(graph ${GRAPHVIZ_INPUTS})
 		add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/${graph}.png
