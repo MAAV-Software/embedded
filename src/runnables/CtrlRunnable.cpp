@@ -204,7 +204,7 @@ void CtrlRunnable::run()
 			"%f\t%f\t%f\t%f\t"
 			"%u\t%u\t%u\t%u\t"
 			"%u\t"
-			"%f\t%f\t%f\t%f\n",
+			"%f\t%f\t%f\t%f\t%f\n",
 			time,
 			ps->mode,
 			ps->imu->getAccX(), ps->imu->getAccY(), ps->imu->getAccZ(),
@@ -248,7 +248,8 @@ void CtrlRunnable::run()
 			ps->lidar->getTimestamp(),
 			ps->px4->getTimestamp(),
 			ps->imu->getTimestamp(),
-			poseTimestamp);
+			poseTimestamp,
+			ps->imu->getRefYaw());
 	ps->sdcard->write(msg, len);
 }
 

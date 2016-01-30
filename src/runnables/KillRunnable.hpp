@@ -10,6 +10,8 @@ public:
 	KillRunnable(ProgramState* pState);
 	void run();
 
+	void resetYaw();
+
 private:
 	ProgramState *state;
 //	uint32_t fileNumber;

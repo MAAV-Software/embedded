@@ -1,7 +1,7 @@
 close all
 clc
 clf
-log = load('~/ctrl/research/Log_analysis/9-29-why-height-exploded/LOG47.TXT');
+log = load('F:\LOG39.TXT');
 
 % parsing the data
 Time          = log(:,1);
@@ -32,7 +32,7 @@ Filter_Ydot   = log(:,33);
 Filter_Zdot   = log(:,34);
 Filter_Roll   = log(:,35);
 Filter_Pitch  = log(:,36);
-Filter_Yaw    = log(:,37);
+Imu_Comp_Yaw  = log(:,37);
 Val_P_X       = log(:,38);
 Val_I_X       = log(:,39);
 Val_D_X       = log(:,40);
@@ -118,7 +118,7 @@ xlabel('Time')
 ylabel('Value Z')
 
 subplot(224)
-plot(Time, Filter_Yaw, 'b', Time, Setpt_Yaw, 'g')
+plot(Time, Imu_Comp_Yaw, 'b', Time, Setpt_Yaw, 'g')
 xlabel('Time')
 ylabel('Value Yaw')
 

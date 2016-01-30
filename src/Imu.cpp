@@ -180,3 +180,8 @@ void Imu::setRefYaw(float newRefYaw)
 {
     refYaw = newRefYaw;
 }
+
+float Imu::getRefYaw()
+{
+    return refYaw;
+}

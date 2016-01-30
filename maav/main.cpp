@@ -181,7 +181,9 @@ int main()
 		switchesUpdate(sw);
 	}
 */
-
+	//The first unkill the kill runnable isn't running yet
+	//So we have to manually do the unkill tasks
+	killRunnable.resetYaw();
 	sdcard.createFile();
 
 //	char buf[100];

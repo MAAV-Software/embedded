@@ -34,6 +34,7 @@ public:
 	float getTimestamp() const;
 	void RecordTime(float time);
 	void setRefYaw(float newRefYaw);
+	float getRefYaw();
 
 private:
 	float refYaw;
