@@ -9,7 +9,7 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 
-if(CMAKE_BUILD_TYPE EQUAL "Hardware")
+if(CMAKE_BUILD_TYPE MATCHES "Hardware")
     set(CMAKE_C_COMPILER "arm-none-eabi-gcc")
     set(CMAKE_CXX_COMPILER "arm-none-eabi-g++")
     
@@ -26,6 +26,10 @@ if(CMAKE_BUILD_TYPE EQUAL "Hardware")
                     -D TARGET_IS_TM4C123_RB1 
                     -D LINKAGE
                    )
+    
+    message(STATUS "")
+    message(STATUS "Using ${CMAKE_C_COMPILER} ${CMAKE_CXX_COMPILER}")
+    message(STATUS "")
 endif()
 
 ## Enfore C++03 compatability becuase that is what is required by the Tiva
@@ -33,6 +37,9 @@ include(CheckCXXCompilerFlag)
 check_cxx_compiler_flag("-std=c++03" COMPILER_SUPPORTS_CXX03)
 if(COMPILER_SUPPORTS_CXX03)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++03")
+    message(STATUS "")
+    message(STATUS "Compiler Check Success: CXX03 Supported")
+    message(STATUS "")
 else()
     message(FATAL_ERROR "The compiler ${CMAKE_CXX_COMPILER} has no C++03
     support.  Please use a different C++ compiler.")
@@ -53,6 +60,8 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-unused-parameter")
 
 # src is common subdirectory to all builds
 add_subdirectory(src)
+
+add_subdirectory(lm4tools)
 
 if (CMAKE_BUILD_TYPE EQUAL "Hardware")
     add_subdirectory(maav)
