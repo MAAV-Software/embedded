@@ -63,7 +63,7 @@ add_subdirectory(src)
 
 add_subdirectory(lm4tools)
 
-if (CMAKE_BUILD_TYPE EQUAL "Hardware")
+if (CMAKE_BUILD_TYPE MATCHES "Hardware")
     add_subdirectory(maav)
 else()
     # Find required libs
