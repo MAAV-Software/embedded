@@ -46,6 +46,11 @@ If you need to clean anything up or remove the built files:
 
 	make clean
 
+Making clean will not remove documentation files (limitation of cmake). If you 
+need to clean up the doxygen documentation:
+
+	make doc_clean
+
 Any other questions should first be addressed to Google (if it's about make, 
 cmake, or Linux terminal commands) or the team leads (anything and everything).
 
