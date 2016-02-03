@@ -6,6 +6,7 @@ set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};${PROJECT_SOURCE_DIR}/cmake")
 
 if(NOT CMAKE_BUILD_TYPE)
 	set(CMAKE_BUILD_TYPE "Debug")
+    	message(STATUS "Build Type Automatically set to Debug")
 endif()
 
 
@@ -60,7 +61,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-unused-parameter")
 
 # src is common subdirectory to all builds
 add_subdirectory(src)
-
+add_subdirectory(doc)
 add_subdirectory(lm4tools)
 
 if (CMAKE_BUILD_TYPE MATCHES "Hardware")

@@ -32,6 +32,8 @@ build
 
 # genereated docs
 *.pdf
+doc/html
+doc/latex
 
 # other
 *octave-workspace
