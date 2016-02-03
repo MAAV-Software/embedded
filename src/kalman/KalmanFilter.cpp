@@ -2,7 +2,9 @@
 
 using namespace std;
 
-// easy func for initializing a matrix with uninitialized data
+/** @brief Simple function for initializing a matrix
+ *
+ */
 inline static void MAT_INIT(arm_matrix_instance_f32* mat, size_t rows, size_t cols)
 {
 	//arm_mat_init_f32(mat, (uint16_t)rows, (uint16_t)cols, (float*)malloc(sizeof(float) * rows * cols));
@@ -26,8 +28,11 @@ KalmanFilter::KalmanFilter() :
 	p(2),
 	c(3) {
 	MAT_INIT(&state, n, 1);
+	mat_fill(state, 0);
 	MAT_INIT(&P, n, n);
+	mat_fill(P, 0);
 	MAT_INIT(&A, n, n);
+	mat_fill(A, 0);
 	mat_at(A, 0, 0) = 1;
 	mat_at(A, 1, 1) = 1;
 	mat_at(A, 2, 2) = 1;
@@ -35,26 +40,43 @@ KalmanFilter::KalmanFilter() :
 	mat_at(A, 4, 4) = 1;
 	mat_at(A, 5, 5) = 1;
 	MAT_INIT(&B, n, u);
+	mat_fill(B, 0);
 	MAT_INIT(&Q, n, n);
+	mat_fill(Q, 0);
 	MAT_INIT(&R_lidar, l, l);
+	mat_fill(R_lidar, 0);
 	MAT_INIT(&R_Px4, p, p);
+	mat_fill(R_Px4, 0);
 	//MAT_INIT(&R_camera, c, c);
+	//mat_fill(R_camera, 0);
 	MAT_INIT(&H_lidar, l, n);
+	mat_fill(H_lidar, 0);
 	mat_at(H_lidar, 0, 4) = 1;
 	mat_at(H_lidar, 1, 5) = 1;
 	MAT_INIT(&H_Px4, p, n);
+	mat_fill(H_Px4, 0);
 	mat_at(H_lidar, 0, 1) = 1;
 	mat_at(H_lidar, 0, 4) = 1;
 	//MAT_INIT(&H_camera, c, n);
+	//mat_fill(H_camera, 0);
 	MAT_INIT(&inter_nby1, n, 1); //used as temporary variables
+	mat_fill(inter_nby1, 0);
 	MAT_INIT(&inter_nbyn, n, n);
+	mat_fill(inter_nbyn, 0);
 	MAT_INIT(&inter_another_nbyn, n, n);
+	mat_fill(inter_another_nbyn, 0);
 	MAT_INIT(&inter_2by1, 2, 1);
+	mat_fill(inter_2by1, 0);
 	MAT_INIT(&inter_nby2, n, 2);
+	mat_fill(inter_nby2, 0);
 	MAT_INIT(&inter_another_nby2, n, 2);
+	mat_fill(inter_another_nby2, 0);
 	MAT_INIT(&inter_2byn, 2, n);
+	mat_fill(inter_2byn, 0);
 	MAT_INIT(&inter_2by2, 2, 2);
+	mat_fill(inter_2by2, 0);
 	MAT_INIT(&inter_another_2by2, 2, 2);
+	mat_fill(inter_another_2by2, 0);
 }
 
 KalmanFilter::~KalmanFilter() {
