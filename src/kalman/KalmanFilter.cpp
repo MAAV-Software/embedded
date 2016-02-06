@@ -10,10 +10,9 @@ using namespace std;
  * @param rows number of rows in the desired matrix
  * @param cols number of cols in the desired matrix
  */
-inline static void mat_init(arm_matrix_instance_f32* mat, size_t rows, size_t cols)
+inline static void mat_init(arm_matrix_instance_f32* mat, uint16_t rows, uint16_t cols)
 {
-	//arm_mat_init_f32(mat, (uint16_t)rows, (uint16_t)cols, (float*)malloc(sizeof(float) * rows * cols));
-	arm_mat_init_f32(mat, (uint16_t)rows, (uint16_t)cols, (float*)calloc((rows * cols), sizeof(float)));
+	arm_mat_init_f32(mat, rows, cols, (float*)calloc((rows * cols), sizeof(float)));
 }
 
 /**
@@ -25,27 +24,32 @@ inline static void mat_init(arm_matrix_instance_f32* mat, size_t rows, size_t co
  * @param row the desired element's row
  * @param col the desired element's column
  */
-inline static float& mat_at(arm_matrix_instance_f32& mat, int row, int col) {
+inline static float& mat_at(arm_matrix_instance_f32& mat, uint16_t row, uint16_t col)
+{
 	return mat.pData[row * mat.numCols + col];
 }
 
-inline static void mat_fill(arm_matrix_instance_f32& mat, float toFill) {
-	for(int i = 0; i < mat.numRows * mat.numCols; i++) {
+inline static void mat_fill(arm_matrix_instance_f32& mat, float toFill)
+{
+    //TODO should this be uint16
+	for(uint16_t i = 0; i < mat.numRows * mat.numCols; i++)
+    {
 		mat.pData[i] = toFill;
 	}
 }
 
 KalmanFilter::KalmanFilter() :
-	n(6),
-	u(3),
-	l(2),
-	p(2),
-	c(3) {
-	mat_init(&state, n, 1);
+	n_size(6),
+	u_size(3),
+	l_size(2),
+	p_size(2),
+	c_size(3) 
+{
+	mat_init(&state, n_size, 1);
 	mat_fill(state, 0);
-	mat_init(&P, n, n);
+	mat_init(&P, n_size, n_size);
 	mat_fill(P, 0);
-	mat_init(&A, n, n);
+	mat_init(&A, n_size, n_size);
 	mat_fill(A, 0);
 	mat_at(A, 0, 0) = 1;
 	mat_at(A, 1, 1) = 1;
@@ -53,39 +57,41 @@ KalmanFilter::KalmanFilter() :
 	mat_at(A, 3, 3) = 1;
 	mat_at(A, 4, 4) = 1;
 	mat_at(A, 5, 5) = 1;
-	mat_init(&B, n, u);
+	mat_init(&B, n_size, u_size);
 	mat_fill(B, 0);
-	mat_init(&Q, n, n);
+	mat_init(&Q, n_size, n_size);
 	mat_fill(Q, 0);
-	mat_init(&R_lidar, l, l);
+	mat_init(&R_lidar, l_size, l_size);
 	mat_fill(R_lidar, 0);
-	mat_init(&R_Px4, p, p);
+	mat_init(&R_Px4, p_size, p_size);
 	mat_fill(R_Px4, 0);
-	//mat_init(&R_camera, c, c);
-	//mat_fill(R_camera, 0);
-	mat_init(&H_lidar, l, n);
+	mat_init(&R_camera, c_size, c_size);
+	mat_fill(R_camera, 0);
+	mat_init(&H_lidar, l_size, n_size);
 	mat_fill(H_lidar, 0);
 	mat_at(H_lidar, 0, 4) = 1;
 	mat_at(H_lidar, 1, 5) = 1;
-	mat_init(&H_Px4, p, n);
+	mat_init(&H_Px4, p_size, n_size);
 	mat_fill(H_Px4, 0);
 	mat_at(H_lidar, 0, 1) = 1;
 	mat_at(H_lidar, 0, 4) = 1;
-	//mat_init(&H_camera, c, n);
-	//mat_fill(H_camera, 0);
-	mat_init(&inter_nby1, n, 1); //used as temporary variables
+	mat_init(&H_camera, c_size, n_size);
+	mat_fill(H_camera, 0);
+    mat_init(&z_2by1, 2, 1);
+    mat_init(&z_3by1, 3, 1);
+	mat_init(&inter_nby1, n_size, 1); //used as temporary variables
 	mat_fill(inter_nby1, 0);
-	mat_init(&inter_nbyn, n, n);
+	mat_init(&inter_nbyn, n_size, n_size);
 	mat_fill(inter_nbyn, 0);
-	mat_init(&inter_another_nbyn, n, n);
+	mat_init(&inter_another_nbyn, n_size, n_size);
 	mat_fill(inter_another_nbyn, 0);
 	mat_init(&inter_2by1, 2, 1);
 	mat_fill(inter_2by1, 0);
-	mat_init(&inter_nby2, n, 2);
+	mat_init(&inter_nby2, n_size, 2);
 	mat_fill(inter_nby2, 0);
-	mat_init(&inter_another_nby2, n, 2);
+	mat_init(&inter_another_nby2, n_size, 2);
 	mat_fill(inter_another_nby2, 0);
-	mat_init(&inter_2byn, 2, n);
+	mat_init(&inter_2byn, 2, n_size);
 	mat_fill(inter_2byn, 0);
 	mat_init(&inter_2by2, 2, 2);
 	mat_fill(inter_2by2, 0);
@@ -93,7 +99,8 @@ KalmanFilter::KalmanFilter() :
 	mat_fill(inter_another_2by2, 0);
 }
 
-KalmanFilter::~KalmanFilter() {
+KalmanFilter::~KalmanFilter()
+{
 	free(state.pData);
 	free(P.pData);
 	free(A.pData);
@@ -101,10 +108,12 @@ KalmanFilter::~KalmanFilter() {
 	free(Q.pData);
 	free(R_lidar.pData);
 	free(R_Px4.pData);
-	//free(R_camera.pData);
+	free(R_camera.pData);
 	free(H_lidar.pData);
 	free(H_Px4.pData);
-	//free(H_camera.pData);
+	free(H_camera.pData);
+    free(z_2by1.pData);
+    free(z_3by1.pData);
 	free(inter_nby1.pData);
 	free(inter_nbyn.pData);
 	free(inter_another_nbyn.pData);
@@ -116,7 +125,8 @@ KalmanFilter::~KalmanFilter() {
 	free(inter_another_2by2.pData);
 }
 
-void KalmanFilter::predict(const arm_matrix_instance_f32 u, float delta_t) {
+void KalmanFilter::predict(const arm_matrix_instance_f32 u, float delta_t)
+{
 	//Put delta_t in the appropriate spot in A and B
 	//note: right now this assumes A is 6x6 and B is 6x3
 	mat_at(A, 0, 1) = delta_t;
@@ -140,7 +150,8 @@ void KalmanFilter::predict(const arm_matrix_instance_f32 u, float delta_t) {
 }
 
 //if Px4 is true, we're correcting the Px4. Otherwise we're correcting the lidar
-void KalmanFilter::correct2(const arm_matrix_instance_f32& z, const bool Px4) {
+void KalmanFilter::correct2(const arm_matrix_instance_f32& z, const bool Px4)
+{
 
 	arm_matrix_instance_f32* H;
 	arm_matrix_instance_f32* R;
@@ -195,15 +206,22 @@ void KalmanFilter::correct2(const arm_matrix_instance_f32& z, const bool Px4) {
 	P = inter_nbyn;
 }
 
-void KalmanFilter::correctPx4(const arm_matrix_instance_f32& z) {
-	correct2(z, true);
+void KalmanFilter::correctPx4(const float xdot, const float ydot)
+{
+    mat_at(z_2by1, 0, 0) = xdot;
+    mat_at(z_2by1, 1, 0) = ydot;
+	correct2(z_2by1, true);
 }
 
-void KalmanFilter::correctLidar(const arm_matrix_instance_f32& z) {
-	correct2(z, false);
+void KalmanFilter::correctLidar(const float z, const float zdot)
+{
+    mat_at(z_2by1, 0, 0) = z;
+    mat_at(z_2by1, 0, 1) = zdot;
+	correct2(z_2by1, false);
 }
 
-void KalmanFilter::correctCamera(const arm_matrix_instance_f32& z) {
+void KalmanFilter::correctCamera(const float x, const float y, const float yaw)
+{
 
 }
 
@@ -215,7 +233,8 @@ const arm_matrix_instance_f32& KalmanFilter::getCovar() const {
 	return P;
 }
 
-void KalmanFilter::reset() {
+void KalmanFilter::reset()
+{
 	mat_fill(state, 0);
 	mat_fill(P, 0);
 }
