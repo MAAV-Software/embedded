@@ -218,23 +218,4 @@ const arm_matrix_instance_f32& KalmanFilter::getCovar() const {
 void KalmanFilter::reset() {
 	mat_fill(state, 0);
 	mat_fill(P, 0);
-	mat_fill(A, 0);
-	mat_fill(B, 0);
-	mat_fill(Q, 0);
-	mat_fill(R_lidar, 0);
-	mat_fill(R_Px4, 0);
-	mat_fill(R_camera;
-	mat_fill(H_lidar, 0);
-	mat_fill(H_Px4, 0);
-	mat_fill(H_camera;
-	mat_fill(inter_nby1, 0);
-	mat_fill(inter_nbyn, 0);
-	mat_fill(inter_another_nbyn, 0);
-	mat_fill(inter_H, 0);
-	mat_fill(inter_2by1, 0);
-	mat_fill(inter_nby2, 0);
-	mat_fill(inter_another_nby2, 0);
-	mat_fill(inter_2byn, 0);
-	mat_fill(inter_2by2, 0);
-	mat_fill(inter_another_2by2, 0);
 }
