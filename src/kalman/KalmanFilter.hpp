@@ -8,13 +8,12 @@
 #include "arm_math.h"
 #endif
 
-#include<stdlib.h>
+#include <stdlib.h>
 #include <stdint.h>
 
 class KalmanFilter
 {
 public:
-	/*TODO arguments for like all of these*/
 	KalmanFilter();
 
 	~KalmanFilter();
@@ -28,11 +27,11 @@ public:
 	/*
 	 * Run when we get new lidar info so we can correct where we are.
 	 */
-	void correctLidar(const arm_matrix_instance_f32& z);
+	void correctLidar(const float z, const float zdot);
 
-	void correctPx4(const arm_matrix_instance_f32& z);
+	void correctPx4(const float xdot, const float ydot);
 
-	void correctCamera();
+	void correctCamera(const float x, const float y, const float yaw);
 
 	/*
 	 * Returns a pointer to the state data. Const because we do not want
@@ -56,11 +55,11 @@ private:
 	KalmanFilter& operator=(const KalmanFilter& a);
 	KalmanFilter(const KalmanFilter& b);
 
-	const int n; //size of the state vector
-	const int u; //size of control input
-	const int l; //size of lidar input
-	const int p; //size of Px4 input
-	const int c; //size of camera input
+	const uint16_t n_size; //size of the state vector
+	const uint16_t u_size; //size of control input
+	const uint16_t l_size; //size of lidar input
+	const uint16_t p_size; //size of Px4 input
+	const uint16_t c_size; //size of camera input
 
 	arm_matrix_instance_f32 state; //aka x
 	arm_matrix_instance_f32 P; //covariances
@@ -73,6 +72,8 @@ private:
 	arm_matrix_instance_f32 H_lidar;
 	arm_matrix_instance_f32 H_Px4;
 	arm_matrix_instance_f32 H_camera;
+    arm_matrix_instance_f32 z_2by1;//for the Px4 and lidar
+    arm_matrix_instance_f32 z_3by1; //for the camera
 	arm_matrix_instance_f32 inter_nby1;
 	arm_matrix_instance_f32 inter_nbyn;
 	arm_matrix_instance_f32 inter_another_nbyn;
