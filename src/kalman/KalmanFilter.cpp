@@ -1,16 +1,30 @@
 #include "kalman/KalmanFilter.hpp"
-
 using namespace std;
 
-/** @brief Simple function for initializing a matrix
+/** 
+ * @brief Simple function for initializing a matrix
  *
+ * @details Basically just calls arm_mat_init_f32, initializing memory as necessary
+ *
+ * @param mat a pointer to the matrix being initialized
+ * @param rows number of rows in the desired matrix
+ * @param cols number of cols in the desired matrix
  */
-inline static void MAT_INIT(arm_matrix_instance_f32* mat, size_t rows, size_t cols)
+inline static void mat_init(arm_matrix_instance_f32* mat, size_t rows, size_t cols)
 {
 	//arm_mat_init_f32(mat, (uint16_t)rows, (uint16_t)cols, (float*)malloc(sizeof(float) * rows * cols));
 	arm_mat_init_f32(mat, (uint16_t)rows, (uint16_t)cols, (float*)calloc((rows * cols), sizeof(float)));
 }
 
+/**
+ * @brief Returns a reference to the matrix at the specified row and column
+ *
+ * @details Returns a reference to the float at the spot given by the row and column which can be read or assigned as needed
+ *
+ * @param mat the matrix you want to get the element from
+ * @param row the desired element's row
+ * @param col the desired element's column
+ */
 inline static float& mat_at(arm_matrix_instance_f32& mat, int row, int col) {
 	return mat.pData[row * mat.numCols + col];
 }
@@ -27,11 +41,11 @@ KalmanFilter::KalmanFilter() :
 	l(2),
 	p(2),
 	c(3) {
-	MAT_INIT(&state, n, 1);
+	mat_init(&state, n, 1);
 	mat_fill(state, 0);
-	MAT_INIT(&P, n, n);
+	mat_init(&P, n, n);
 	mat_fill(P, 0);
-	MAT_INIT(&A, n, n);
+	mat_init(&A, n, n);
 	mat_fill(A, 0);
 	mat_at(A, 0, 0) = 1;
 	mat_at(A, 1, 1) = 1;
@@ -39,43 +53,43 @@ KalmanFilter::KalmanFilter() :
 	mat_at(A, 3, 3) = 1;
 	mat_at(A, 4, 4) = 1;
 	mat_at(A, 5, 5) = 1;
-	MAT_INIT(&B, n, u);
+	mat_init(&B, n, u);
 	mat_fill(B, 0);
-	MAT_INIT(&Q, n, n);
+	mat_init(&Q, n, n);
 	mat_fill(Q, 0);
-	MAT_INIT(&R_lidar, l, l);
+	mat_init(&R_lidar, l, l);
 	mat_fill(R_lidar, 0);
-	MAT_INIT(&R_Px4, p, p);
+	mat_init(&R_Px4, p, p);
 	mat_fill(R_Px4, 0);
-	//MAT_INIT(&R_camera, c, c);
+	//mat_init(&R_camera, c, c);
 	//mat_fill(R_camera, 0);
-	MAT_INIT(&H_lidar, l, n);
+	mat_init(&H_lidar, l, n);
 	mat_fill(H_lidar, 0);
 	mat_at(H_lidar, 0, 4) = 1;
 	mat_at(H_lidar, 1, 5) = 1;
-	MAT_INIT(&H_Px4, p, n);
+	mat_init(&H_Px4, p, n);
 	mat_fill(H_Px4, 0);
 	mat_at(H_lidar, 0, 1) = 1;
 	mat_at(H_lidar, 0, 4) = 1;
-	//MAT_INIT(&H_camera, c, n);
+	//mat_init(&H_camera, c, n);
 	//mat_fill(H_camera, 0);
-	MAT_INIT(&inter_nby1, n, 1); //used as temporary variables
+	mat_init(&inter_nby1, n, 1); //used as temporary variables
 	mat_fill(inter_nby1, 0);
-	MAT_INIT(&inter_nbyn, n, n);
+	mat_init(&inter_nbyn, n, n);
 	mat_fill(inter_nbyn, 0);
-	MAT_INIT(&inter_another_nbyn, n, n);
+	mat_init(&inter_another_nbyn, n, n);
 	mat_fill(inter_another_nbyn, 0);
-	MAT_INIT(&inter_2by1, 2, 1);
+	mat_init(&inter_2by1, 2, 1);
 	mat_fill(inter_2by1, 0);
-	MAT_INIT(&inter_nby2, n, 2);
+	mat_init(&inter_nby2, n, 2);
 	mat_fill(inter_nby2, 0);
-	MAT_INIT(&inter_another_nby2, n, 2);
+	mat_init(&inter_another_nby2, n, 2);
 	mat_fill(inter_another_nby2, 0);
-	MAT_INIT(&inter_2byn, 2, n);
+	mat_init(&inter_2byn, 2, n);
 	mat_fill(inter_2byn, 0);
-	MAT_INIT(&inter_2by2, 2, 2);
+	mat_init(&inter_2by2, 2, 2);
 	mat_fill(inter_2by2, 0);
-	MAT_INIT(&inter_another_2by2, 2, 2);
+	mat_init(&inter_another_2by2, 2, 2);
 	mat_fill(inter_another_2by2, 0);
 }
 
@@ -125,6 +139,7 @@ void KalmanFilter::predict(const arm_matrix_instance_f32 u, float delta_t) {
 	arm_mat_add_f32(&P, &Q, &P);
 }
 
+//if Px4 is true, we're correcting the Px4. Otherwise we're correcting the lidar
 void KalmanFilter::correct2(const arm_matrix_instance_f32& z, const bool Px4) {
 
 	arm_matrix_instance_f32* H;
@@ -188,8 +203,7 @@ void KalmanFilter::correctLidar(const arm_matrix_instance_f32& z) {
 	correct2(z, false);
 }
 
-//Probably will be implemented later
-void KalmanFilter::correctCamera() {
+void KalmanFilter::correctCamera(const arm_matrix_instance_f32& z) {
 
 }
 
@@ -202,6 +216,25 @@ const arm_matrix_instance_f32& KalmanFilter::getCovar() const {
 }
 
 void KalmanFilter::reset() {
-
-
+	mat_fill(state, 0);
+	mat_fill(P, 0);
+	mat_fill(A, 0);
+	mat_fill(B, 0);
+	mat_fill(Q, 0);
+	mat_fill(R_lidar, 0);
+	mat_fill(R_Px4, 0);
+	mat_fill(R_camera;
+	mat_fill(H_lidar, 0);
+	mat_fill(H_Px4, 0);
+	mat_fill(H_camera;
+	mat_fill(inter_nby1, 0);
+	mat_fill(inter_nbyn, 0);
+	mat_fill(inter_another_nbyn, 0);
+	mat_fill(inter_H, 0);
+	mat_fill(inter_2by1, 0);
+	mat_fill(inter_nby2, 0);
+	mat_fill(inter_another_nby2, 0);
+	mat_fill(inter_2byn, 0);
+	mat_fill(inter_2by2, 0);
+	mat_fill(inter_another_2by2, 0);
 }

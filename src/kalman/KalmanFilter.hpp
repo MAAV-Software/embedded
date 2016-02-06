@@ -55,23 +55,24 @@ private:
 	void correct2(const arm_matrix_instance_f32& z, const bool Px4);
 	KalmanFilter& operator=(const KalmanFilter& a);
 	KalmanFilter(const KalmanFilter& b);
-	int n; //size of the state vector
-	int u; //size of control input
-	int l; //size of lidar input
-	int p; //size of Px4 input
-	int c; //size of camera input
+
+	const int n; //size of the state vector
+	const int u; //size of control input
+	const int l; //size of lidar input
+	const int p; //size of Px4 input
+	const int c; //size of camera input
+
 	arm_matrix_instance_f32 state; //aka x
 	arm_matrix_instance_f32 P; //covariances
-	//float* last_camera;
 	arm_matrix_instance_f32 A;
 	arm_matrix_instance_f32 B;
 	arm_matrix_instance_f32 Q; //noise matrices
 	arm_matrix_instance_f32 R_lidar;
 	arm_matrix_instance_f32 R_Px4;
-	//arm_matrix_instance_f32 R_camera;
+	arm_matrix_instance_f32 R_camera;
 	arm_matrix_instance_f32 H_lidar;
 	arm_matrix_instance_f32 H_Px4;
-	//arm_matrix_instance_f32 H_camera;
+	arm_matrix_instance_f32 H_camera;
 	arm_matrix_instance_f32 inter_nby1;
 	arm_matrix_instance_f32 inter_nbyn;
 	arm_matrix_instance_f32 inter_another_nbyn;
