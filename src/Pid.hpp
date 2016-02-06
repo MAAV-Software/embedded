@@ -1,9 +1,6 @@
 #ifndef PID_HPP_
 #define PID_HPP_
 
-/**
- * PID class that executes discrete PID control on a continuous-time model.
- */
 #include <stdint.h>
 #include "CtrlLogs.hpp"
 #include "LowPass.hpp"
@@ -23,13 +20,19 @@ extern const uint8_t DERR_LOWPASS_MASK; // enable use of lowpass filter on dErro
 enum PIDGainsEnum {KP, KI, KD}; 
 enum PIDStateEnum {VAL, DERIV, TIME};
 
+/**
+ * @brief state-space PID class 
+ * @detail PID class that executes discrete PID control on a continuous-time state-space model.
+ */
 class Pid
 {
 public:
 	// Default constructor
 	Pid();
 	
-	// Custom constructor that initializes the state, setpt, flags, gains, limits, and lowpass coefficients
+	/**
+	 * @brief Custom constructor that initializes the state, setpt, flags, gains, limits, and lowpass coefficients
+	 */
 	Pid(const float initState[NUM_PID_STATES], 
 		const float initSetpt[NUM_PID_STATES],
 		const uint8_t initFlags, 
@@ -40,22 +43,34 @@ public:
 		const float stateLpCoeff,
 		const float errorLpCoeff);
 	
-	// Sets the state (feedback) for the PID algorithm
+	/**
+	 * @brief Sets the state (feedback) for the PID algorithm
+	 */
 	void setState(const float val, const float deriv, const float time);
 	
-	// Sets the setpoint for the PID algorithm
+	/**
+	 * @breif Sets the setpoint for the PID algorithm
+	 */
 	void setSetpt(const float val, const float time);
 	
-	// Sets the gains for the PID algorithm
+	/**
+	 * @brief Sets the gains for the PID algorithm
+	 */
 	void setGains(const float kp, const float ki, const float kd);
 	
-	// runs the PID algorithm
+	/**
+	 * @breif runs the PID algorithm
+	 */
 	void run();
 
-	// return the output of the PID
+	/**
+	 * @brief return the output of the PID
+	 */
 	float getOutput() const;
 
-	// function for preparing the log data for this PID class
+	/**
+	 * @brief function for preparing the log data for this PID class
+	 */
 	void prepareLog(PidLog &plog); 
 	
 private:
