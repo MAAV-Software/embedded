@@ -3,6 +3,7 @@
 # build process for the vehicle (to build and flash flight-ready code to the
 # vehicle) is currently handled by Code Composer Studio.
 add_library(ctrl_sw SHARED
+			kalman/KalmanFilter
 			kalman/ExtendedKalmanFilter
 			kalman/KalmanFunctions
 			Battery

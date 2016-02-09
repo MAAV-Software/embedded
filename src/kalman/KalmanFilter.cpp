@@ -15,13 +15,14 @@ inline static void mat_init(arm_matrix_instance_f32* mat, uint16_t rows, uint16_
 	arm_mat_init_f32(mat, rows, cols, (float*)calloc((rows * cols), sizeof(float)));
 }
 
-inline static void mat_destroy(arm_matrix_instance_f32 &mat) {
+inline static void mat_destroy(arm_matrix_instance_f32 &mat) 
+{
     free(mat.pData);
-    //&*mat = NULL;//TODO is this how to destroy the matrix?
+    mat.pData = NULL;
 }
 
 /**
- * @brief Returns a reference to the matrix at the specified row and column
+ * @brief Returns a reference to the value of the matrix at the specified row and column
  *
  * @details Returns a reference to the float at the spot given by the row and column which can be read or assigned as needed
  *
@@ -34,12 +35,15 @@ inline static float& mat_at(arm_matrix_instance_f32& mat, uint16_t row, uint16_t
 	return mat.pData[row * mat.numCols + col];
 }
 
+float mat_noref_at(const arm_matrix_instance_f32& mat, uint16_t row, uint16_t col)
+{
+	return mat.pData[row * mat.numCols + col];
+}
+
 inline static void mat_fill(arm_matrix_instance_f32& mat, float toFill)
 {
-	for(uint16_t i = 0; i < mat.numRows * mat.numCols; i++)
-    {
+	for (uint16_t i = 0; i < mat.numRows * mat.numCols; i++) 
 		mat.pData[i] = toFill;
-	}
 }
 
 KalmanFilter::KalmanFilter() :
@@ -108,7 +112,6 @@ KalmanFilter::KalmanFilter() :
 
     //initialize z matrices
     mat_init(&z_2by1, 2, 1);
-    //mat_init(&z_3by1, 3, 1); //was going to be used for camera corrections?
 
     //initialize a bunch of intermediate matrices TODO no need to bother filling these, right?
 	mat_init(&inter_nby1, n_size, 1); //used as temporary variables
@@ -136,7 +139,6 @@ KalmanFilter::~KalmanFilter()
 	mat_destroy(H_Px4);
 	mat_destroy(H_camera);
     mat_destroy(z_2by1);
-    //mat_destroy(z_3by1);
 	mat_destroy(inter_nby1);
 	mat_destroy(inter_nbyn);
 	mat_destroy(inter_another_nbyn);
@@ -174,11 +176,11 @@ void KalmanFilter::predict(const arm_matrix_instance_f32 &u, float dt)
 
 void KalmanFilter::correct2(const arm_matrix_instance_f32& z, const CorrectionType sensor)
 {
-
 	arm_matrix_instance_f32* H;
 	arm_matrix_instance_f32* R;
 
-    switch(sensor) {
+    switch (sensor) 
+	{
         case LIDAR:
             H = &H_lidar;
             R = &R_lidar;
@@ -252,19 +254,21 @@ void KalmanFilter::correctLidar(const float z, const float zdot)
 	correct2(z_2by1, LIDAR);
 }
 
-void KalmanFilter::correctCamera(const float x, const float y, const float yaw)
+void KalmanFilter::correctCamera(const float x, const float y)
 {
-    //z_2by1 = [ x, y ]
+    //z_2by1 = [ x; y ]
     mat_at(z_2by1, 0, 0) = x;
     mat_at(z_2by1, 1, 0) = y;
     correct2(z_2by1, CAMERA);
 }
 
-const arm_matrix_instance_f32& KalmanFilter::getState() const {
+const arm_matrix_instance_f32& KalmanFilter::getState() const 
+{
 	return state;
 }
 
-const arm_matrix_instance_f32& KalmanFilter::getCovar() const {
+const arm_matrix_instance_f32& KalmanFilter::getCovar() const 
+{
 	return P;
 }
 
