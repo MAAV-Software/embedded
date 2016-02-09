@@ -34,7 +34,7 @@ public:
 	 * Run the predict step whenever we want updated state info,
 	 * but don't have new sensor data.
 	 */
-	void predict(const arm_matrix_instance_f32 &u, float delta_t);
+	void predict(float xddot, float yddot, float zddot, float dt);
 
 	/*
 	 * Run when we get new lidar info so we can correct where we are.
@@ -80,7 +80,9 @@ private:
 	arm_matrix_instance_f32 A;
 	arm_matrix_instance_f32 B;
 	arm_matrix_instance_f32 Q; //noise matrices
-	arm_matrix_instance_f32 R_lidar;
+	arm_matrix_instance_f32 u;
+    
+    arm_matrix_instance_f32 R_lidar;
 	arm_matrix_instance_f32 R_Px4;
 	arm_matrix_instance_f32 R_camera;
 	arm_matrix_instance_f32 H_lidar;
