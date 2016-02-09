@@ -1,4 +1,7 @@
 #include "kalman/KalmanFilter.hpp"
+
+#include <stdlib.h>
+
 using namespace std;
 
 /** 
@@ -76,6 +79,10 @@ KalmanFilter::KalmanFilter() :
 	mat_init(&B, n_size, u_size);
 	mat_fill(B, 0);
 
+    //init u and set to 0
+    mat_init(&u, u_size, 1);
+    mat_fill(u, 0);
+
     //initialize and zero Q
 	mat_init(&Q, n_size, n_size);
 	mat_fill(Q, 0);
@@ -132,6 +139,8 @@ KalmanFilter::~KalmanFilter()
 	mat_destroy(A);
 	mat_destroy(B);
 	mat_destroy(Q);
+    mat_destroy(u);
+
 	mat_destroy(R_lidar);
 	mat_destroy(R_Px4);
 	mat_destroy(R_camera);
@@ -139,7 +148,8 @@ KalmanFilter::~KalmanFilter()
 	mat_destroy(H_Px4);
 	mat_destroy(H_camera);
     mat_destroy(z_2by1);
-	mat_destroy(inter_nby1);
+	
+    mat_destroy(inter_nby1);
 	mat_destroy(inter_nbyn);
 	mat_destroy(inter_another_nbyn);
 	mat_destroy(inter_2by1);
@@ -150,8 +160,13 @@ KalmanFilter::~KalmanFilter()
 	mat_destroy(inter_another_2by2);
 }
 
-void KalmanFilter::predict(const arm_matrix_instance_f32 &u, float dt)
+void KalmanFilter::predict(float xddot, float yddot, float zddot, float dt)
 {
+    // Put accels in u
+    mat_at(u, 0, 0) = xddot;
+    mat_at(u, 1, 0) = yddot;
+    mat_at(u, 2, 0) = zddot;
+
 	//Put dt in the appropriate spot in A and B
 	//note: right now this assumes A is 6x6 and B is 6x3
 	mat_at(A, 0, 1) = dt;
