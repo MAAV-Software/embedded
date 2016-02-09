@@ -8,8 +8,20 @@
 #include "arm_math.h"
 #endif
 
-#include <stdlib.h>
+#include <cstdlib>
 #include <stdint.h>
+
+
+/**
+ * @brief Returns the value of the matrix at the specified row and column
+ *
+ * @details Returns a value of the float at the spot given by the row and column which can be read or assigned as needed
+ *
+ * @param mat the matrix you want to get the element from
+ * @param row the desired element's row
+ * @param col the desired element's column
+ */
+float mat_noref_at(const arm_matrix_instance_f32& mat, uint16_t row, uint16_t col);
 
 class KalmanFilter
 {
@@ -31,7 +43,7 @@ public:
 
 	void correctPx4(const float xdot, const float ydot);
 
-	void correctCamera(const float x, const float y, const float yaw);
+	void correctCamera(const float x, const float y);
 
 	/*
 	 * Returns a pointer to the state data. Const because we do not want
@@ -51,9 +63,9 @@ public:
 	void reset();
 private:
     enum CorrectionType { LIDAR, PX4, CAMERA };
-    CorrectionType sensor;
+	void correct2(const arm_matrix_instance_f32& z, const CorrectionType sensor);
+	
 	//Make sure nobody tries to assign Kalman filters.
-	void correct2(const arm_matrix_instance_f32& z, const enum CorrectionType);
 	KalmanFilter& operator=(const KalmanFilter& a);
 	KalmanFilter(const KalmanFilter& b);
 
@@ -75,7 +87,6 @@ private:
 	arm_matrix_instance_f32 H_Px4;
 	arm_matrix_instance_f32 H_camera;
     arm_matrix_instance_f32 z_2by1;//for the Px4, camera, and lidar
-    //arm_matrix_instance_f32 z_3by1; //was going to be used for the camera
 	arm_matrix_instance_f32 inter_nby1;
 	arm_matrix_instance_f32 inter_nbyn;
 	arm_matrix_instance_f32 inter_another_nbyn;

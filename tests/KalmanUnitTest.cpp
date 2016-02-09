@@ -41,7 +41,7 @@ BOOST_AUTO_TEST_CASE(ctorTest)
 	Fixture f;
 	const arm_matrix_instance_f32& x = f.kf.getState();
 	const arm_matrix_instance_f32& P = f.kf.getCovar();
-  
+`    
     for (uint16_t r = 0; r < x.numRows; ++r)
     {
         for (uint16_t c = 0; c < x.numCols; ++c)
@@ -56,59 +56,36 @@ BOOST_AUTO_TEST_CASE(ctorTest)
 }
 
 
-BOOST_AUTO_TEST_CASE(ptest)
+BOOST_AUTO_TEST_CASE(predictTest)
 {
 	Fixture f;
-    f.kf.predict(f.xddotImu, f.yddotImu, f.zddotImu, f.dt); 
+	
 	const arm_matrix_instance_f32& x = f.kf.getState();
-    const arm_matrix_instance_f32& P = f.kf.getCovar();
-
-    BOOST_CHECK_CLOSE(mat_noref_at(x, 0, 0), 0.00000, 100);
-    BOOST_CHECK_CLOSE(mat_noref_at(x, 1, 0), 0.00010, 100);
-    BOOST_CHECK_CLOSE(mat_noref_at(x, 2, 0), 0.00000, 100);
-    BOOST_CHECK_CLOSE(mat_noref_at(x, 3, 0), 0.01000, 100);
-    BOOST_CHECK_CLOSE(mat_noref_at(x, 4, 0), 0.00000, 100);
-    BOOST_CHECK_CLOSE(mat_noref_at(x, 5, 0), 0.00001, 100);
-  
-    for (uint16_t r = 0; r < P.numRows; ++r)
-    { 
-        for (uint16_t c = 0; c < P.numCols; ++c)
-            BOOST_CHECK_CLOSE(mat_noref_at(P, r, c), 0.0, 0.0001);
-    }
+	const arm_matrix_instance_f32& P = f.kf.getCovar();
 }
 
+/*
 BOOST_AUTO_TEST_CASE(resetTest)
 {
 	Fixture f;
-    f.kf.predict(f.xddotImu, f.yddotImu, f.zddotImu, f.dt);    
+	const arm_matrix_instance_f32& xBefore = f.kf.getState();
+	const arm_matrix_instance_f32& PBefore = f.kf.getCovar();
+	
+	// use same prediction stuff here
+
 	f.kf.reset();
-	const arm_matrix_instance_f32& x = f.kf.getState();
-	const arm_matrix_instance_f32& P = f.kf.getCovar();
-    
-    for (uint16_t r = 0; r < x.numRows; ++r)
-    {
-        for (uint16_t c = 0; c < x.numCols; ++c)
-            BOOST_CHECK_CLOSE(mat_noref_at(x, r, c), 0.0, 0.0001);
-    }
-    
-    for (uint16_t r = 0; r < P.numRows; ++r)
-    {
-        for (uint16_t c = 0; c < P.numCols; ++c)
-            BOOST_CHECK_CLOSE(mat_noref_at(P, r, c), 0.0, 0.0001);
-    }
+	const arm_matrix_instance_f32& xAfter = f.kf.getState();
+	const arm_matrix_instance_f32& PAfter = f.kf.getCovar();
 }
 
 BOOST_AUTO_TEST_CASE(correctPx4Test)
 {
 	Fixture f;
-    f.kf.predict(f.xddotImu, f.yddotImu, f.zddotImu, f.dt);    
-    f.kf.correctPx4(f.xdotPx4, f.ydotPx4);
 
-//	const arm_matrix_instance_f32& x = f.kf.getState();
-//	const arm_matrix_instance_f32& P = f.kf.getCovar();
+	const arm_matrix_instance_f32& x = f.kf.getState();
+	const arm_matrix_instance_f32& P = f.kf.getCovar();
 }
 
-/*
 BOOST_AUTO_TEST_CASE(correctLidarTest)
 {
 	Fixture f;
