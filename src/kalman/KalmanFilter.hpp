@@ -22,7 +22,7 @@ public:
 	 * Run the predict step whenever we want updated state info,
 	 * but don't have new sensor data.
 	 */
-	void predict(const arm_matrix_instance_f32 u, float delta_t);
+	void predict(const arm_matrix_instance_f32 &u, float delta_t);
 
 	/*
 	 * Run when we get new lidar info so we can correct where we are.
@@ -50,8 +50,10 @@ public:
 	 */
 	void reset();
 private:
+    enum CorrectionType { LIDAR, PX4, CAMERA };
+    CorrectionType sensor;
 	//Make sure nobody tries to assign Kalman filters.
-	void correct2(const arm_matrix_instance_f32& z, const bool Px4);
+	void correct2(const arm_matrix_instance_f32& z, const enum CorrectionType);
 	KalmanFilter& operator=(const KalmanFilter& a);
 	KalmanFilter(const KalmanFilter& b);
 
@@ -72,8 +74,8 @@ private:
 	arm_matrix_instance_f32 H_lidar;
 	arm_matrix_instance_f32 H_Px4;
 	arm_matrix_instance_f32 H_camera;
-    arm_matrix_instance_f32 z_2by1;//for the Px4 and lidar
-    arm_matrix_instance_f32 z_3by1; //for the camera
+    arm_matrix_instance_f32 z_2by1;//for the Px4, camera, and lidar
+    //arm_matrix_instance_f32 z_3by1; //was going to be used for the camera
 	arm_matrix_instance_f32 inter_nby1;
 	arm_matrix_instance_f32 inter_nbyn;
 	arm_matrix_instance_f32 inter_another_nbyn;

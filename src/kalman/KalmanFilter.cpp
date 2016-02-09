@@ -15,9 +15,9 @@ inline static void mat_init(arm_matrix_instance_f32* mat, uint16_t rows, uint16_
 	arm_mat_init_f32(mat, rows, cols, (float*)calloc((rows * cols), sizeof(float)));
 }
 
-inline static void mat_destroy(arm_matrix_instance_f32 *mat) {
-    free(*mat.pData);
-    &*mat = NULL;//TODO is this how to destroy the matrix?
+inline static void mat_destroy(arm_matrix_instance_f32 &mat) {
+    free(mat.pData);
+    //&*mat = NULL;//TODO is this how to destroy the matrix?
 }
 
 /**
@@ -108,7 +108,7 @@ KalmanFilter::KalmanFilter() :
 
     //initialize z matrices
     mat_init(&z_2by1, 2, 1);
-    mat_init(&z_3by1, 3, 1);
+    //mat_init(&z_3by1, 3, 1); //was going to be used for camera corrections?
 
     //initialize a bunch of intermediate matrices TODO no need to bother filling these, right?
 	mat_init(&inter_nby1, n_size, 1); //used as temporary variables
@@ -136,7 +136,7 @@ KalmanFilter::~KalmanFilter()
 	mat_destroy(H_Px4);
 	mat_destroy(H_camera);
     mat_destroy(z_2by1);
-    mat_destroy(z_3by1);
+    //mat_destroy(z_3by1);
 	mat_destroy(inter_nby1);
 	mat_destroy(inter_nbyn);
 	mat_destroy(inter_another_nbyn);
@@ -172,21 +172,29 @@ void KalmanFilter::predict(const arm_matrix_instance_f32 &u, float dt)
 	arm_mat_add_f32(&P, &Q, &P); //P = A * P * A^T + Q
 }
 
-void KalmanFilter::correct2(const arm_matrix_instance_f32& z, const bool Px4)
+void KalmanFilter::correct2(const arm_matrix_instance_f32& z, const CorrectionType sensor)
 {
 
 	arm_matrix_instance_f32* H;
 	arm_matrix_instance_f32* R;
-	if( Px4 )//if Px4 is true, we're correcting with the Px4, if not, with lidar
-	{
-		H = &H_Px4;
-		R = &R_Px4;
-	}
-	else
-	{
-		H = &H_lidar;
-		R = &R_lidar;
-	}
+
+    switch(sensor) {
+        case LIDAR:
+            H = &H_lidar;
+            R = &R_lidar;
+            break;
+        case PX4:
+            H = &H_Px4;
+            R = &R_Px4;
+            break;
+        case CAMERA:
+            H = &H_camera;
+            R = &R_camera;
+            break;
+        default:
+            //Really, we probably want to throw some sort of error here. Not cure exactly how that should happen
+            break;
+    }
 
 	//H * x
 	arm_mat_mult_f32(H, &state, &inter_2by1);
@@ -233,22 +241,23 @@ void KalmanFilter::correctPx4(const float xdot, const float ydot)
     //z_2by1 = [ xdot; ydot ]
     mat_at(z_2by1, 0, 0) = xdot;
     mat_at(z_2by1, 1, 0) = ydot;
-	correct2(z_2by1, true);
+	correct2(z_2by1, PX4);
 }
 
 void KalmanFilter::correctLidar(const float z, const float zdot)
 {
     //z_2by1 = [ z; zdot ]
     mat_at(z_2by1, 0, 0) = z;
-    mat_at(z_2by1, 0, 1) = zdot;
-	correct2(z_2by1, false);
+    mat_at(z_2by1, 1, 0) = zdot;
+	correct2(z_2by1, LIDAR);
 }
 
-//TODO figure out how to write this, specifically: where does yaw go? Is it even
-//part of the state matrix? What are we supposed to do with it?
 void KalmanFilter::correctCamera(const float x, const float y, const float yaw)
 {
-    //z_3by1 = [ x, y ]
+    //z_2by1 = [ x, y ]
+    mat_at(z_2by1, 0, 0) = x;
+    mat_at(z_2by1, 1, 0) = y;
+    correct2(z_2by1, CAMERA);
 }
 
 const arm_matrix_instance_f32& KalmanFilter::getState() const {
