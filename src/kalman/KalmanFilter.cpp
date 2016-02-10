@@ -4,6 +4,60 @@
 
 using namespace std;
 
+/** 
+ * @brief Simple function for initializing a matrix
+ *
+ * @details Basically just calls arm_mat_init_f32, initializing memory as necessary
+ *
+ * @param mat a pointer to the matrix being initialized
+ * @param rows number of rows in the desired matrix
+ * @param cols number of cols in the desired matrix
+ */
+inline static void mat_init(arm_matrix_instance_f32* mat, uint16_t rows, uint16_t cols)
+{
+	arm_mat_init_f32(mat, rows, cols, (float*)calloc((rows * cols), sizeof(float)));
+}
+
+inline static void mat_destroy(arm_matrix_instance_f32 &mat) 
+{
+    free(mat.pData);
+    mat.pData = NULL;
+}
+
+/**
+ * @brief Returns a reference to the value of the matrix at the specified row and column
+ *
+ * @details Returns a reference to the float at the spot given by the row and column which can be read or assigned as needed
+ *
+ * @param mat the matrix you want to get the element from
+ * @param row the desired element's row
+ * @param col the desired element's column
+ */
+inline static float& mat_at(arm_matrix_instance_f32& mat, uint16_t row, uint16_t col)
+{
+	return mat.pData[row * mat.numCols + col];
+}
+
+float mat_at(const arm_matrix_instance_f32& mat, uint16_t row, uint16_t col)
+{
+	return mat.pData[row * mat.numCols + col]; 
+}
+
+inline static void mat_fill(arm_matrix_instance_f32& mat, float toFill)
+{
+	for (uint16_t i = 0; i < mat.numRows * mat.numCols; i++) 
+		mat.pData[i] = toFill;
+}
+
+inline static void mat_copy(const arm_matrix_instance_f32 &src, arm_matrix_instance_f32 &dest) {
+    #ifdef LINUX
+        assert(src.numCols == dest.numCols && src.numRows == dest.numRows);
+    #endif
+    for(uint16_t i = 0; i < src.numRows * src.numCols; ++i) {
+        dest.pData[i] = src.pData[i];
+    }
+}
+
 KalmanFilter::KalmanFilter() :
 	n_size(6),
 	u_size(3),
