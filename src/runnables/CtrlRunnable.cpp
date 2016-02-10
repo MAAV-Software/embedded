@@ -45,7 +45,10 @@ void CtrlRunnable::run()
 	}
 
 	ps->vehicle->runFilter(ps->imu->getRotMat(), ps->imu->getYaw(),
-		ps->imu->getAccX(), ps->imu->getAccY(), ps);
+		ps->imu->getAccX(), ps->imu->getAccY(), ps->imu->getAccZ(), time,
+		ps->lidar->getDist(), ps->lidar->getTimestamp(),
+		ps->px4->getXFlow(), ps->px4->getYFlow(), ps->px4->getTimestamp(),
+		0, 0, 0);
 
 
 	// if ((ps->mode == AUTONOMOUS) && (ps->dLink->getRawPoseMsg().utime > lastPoseTime))
