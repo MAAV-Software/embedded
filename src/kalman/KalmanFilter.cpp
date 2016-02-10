@@ -4,6 +4,7 @@
 
 using namespace std;
 
+<<<<<<< 345592df02c4cd804801aedb134e7745bace8304
 /** 
  * @brief Simple function for initializing a matrix
  *
@@ -58,6 +59,8 @@ inline static void mat_copy(const arm_matrix_instance_f32 &src, arm_matrix_insta
     }
 }
 
+=======
+>>>>>>> using kalman filter in vehicle class, added maav math
 KalmanFilter::KalmanFilter() :
 	n_size(6),
 	u_size(3),
@@ -85,7 +88,7 @@ KalmanFilter::KalmanFilter() :
 	MaavMath::mat_init(&B, n_size, u_size);
 
     //init u and set to 0
-    MaavMath::mat_init(&u, u_size, 1);
+	MaavMath::mat_init(&u, u_size, 1);
 
     //initialize and zero Q
 	MaavMath::mat_init(&Q, n_size, n_size);
