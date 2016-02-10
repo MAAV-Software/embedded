@@ -8,6 +8,7 @@
 #include "arm_math.h"
 #endif
 
+#include <cassert>
 #include <cstdlib>
 #include <stdint.h>
 

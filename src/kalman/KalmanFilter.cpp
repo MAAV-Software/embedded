@@ -49,6 +49,15 @@ inline static void mat_fill(arm_matrix_instance_f32& mat, float toFill)
 		mat.pData[i] = toFill;
 }
 
+inline static void mat_copy(const arm_matrix_instance_f32 &src, arm_matrix_instance_f32 &dest) {
+    #ifdef LINUX
+        assert(src.numCols == dest.numCols && src.numRows == dest.numRows);
+    #endif
+    for(uint16_t i = 0; i < src.numRows * src.numCols; ++i) {
+        dest.pData[i] = src.pData[i];
+    }
+}
+
 KalmanFilter::KalmanFilter() :
 	n_size(6),
 	u_size(3),
@@ -77,7 +86,6 @@ KalmanFilter::KalmanFilter() :
 
     //init u and set to 0
     mat_init(&u, u_size, 1);
-    mat_fill(u, 0);
 
     //initialize and zero Q
 	mat_init(&Q, n_size, n_size);
@@ -167,7 +175,7 @@ void KalmanFilter::predict(float xddot, float yddot, float zddot, float dt)
 
 	//predict step for state
 	arm_mat_mult_f32(&A, &state, &inter_nby1); // A * x
-	state = inter_nby1; // x = A * x
+	mat_copy(inter_nby1, state); // x = A * x
 	arm_mat_mult_f32(&B, &u, &inter_nby1); //B * u
 	arm_mat_add_f32(&state, &inter_nby1, &state);//x = A * x + B * u
 
@@ -239,7 +247,7 @@ void KalmanFilter::correct2(const arm_matrix_instance_f32& z, const CorrectionTy
 	//(I - K * H) * P
 	arm_mat_mult_f32(&inter_another_nbyn, &P, &inter_nbyn);
 	//P+ = (I - K * H) * P
-	P = inter_nbyn;
+	mat_copy(inter_nbyn, P);
 }
 
 void KalmanFilter::correctPx4(const float xdot, const float ydot)
