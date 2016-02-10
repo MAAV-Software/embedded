@@ -49,7 +49,7 @@ endif()
 # -Wno-format-zero-length: permit printf("")
 # -Wno-unused-parameter: permit a function to ignore an argument
 # Setup CFLAGS
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Werror -Wvla")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Werror -Wvla -g")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -pthread -Wno-format-zero-length -std=c99")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-sign-compare -Wno-unused-parameter")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-write-strings")
