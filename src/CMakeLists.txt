@@ -14,6 +14,7 @@ add_library(ctrl_sw SHARED
 			Px4
 			Lidar
             Vehicle
+            MaavMath
 			messaging/DataLinkDefines
 			messaging/Encoder
 			messaging/Decoder

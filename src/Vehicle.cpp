@@ -5,8 +5,7 @@
 #include "Dof.hpp"
 #include "Pid.hpp"
 #include "FlightMode.hpp"
-#include "kalman/ExtendedKalmanFilter.hpp"
-#include "kalman/KalmanFunctions.hpp"
+#include "MaavMath.hpp"
 //#include "servoIn.hpp"
 //#include "rc.hpp"
 
@@ -24,23 +23,14 @@
 
 using namespace std;
 
-// define pi and gravity only if not yet defined
-#ifndef PI
-static const float PI = 3.14159265358979323846;
-#endif //PI
-static const float GRAVITY = 9.81;
-
 Vehicle::Vehicle(const float valueGains[NUM_DOFS][NUM_PID_GAINS],
 				 const float rateGains[NUM_DOFS][NUM_PID_GAINS])
+	: lastPredictTime(0),
+	lastLidarTime(0),
+	lastPx4Time(0),
+	lastCameraTime(0)
 {
-	#ifdef LINUX
-		time = 0.0f;
-	#else
-		time 		 = (float)millis() / 1000.0f; // grab current time for initialization
-	#endif
 	mass 		 = 2.38f;
-	lastPredTime = time;
-	lastCorrTime = time;
 	dji.roll     = 0;
 	dji.pitch    = 0;
 	dji.yawRate  = 0;
@@ -49,16 +39,16 @@ Vehicle::Vehicle(const float valueGains[NUM_DOFS][NUM_PID_GAINS],
 	// Ctrl Vals
 	// state and setpt will always be initialized the to 0 and time
 	float states[NUM_DOFS][NUM_DOF_STATES] = {
-		{0, 0, 0, time},
-		{0, 0, 0, time},
-		{0, 0, 0, time},
-		{0, 0, 0, time},
+		{0, 0, 0, lastPredictTime},
+		{0, 0, 0, lastPredictTime},
+		{0, 0, 0, lastPredictTime},
+		{0, 0, 0, lastPredictTime},
 	};
 	float setpts[NUM_DOFS][NUM_DOF_STATES] = {
-		{0, 0, 0, time},
-		{0, 0, 0, time},
-		{0, 0, 0, time},
-		{0, 0, 0, time},
+		{0, 0, 0, lastPredictTime},
+		{0, 0, 0, lastPredictTime},
+		{0, 0, 0, lastPredictTime},
+		{0, 0, 0, lastPredictTime},
 	};
 	uint8_t valueFlags[NUM_DOFS] = {
 		DERR_DT_MASK,
@@ -72,7 +62,7 @@ Vehicle::Vehicle(const float valueGains[NUM_DOFS][NUM_PID_GAINS],
 		DERR_DT_MASK | DISC_DERIV_MASK,
 		DERR_DT_MASK | DISC_DERIV_MASK,
 	};
-	float stateBounds[4] = {0, 0, 0, PI};
+	float stateBounds[4] = {0, 0, 0, MaavMath::Pi};
 	float rateUpLims[4]  = {2, 2, 10, 1};
 	float rateLwLims[4]  = {-2, -2, -10, -1};
 	float accelUpLims[4] = {1, 1, 10, 1};
@@ -97,238 +87,123 @@ Vehicle::Vehicle(const float valueGains[NUM_DOFS][NUM_PID_GAINS],
 					  rateErrorLpCoeffs[i]);
 	}
 
-	// EKF values
-	float ekfInitState[6] = {0, 0, 0, 0, 0, 0};
-	float ekfInitP[36] = {
-		0.1, 0, 0, 0, 0, 0,
-		0, 0.1, 0, 0, 0, 0,
-		0, 0, 0.1, 0, 0, 0,
-		0, 0, 0, 0.1, 0, 0,
-		0, 0, 0, 0, 0.1, 0,
-		0, 0, 0, 0, 0, 0.1
-	};
-	float ekfQ[36] = {
-		0.1, 0, 0, 0, 0, 0,
-		0, 0.1, 0, 0, 0, 0,
-		0, 0, 0.9, 0, 0, 0,
-		0, 0, 0, 0.01, 0, 0,
-		0, 0, 0, 0, 0.01, 0,
-		0, 0, 0, 0, 0, 0.01
-	};
-	float ekfNoCamR[9] = {
-		0.02, 0, 0,
-		0, 0.1, 0,
-		0, 0, 0.1
-	};
-	float ekfWithCamR[25] = {
-		0.1, 0, 0, 0, 0,
-		0, 0.1, 0, 0, 0,
-		0, 0, 0.02, 0, 0,
-		0, 0, 0, 0.1, 0,
-		0, 0, 0, 0, 0.1
-	};
-
-	// ekfInitP is the ekfInitErrorCov
-	ekf = new ExtendedKalmanFilter(6, ekfInitState, ekfInitP);
-
-	arm_matrix_instance_f32 Q;
-	arm_mat_init_f32(&Q, 6, 6, ekfQ);
-	ekf->setPredictFunc(4, systemDeltaState, systemGetJacobian, &Q);
-
-	arm_matrix_instance_f32 RNoCam, RWithCam;
-	arm_mat_init_f32(&RNoCam, 3, 3, ekfNoCamR);
-	arm_mat_init_f32(&RWithCam, 5, 5, ekfWithCamR);
-	ekf->setUpdateFunc(0, 3, sensorPredict, sensorGetJacobian, &RNoCam);
-	ekf->setUpdateFunc(1, 5, sensorPredictWithCam, sensorGetJacobianWithCam, &RWithCam);
-
-	float controlInput[4] = {0, 0, 0, 0};
-	arm_mat_init_f32(&controlInputMat, 4, 1, controlInput);
-
-	float sensorMeasurement[3] = {0, 0, 0};
-	arm_mat_init_f32(&sensorMeasurementMat, 3, 1, sensorMeasurement);
-
-	float sensorMeasurementWithCam[5] = {0, 0, 0, 0, 0};
-	arm_mat_init_f32(&sensorMeasurementMatWithCam, 5, 1, sensorMeasurementWithCam);
 }
-
-/*
-Vehicle::Vehicle()
-{
-	for (int i = 0; i < NUM_DOFS; ++i) dofs[i] = Dof();
-	for (int i = 0; i < NUM_ANGLES; ++i) rpLimits[i] = PI / 4.0f;
-	
-	dji.roll    = 0;
-	dji.pitch   = 0; 
-	dji.yawRate = 0;
-	dji.thrust  = 0;
-	mass        = 1;
-	time        = 0;
-	lastPredTime = 0;
-	
-	// allocate EKF
-	float initialState[6] = {0, 0, 0, 0, 0, 0};
-	float initialErrorCov[36]; memset(initialErrorCov, 0, sizeof(float) * 36);
-	ekf = new ExtendedKalmanFilter(6, initialState, initialErrorCov);
-
-	float controlInput[4] = {0, 0, 0, 0};
-	arm_mat_init_f32(&controlInputMat, 4, 1, controlInput);
-
-	float sensorMeasurement[3] = {0, 0, 0};
-	arm_mat_init_f32(&sensorMeasurementMat, 3, 1, sensorMeasurement);
-
-	float sensorMeasurementWithCam[5] = {0, 0, 0, 0, 0};
-	arm_mat_init_f32(&sensorMeasurementMatWithCam, 5, 1, sensorMeasurementWithCam);
-}
-*/
 
 Vehicle::~Vehicle()
 {
-	delete ekf;
+
 }
 
-Vehicle::Vehicle(const float states[NUM_DOFS][NUM_DOF_STATES],
-				 const float setpts[NUM_DOFS][NUM_DOF_STATES],
-				 const float valueGains[NUM_DOFS][NUM_PID_GAINS],
-				 const float rateGains[NUM_DOFS][NUM_PID_GAINS],
-				 const uint8_t valueFlags[NUM_DOFS],
-				 const uint8_t rateFlags[NUM_DOFS],
-				 const float inertias[NUM_DOFS],
-				 const float stateBounds[NUM_DOFS],
-				 const float rateUpLims[NUM_DOFS],
-				 const float rateLwLims[NUM_DOFS],
-				 const float accelUpLims[NUM_DOFS],
-				 const float accelLwLims[NUM_DOFS],
-				 const float valueStateLpCoeffs[NUM_DOFS],
-				 const float valueErrorLpCoeffs[NUM_DOFS],
-				 const float rateStateLpCoeffs[NUM_DOFS],
-				 const float rateErrorLpCoeffs[NUM_DOFS],
-				 const float totalMass,
-				 const float initTime,
-				 const float rpLims[NUM_ANGLES],
-				 const float ekfInitState[6],
-				 const float ekfInitP[36],
-				 float ekfQ[36],
-				 float ekfNoCamR[3],
-				 float ekfWithCamR[5])
-{
-	mass = totalMass;
-	time = initTime;
-	lastPredTime = initTime;
-	lastCorrTime = initTime;
-	dji.roll    = 0;
-	dji.pitch   = 0; 
-	dji.yawRate = 0;
-	dji.thrust  = 0;
+// Vehicle::Vehicle(const float states[NUM_DOFS][NUM_DOF_STATES],
+// 				 const float setpts[NUM_DOFS][NUM_DOF_STATES],
+// 				 const float valueGains[NUM_DOFS][NUM_PID_GAINS],
+// 				 const float rateGains[NUM_DOFS][NUM_PID_GAINS],
+// 				 const uint8_t valueFlags[NUM_DOFS],
+// 				 const uint8_t rateFlags[NUM_DOFS],
+// 				 const float inertias[NUM_DOFS],
+// 				 const float stateBounds[NUM_DOFS],
+// 				 const float rateUpLims[NUM_DOFS],
+// 				 const float rateLwLims[NUM_DOFS],
+// 				 const float accelUpLims[NUM_DOFS],
+// 				 const float accelLwLims[NUM_DOFS],
+// 				 const float valueStateLpCoeffs[NUM_DOFS],
+// 				 const float valueErrorLpCoeffs[NUM_DOFS],
+// 				 const float rateStateLpCoeffs[NUM_DOFS],
+// 				 const float rateErrorLpCoeffs[NUM_DOFS],
+// 				 const float totalMass,
+// 				 const float initTime,
+// 				 const float rpLims[NUM_ANGLES],
+// {
+// 	mass = totalMass;
+// 	time = initTime;
+// 	lastPredTime = initTime;
+// 	lastCorrTime = initTime;
+// 	dji.roll    = 0;
+// 	dji.pitch   = 0; 
+// 	dji.yawRate = 0;
+// 	dji.thrust  = 0;
 	
-	for (int i = 0; i < NUM_ANGLES; ++i) rpLimits[i] = rpLims[i];
+// 	for (int i = 0; i < NUM_ANGLES; ++i) rpLimits[i] = rpLims[i];
 
-	for (int i = 0; i < NUM_DOFS; ++i)
-	{
-		dofs[i] = Dof(states[i], setpts[i], valueGains[i], rateGains[i],
-					  valueFlags[i], rateFlags[i], inertias[i], stateBounds[i],
-					  rateUpLims[i], rateLwLims[i], accelUpLims[i], 
-					  accelLwLims[i], valueStateLpCoeffs[i], 
-					  valueErrorLpCoeffs[i], rateStateLpCoeffs[i],
-					  rateErrorLpCoeffs[i]);
-	}
-
-	// intial P = ekfInitErrorCov
-	ekf = new ExtendedKalmanFilter(6, ekfInitState, ekfInitP);
-
-	arm_matrix_instance_f32 Q;
-	arm_mat_init_f32(&Q, 6, 6, ekfQ);
-	ekf->setPredictFunc(4, systemDeltaState, systemGetJacobian, &Q);
-
-	arm_matrix_instance_f32 RNoCam, RWithCam;
-	arm_mat_init_f32(&RNoCam, 3, 3, ekfNoCamR);
-	arm_mat_init_f32(&RWithCam, 5, 5, ekfWithCamR);
-	ekf->setUpdateFunc(0, 3, sensorPredict, sensorGetJacobian, &RNoCam);
-	ekf->setUpdateFunc(1, 5, sensorPredictWithCam, sensorGetJacobianWithCam, &RWithCam);
-
-
-	float controlInput[4] = {0, 0, 0, 0};
-	arm_mat_init_f32(&controlInputMat, 4, 1, controlInput);
-
-	float sensorMeasurement[3] = {0, 0, 0};
-	arm_mat_init_f32(&sensorMeasurementMat, 3, 1, sensorMeasurement);
-
-	float sensorMeasurementWithCam[5] = {0, 0, 0, 0, 0};
-	arm_mat_init_f32(&sensorMeasurementMatWithCam, 5, 1, sensorMeasurementWithCam);
-}
+// 	for (int i = 0; i < NUM_DOFS; ++i)
+// 	{
+// 		dofs[i] = Dof(states[i], setpts[i], valueGains[i], rateGains[i],
+// 					  valueFlags[i], rateFlags[i], inertias[i], stateBounds[i],
+// 					  rateUpLims[i], rateLwLims[i], accelUpLims[i], 
+// 					  accelLwLims[i], valueStateLpCoeffs[i], 
+// 					  valueErrorLpCoeffs[i], rateStateLpCoeffs[i],
+// 					  rateErrorLpCoeffs[i]);
+// 	}
+// }
 
 // updates sensor inputs, runs the EKF, and updates the states in the DOFs
-void Vehicle::runFilter(const float x, const float y, const float z,
-				  	    const float xdot, const float ydot, const float roll,
-						const float pitch, const float yawImu, const float yawCam,
-						const float timestamp, const bool withCam, const FlightMode mode,
-						const bool usePredict)
+void Vehicle::runFilter(const float rotationMatrix[9], float yaw,
+			float imuX, float imuY, float imuZ, float currTime,
+			float lidar, float lidarTime,
+			float px4X, float px4Y, float px4Time, 
+			float cameraX, float cameraY, float cameraTime) 
 {
-	// record time and calc filter dt
-	lastPredTime = time;
-	time = timestamp;
-	float dt = time - lastPredTime;
+	preYawSin = arm_sin_f32(yaw);
+	preYawCos = arm_cos_f32(yaw);
+
+	// new IMU measurement
+	float imuArenaX, imuArenaY, imuArenaZ;
+	MaavMath::applyRotationMatrix(rotationMatrix, imuX, imuY, imuZ,
+		imuArenaX, imuArenaY, imuArenaZ);
 
 
-	// get sin/cos of Euler angles
-	preYawCos = arm_cos_f32(yawImu);
-	preYawSin = arm_sin_f32(yawImu);
-	float rollCos = arm_cos_f32(roll);
-	float rollSin = arm_sin_f32(roll);
-	float pitchCos = arm_cos_f32(pitch);
-	float pitchSin = arm_sin_f32(pitch);
-
-	// assign input to control vector
-	//controlInputMat.pData[0] = (mode == MANUAL) ? map(servoIn_getPulse(RC_CHAN3), 114000, 124000, 0, 46.6956) : dji.thrust;
-    controlInputMat.pData[0] = (mode == MANUAL) ? 0.0 : dji.thrust;
-    controlInputMat.pData[1] = (mode == MANUAL) ? 0.0 : dji.roll;
-	controlInputMat.pData[2] = (mode == MANUAL) ? 0.0 : dji.pitch;
-	controlInputMat.pData[3] = (mode == MANUAL) ? 0.0 : dji.yawRate;
-
-	// run filter
-	//if ((time - lastCorrTime) < 0.02) // predict if corrDt < 20 ms (rate of Lidar)
-	//if (dt < 0.015)
-	if (usePredict)
+	if (MaavMath::floatClose(currTime, lastPredictTime, 0.001)) 
 	{
-		ekf->predict(dt, mass, rollSin, rollCos, pitchSin, pitchCos,
-					 preYawSin, preYawCos, &controlInputMat);
+		kalmanFilter.predict(imuArenaX, imuArenaY, imuArenaZ, currTime - lastPredictTime);
+		lastPredictTime = currTime;
 	}
-	else // run correction bcz we have Lidar
+
+	// new lidar measurement
+	if (lidarTime != lastLidarTime) 
 	{
-		lastCorrTime = time;
-		if ((mode == AUTONOMOUS) && withCam)
-		{
-			sensorMeasurementMatWithCam.pData[0] = x;
-			sensorMeasurementMatWithCam.pData[1] = y;
-			sensorMeasurementMatWithCam.pData[2] = z * pitchCos * rollCos;
-			sensorMeasurementMatWithCam.pData[3] = (xdot * preYawCos) + (ydot * preYawSin);
-			sensorMeasurementMatWithCam.pData[4] = -(xdot * preYawSin) + (ydot * preYawCos);
+		float lidarArenaX, lidarArenaY, lidarArenaZ;
+		MaavMath::applyRotationMatrix(rotationMatrix, 0, 0, -lidar,
+			lidarArenaX, lidarArenaY, lidarArenaZ);
 
-			ekf->update(dt, 1, &sensorMeasurementMatWithCam); // update with camera vals
-		}
-		else
-		{
-			// assign input to sensor vector
-			sensorMeasurementMat.pData[0] = z * pitchCos * rollCos;
-			sensorMeasurementMat.pData[1] = (xdot * preYawCos) + (ydot * preYawSin);
-			sensorMeasurementMat.pData[2] = -(xdot * preYawSin) + (ydot * preYawCos);
+		kalmanFilter.correctLidar(lidarArenaZ, lidarArenaZ - lastLidarArenaZ);
 
-			ekf->update(dt, 0, &sensorMeasurementMat); // update without camera vals
-		}
+		lastLidarArenaZ = lidarArenaZ;
+		lastLidarTime = lidarTime;
 	}
-	// extract state and send to dofs
-	arm_matrix_instance_f32 ekfState = ekf->getState();
+
+	// new px4 measurement
+	if (px4Time != lastPx4Time) 
+	{
+		float px4ArenaX = arm_cos_f32(yaw) * px4X + arm_sin_f32(yaw) * px4Y;
+		float px4ArenaY = -arm_sin_f32(yaw) * px4X + arm_cos_f32(yaw) * px4Y;
+
+		kalmanFilter.correctPx4(px4ArenaX, px4ArenaY);
+
+		lastPx4Time = px4Time;
+	}
+
+	// new camera measurement
+	if (cameraTime != lastCameraTime) 
+	{
+		kalmanFilter.correctCamera(cameraX, cameraY);
+		lastCameraTime = cameraTime;
+	}
+
+
+	// // extract state and send to dofs
+	const arm_matrix_instance_f32& filterState = kalmanFilter.getState();
 	float state[NUM_DOFS][NUM_DOF_STATES];
-	for (int i = 0; i < NUM_DOFS; ++i) state[i][DOF_TIME] = time;
-	state[X_AXIS][DOF_VAL]   = ekfState.pData[0];
-	state[X_AXIS][DOF_RATE]  = ekfState.pData[3];
-	state[X_AXIS][DOF_ACCEL] = 0;
-	state[Y_AXIS][DOF_VAL]   = ekfState.pData[1];
-	state[Y_AXIS][DOF_RATE]  = ekfState.pData[4];
-	state[Y_AXIS][DOF_ACCEL] = 0;
-	state[Z_AXIS][DOF_VAL]   = -ekfState.pData[2];
-	state[Z_AXIS][DOF_RATE]  = -ekfState.pData[2] / dt;
-	state[Z_AXIS][DOF_ACCEL] = 0;
-	state[YAW][DOF_VAL]      = yawImu;
+	for (int i = 0; i < NUM_DOFS; ++i) state[i][DOF_TIME] = currTime;
+	state[X_AXIS][DOF_VAL]   = filterState.pData[0];
+	state[X_AXIS][DOF_RATE]  = filterState.pData[1];
+	state[X_AXIS][DOF_ACCEL] = imuArenaX;
+	state[Y_AXIS][DOF_VAL]   = filterState.pData[2];
+	state[Y_AXIS][DOF_RATE]  = filterState.pData[3];
+	state[Y_AXIS][DOF_ACCEL] = imuArenaY;
+	state[Z_AXIS][DOF_VAL]   = filterState.pData[4];
+	state[Z_AXIS][DOF_RATE]  = filterState.pData[5];
+	state[Z_AXIS][DOF_ACCEL] = imuArenaZ;
+	state[YAW][DOF_VAL]      = yaw;
 	state[YAW][DOF_RATE]     = 0;
 	state[YAW][DOF_ACCEL]    = 0;
 	setDofStates(state);
@@ -416,7 +291,7 @@ void Vehicle::calcDJIValues(const FlightMode mode)
 
 	for (int i = 0; i < 2; ++i) forceVe[i] = dofs[i].getUval();
 
-	forceVe[Z_AXIS] = (dofs[Z_AXIS].getRate() * mass) + (mass * GRAVITY);
+	forceVe[Z_AXIS] = (dofs[Z_AXIS].getRate() * mass) + (mass * MaavMath::Gravity);
 
 	// Convert earth frame forces to body frame
 	forceVy[X_AXIS] =  (preYawCos * forceVe[X_AXIS]) + (preYawSin * forceVe[Y_AXIS]);
@@ -463,18 +338,18 @@ void Vehicle::prepareLog(VehicleLog &vlog, PidLog plogs[NUM_DOFS][2])
 	for (int i = 0; i < NUM_DOFS; ++i) dofs[i].prepareLog(plogs[i]);
 	
 	// grab ekf state
-	arm_matrix_instance_f32 ekfState = ekf->getState();
+	// arm_matrix_instance_f32 ekfState = ekf->getState();
 	
 	// fill vehicle log
 	vlog.xUval	   = dofs[X_AXIS].getUval();
 	vlog.yUval     = dofs[Y_AXIS].getUval();
 	vlog.zUval     = dofs[Z_AXIS].getRate() * mass;
-	vlog.xFilt     = ekfState.pData[0];
-	vlog.yFilt     = ekfState.pData[1];
-	vlog.zFilt     = ekfState.pData[2];
-	vlog.xdotFilt  = ekfState.pData[3];
-	vlog.ydotFilt  = ekfState.pData[4];
-	vlog.zdotFilt  = ekfState.pData[5];
+	// vlog.xFilt     = ekfState.pData[0];
+	// vlog.yFilt     = ekfState.pData[1];
+	// vlog.zFilt     = ekfState.pData[2];
+	// vlog.xdotFilt  = ekfState.pData[3];
+	// vlog.ydotFilt  = ekfState.pData[4];
+	// vlog.zdotFilt  = ekfState.pData[5];
 	vlog.rollFilt  = 0;
 	vlog.pitchFilt = 0;
 	vlog.yawFilt   = 0;

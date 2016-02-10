@@ -4,8 +4,7 @@
 #include "Dji.hpp"
 #include "Dof.hpp"
 #include "Pid.hpp"
-#include "kalman/ExtendedKalmanFilter.hpp"
-#include "kalman/KalmanFunctions.hpp"
+#include "kalman/KalmanFilter.hpp"
 #include "FlightMode.hpp"
 #include "CtrlLogs.hpp"
 
@@ -25,6 +24,7 @@ public:
 	//Vehicle(){};
 	Vehicle(const float valueGains[NUM_DOFS][NUM_PID_GAINS],
 			const float rateGains[NUM_DOFS][NUM_PID_GAINS]);
+
 	Vehicle(const float states[NUM_DOFS][NUM_DOF_STATES],
 			const float setpts[NUM_DOFS][NUM_DOF_STATES],
 			const float valueGains[NUM_DOFS][NUM_PID_GAINS],
@@ -66,11 +66,12 @@ public:
 	void runCtrl(const FlightMode mode);
 	
 	// updates sensor inputs, runs the EKF, and updates the states in the DOFs
-	void runFilter(const float x, const float y, const float z,
-				   const float xdot, const float ydot, const float roll, 
-				   const float pitch, const float yawImu, const float yawCam,
-				   const float time, const bool withCam, const FlightMode mode,
-				   const bool usePredict);
+	// times are seconds
+	void runFilter(const float rotationMatrix[9], float yaw,
+			float imuX, float imuY, float imuZ, float currTime,
+			float lidar, float lidarTime,
+			float px4X, float px4Y, float px4Time,
+			float cameraX, float cameraY, float cameraTime);
 	
 	// returns the DJI values needed to send to it
 	Dji getDjiVals() const;
@@ -86,17 +87,17 @@ private:
 	Dji dji;					// DJI struct of values
 	float mass;					// Mass of the Vehicle
 	float rpLimits[NUM_ANGLES];	// max roll and pitch limit
-	float lastPredTime; 		// time of the last ekf predict
-	float lastCorrTime;			// time of the last ekf correct
-	float time;					// current time
+
 	float preYawSin;			// precaculated sin and cos (in next line) of current vehicle yaw
 	float preYawCos;
 	
 	// State Estimator Specific Members	
-	ExtendedKalmanFilter *ekf;
-	arm_matrix_instance_f32 controlInputMat;
-	arm_matrix_instance_f32 sensorMeasurementMat;
-	arm_matrix_instance_f32 sensorMeasurementMatWithCam;
+	KalmanFilter kalmanFilter;
+	float lastPredictTime;
+	float lastLidarTime;
+	float lastPx4Time;
+	float lastCameraTime;
+	float lastLidarArenaZ;
 	
 	// Calculates Roll, Pitch, Z Force, and Yaw Rate to send to the DJI
 	void calcDJIValues(const FlightMode mode);

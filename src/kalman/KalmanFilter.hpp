@@ -11,18 +11,7 @@
 #include <cassert>
 #include <cstdlib>
 #include <stdint.h>
-
-
-/**
- * @brief Returns the value of the matrix at the specified row and column
- *
- * @details Returns a value of the float at the spot given by the row and column which can be read or assigned as needed
- *
- * @param mat the matrix you want to get the element from
- * @param row the desired element's row
- * @param col the desired element's column
- */
-float mat_at(const arm_matrix_instance_f32& mat, uint16_t row, uint16_t col);
+#include "MaavMath.hpp"
 
 class KalmanFilter
 {
