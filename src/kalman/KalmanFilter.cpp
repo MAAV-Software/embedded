@@ -58,16 +58,13 @@ KalmanFilter::KalmanFilter() :
 {
     //initialize state matrix and set values to 0
 	mat_init(&state, n_size, 1);
-	mat_fill(state, 0);
 
     //initialize covariances matrix and set them to 0 too
 	mat_init(&P, n_size, n_size);
-	mat_fill(P, 0);
 
     //A = diag(1, 1, 1, 1, 1, 1)
     //note that A will have changes made to it within some of the functions
 	mat_init(&A, n_size, n_size);
-	mat_fill(A, 0);
 	mat_at(A, 0, 0) = 1;
 	mat_at(A, 1, 1) = 1;
 	mat_at(A, 2, 2) = 1;
@@ -77,7 +74,6 @@ KalmanFilter::KalmanFilter() :
 
     //initialize B and set values to 0
 	mat_init(&B, n_size, u_size);
-	mat_fill(B, 0);
 
     //init u and set to 0
     mat_init(&u, u_size, 1);
@@ -85,42 +81,35 @@ KalmanFilter::KalmanFilter() :
 
     //initialize and zero Q
 	mat_init(&Q, n_size, n_size);
-	mat_fill(Q, 0);
 
     //initialize and zero R for the lidar
 	mat_init(&R_lidar, l_size, l_size);
-	mat_fill(R_lidar, 0);
 
     //initialize and zero R for the Px4
 	mat_init(&R_Px4, p_size, p_size);
-	mat_fill(R_Px4, 0);
 
     //initialize and zero R for the camera
 	mat_init(&R_camera, c_size, c_size);
-	mat_fill(R_camera, 0);
 
     //H_lidar = [ 0 0 0 0 1 0; 0 0 0 0 0 1 ]
 	mat_init(&H_lidar, l_size, n_size);
-	mat_fill(H_lidar, 0);
 	mat_at(H_lidar, 0, 4) = 1;
 	mat_at(H_lidar, 1, 5) = 1;
 
     //H_Px4 = [ 0 1 0 0 0 0; 0 0 0 1 0 0 ]
 	mat_init(&H_Px4, p_size, n_size);
-	mat_fill(H_Px4, 0);
 	mat_at(H_lidar, 0, 1) = 1;
 	mat_at(H_lidar, 0, 4) = 1;
 
     //H_camera = [ 1 0 0 0 0 0; 0 0 1 0 0 0 ] TODO correct?
 	mat_init(&H_camera, c_size, n_size);
-	mat_fill(H_camera, 0);
     mat_at(H_camera, 0, 0) = 1;
     mat_at(H_camera, 1, 2) = 1;
 
     //initialize z matrices
     mat_init(&z_2by1, 2, 1);
 
-    //initialize a bunch of intermediate matrices TODO no need to bother filling these, right?
+    //initialize a bunch of intermediate matrices
 	mat_init(&inter_nby1, n_size, 1); //used as temporary variables
 	mat_init(&inter_nbyn, n_size, n_size);
 	mat_init(&inter_another_nbyn, n_size, n_size);
