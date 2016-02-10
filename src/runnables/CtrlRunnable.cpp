@@ -257,7 +257,6 @@ void CtrlRunnable::run()
 			ps->imu->getTimestamp(),
 			poseTimestamp,
 			ps->imu->getRefYaw());
-
 	ps->sdcard->write(msg, len);
 }
 
