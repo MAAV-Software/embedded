@@ -248,8 +248,7 @@ void CtrlRunnable::run()
 			ps->lidar->getTimestamp(),
 			ps->px4->getTimestamp(),
 			ps->imu->getTimestamp(),
-			poseTimestamp,
-			ps->imu->getRefYaw());
+			poseTimestamp);
 	ps->sdcard->write(msg, len);
 }
 
