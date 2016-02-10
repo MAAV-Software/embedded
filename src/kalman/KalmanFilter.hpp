@@ -22,7 +22,7 @@
  * @param row the desired element's row
  * @param col the desired element's column
  */
-float mat_noref_at(const arm_matrix_instance_f32& mat, uint16_t row, uint16_t col);
+float mat_at(const arm_matrix_instance_f32& mat, uint16_t row, uint16_t col);
 
 class KalmanFilter
 {

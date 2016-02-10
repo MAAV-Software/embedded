@@ -45,13 +45,13 @@ BOOST_AUTO_TEST_CASE(ctorTest)
     for (uint16_t r = 0; r < x.numRows; ++r)
     {
         for (uint16_t c = 0; c < x.numCols; ++c)
-            BOOST_CHECK_CLOSE(mat_noref_at(x, r, c), 0.0, 0.0001);
+            BOOST_CHECK_CLOSE(mat_at(x, r, c), 0.0, 0.0001);
     }
     
     for (uint16_t r = 0; r < P.numRows; ++r)
     {
         for (uint16_t c = 0; c < P.numCols; ++c)
-            BOOST_CHECK_CLOSE(mat_noref_at(P, r, c), 0.0, 0.0001);
+            BOOST_CHECK_CLOSE(mat_at(P, r, c), 0.0, 0.0001);
     }
 }
 
@@ -63,17 +63,17 @@ BOOST_AUTO_TEST_CASE(ptest)
 	const arm_matrix_instance_f32& x = f.kf.getState();
     const arm_matrix_instance_f32& P = f.kf.getCovar();
 
-    BOOST_CHECK_CLOSE(mat_noref_at(x, 0, 0), 0.00000, 100);
-    BOOST_CHECK_CLOSE(mat_noref_at(x, 1, 0), 0.00010, 100);
-    BOOST_CHECK_CLOSE(mat_noref_at(x, 2, 0), 0.00000, 100);
-    BOOST_CHECK_CLOSE(mat_noref_at(x, 3, 0), 0.01000, 100);
-    BOOST_CHECK_CLOSE(mat_noref_at(x, 4, 0), 0.00000, 100);
-    BOOST_CHECK_CLOSE(mat_noref_at(x, 5, 0), 0.00001, 100);
+    BOOST_CHECK_CLOSE(mat_at(x, 0, 0), 0.00000, 1);
+    BOOST_CHECK_CLOSE(mat_at(x, 1, 0), 0.00010, 1);
+    BOOST_CHECK_CLOSE(mat_at(x, 2, 0), 0.00000, 1);
+    BOOST_CHECK_CLOSE(mat_at(x, 3, 0), 0.01000, 1);
+    BOOST_CHECK_CLOSE(mat_at(x, 4, 0), 0.00000, 1);
+    BOOST_CHECK_CLOSE(mat_at(x, 5, 0), 0.00001, 1);
   
     for (uint16_t r = 0; r < P.numRows; ++r)
     { 
         for (uint16_t c = 0; c < P.numCols; ++c)
-            BOOST_CHECK_CLOSE(mat_noref_at(P, r, c), 0.0, 0.0001);
+            BOOST_CHECK_CLOSE(mat_at(P, r, c), 0.0, 0.0001);
     }
 }
 
@@ -88,13 +88,13 @@ BOOST_AUTO_TEST_CASE(resetTest)
     for (uint16_t r = 0; r < x.numRows; ++r)
     {
         for (uint16_t c = 0; c < x.numCols; ++c)
-            BOOST_CHECK_CLOSE(mat_noref_at(x, r, c), 0.0, 0.0001);
+            BOOST_CHECK_CLOSE(mat_at(x, r, c), 0.0, 0.0001);
     }
     
     for (uint16_t r = 0; r < P.numRows; ++r)
     {
         for (uint16_t c = 0; c < P.numCols; ++c)
-            BOOST_CHECK_CLOSE(mat_noref_at(P, r, c), 0.0, 0.0001);
+            BOOST_CHECK_CLOSE(mat_at(P, r, c), 0.0, 0.0001);
     }
 }
 

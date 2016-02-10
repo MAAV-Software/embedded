@@ -38,7 +38,7 @@ inline static float& mat_at(arm_matrix_instance_f32& mat, uint16_t row, uint16_t
 	return mat.pData[row * mat.numCols + col];
 }
 
-float mat_noref_at(const arm_matrix_instance_f32& mat, uint16_t row, uint16_t col)
+float mat_at(const arm_matrix_instance_f32& mat, uint16_t row, uint16_t col)
 {
 	return mat.pData[row * mat.numCols + col];
 }
