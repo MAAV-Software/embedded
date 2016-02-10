@@ -4,63 +4,6 @@
 
 using namespace std;
 
-<<<<<<< 345592df02c4cd804801aedb134e7745bace8304
-/** 
- * @brief Simple function for initializing a matrix
- *
- * @details Basically just calls arm_mat_init_f32, initializing memory as necessary
- *
- * @param mat a pointer to the matrix being initialized
- * @param rows number of rows in the desired matrix
- * @param cols number of cols in the desired matrix
- */
-inline static void mat_init(arm_matrix_instance_f32* mat, uint16_t rows, uint16_t cols)
-{
-	arm_mat_init_f32(mat, rows, cols, (float*)calloc((rows * cols), sizeof(float)));
-}
-
-inline static void mat_destroy(arm_matrix_instance_f32 &mat) 
-{
-    free(mat.pData);
-    mat.pData = NULL;
-}
-
-/**
- * @brief Returns a reference to the value of the matrix at the specified row and column
- *
- * @details Returns a reference to the float at the spot given by the row and column which can be read or assigned as needed
- *
- * @param mat the matrix you want to get the element from
- * @param row the desired element's row
- * @param col the desired element's column
- */
-inline static float& mat_at(arm_matrix_instance_f32& mat, uint16_t row, uint16_t col)
-{
-	return mat.pData[row * mat.numCols + col];
-}
-
-float mat_at(const arm_matrix_instance_f32& mat, uint16_t row, uint16_t col)
-{
-	return mat.pData[row * mat.numCols + col]; 
-}
-
-inline static void mat_fill(arm_matrix_instance_f32& mat, float toFill)
-{
-	for (uint16_t i = 0; i < mat.numRows * mat.numCols; i++) 
-		mat.pData[i] = toFill;
-}
-
-inline static void mat_copy(const arm_matrix_instance_f32 &src, arm_matrix_instance_f32 &dest) {
-    #ifdef LINUX
-        assert(src.numCols == dest.numCols && src.numRows == dest.numRows);
-    #endif
-    for(uint16_t i = 0; i < src.numRows * src.numCols; ++i) {
-        dest.pData[i] = src.pData[i];
-    }
-}
-
-=======
->>>>>>> using kalman filter in vehicle class, added maav math
 KalmanFilter::KalmanFilter() :
 	n_size(6),
 	u_size(3),
@@ -161,27 +104,27 @@ KalmanFilter::~KalmanFilter()
 }
 
 void KalmanFilter::setQ(float val1, float val2, float val3, float val4, float val5, float val6) {
-	mat_at(R_lidar, 0, 0) = val1;
-	mat_at(R_lidar, 1, 1) = val2;
-	mat_at(R_lidar, 2, 2) = val3;
-	mat_at(R_lidar, 3, 3) = val4;
-	mat_at(R_lidar, 4, 4) = val5;
-	mat_at(R_lidar, 5, 5) = val6;
+	MaavMath::mat_at(R_lidar, 0, 0) = val1;
+	MaavMath::mat_at(R_lidar, 1, 1) = val2;
+	MaavMath::mat_at(R_lidar, 2, 2) = val3;
+	MaavMath::mat_at(R_lidar, 3, 3) = val4;
+	MaavMath::mat_at(R_lidar, 4, 4) = val5;
+	MaavMath::mat_at(R_lidar, 5, 5) = val6;
 }
 
 void KalmanFilter::setR_lidar(float val1, float val2) {
-	mat_at(R_lidar, 0, 0) = val1;
-	mat_at(R_lidar, 1, 1) = val2;
+	MaavMath::mat_at(R_lidar, 0, 0) = val1;
+	MaavMath::mat_at(R_lidar, 1, 1) = val2;
 }
 
 void KalmanFilter::setR_Px4(float val1, float val2) {
-	mat_at(R_Px4, 0, 0) = val1;
-	mat_at(R_Px4, 1, 1) = val2;
+	MaavMath::mat_at(R_Px4, 0, 0) = val1;
+	MaavMath::mat_at(R_Px4, 1, 1) = val2;
 }
 
 void KalmanFilter::setR_camera(float val1, float val2) {
-	mat_at(R_camera, 0, 0) = val1;
-	mat_at(R_camera, 1, 1) = val2;
+	MaavMath::mat_at(R_camera, 0, 0) = val1;
+	MaavMath::mat_at(R_camera, 1, 1) = val2;
 }
 
 void KalmanFilter::predict(float xddot, float yddot, float zddot, float dt)
