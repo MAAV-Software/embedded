@@ -63,7 +63,7 @@ KalmanFilter::KalmanFilter() :
 	u_size(3),
 	l_size(2),
 	p_size(2),
-	c_size(3) 
+	c_size(2)
 {
     //initialize state matrix and set values to 0
 	mat_init(&state, n_size, 1);
@@ -155,6 +155,30 @@ KalmanFilter::~KalmanFilter()
 	mat_destroy(inter_2byn);
 	mat_destroy(inter_2by2);
 	mat_destroy(inter_another_2by2);
+}
+
+void KalmanFilter::setQ(float val1, float val2, float val3, float val4, float val5, float val6) {
+	mat_at(R_lidar, 0, 0) = val1;
+	mat_at(R_lidar, 1, 1) = val2;
+	mat_at(R_lidar, 2, 2) = val3;
+	mat_at(R_lidar, 3, 3) = val4;
+	mat_at(R_lidar, 4, 4) = val5;
+	mat_at(R_lidar, 5, 5) = val6;
+}
+
+void KalmanFilter::setR_lidar(float val1, float val2) {
+	mat_at(R_lidar, 0, 0) = val1;
+	mat_at(R_lidar, 1, 1) = val2;
+}
+
+void KalmanFilter::setR_Px4(float val1, float val2) {
+	mat_at(R_Px4, 0, 0) = val1;
+	mat_at(R_Px4, 1, 1) = val2;
+}
+
+void KalmanFilter::setR_camera(float val1, float val2) {
+	mat_at(R_camera, 0, 0) = val1;
+	mat_at(R_camera, 1, 1) = val2;
 }
 
 void KalmanFilter::predict(float xddot, float yddot, float zddot, float dt)

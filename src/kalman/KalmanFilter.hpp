@@ -47,6 +47,17 @@ public:
 	void correctCamera(const float x, const float y);
 
 	/*
+	 * Allows for setting Q and R matrices
+	 */
+	void setQ(float val1, float val2, float val3, float val4, float val5, float val6);
+
+	void setR_lidar(float val1, float val2);
+
+	void setR_Px4(float val1, float val2);
+
+	void setR_camera(float val1, float val2);
+
+	/*
 	 * Returns a pointer to the state data. Const because we do not want
 	 * people messing with the data.
 	 */
