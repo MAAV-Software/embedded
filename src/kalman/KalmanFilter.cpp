@@ -85,7 +85,7 @@ KalmanFilter::KalmanFilter() :
 	mat_init(&B, n_size, u_size);
 
     //init u and set to 0
-    mat_init(&u, u_size, 1);
+   	mat_init(&u, u_size, 1);
 
     //initialize and zero Q
 	mat_init(&Q, n_size, n_size);
