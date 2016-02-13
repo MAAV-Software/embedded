@@ -53,7 +53,7 @@ KalmanFilter::KalmanFilter() :
     //H_Px4 = [ 0 1 0 0 0 0; 0 0 0 1 0 0 ]
 	MaavMath::mat_init(&H_Px4, p_size, n_size);
 	MaavMath::mat_at(H_lidar, 0, 1) = 1;
-	MaavMath::mat_at(H_lidar, 0, 4) = 1;
+	MaavMath::mat_at(H_lidar, 1, 3) = 1;
 
     //H_camera = [ 1 0 0 0 0 0; 0 0 1 0 0 0 ] TODO correct?
 	MaavMath::mat_init(&H_camera, c_size, n_size);
@@ -104,12 +104,12 @@ KalmanFilter::~KalmanFilter()
 }
 
 void KalmanFilter::setQ(float val1, float val2, float val3, float val4, float val5, float val6) {
-	MaavMath::mat_at(R_lidar, 0, 0) = val1;
-	MaavMath::mat_at(R_lidar, 1, 1) = val2;
-	MaavMath::mat_at(R_lidar, 2, 2) = val3;
-	MaavMath::mat_at(R_lidar, 3, 3) = val4;
-	MaavMath::mat_at(R_lidar, 4, 4) = val5;
-	MaavMath::mat_at(R_lidar, 5, 5) = val6;
+	MaavMath::mat_at(Q, 0, 0) = val1;
+	MaavMath::mat_at(Q, 1, 1) = val2;
+	MaavMath::mat_at(Q, 2, 2) = val3;
+	MaavMath::mat_at(Q, 3, 3) = val4;
+	MaavMath::mat_at(Q, 4, 4) = val5;
+	MaavMath::mat_at(Q, 5, 5) = val6;
 }
 
 void KalmanFilter::setR_lidar(float z, float zdot) {
@@ -176,7 +176,7 @@ void KalmanFilter::correct2(const arm_matrix_instance_f32& z, const CorrectionTy
             R = &R_camera;
             break;
         default:
-            //Really, we probably want to throw some sort of error here. Not cure exactly how that should happen
+            //Really, we probably want to throw some sort of error here. Not sure exactly how that should happen
             break;
     }
 
