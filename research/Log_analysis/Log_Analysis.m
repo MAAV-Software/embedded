@@ -1,7 +1,7 @@
 close all
 clc
 clf
-log = load('./W16-02-13-NewFilter/LOG88.TXT');
+log = load('./W16-02-13-NewFilter/LOG93.TXT');
 
 % parsing the data
 Time          = log(:,1);
@@ -324,7 +324,7 @@ ylabel('Az');
 
 figure(100)
 hold on;
-plot(Time, Lidar_Dist, 'g');
+plot(Time, Lidar_Dist, 'k');
 plot(Time, -Filter_Z, '--b');
 hold off;
 ylabel('Z Filter')
@@ -332,7 +332,7 @@ xlabel('Time')
 
 figure(101)
 hold on;
-plot(Time, lidarTime, 'g');
+plot(Time(2:end), lidarTime(2:end), 'g');
 ylabel('Latest Lidar Timestamp');
 xlabel('Time');
 hold off;
