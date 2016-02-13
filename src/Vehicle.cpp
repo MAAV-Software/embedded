@@ -152,7 +152,7 @@ void Vehicle::runFilter(const float rotationMatrix[9], float yaw,
 		imuArenaX, imuArenaY, imuArenaZ);
 
 
-	if (MaavMath::floatClose(currTime, lastPredictTime, 0.001)) 
+	if (!MaavMath::floatClose(currTime, lastPredictTime, 0.001))
 	{
 		kalmanFilter.predict(imuArenaX, imuArenaY, imuArenaZ, currTime - lastPredictTime);
 		lastPredictTime = currTime;

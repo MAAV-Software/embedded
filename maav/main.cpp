@@ -32,7 +32,6 @@
 
 #include "servoIn.hpp"
 #include "switch.h"
-#include "utility.h"
 #include "PPM.h"
 #include "time_util.h"
 #include "rc.hpp"
