@@ -156,18 +156,17 @@ void Vehicle::runFilter(const float rotationMatrix[9], float yaw,
 			float px4X, float px4Y, float px4Time, 
 			float cameraX, float cameraY, float cameraTime) 
 {
-	preYawSin = arm_sin_f32(yaw);
-	preYawCos = arm_cos_f32(yaw);
+	currYawSin = arm_sin_f32(yaw);
+	currYawCos = arm_cos_f32(yaw);
 
 	// new IMU measurement
 	float imuArenaX, imuArenaY, imuArenaZ;
 	MaavMath::applyRotationMatrix(rotationMatrix, imuX, imuY, imuZ,
 		imuArenaX, imuArenaY, imuArenaZ);
 
-
 	if (!MaavMath::floatClose(currTime, lastPredictTime, 0.001))
 	{
-		kalmanFilter.predict(imuArenaX, imuArenaY, imuArenaZ, currTime - lastPredictTime);
+		kalmanFilter.predict(imuArenaX, imuArenaY, imuArenaZ - MaavMath::Gravity, currTime - lastPredictTime);
 		lastPredictTime = currTime;
 	}
 
@@ -187,8 +186,8 @@ void Vehicle::runFilter(const float rotationMatrix[9], float yaw,
 	// new px4 measurement
 	if (px4Time != lastPx4Time) 
 	{
-		float px4ArenaX = arm_cos_f32(yaw) * px4X + arm_sin_f32(yaw) * px4Y;
-		float px4ArenaY = -arm_sin_f32(yaw) * px4X + arm_cos_f32(yaw) * px4Y;
+		float px4ArenaX = currYawCos * px4X + currYawSin * px4Y;
+		float px4ArenaY = -currYawSin * px4X + currYawCos * px4Y;
 
 		kalmanFilter.correctPx4(px4ArenaX, px4ArenaY);
 
@@ -307,8 +306,8 @@ void Vehicle::calcDJIValues(const FlightMode mode)
 	forceVe[Z_AXIS] = (dofs[Z_AXIS].getRate() * mass) + (mass * MaavMath::Gravity);
 
 	// Convert earth frame forces to body frame
-	forceVy[X_AXIS] =  (preYawCos * forceVe[X_AXIS]) + (preYawSin * forceVe[Y_AXIS]);
-	forceVy[Y_AXIS] = -(preYawSin * forceVe[X_AXIS]) + (preYawCos * forceVe[Y_AXIS]);
+	forceVy[X_AXIS] =  (currYawCos * forceVe[X_AXIS]) + (currYawSin * forceVe[Y_AXIS]);
+	forceVy[Y_AXIS] = -(currYawSin * forceVe[X_AXIS]) + (currYawCos * forceVe[Y_AXIS]);
 	forceVy[Z_AXIS] = forceVe[Z_AXIS];
 
 	// calculate ||F|| = sqrt(Fx^2 + Fy^2 + Fz^2) (L2-Norm)

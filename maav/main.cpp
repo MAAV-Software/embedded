@@ -61,9 +61,6 @@ using namespace std;
 ////////////////////////////// MAIN FUNCTION ///////////////////////////////////
 int main()
 {
-	//TODO remove Kalman filter
-
-	KalmanFilter kf;
 
 	MAP_FPULazyStackingEnable();
 	MAP_FPUEnable();

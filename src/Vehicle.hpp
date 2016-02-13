@@ -88,8 +88,8 @@ private:
 	float mass;					// Mass of the Vehicle
 	float rpLimits[NUM_ANGLES];	// max roll and pitch limit
 
-	float preYawSin;			// precaculated sin and cos (in next line) of current vehicle yaw
-	float preYawCos;
+	float currYawSin;			// precaculated sin and cos (in next line) of current vehicle yaw
+	float currYawCos;
 	
 	// State Estimator Specific Members	
 	KalmanFilter kalmanFilter;
