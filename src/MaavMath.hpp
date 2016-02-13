@@ -32,7 +32,7 @@ bool floatClose(float f1, float f2, float threshold);
  * @param row the desired element's row
  * @param col the desired element's column
  */
-float mat_noref_at(const arm_matrix_instance_f32& mat, uint16_t row, uint16_t col);
+float mat_at(const arm_matrix_instance_f32& mat, uint16_t row, uint16_t col);
 
 /** 
  * @brief Simple function for initializing a matrix
@@ -58,7 +58,7 @@ void mat_destroy(arm_matrix_instance_f32 &mat);
  */
 float& mat_at(arm_matrix_instance_f32& mat, uint16_t row, uint16_t col);
 
-float mat_noref_at(const arm_matrix_instance_f32& mat, uint16_t row, uint16_t col);
+float mat_at(const arm_matrix_instance_f32& mat, uint16_t row, uint16_t col);
 
 void mat_fill(arm_matrix_instance_f32& mat, float toFill);
 

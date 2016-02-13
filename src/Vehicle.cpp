@@ -22,6 +22,7 @@
 //#endif
 
 using namespace std;
+using MaavMath::mat_at;
 
 Vehicle::Vehicle(const float valueGains[NUM_DOFS][NUM_PID_GAINS],
 				 const float rateGains[NUM_DOFS][NUM_PID_GAINS])
@@ -86,6 +87,18 @@ Vehicle::Vehicle(const float valueGains[NUM_DOFS][NUM_PID_GAINS],
 					  valueErrorLpCoeffs[i], rateStateLpCoeffs[i],
 					  rateErrorLpCoeffs[i]);
 	}
+
+	//initializing Q and R matrices
+	//                x    xdot  y    ydot  z     zdot
+	kalmanFilter.setQ(0.1, 0.01, 0.1, 0.01, 0.07, 0.9);
+	//                      z        zdot
+	kalmanFilter.setR_lidar(0.47236, 0.47236);
+	//                    xdot ydot
+	kalmanFilter.setR_Px4(0.1, 0.1);
+	//camera not in use
+	kalmanFilter.setR_camera(0.0, 0.0);
+
+
 
 }
 
@@ -338,18 +351,18 @@ void Vehicle::prepareLog(VehicleLog &vlog, PidLog plogs[NUM_DOFS][2])
 	for (int i = 0; i < NUM_DOFS; ++i) dofs[i].prepareLog(plogs[i]);
 	
 	// grab ekf state
-	// arm_matrix_instance_f32 ekfState = ekf->getState();
+	arm_matrix_instance_f32 kfState = kalmanFilter.getState();
 	
 	// fill vehicle log
 	vlog.xUval	   = dofs[X_AXIS].getUval();
 	vlog.yUval     = dofs[Y_AXIS].getUval();
 	vlog.zUval     = dofs[Z_AXIS].getRate() * mass;
-	// vlog.xFilt     = ekfState.pData[0];
-	// vlog.yFilt     = ekfState.pData[1];
-	// vlog.zFilt     = ekfState.pData[2];
-	// vlog.xdotFilt  = ekfState.pData[3];
-	// vlog.ydotFilt  = ekfState.pData[4];
-	// vlog.zdotFilt  = ekfState.pData[5];
+	vlog.xFilt     = mat_at(kfState, 0, 0);
+	vlog.xdotFilt  = mat_at(kfState, 0, 1);
+	vlog.yFilt     = mat_at(kfState, 0, 2);
+	vlog.ydotFilt  = mat_at(kfState, 0, 3);
+	vlog.zFilt     = mat_at(kfState, 0, 4);
+	vlog.zdotFilt  = mat_at(kfState, 0, 5);
 	vlog.rollFilt  = 0;
 	vlog.pitchFilt = 0;
 	vlog.yawFilt   = 0;

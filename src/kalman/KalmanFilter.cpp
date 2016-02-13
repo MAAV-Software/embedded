@@ -112,19 +112,19 @@ void KalmanFilter::setQ(float val1, float val2, float val3, float val4, float va
 	MaavMath::mat_at(R_lidar, 5, 5) = val6;
 }
 
-void KalmanFilter::setR_lidar(float val1, float val2) {
-	MaavMath::mat_at(R_lidar, 0, 0) = val1;
-	MaavMath::mat_at(R_lidar, 1, 1) = val2;
+void KalmanFilter::setR_lidar(float z, float zdot) {
+	MaavMath::mat_at(R_lidar, 0, 0) = z;
+	MaavMath::mat_at(R_lidar, 1, 1) = zdot;
 }
 
-void KalmanFilter::setR_Px4(float val1, float val2) {
-	MaavMath::mat_at(R_Px4, 0, 0) = val1;
-	MaavMath::mat_at(R_Px4, 1, 1) = val2;
+void KalmanFilter::setR_Px4(float xdot, float ydot) {
+	MaavMath::mat_at(R_Px4, 0, 0) = xdot;
+	MaavMath::mat_at(R_Px4, 1, 1) = ydot;
 }
 
-void KalmanFilter::setR_camera(float val1, float val2) {
-	MaavMath::mat_at(R_camera, 0, 0) = val1;
-	MaavMath::mat_at(R_camera, 1, 1) = val2;
+void KalmanFilter::setR_camera(float x, float y) {
+	MaavMath::mat_at(R_camera, 0, 0) = x;
+	MaavMath::mat_at(R_camera, 1, 1) = y;
 }
 
 void KalmanFilter::predict(float xddot, float yddot, float zddot, float dt)
