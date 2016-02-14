@@ -7,10 +7,10 @@ log = load('~/maav/ctrl/test/bin/LKLOG57.TXT');
 Time          = log(:,1);
 LidarDist     = log(:,2);
 xFilt         = log(:,3);
-yFilt         = log(:,4);
-zFilt         = log(:,5);
-xdotFilt      = log(:,6);
-ydotFilt      = log(:,7);
+yFilt         = log(:,5);
+zFilt         = log(:,7);
+xdotFilt      = log(:,4);
+ydotFilt      = log(:,6);
 zdotFilt      = log(:,8);
 
 
