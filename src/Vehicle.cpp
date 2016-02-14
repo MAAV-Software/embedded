@@ -283,6 +283,18 @@ void Vehicle::setGains(const float valueGains[NUM_DOFS][NUM_PID_GAINS],
 		dofs[i].setGains(valueGains[i], rateGains[i]);
 }
 
+void Vehicle::setQR(const float qx, const float qxd, 
+		const float qy, const float qyd,
+		const float qz, const float qzd,
+		const float rlidarz, const float rlidarzd,
+		const float rpx4xd, const float rpx4yd,
+		const float rcamx, const float rcamy)
+{
+	kalmanFilter.setQ(qx, qxd, qy, qyd, qz, qzd);
+	kalmanFilter.setR_lidar(rlidarz, rlidarzd);
+	kalmanFilter.setR_Px4(rpx4xd, rpx4yd);
+	kalmanFilter.setR_camera(rcamx, rcamy);
+}
 
 void Vehicle::setDofStates(const float state[NUM_DOFS][NUM_DOF_STATES])
 {

@@ -62,6 +62,14 @@ public:
 	void setGains(const float valueGains[NUM_DOFS][NUM_PID_GAINS],
 				  const float rateGains[NUM_DOFS][NUM_PID_GAINS]);
 	
+	// Assigns the Q and R matricies within the Kalman Filter for this Vehicle
+	void setQR(const float qx, const float qxd, 
+		const float qy, const float qyd,
+		const float qz, const float qzd,
+		const float rlidarz, const float rlidarzd,
+		const float rpx4xd, const float rpx4yd,
+		const float rcamx, const float rcamy);
+
 	// Executes all PID control for all DOFs based on flight mode and calcs DJI vals
 	void runCtrl(const FlightMode mode);
 	

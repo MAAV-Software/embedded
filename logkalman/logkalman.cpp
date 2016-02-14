@@ -6,11 +6,25 @@
 #include "Vehicle.hpp"
 #include "MaavMath.hpp"
 
+
 using namespace MaavMath;
 using namespace std;
 
 int main(int argc, char **argv)
 {
+//Q AND R MATRIX SETTINGS======================================================
+	const float qx  = 0.5;
+	const float qxd = 0.1;
+	const float qy  = 0.5;
+	const float qyd = 0.1;
+	const float qz  = 0.1;
+	const float qzd = 0.1;
+	const float rlidarz  = 0.05;
+	const float rlidarzd = 0.05;
+	const float rpx4xd = 0.8;
+	const float rpx4yd = 0.8;
+
+//ARGUMENT HANDLING============================================================
 	if(argc < 2)
 	{
 		cout << "logkalman logfile outfile" << endl;
@@ -19,6 +33,7 @@ int main(int argc, char **argv)
 	ofstream outfile(argv[2]);//open second parameter as output file
 	if(!logfile) return 1; //could not open
 
+//VARIABLES====================================================================
 	//Fake PID gains to instantiate Vehicle
 	float valueGains[NUM_DOFS][NUM_PID_GAINS];
 	float rateGains[NUM_DOFS][NUM_PID_GAINS];
@@ -130,7 +145,12 @@ int main(int argc, char **argv)
 	float refYaw;
 
 	Vehicle v(valueGains, rateGains);
+	v.setQR(qx, qxd, qy, qyd, qz, qzd, 
+		rlidarz, rlidarzd, 
+		rpx4xd, rpx4yd, 
+		0.0, 0.0);
 
+//MAIN LOOP====================================================================
 	while(	//read data from log
 		logfile >>
 			Time            >>
@@ -244,6 +264,8 @@ int main(int argc, char **argv)
 		//log the state estimate
 		v.prepareLog(vlog, plogs);
 		outfile <<
+			Time << "\t" <<
+			Lidar_Dist << "\t" <<
 			vlog.xFilt << "\t" <<
 			vlog.xdotFilt << "\t" <<
 			vlog.yFilt << "\t" <<
@@ -251,6 +273,8 @@ int main(int argc, char **argv)
 			vlog.zFilt << "\t" <<
 			vlog.zdotFilt << endl;
 	}
+
+//CLEANUP======================================================================
 	outfile.close();
 	logfile.close();
 	return 0;
