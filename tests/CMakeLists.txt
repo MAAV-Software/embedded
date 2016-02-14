@@ -37,7 +37,12 @@ set(TESTS
 #	KalmanTest
 	VehicleSwTest
 	KalmanUnitTest
+	VehicleRunFilterTest
     )
+
+# Log file for VehicleRunFilterTest
+configure_file(RunFilterTestLog.TXT
+	${CMAKE_CURRENT_BINARY_DIR}/RunFilterTestLog.TXT @ONLY)
 
 foreach(test ${TESTS})
 	add_executable(${test} ${test}.cpp)
