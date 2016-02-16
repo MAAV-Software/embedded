@@ -16,10 +16,10 @@ build
 # folders
 #Debug
 #targetConfigs
-#.cproject
+.cproject
 #.launches
 #.project
-#.settings
+.settings
 #.ccsproject
 
 # latex temporary files
