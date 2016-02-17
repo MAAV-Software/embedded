@@ -78,7 +78,9 @@ BOOST_AUTO_TEST_CASE(RunFilterRealDataTest)
 
 	//Log File to test with
 	ifstream logfile("RunFilterTestLog.TXT");
-	
+    BOOST_CHECK(logfile);
+
+
 	//Log Reading Variables
 	float Time          ;
 	float Mode          ;
@@ -172,15 +174,15 @@ BOOST_AUTO_TEST_CASE(RunFilterRealDataTest)
 	float poseTime;
 	float refYaw;
 
-	float correct[6][6] = 
+    float correct[6][6] = 
     {
-        {0.000000,   0.000000,  -0.000134,  -0.000255,  -0.000408,  -0.000606},
-        {0.000000,  -0.003837,  -0.008651,  -0.010501,  -0.012342,  -0.014493},
-        {0.000000,   0.000000,  -0.000133,  -0.000253,  -0.000406,  -0.000605},
-        {0.000000,  -0.003796,  -0.008557,  -0.010521,  -0.012481,  -0.014654},
-        {0.000000,   0.000000,   0.000053,   0.000108,   0.000182,   0.000193},
-        {0.000000,   0.001907,   0.003940,   0.004945,   0.006023,   0.006025},
-	};
+        {0.000000,   0.000000,  -0.000239,  -0.000454,  -0.000728,  -0.001084}, 
+        {0.000000,  -0.006826,  -0.015389,  -0.018818,  -0.022237,  -0.026125}, 
+        {0.000000,   0.000000,  -0.000065,  -0.000123,  -0.000198,  -0.000297}, 
+        {0.000000,  -0.001844,  -0.004156,  -0.005179,  -0.006203,  -0.007291}, 
+        {0.000000,   0.000000,   0.000054,   0.000110,   0.000186,   0.000197}, 
+        {0.000000,   0.001944,   0.004015,   0.005041,   0.006140,   0.006142}, 
+    };
 
 	//Check initial state
 	f.v1->prepareLog(f.vlog, f.plog);
@@ -302,24 +304,27 @@ BOOST_AUTO_TEST_CASE(RunFilterRealDataTest)
 			Imu_AccX, Imu_AccY, Imu_AccZ, Time,
 			Lidar_Dist, lidarTime,
 			Px4_Xdot, Px4_Ydot, px4Time, 
-			0.0, 0.0, 0.0);
+			Camera_X, Camera_Y, Camera_T);
 
 		//Compare the output
 		f.v1->prepareLog(f.vlog, f.plog);
-    
-        cout << "\nITER " << i << "\n";
+
+    /*    
+        cout << "\nITER " << i << " Time " << Time << " \n";
         cout << f.vlog.xFilt << " " << f.vlog.xdotFilt << " ";
         cout << f.vlog.yFilt << " " << f.vlog.ydotFilt << " ";
         cout << f.vlog.zFilt << " " << f.vlog.zdotFilt << "\n";
-        cout << correct[i][0] << " " << correct[i][1] << " ";
-        cout << correct[i][2] << " " << correct[i][3] << " ";
-        cout << correct[i][4] << " " << correct[i][5] << "\n";
-        
-		BOOST_CHECK(abs(f.vlog.xFilt - correct[i][0])    < 0.000001);
-		BOOST_CHECK(abs(f.vlog.xdotFilt - correct[i][1]) < 0.000001);
-		BOOST_CHECK(abs(f.vlog.yFilt - correct[i][2])    < 0.000001);
-		BOOST_CHECK(abs(f.vlog.ydotFilt - correct[i][3]) < 0.000001);
-		BOOST_CHECK(abs(f.vlog.zFilt - correct[i][4])    < 0.000001);
-		BOOST_CHECK(abs(f.vlog.zdotFilt - correct[i][5]) < 0.000001);
+        cout << correct[0][i] << " " << correct[1][i] << " ";
+        cout << correct[2][i] << " " << correct[3][i] << " ";
+        cout << correct[4][i] << " " << correct[5][i] << "\n";
+      */  
+		BOOST_CHECK(abs(f.vlog.xFilt -    correct[0][i]) < 0.001);
+		BOOST_CHECK(abs(f.vlog.xdotFilt - correct[1][i]) < 0.001);
+		BOOST_CHECK(abs(f.vlog.yFilt -    correct[2][i]) < 0.001);
+		BOOST_CHECK(abs(f.vlog.ydotFilt - correct[3][i]) < 0.001);
+		BOOST_CHECK(abs(f.vlog.zFilt -    correct[4][i]) < 0.001);
+		BOOST_CHECK(abs(f.vlog.zdotFilt - correct[5][i]) < 0.001);
 	}
+
+    logfile.close();
 }

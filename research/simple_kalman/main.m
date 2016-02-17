@@ -46,7 +46,7 @@ for i = 1:log_length
     
     % rotation matrix that turns vectors in quadcopter frame to earth frame
     rotMat = reshape(Imu_Rot(i, :), [3, 3]);
-    %rotMat = rotMat';
+    rotMat = rotMat';
     
     % rotating imu
     imu = [Imu_AccX(i), Imu_AccY(i), Imu_AccZ(i)]';
@@ -123,7 +123,9 @@ plot(Time, x_hist(4, :), Time, px4_y(:), '*');
 legend('filtered y rate', 'px4 y rate');
 
 figure(5);
-plot(Time, x_hist(1, :), Time, x_hist(3, :));
-legend('filtered x', 'filtered y');
+plot(Time, x_hist(1, :));
+legend('filtered x');
 
-
+figure(6);
+plot(Time, x_hist(3, :));
+legend('filtered y');
