@@ -16,7 +16,7 @@ const float Gravity = 9.80665f;
 const float Pi = 3.14159265358979323846264338327950288419716939937510582097494f;
 const float Pi_Over_Two = Pi / 2.0f;
 
-void applyRotationMatrix(const float rotationMatrix[9],
+void applyTransRotMatrix(const float rotationMatrix[9],
 	float x_in, float y_in, float z_in,
 	float& x_out, float& y_out, float& z_out);
 
