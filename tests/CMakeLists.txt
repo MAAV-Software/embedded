@@ -43,6 +43,8 @@ set(TESTS
 # Log file for VehicleRunFilterTest
 configure_file(RunFilterTestLog.TXT
 	${CMAKE_CURRENT_BINARY_DIR}/RunFilterTestLog.TXT @ONLY)
+configure_file(runFltAns.txt
+	${CMAKE_CURRENT_BINARY_DIR}/runFltAns.txt @ONLY)
 
 foreach(test ${TESTS})
 	add_executable(${test} ${test}.cpp)

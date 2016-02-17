@@ -79,7 +79,9 @@ BOOST_AUTO_TEST_CASE(RunFilterRealDataTest)
 	//Log File to test with
 	ifstream logfile("RunFilterTestLog.TXT");
     BOOST_CHECK(logfile);
-
+    
+    ifstream answerFile("runFltAns.txt");
+    BOOST_CHECK(answerFile);
 
 	//Log Reading Variables
 	float Time          ;
@@ -173,7 +175,10 @@ BOOST_AUTO_TEST_CASE(RunFilterRealDataTest)
 	float imuTime;
 	float poseTime;
 	float refYaw;
+    
+    float correct[6];
 
+    /*
     float correct[6][6] = 
     {
         {0.000000,   0.000000,  -0.000100,  -0.000300,  -0.000400,  -0.000600}, 
@@ -183,6 +188,8 @@ BOOST_AUTO_TEST_CASE(RunFilterRealDataTest)
         {0.000000,   0.000000,   0.000100,   0.000100,   0.000200,   0.000200}, 
         {0.000000,   0.001900,   0.003900,   0.004900,   0.006000,   0.006000}, 
     };
+    
+    */
 
 	//Check initial state
 	f.v1->prepareLog(f.vlog, f.plog);
@@ -194,7 +201,7 @@ BOOST_AUTO_TEST_CASE(RunFilterRealDataTest)
 	BOOST_CHECK(abs(f.vlog.zdotFilt) < 0.0001);
 
 	//Run the filter five iterations
-	for(int i = 0; i < 6; ++i)
+	for(int i = 0; i < 4847; ++i)
 	{
 		//Read out of the logfile
 		logfile >>
@@ -298,6 +305,8 @@ BOOST_AUTO_TEST_CASE(RunFilterRealDataTest)
 			poseTime        >>
 			refYaw;
 
+        for (size_t j = 0; j < 6; ++j) answerFile >> correct[j];
+
 		//Run the filter
 		float yaw = atan2(Imu_Rot[1], Imu_Rot[0]);
 		f.v1->runFilter(Imu_Rot, yaw,
@@ -308,7 +317,25 @@ BOOST_AUTO_TEST_CASE(RunFilterRealDataTest)
 
 		//Compare the output
 		f.v1->prepareLog(f.vlog, f.plog);
-
+        
+		if (abs(f.vlog.xFilt -    correct[0]) >= 0.0010) cout << "Iter: " << i << "\n"; 
+		if (abs(f.vlog.xdotFilt - correct[1]) >= 0.0015) cout << "Iter: " << i << "\n";
+		if (abs(f.vlog.yFilt -    correct[2]) >= 0.0010) cout << "Iter: " << i << "\n";
+		if (abs(f.vlog.ydotFilt - correct[3]) >= 0.0015) cout << "Iter: " << i << "\n";
+		if (abs(f.vlog.zFilt -    correct[4]) >= 0.0010) cout << "Iter: " << i << "\n";
+		if (abs(f.vlog.zdotFilt - correct[5]) >= 0.0015) 
+        {
+            cout << "Iter: " << i << "\n";
+            cout << f.vlog.zdotFilt << "\n" << correct[5] << "\n";
+            cout << abs(f.vlog.zdotFilt - correct[5]) << "\n";
+        }   
+        
+		BOOST_CHECK(abs(f.vlog.xFilt -    correct[0]) < 0.0010);
+		BOOST_CHECK(abs(f.vlog.xdotFilt - correct[1]) < 0.0015);
+		BOOST_CHECK(abs(f.vlog.yFilt -    correct[2]) < 0.0010);
+		BOOST_CHECK(abs(f.vlog.ydotFilt - correct[3]) < 0.0015);
+		BOOST_CHECK(abs(f.vlog.zFilt -    correct[4]) < 0.0010);
+		BOOST_CHECK(abs(f.vlog.zdotFilt - correct[5]) < 0.0015);
     /*    
         cout << "\nITER " << i << " Time " << Time << " \n";
         cout << f.vlog.xFilt << " " << f.vlog.xdotFilt << " ";
@@ -317,14 +344,16 @@ BOOST_AUTO_TEST_CASE(RunFilterRealDataTest)
         cout << correct[0][i] << " " << correct[1][i] << " ";
         cout << correct[2][i] << " " << correct[3][i] << " ";
         cout << correct[4][i] << " " << correct[5][i] << "\n";
-      */  
+        
 		BOOST_CHECK(abs(f.vlog.xFilt -    correct[0][i]) < 0.001);
-		BOOST_CHECK(abs(f.vlog.xdotFilt - correct[1][i]) < 0.001);
+	    BOOST_CHECK(abs(f.vlog.xdotFilt - correct[1][i]) < 0.001);
 		BOOST_CHECK(abs(f.vlog.yFilt -    correct[2][i]) < 0.001);
 		BOOST_CHECK(abs(f.vlog.ydotFilt - correct[3][i]) < 0.001);
 		BOOST_CHECK(abs(f.vlog.zFilt -    correct[4][i]) < 0.001);
 		BOOST_CHECK(abs(f.vlog.zdotFilt - correct[5][i]) < 0.001);
+    */
 	}
-
+    
+    answerFile.close();
     logfile.close();
 }
