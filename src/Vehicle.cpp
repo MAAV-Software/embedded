@@ -33,7 +33,8 @@ Vehicle::Vehicle(const float valueGains[NUM_DOFS][NUM_PID_GAINS],
 	: lastPredictTime(0),
 	lastLidarTime(0),
 	lastPx4Time(0),
-	lastCameraTime(0)
+	lastCameraTime(0),
+	first(true)
 {
 	mass 		 = 2.38f;
 	dji.roll     = 0;
@@ -160,7 +161,14 @@ void Vehicle::runFilter(const float rotationMatrix[9], float yaw,
 			float px4X, float px4Y, float px4Time, 
 			float cameraX, float cameraY, float cameraTime) 
 {
-
+	if(first)
+	{
+		first = false;
+		lastPredictTime = currTime;
+		lastLidarTime = currTime;
+		lastPx4Time = px4Time;
+		return;
+	}
 #ifdef BENCHTOP
 	UARTprintf("Running Filter at t = %3.2fs ", currTime);
 #endif

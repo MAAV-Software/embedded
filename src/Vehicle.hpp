@@ -106,6 +106,7 @@ private:
 	float lastPx4Time;
 	float lastCameraTime;
 	float lastLidarArenaZ;
+	bool first;
 	
 	// Calculates Roll, Pitch, Z Force, and Yaw Rate to send to the DJI
 	void calcDJIValues(const FlightMode mode);
