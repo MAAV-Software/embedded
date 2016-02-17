@@ -302,17 +302,24 @@ BOOST_AUTO_TEST_CASE(RunFilterRealDataTest)
 			Imu_AccX, Imu_AccY, Imu_AccZ, Time,
 			Lidar_Dist, lidarTime,
 			Px4_Xdot, Px4_Ydot, px4Time, 
-			0, 0, 0);
+			0.0, 0.0, 0.0);
 
 		//Compare the output
 		f.v1->prepareLog(f.vlog, f.plog);
     
         cout << "\nITER " << i << "\n";
-		BOOST_CHECK(abs(f.vlog.xFilt - correct[i][0])    < 0.001);
-		BOOST_CHECK(abs(f.vlog.xdotFilt - correct[i][1]) < 0.001);
-		BOOST_CHECK(abs(f.vlog.yFilt - correct[i][2])    < 0.001);
-		BOOST_CHECK(abs(f.vlog.ydotFilt - correct[i][3]) < 0.001);
-		BOOST_CHECK(abs(f.vlog.zFilt - correct[i][4])    < 0.001);
-		BOOST_CHECK(abs(f.vlog.zdotFilt - correct[i][5]) < 0.001);
+        cout << f.vlog.xFilt << " " << f.vlog.xdotFilt << " ";
+        cout << f.vlog.yFilt << " " << f.vlog.ydotFilt << " ";
+        cout << f.vlog.zFilt << " " << f.vlog.zdotFilt << "\n";
+        cout << correct[i][0] << " " << correct[i][1] << " ";
+        cout << correct[i][2] << " " << correct[i][3] << " ";
+        cout << correct[i][4] << " " << correct[i][5] << "\n";
+        
+		BOOST_CHECK(abs(f.vlog.xFilt - correct[i][0])    < 0.000001);
+		BOOST_CHECK(abs(f.vlog.xdotFilt - correct[i][1]) < 0.000001);
+		BOOST_CHECK(abs(f.vlog.yFilt - correct[i][2])    < 0.000001);
+		BOOST_CHECK(abs(f.vlog.ydotFilt - correct[i][3]) < 0.000001);
+		BOOST_CHECK(abs(f.vlog.zFilt - correct[i][4])    < 0.000001);
+		BOOST_CHECK(abs(f.vlog.zdotFilt - correct[i][5]) < 0.000001);
 	}
 }
