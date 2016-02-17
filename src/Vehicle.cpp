@@ -165,8 +165,6 @@ void Vehicle::runFilter(const float rotationMatrix[9], float yaw,
 	{
 		first = false;
 		lastPredictTime = currTime;
-		lastLidarTime = currTime;
-		lastPx4Time = px4Time;
 		return;
 	}
 #ifdef BENCHTOP

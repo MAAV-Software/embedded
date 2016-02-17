@@ -63,7 +63,6 @@ for i = 1:log_length
     
     if (last_imu_time == -1) 
        last_imu_time = time;
-       last_imu = imu;
        last_time = time;
        continue;
     end
