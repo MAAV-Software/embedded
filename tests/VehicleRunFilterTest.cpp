@@ -173,7 +173,7 @@ BOOST_AUTO_TEST_CASE(RunFilterRealDataTest)
 	float refYaw;
 
 	float correct[5][6] = 
-	{
+    {
 		{2.1140, -0.7781, 2.0910, -0.7696, -0.0015, 0.0351},
 		{2.0868, -0.7829, 2.0640, -0.7743, -0.0005, 0.0184},
 		{2.0758, -0.7847, 2.0532, -0.7763, -0.0002, 0.0194},
@@ -191,7 +191,7 @@ BOOST_AUTO_TEST_CASE(RunFilterRealDataTest)
 	BOOST_CHECK(abs(f.vlog.zdotFilt) < 0.0001);
 
 	//Run the filter five iterations
-	for(int i = 0; i < 5; ++i)
+	for(int i = 0; i < 6; ++i)
 	{
 		//Read out of the logfile
 		logfile >>
