@@ -34,7 +34,6 @@ set(TESTS
 	Px4SwTest
 	LidarSwTest
 	BatteryTest
-#	KalmanTest
 	VehicleSwTest
 	KalmanUnitTest
 	VehicleRunFilterTest
