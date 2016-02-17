@@ -52,8 +52,8 @@ KalmanFilter::KalmanFilter() :
 
     //H_Px4 = [ 0 1 0 0 0 0; 0 0 0 1 0 0 ]
 	MaavMath::mat_init(&H_Px4, p_size, n_size);
-	MaavMath::mat_at(H_lidar, 0, 1) = 1;
-	MaavMath::mat_at(H_lidar, 1, 3) = 1;
+	MaavMath::mat_at(H_Px4, 0, 1) = 1;
+	MaavMath::mat_at(H_Px4, 1, 3) = 1;
 
     //H_camera = [ 1 0 0 0 0 0; 0 0 1 0 0 0 ] TODO correct?
 	MaavMath::mat_init(&H_camera, c_size, n_size);
@@ -195,6 +195,13 @@ void KalmanFilter::correct2(const arm_matrix_instance_f32& z, const CorrectionTy
 	//H * P * H transpose + R
 	arm_mat_add_f32(&inter_2by2, R, &inter_2by2);
 	//(H * P * H transpose + R)^(-1)
+	float det = (MaavMath::mat_at(inter_2by2, 0, 0) * MaavMath::mat_at(inter_2by2, 1, 1)) - 
+		(MaavMath::mat_at(inter_2by2, 0, 1) * MaavMath::mat_at(inter_2by2, 1, 0));
+	if (MaavMath::floatClose(det, 0.0f, 0.00001)) {
+		// ERROR! stop 
+		return;
+	}
+
 	arm_mat_inverse_f32(&inter_2by2, &inter_another_2by2);
 	//P * H transpose
 	arm_mat_mult_f32(&P, &inter_nby2, &inter_another_nby2);
@@ -234,7 +241,7 @@ void KalmanFilter::correctLidar(const float z, const float zdot)
     //z_2by1 = [ z; zdot ]
     MaavMath::mat_at(z_2by1, 0, 0) = z;
     MaavMath::mat_at(z_2by1, 1, 0) = zdot;
-	correct2(z_2by1, LIDAR);
+	correct2(z_2by1 , LIDAR);
 }
 
 void KalmanFilter::correctCamera(const float x, const float y)
