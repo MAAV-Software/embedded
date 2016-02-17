@@ -153,7 +153,8 @@ void KalmanFilter::predict(float xddot, float yddot, float zddot, float dt)
 	arm_mat_mult_f32(&A, &P, &inter_nbyn); //A * P
 	arm_mat_trans_f32(&A, &inter_another_nbyn); //A^T
 	arm_mat_mult_f32(&inter_nbyn, &inter_another_nbyn, &P); //P = A * P * A^T
-	arm_mat_add_f32(&P, &Q, &P); //P = A * P * A^T + Q
+	arm_mat_scale_f32(&Q, dt, &inter_nbyn);
+	arm_mat_add_f32(&P, &inter_nbyn, &P); //P = A * P * A^T + Q
 }
 
 void KalmanFilter::correct2(const arm_matrix_instance_f32& z, const CorrectionType sensor)

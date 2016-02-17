@@ -2,7 +2,7 @@ clear all;
 close all;
 
 % log reading
-log = load('LOG30.TXT');
+log = load('../Log_analysis/W16-02-13-NewFilter/LOG93.TXT');
 
 Time          = log(:,1);
 Imu_AccX      = log(:,3);
@@ -19,18 +19,25 @@ Lidar_Dist    = log(:,24); % meters
 
 log_length = size(Time, 1);
 
+lidarTime     = log(:,95);
+px4Time       = log(:,96);
+
 last_imu_time = -1;
+last_time = 0;
 last_imu = [0, 0, 0]';
+last_lidar_time = 0;
 last_lidar = 0;
+last_px4_time = 0;
 last_px4 = [0, 0]';
 
 % initial states
 x = [0, 0, 0, 0, 0, 0]';
 P = zeros(6);
+%P = diag([0.1, 0.1, 0.1, 0.1, 0.1, 0.1]);
 
 % noise matrices
 Q = diag([0.5, 0.1, 0.5, 0.1, 0.1, 0.1]);
-R_lidar = diag([0.05, 0.5]);
+R_lidar = diag([0.05, 0.05]);
 R_optical_flow = diag([.8, 0.8]);
 
 for i = 1:log_length
@@ -38,10 +45,12 @@ for i = 1:log_length
     
     % rotation matrix that turns vectors in quadcopter frame to earth frame
     rotMat = reshape(Imu_Rot(i, :), [3, 3]);
+    %rotMat = rotMat';
     
     % rotating imu
     imu = [Imu_AccX(i), Imu_AccY(i), Imu_AccZ(i)]';
     imu = rotMat * imu;
+    imu(3) = imu(3) + 9.81;
     
     % rotating lidar
     lidar = rotMat * [0 0 -Lidar_Dist(i)]';
@@ -58,26 +67,31 @@ for i = 1:log_length
     end
     
     % update step
-    if (~isequal(imu, last_imu)) 
+    if (Time(i) ~= last_time) 
         last_imu = imu;
-        deltaT = time - last_imu_time;
-        last_imu_time = time;
+        deltaT = Time(i) - last_time;
+        last_time = Time(i);
+        %imu = [0,0,0]';
         [x, P] = update(x, P, imu, Q, deltaT);
     end
-    
+
+ 
     % correct lidar
-    if (lidar ~= last_lidar)
+    if (lidarTime(i) ~= last_lidar_time)
         del_height = lidar - last_lidar;
         lidar_meas = [lidar, del_height]';
         [x, P] = correct_lidar(x, P, lidar_meas, R_lidar);
+        last_lidar_time = lidarTime(i);
         last_lidar = lidar;
     end
     
     % correct optical flow
-    if (~isequal(px4, last_px4)) 
+    if (last_px4_time ~= px4Time(i)) 
         last_px4 = px4;
+        last_px4_time = px4Time(i);
         [x, P] = correct_optical_flow(x, P, last_px4, R_optical_flow);
     end
+
     
     lidar_hist(:, i) = lidar;
     x_hist(:, i) = x;
