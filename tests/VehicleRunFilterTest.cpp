@@ -1,23 +1,19 @@
-//#define BOOST_TEST_DYN_LINK
 #define BOOST_TEST_MODULE "VehicleRunFilterTest"
-#define PI 3.14159265358979f
 #include <boost/test/unit_test.hpp>
 #include <boost/test/floating_point_comparison.hpp>
 
+#include <iostream>
 #include <fstream>
-#include <math.h>
+#include <cmath>
+#include <stdint.h>
+
 #include "cmeigen.hpp"
 #include "Vehicle.hpp"
 #include "MaavMath.hpp"
-
-
-#include <stdint.h>
 #include "Vehicle.hpp"
 #include "Dof.hpp"
 
-#include <iostream>
-
-using std::ifstream;
+using namespace std;
 
 struct Fixture
 {	
@@ -71,8 +67,6 @@ struct Fixture
 			rlidarz, rlidarzd, 
 			rpx4xd, rpx4yd, 
 			0.0, 0.0);
-
-
 	}
 
 };
@@ -189,12 +183,12 @@ BOOST_AUTO_TEST_CASE(RunFilterRealDataTest)
 
 	//Check initial state
 	f.v1->prepareLog(f.vlog, f.plog);
-	BOOST_CHECK_CLOSE(f.vlog.xFilt   , 0, 0.0001);
-	BOOST_CHECK_CLOSE(f.vlog.yFilt   , 0, 0.0001);
-	BOOST_CHECK_CLOSE(f.vlog.zFilt   , 0, 0.0001);
-	BOOST_CHECK_CLOSE(f.vlog.xdotFilt, 0, 0.0001);
-	BOOST_CHECK_CLOSE(f.vlog.ydotFilt, 0, 0.0001);
-	BOOST_CHECK_CLOSE(f.vlog.zdotFilt, 0, 0.0001);
+	BOOST_CHECK(abs(f.vlog.xFilt)    < 0.0001);
+	BOOST_CHECK(abs(f.vlog.yFilt)    < 0.0001);
+	BOOST_CHECK(abs(f.vlog.zFilt)    < 0.0001);
+	BOOST_CHECK(abs(f.vlog.xdotFilt) < 0.0001);
+	BOOST_CHECK(abs(f.vlog.ydotFilt) < 0.0001);
+	BOOST_CHECK(abs(f.vlog.zdotFilt) < 0.0001);
 
 	//Run the filter five iterations
 	for(int i = 0; i < 5; ++i)
@@ -311,12 +305,13 @@ BOOST_AUTO_TEST_CASE(RunFilterRealDataTest)
 
 		//Compare the output
 		f.v1->prepareLog(f.vlog, f.plog);
-
-		BOOST_CHECK_CLOSE(f.vlog.xFilt   , correct[i][0], 10);
-		BOOST_CHECK_CLOSE(f.vlog.xdotFilt, correct[i][1], 10);
-		BOOST_CHECK_CLOSE(f.vlog.yFilt   , correct[i][2], 10);
-		BOOST_CHECK_CLOSE(f.vlog.ydotFilt, correct[i][3], 10);
-		BOOST_CHECK_CLOSE(f.vlog.zFilt   , correct[i][4], 10);
-		BOOST_CHECK_CLOSE(f.vlog.zdotFilt, correct[i][5], 10);
+    
+        cout << "\nITER " << i << "\n";
+		BOOST_CHECK(abs(f.vlog.xFilt - correct[i][0])    < 0.0001);
+		BOOST_CHECK(abs(f.vlog.xdotFilt - correct[i][1]) < 0.0001);
+		BOOST_CHECK(abs(f.vlog.yFilt - correct[i][2])    <  0.0001);
+		BOOST_CHECK(abs(f.vlog.ydotFilt - correct[i][3]) < 0.0001);
+		BOOST_CHECK(abs(f.vlog.zFilt - correct[i][4])    < 0.0001);
+		BOOST_CHECK(abs(f.vlog.zdotFilt - correct[i][5]) < 0.0001);
 	}
 }
