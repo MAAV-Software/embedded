@@ -46,7 +46,7 @@ for i = 1:log_length
     
     % rotation matrix that turns vectors in quadcopter frame to earth frame
     rotMat = reshape(Imu_Rot(i, :), [3, 3]);
-    rotMat = rotMat';
+    %rotMat = rotMat';
     
     % rotating imu
     imu = [Imu_AccX(i), Imu_AccY(i), Imu_AccZ(i)]';
