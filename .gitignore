@@ -12,15 +12,14 @@ build
 
 #Linked Resources file
 .project
+#targetConfigs
+#.cproject
+.launches
+.settings
+#.ccsproject
 
 # folders
 #Debug
-#targetConfigs
-.cproject
-#.launches
-#.project
-.settings
-#.ccsproject
 
 # latex temporary files
 *.aux
