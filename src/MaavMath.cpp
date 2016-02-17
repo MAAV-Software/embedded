@@ -3,13 +3,13 @@
 
 namespace MaavMath {
 
-void applyRotationMatrix(const float rotationMatrix[9],
+void applyTransRotMatrix(const float rotationMatrix[9],
 	float x_in, float y_in, float z_in,
 	float& x_out, float& y_out, float& z_out) {
 
-	x_out = x_in * rotationMatrix[0] + y_in * rotationMatrix[1] + z_in * rotationMatrix[2];
-	y_out = x_in * rotationMatrix[3] + y_in * rotationMatrix[4] + z_in * rotationMatrix[5];
-	z_out = x_in * rotationMatrix[6] + y_in * rotationMatrix[7] + z_in * rotationMatrix[8];
+	x_out = x_in * rotationMatrix[0] + y_in * rotationMatrix[3] + z_in * rotationMatrix[6];
+	y_out = x_in * rotationMatrix[1] + y_in * rotationMatrix[4] + z_in * rotationMatrix[7];
+	z_out = x_in * rotationMatrix[2] + y_in * rotationMatrix[5] + z_in * rotationMatrix[8];
 }
 
 

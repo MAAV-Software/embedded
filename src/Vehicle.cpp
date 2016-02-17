@@ -176,7 +176,7 @@ void Vehicle::runFilter(const float rotationMatrix[9], float yaw,
 
 	// new IMU measurement
 	float imuArenaX, imuArenaY, imuArenaZ;
-	MaavMath::applyRotationMatrix(rotationMatrix, imuX, imuY, imuZ,
+	MaavMath::applyTransRotMatrix(rotationMatrix, imuX, imuY, imuZ,
 		imuArenaX, imuArenaY, imuArenaZ);
 
 	if (!MaavMath::floatClose(currTime, lastPredictTime, 0.001))
@@ -195,7 +195,7 @@ void Vehicle::runFilter(const float rotationMatrix[9], float yaw,
 	UARTprintf(" Correct Lidar ");
 #endif
 		float lidarArenaX, lidarArenaY, lidarArenaZ;
-		MaavMath::applyRotationMatrix(rotationMatrix, 0, 0, -lidar,
+		MaavMath::applyTransRotMatrix(rotationMatrix, 0, 0, -lidar,
 			lidarArenaX, lidarArenaY, lidarArenaZ);
 
 		kalmanFilter.correctLidar(lidarArenaZ, lidarArenaZ - lastLidarArenaZ);
