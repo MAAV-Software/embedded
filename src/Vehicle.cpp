@@ -160,11 +160,12 @@ void Vehicle::runFilter(const float rotationMatrix[9], float yaw,
 			float px4X, float px4Y, float px4Time, 
 			float cameraX, float cameraY, float cameraTime) 
 {
+
 #ifdef BENCHTOP
-    UARTprintf("Running Filter: t = %3.2fs ", currTime);
+	UARTprintf("Running Filter at t = %3.2fs ", currTime);
 #endif
 
-    currYawSin = arm_sin_f32(yaw);
+	currYawSin = arm_sin_f32(yaw);
 	currYawCos = arm_cos_f32(yaw);
 
 	// new IMU measurement
@@ -175,7 +176,7 @@ void Vehicle::runFilter(const float rotationMatrix[9], float yaw,
 	if (!MaavMath::floatClose(currTime, lastPredictTime, 0.001))
 	{
 #ifdef BENCHTOP
-    UARTprintf(" Predict ");
+	UARTprintf(" Predict ");
 #endif
 		kalmanFilter.predict(imuArenaX, imuArenaY, imuArenaZ - MaavMath::Gravity, currTime - lastPredictTime);
 		lastPredictTime = currTime;
@@ -185,7 +186,7 @@ void Vehicle::runFilter(const float rotationMatrix[9], float yaw,
 	if (lidarTime != lastLidarTime) 
 	{
 #ifdef BENCHTOP
-    UARTprintf(" Lidar ");
+	UARTprintf(" Correct Lidar ");
 #endif
 		float lidarArenaX, lidarArenaY, lidarArenaZ;
 		MaavMath::applyRotationMatrix(rotationMatrix, 0, 0, -lidar,
@@ -200,8 +201,9 @@ void Vehicle::runFilter(const float rotationMatrix[9], float yaw,
 	// new px4 measurement
 	if (px4Time != lastPx4Time) 
 	{
+
 #ifdef BENCHTOP
-    UARTprintf(" PX4 ");
+	UARTprintf(" Correct Px4 ");
 #endif
 		float px4ArenaX = currYawCos * px4X + currYawSin * px4Y;
 		float px4ArenaY = -currYawSin * px4X + currYawCos * px4Y;
@@ -215,15 +217,16 @@ void Vehicle::runFilter(const float rotationMatrix[9], float yaw,
 	if (cameraTime != lastCameraTime) 
 	{
 #ifdef BENCHTOP
-    UARTprintf(" Camera ");
+	UARTprintf(" Correct Camera ");
 #endif
 		kalmanFilter.correctCamera(cameraX, cameraY);
 		lastCameraTime = cameraTime;
 	}
 
 #ifdef BENCHTOP
-    UARTprintf(" Updating State\n");
+	UARTprintf(" Updating State\n");
 #endif
+
 
 	// // extract state and send to dofs
 	const arm_matrix_instance_f32& filterState = kalmanFilter.getState();
