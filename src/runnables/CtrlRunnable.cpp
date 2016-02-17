@@ -22,10 +22,6 @@ void CtrlRunnable::run()
 	float time = ((float)msTime) / 1000.0f; // grab current time
 	float poseTimestamp = (float)millis() / 1000.0f;
 
-	bool usePredict = false;
-	if ((time - lastTime) < 0.015) usePredict = true;
-	lastTime = time;
-
 	if ((ps->mode == ASSISTED) || (ps->mode == MANUAL)) // set setpts here from rc pilot ctrl in assisted mode
 	{
 		float setpt[NUM_DOFS][NUM_DOF_STATES];
