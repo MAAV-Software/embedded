@@ -31,7 +31,6 @@ build
 *.synctex.gz
 
 # genereated docs
-*.pdf
 doc/html
 doc/latex
 
