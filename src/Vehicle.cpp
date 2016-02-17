@@ -178,7 +178,7 @@ void Vehicle::runFilter(const float rotationMatrix[9], float yaw,
 #ifdef BENCHTOP
 	UARTprintf(" Predict ");
 #endif
-		kalmanFilter.predict(imuArenaX, imuArenaY, imuArenaZ - MaavMath::Gravity, currTime - lastPredictTime);
+		kalmanFilter.predict(imuArenaX, imuArenaY, imuArenaZ + MaavMath::Gravity, currTime - lastPredictTime);
 		lastPredictTime = currTime;
 	}
 
