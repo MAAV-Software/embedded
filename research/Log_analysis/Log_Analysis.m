@@ -1,7 +1,7 @@
 close all
 clc
 clf
-log = load('./W16-02-13-NewFilter/LOG93.TXT');
+log = load('23feb2016/LOG94.TXT');
 
 % parsing the data
 Time          = log(:,1);
@@ -325,7 +325,7 @@ ylabel('Az');
 figure(100)
 hold on;
 plot(Time, Lidar_Dist, 'k');
-plot(Time, -Filter_Z, '--b');
+plot(Time, -Filter_Z, '--r');
 hold off;
 ylabel('Z Filter')
 xlabel('Time')
