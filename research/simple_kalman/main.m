@@ -102,12 +102,14 @@ end
 
 %%
 figure(1)
+hold on;
 heightVar = 3 * P_hist(5, 5, :);
 heightVar = heightVar(:);
 upperVar = -x_hist(5, :) + sqrt(heightVar');
 lowerVar = -x_hist(5, :) - sqrt(heightVar');
 plot(Time,-x_hist(5, :), Time, -lidar_hist, Time, upperVar, Time, lowerVar);
-legend('filtered z', 'lidar rotated', 'upper var', 'lower var');
+hold off;
+%legend('filtered z', 'lidar rotated', 'upper var', 'lower var');
 
 figure(2)
 plot(Time, -x_hist(6, :));
@@ -130,3 +132,5 @@ legend('filtered x');
 figure(6)
 plot(Time, x_hist(3, :));
 legend('filtered y');
+
+figure(7)
