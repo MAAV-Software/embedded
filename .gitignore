@@ -9,6 +9,7 @@ test/bin/*
 maav/Debug/*
 
 build
+hw_build
 
 #Linked Resources file
 .project
