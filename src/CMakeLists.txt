@@ -6,6 +6,7 @@ add_library(ctrl_sw SHARED
 			kalman/KalmanFilter
 			Battery
 			LowPass
+            MovingAvg
 			Pid
 			Dof
 			Imu
