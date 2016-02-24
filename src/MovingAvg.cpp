@@ -4,12 +4,12 @@
 using std::calloc;
 
 MovingAvg::MovingAvg(size_t size)
-    : size_(size), buf_((float*)calloc(n, sizeof(float))), 
+    : size_(size), buf_((float*)calloc(size, sizeof(float))), 
       state_(0), idx_(0) {}
 
 MovingAvg::~MovingAvg()
 {
-    free(buff);
+    free(buf_);
 }
 
 float MovingAvg::run(const float input)

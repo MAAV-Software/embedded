@@ -37,6 +37,7 @@ set(TESTS
 	VehicleSwTest
 	KalmanUnitTest
 	VehicleRunFilterTest
+    MovingAvgTest
     )
 
 # Log file for VehicleRunFilterTest
