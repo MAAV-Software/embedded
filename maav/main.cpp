@@ -5,8 +5,8 @@
  * and DJI. Executes outerlook position control of DJI (which handles inner
  * loop attitude control).
  *
- *      Author: Sajan Patel, Jonathan Kurzer, Sasawat Prankprakma, Clark Zhang
- *        Date: Feb 24, 2015
+ *      Author: Sajan Patel, Zhengjie Cui, Jonathan Kurzer, Sasawat Prankprakma, Clark Zhang
+ *        Date: Feb 15, 2016
  *
  */
 #include <stdint.h>
@@ -32,7 +32,6 @@
 
 #include "servoIn.hpp"
 #include "switch.h"
-#include "utility.h"
 #include "PPM.h"
 #include "time_util.h"
 #include "rc.hpp"
@@ -62,9 +61,6 @@ using namespace std;
 ////////////////////////////// MAIN FUNCTION ///////////////////////////////////
 int main()
 {
-	//TODO remove Kalman filter
-
-	KalmanFilter kf;
 
 	MAP_FPULazyStackingEnable();
 	MAP_FPUEnable();
@@ -211,6 +207,10 @@ int main()
 	ems.status = (int8_t)EMERGENCY_T_NORMAL;
 	dl.send(&ems);
 
+#ifdef BENCHTOP
+	UARTStdioConfig(0, 115200, 16000000);
+	UARTprintf("Starting MAAV Ctrls Main Loop\n");
+#endif
 
 //	for (int i = 0; i < 6; ++i)
 //		Toggle_LED(BLUE_LED, SYSCLOCK / 3 / 2);

@@ -4,16 +4,16 @@
 # vehicle) is currently handled by Code Composer Studio.
 add_library(ctrl_sw SHARED
 			kalman/KalmanFilter
-			kalman/ExtendedKalmanFilter
-			kalman/KalmanFunctions
 			Battery
 			LowPass
+            MovingAvg
 			Pid
 			Dof
 			Imu
 			Px4
 			Lidar
             Vehicle
+            MaavMath
 			messaging/DataLinkDefines
 			messaging/Encoder
 			messaging/Decoder

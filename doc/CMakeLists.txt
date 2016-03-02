@@ -6,6 +6,9 @@ if(DOXYGEN_FOUND)
 	configure_file(Doxyfile.in
 		${CMAKE_CURRENT_BINARY_DIR}/Doxyfile @ONLY)
 
+	configure_file(MicrostrainDoc
+		${CMAKE_CURRENT_BINARY_DIR}/MicrostrainDoc.pdf @ONLY)
+
 	add_custom_target(doc_doxygen
 		${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile
 		WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}

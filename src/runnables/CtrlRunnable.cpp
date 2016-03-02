@@ -22,10 +22,6 @@ void CtrlRunnable::run()
 	float time = ((float)msTime) / 1000.0f; // grab current time
 	float poseTimestamp = (float)millis() / 1000.0f;
 
-	bool usePredict = false;
-	if ((time - lastTime) < 0.015) usePredict = true;
-	lastTime = time;
-
 	if ((ps->mode == ASSISTED) || (ps->mode == MANUAL)) // set setpts here from rc pilot ctrl in assisted mode
 	{
 		float setpt[NUM_DOFS][NUM_DOF_STATES];
@@ -44,43 +40,50 @@ void CtrlRunnable::run()
 		ps->vehicle->setSetpt(setpt, ASSISTED);
 	}
 
-	if ((ps->mode == AUTONOMOUS) && (ps->dLink->getRawPoseMsg().utime > lastPoseTime))
-	{
-		lastPoseTime = ps->dLink->getRawPoseMsg().utime;
-		poseTimestamp = (float)millis() / 1000.0f;
+	ps->vehicle->runFilter(ps->imu->getRotMat(), ps->imu->getYaw(),
+		ps->imu->getAccX(), ps->imu->getAccY(), ps->imu->getAccZ(), time,
+		ps->lidar->getDist(), ps->lidar->getTimestamp(),
+		ps->px4->getXFlow(), ps->px4->getYFlow(), ps->px4->getTimestamp(),
+		0, 0, 0);
 
-		// filter with camera data
-		ps->vehicle->runFilter(ps->dLink->getRawPoseMsg().x,
-							   ps->dLink->getRawPoseMsg().y,
-							   -ps->lidar->getDist(),
-							   ps->px4->getXFlow(),
-							   ps->px4->getYFlow(),
-							   ps->imu->getRoll(),
-							   ps->imu->getPitch(),
-							   ps->imu->getYaw(),
-							   ps->dLink->getRawPoseMsg().yaw,
-							   time,
-							   true,
-							   ps->mode,
-							   usePredict);
-	}
-	else
-	{
-		// filter without camera data
-		ps->vehicle->runFilter(0,
-							   0,
-							   -ps->lidar->getDist(),
-							   ps->px4->getXFlow(),
-							   ps->px4->getYFlow(),
-							   ps->imu->getRoll(),
-							   ps->imu->getPitch(),
-							   ps->imu->getYaw(),
-							   0,
-							   time,
-							   false,
-							   ps->mode,
-							   usePredict);
-	}
+
+	// if ((ps->mode == AUTONOMOUS) && (ps->dLink->getRawPoseMsg().utime > lastPoseTime))
+	// {
+	// 	lastPoseTime = ps->dLink->getRawPoseMsg().utime;
+	// 	poseTimestamp = (float)millis() / 1000.0f;
+
+	// 	// filter with camera data
+	// 	ps->vehicle->runFilter(ps->dLink->getRawPoseMsg().x,
+	// 						   ps->dLink->getRawPoseMsg().y,
+	// 						   -ps->lidar->getDist(),
+	// 						   ps->px4->getXFlow(),
+	// 						   ps->px4->getYFlow(),
+	// 						   ps->imu->getRoll(),
+	// 						   ps->imu->getPitch(),
+	// 						   ps->imu->getYaw(),
+	// 						   ps->dLink->getRawPoseMsg().yaw,
+	// 						   time,
+	// 						   true,
+	// 						   ps->mode,
+	// 						   usePredict);
+	// }
+	// else
+	// {
+	// 	// filter without camera data
+	// 	ps->vehicle->runFilter(0,
+	// 						   0,
+	// 						   -ps->lidar->getDist(),
+	// 						   ps->px4->getXFlow(),
+	// 						   ps->px4->getYFlow(),
+	// 						   ps->imu->getRoll(),
+	// 						   ps->imu->getPitch(),
+	// 						   ps->imu->getYaw(),
+	// 						   0,
+	// 						   time,
+	// 						   false,
+	// 						   ps->mode,
+	// 						   usePredict);
+	// }
 /*
 	// for debug only
 	float states[NUM_DOFS][NUM_DOF_STATES];

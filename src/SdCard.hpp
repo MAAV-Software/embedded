@@ -10,10 +10,10 @@
 
 #include "SdCardHw.hpp"
 
-#include "sdlib/diskio.h"
-#include "sdlib/ff.h"
-#include "sdlib/integer.h"
-#include "sdlib/ffconf.h"
+#include "diskio.h"
+#include "ff.h"
+#include "integer.h"
+#include "ffconf.h"
 
 #include <string.h>
 

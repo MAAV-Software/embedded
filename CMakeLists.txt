@@ -63,6 +63,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-unused-parameter")
 add_subdirectory(src)
 add_subdirectory(doc)
 add_subdirectory(lm4tools)
+add_subdirectory(logkalman)
 
 if (CMAKE_BUILD_TYPE MATCHES "Hardware")
     add_subdirectory(maav)

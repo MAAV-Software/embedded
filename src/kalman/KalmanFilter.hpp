@@ -1,6 +1,5 @@
 #ifndef KALMAN_FILTER_HPP
 #define KALMAN_FILTER_HPP
-#endif
 
 #ifdef LINUX
 #include "cmeigen.hpp"
@@ -11,18 +10,7 @@
 #include <cassert>
 #include <cstdlib>
 #include <stdint.h>
-
-
-/**
- * @brief Returns the value of the matrix at the specified row and column
- *
- * @details Returns a value of the float at the spot given by the row and column which can be read or assigned as needed
- *
- * @param mat the matrix you want to get the element from
- * @param row the desired element's row
- * @param col the desired element's column
- */
-float mat_noref_at(const arm_matrix_instance_f32& mat, uint16_t row, uint16_t col);
+#include "MaavMath.hpp"
 
 class KalmanFilter
 {
@@ -47,8 +35,21 @@ public:
 	void correctCamera(const float x, const float y);
 
 	/*
-	 * Returns a pointer to the state data. Const because we do not want
-	 * people messing with the data.
+	 * Allows for setting Q and R matrices
+	 */
+	void setQ(float val1, float val2, float val3, float val4, float val5, float val6);
+
+	void setR_lidar(float z, float zdot);
+
+	void setR_Px4(float xdot, float ydot);
+
+	void setR_camera(float x, float y);
+
+	/**
+	 * @brief Returns a reference to the state data
+	 * @details Matrix is of form [x; xdot; y; ydot; z; zdot ]
+	 *
+	 * @returns the state matrix
 	 */
 	const arm_matrix_instance_f32& getState() const;
 
@@ -101,3 +102,5 @@ private:
 	arm_matrix_instance_f32 inter_2by2;
 	arm_matrix_instance_f32 inter_another_2by2;
 };
+
+#endif

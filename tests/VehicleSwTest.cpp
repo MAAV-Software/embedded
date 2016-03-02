@@ -63,13 +63,12 @@ struct Fixture
 	FlightMode mode;
 
 	
-	Vehicle *v1, *v2;
+	Vehicle *v1;
 	PidLog plog[NUM_DOFS][2];
 	VehicleLog vlog;
 	~Fixture()
 	{
 		delete v1;
-		delete v2;
 	}
 	Fixture()
 	{
@@ -225,30 +224,6 @@ struct Fixture
 		mode = AUTONOMOUS;
 		//mode = ASSISTED;
 		v1 = new Vehicle(valueGains, rateGains);
-		v2 = new Vehicle(states,
-			setpts,
-			valueGains,
-			rateGains,
-			valueFlags,
-			rateFlags,
-			inertias,
-			stateBounds,
-			rateUpLims,
-			rateLwLims,
-			accelUpLims,
-			accelLwLims,
-			valueStateLpCoeffs,
-			valueErrorLpCoeffs,
-			rateStateLpCoeffs,
-			rateErrorLpCoeffs,
-			totalMass,
-			initTime,
-			rpLims,
-			ekfInitState,
-			ekfInitP,
-			ekfQ,
-			ekfNoCamR,
-			ekfWithCamR);
 	}
 
 };
@@ -278,30 +253,6 @@ BOOST_AUTO_TEST_CASE(ctorTest)
 	}
 }
 
-BOOST_AUTO_TEST_CASE(ctor2Test)
-{
-	Fixture f;
-	Dji temp = f.v2->getDjiVals();
-	BOOST_CHECK_EQUAL(temp.roll, 0);
-	BOOST_CHECK_EQUAL(temp.pitch, 0);
-	BOOST_CHECK_EQUAL(temp.yawRate, 0);
-	BOOST_CHECK_EQUAL(temp.thrust, 0);
-	f.v2->prepareLog(f.vlog, f.plog);
-	for (int i = 0; i < NUM_DOFS; i++)
-	{
-
-		BOOST_CHECK_CLOSE(f.plog[i][0].kp, f.valueGains[i][0], 0.01);
-		BOOST_CHECK_CLOSE(f.plog[i][0].ki, f.valueGains[i][1], 0.01);
-		BOOST_CHECK_CLOSE(f.plog[i][0].kd, f.valueGains[i][2], 0.01);
-		BOOST_CHECK_CLOSE(f.plog[i][1].kp, f.rateGains[i][0], 0.01);
-		BOOST_CHECK_CLOSE(f.plog[i][1].ki, f.rateGains[i][1], 0.01);
-		BOOST_CHECK_CLOSE(f.plog[i][1].kd, f.rateGains[i][2], 0.01);
-		BOOST_CHECK_CLOSE(f.plog[i][0].setpt, (float)f.setpts[i][0], 0.01);
-		BOOST_CHECK_CLOSE(f.plog[i][1].setpt, (float)0, 0.01);
-		BOOST_CHECK_CLOSE(f.plog[i][0].flags, (float)f.valueFlags[i], 0.01);
-		BOOST_CHECK_CLOSE(f.plog[i][1].flags, (float)f.rateFlags[i], 0.01);
-	}
-}
 
 BOOST_AUTO_TEST_CASE(setptTest_AUTONOMOUS)
 {

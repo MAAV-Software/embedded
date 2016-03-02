@@ -9,18 +9,18 @@ test/bin/*
 maav/Debug/*
 
 build
+hw_build
 
 #Linked Resources file
 .project
+#targetConfigs
+#.cproject
+.launches
+.settings
+#.ccsproject
 
 # folders
 #Debug
-#targetConfigs
-#.cproject
-#.launches
-#.project
-#.settings
-#.ccsproject
 
 # latex temporary files
 *.aux
@@ -31,7 +31,6 @@ build
 *.synctex.gz
 
 # genereated docs
-*.pdf
 doc/html
 doc/latex
 

@@ -1,7 +1,7 @@
 close all
 clc
 clf
-log = load('F:\LOG39.TXT');
+log = load('23feb2016/LOG94.TXT');
 
 % parsing the data
 Time          = log(:,1);
@@ -90,6 +90,13 @@ PPM_1 = log(:, 90);
 PPM_2 = log(:, 91);
 PPM_3 = log(:, 92);
 PPM_4 = log(:, 93);
+
+msTime = log(:, 94);
+lidarTime = log(:, 95);
+px4Time = log(:, 96);
+imuTime = log(:, 97);
+poseTime = log(:, 98);
+refYaw = log(:, 99);
 
 clf
 
@@ -317,11 +324,18 @@ ylabel('Az');
 
 figure(100)
 hold on;
-plot(Time, Lidar_Dist, 'g');
-plot(Time, -Filter_Z, '--b');
+plot(Time, Lidar_Dist, 'k');
+plot(Time, -Filter_Z, '--r');
 hold off;
 ylabel('Z Filter')
 xlabel('Time')
+
+figure(101)
+hold on;
+plot(Time(2:end), lidarTime(2:end), 'g');
+ylabel('Latest Lidar Timestamp');
+xlabel('Time');
+hold off;
 
 %%
 Real_Time_for_this_log = (Time(end) - Time(1)) / 60

@@ -10,6 +10,7 @@
 #include "time_util.h"
 #include <stdint.h>
 #include <cmath>
+#include "MaavMath.hpp"
 
 using namespace std;
 
@@ -41,9 +42,9 @@ void Imu::parse(const uint8_t* data)
 		return;
 	}
 
-	AccX = Bytes2Float(data, 1);
-	AccY = Bytes2Float(data, 5);
-	AccZ = Bytes2Float(data, 9);
+	AccX = MaavMath::Gravity * Bytes2Float(data, 1);
+	AccY = MaavMath::Gravity * Bytes2Float(data, 5);
+	AccZ = MaavMath::Gravity * Bytes2Float(data, 9);
 	AngRateX = Bytes2Float(data, 13);
 	AngRateY = Bytes2Float(data, 17);
 	AngRateZ = Bytes2Float(data, 21);
@@ -66,6 +67,10 @@ void Imu::parse(const uint8_t* data)
 void Imu::getRotMat(float dest[NUM_M_VAL])
 {
 	for (int i = 0; i < NUM_M_VAL; ++i) dest[i] = M[i];
+}
+
+const float* Imu::getRotMat() const {
+	return M;
 }
 
 // Return data
