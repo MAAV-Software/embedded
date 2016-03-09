@@ -29,4 +29,6 @@ void imuUartSend(const uint8_t *buffer, uint32_t count);
 
 void imuMemcpy(uint8_t* out, const uint8_t* in, const int len);
 
+void imuCalibrate(uint32_t AccelBiasX, uint32_t AccelBiasY, uint32_t AccelBiasZ);
+
 #endif /* IMUHW_HPP */

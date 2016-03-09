@@ -145,7 +145,7 @@ uint32_t Bytes2Int(const uint8_t *raw, const unsigned int i)
 	{
 	   uint8_t buf[4];
 	   uint32_t number;
-	} data;
+	}data;
 
 	data.buf[0] = raw[i+3];
 	data.buf[1] = raw[i+2];

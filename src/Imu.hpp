@@ -51,7 +51,6 @@ private:
 	float M[NUM_M_VAL];
 	float timestamp;
 	uint32_t Timer;
-
 	/*
 	* Here are the corresponding M rotation matrix entries and their indecies
 	* M[0 1 2;
