@@ -4,18 +4,7 @@
 %Requisite Packages for Test Rubric Box
 \usepackage{multirow}
 
-%opening
-\title{Controls Test Rubric}
-\author{Michigan Autonomous Aerial Vehicles}
-
-\begin{document}
-\maketitle
-
-\begin{abstract}
-
-\end{abstract}
-
-\large
+\newcommand{\testrubric}[3]{
 \begin{tabular}{
 p{\dimexpr 0.10\linewidth-2\tabcolsep}|
 p{\dimexpr 0.18\linewidth-2\tabcolsep}|
@@ -26,7 +15,7 @@ p{\dimexpr 0.18\linewidth-2\tabcolsep}|
 }
 %Header Line 1: Insert the proper test # instead of TEST\#
 \hline\hline
-\multicolumn{1}{|c|}{\multirow{3}{*}{\textbf{TEST\#}}} & 
+\multicolumn{1}{|c|}{\multirow{3}{*}{\textbf{#1}}} & 
 \multicolumn{1}{|c|}{\textbf{SR}} & 
 \multicolumn{1}{|c|}{\textbf{Test 1}} & 
 \multicolumn{1}{|c|}{\textbf{Test 2}} & 
@@ -34,13 +23,13 @@ p{\dimexpr 0.18\linewidth-2\tabcolsep}|
 \multicolumn{1}{|c|}{\textbf{Passed}}\\
 \cline{2-6}  
 %Header Line 2: Insert the proper system req # instead of SR\#
-\multicolumn{1}{|c|}{} & \multicolumn{1}{|c|}{\multirow{2}{*}{SR\#}} &  &  &  & \\
+\multicolumn{1}{|c|}{} & \multicolumn{1}{|c|}{\multirow{2}{*}{#2}} &  &  &  & \\
 \multicolumn{1}{|c|}{} &  &  &  &  & \\
 \hline 
 %Description Box
      & \multicolumn{5}{|p{\dimexpr 0.90\linewidth-2\tabcolsep}|}{
            %Insert Description Here
-           Description
+           #3
      } \\
 %Comments box
 \cline{2-6}
@@ -53,5 +42,22 @@ p{\dimexpr 0.18\linewidth-2\tabcolsep}|
      & \multicolumn{5}{|c|}{}\\ \cline{2-6}\cline{2-6}
      
 \end{tabular}
+}
+
+%opening
+\title{Controls Test Rubric}
+\author{Michigan Autonomous Aerial Vehicles}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+
+\end{abstract}
+
+\large
+\testrubric{88}{13.37}{Bacon ipsum dolor amet id prosciutto ribeye, cupidatat laboris elit turducken. Sausage ham hock quis drumstick, nulla spare ribs sunt lorem. Cow doner non anim ham, salami eu ribeye tail tenderloin leberkas cupim deserunt. Meatloaf nostrud biltong ball tip bresaola.
+
+Laboris magna venison picanha. In ut capicola doner eu voluptate beef flank adipisicing pork loin occaecat landjaeger id aliqua. Dolore alcatra ham eiusmod pork belly shankle do chuck ground round pancetta corned beef aute est. Porchetta short ribs eu boudin tongue lorem pastrami flank meatloaf jowl jerky chicken tenderloin cupidatat.}
 
 \end{document}
