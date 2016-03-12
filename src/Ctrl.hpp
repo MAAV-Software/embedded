@@ -3,15 +3,13 @@
 
 /**
  * @file
- * @brief NAV main loop.
+ * @brief This file controls the text on Main Page and Related Pages
  *
- * @details Why on earth is there a header for this? The main loop is standard
- * and can run on hardware or in simulation, so no sense duplicating that. It
- * needs to be exposed to both.
+ * @details Edit this file to edit the doxygen documentatoin
  */
 
 /**
- * @mainpage NAV
+ * @mainpage CTRL
  *
  * @tableofcontents
  *
