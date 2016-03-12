@@ -15,97 +15,15 @@
  *
  * @section intro Introduction
  *
- * There are two important binaries are created as a part of the build:
- *
- * * nav: The navigation server. Runs on the vehicle and does competition
- * logic. More about it can be read here: @ref nav.
- * * gcs: The ground control station. Contains a lot of functionality. More
- * about it can be read here: @ref gcs.
- *
- * To get a grip of the architecture, take a look at @ref arch. For info about
- * camera calibration, check out @ref calibration.
- *
+ * If you got this far you probably don't need much more help. Although you may
+ * want to check out the contributing section.
  * @section contrib Contributing
  *
  * Check out page @ref contributing. After that, read @ref stylecpp. Finally,
  * become addicted to coffee.
  */
 
-/**
- * @page arch NAV architecture
- *
- * @tableofcontents
- *
- * @section arena Arena
- *
- * The Arena is the global state of the program. As such, all of its functions
- * are (or should be) thread safe. The forward prediction function of the
- * arena does not modify any state, which allows matching sensor data (which
- * may be time-intensive) while still relying on the best-known positions of
- * all objects in the arena.
- *
- * In addition, all of the functions of Arena (should) have locking minimized
- * as much as possible. Any thread that writes to any state will write-lock
- * that state - Arena will not use any read-lock-to-write-lock upgrades, as
- * they can work but are shaky at best.
- *
- * Lastly, the reference frame; MAAV's reference frame is the traditional
- * aerospace reference frame. Looking down at the arena from above:
- *
- * * The origin is the bottom left corner
- * * The x-axis points up
- * * The y-axis points right
- * * The z-axis points into the page
- * * Roll is around the x-axis
- * * Pitch is around the y-axis
- * * Yaw is around the z-axis
- * * Rotations follow the right-hand rule
- *
- * @section eventdriven Event-driven Data Acquisition
- *
- * The sensors are each read in their own thread, and take callbacks that
- * process data as it arrives. This is important for being able to interact
- * with Gazebo - the processing callbacks are the exact same, but the threads
- * are reading from different sensors.
- *
- * @section pic Architecture Diagram
- *
- * The below figure shows the logical flow of data and instructions through
- * the nav code. Color is used to group tasks that run in the same thread.
- *
- * @htmlonly
- * <center><img src="../hlsys.png" /></center>
- * @endhtmlonly
- */
 
-/**
- * @page nav The 'nav' binary
- *
- * @tableofcontents
- *
- * @section summary Summary
- *
- * The 'nav' binary is the main binary that is run on the vehicle. It
- * additionally understands a number of useful options for debugging on a
- * laptop. Consult the '--help' option for a full list of options that can be
- * passed.
- *
- * @section test_serial_comms Testing Serial Communications
- *
- * Running
- *
- *     src/nav --no-laser --debug
- *
- * will launch the server and only connect to the controller. Unless you
- * modify the code, you will also have to launch the ground control station
- * by running:
- *
- *     src/gcs
- *
- * Once the ground control is up, open the command UI, connect to
- * 127.0.0.1:9000 and send poses. That should generate some stuff for testing
- * the serial communications.
- */
 
 /**
  * @page contributing Contributing
@@ -121,11 +39,28 @@
  * 1. On Redmine, ensure the corresponding issue is assigned to yourself, has
  *    a due date, and is "in progress".
  * 2. Checkout a new, temporary branch to work on a certain issue. Do **not**
- *    work on the master branch. Your work most likely will not be accepted.
+ *    work on the master branch. Your work most likely will not be accepted. 
+ *	Create a new branch by running:
+ *	~~~
+ *	$git checkout -b (branchname)
+ *	~~~
+ *	You can then switch branches with:
+ *	~~~
+ *	$git checkout (branchname)
+ *	~~~
+ *
  * 3. Work on that issue, committing every so often (probably at least
  *    once/hour). If it takes a few days, add notes on the corresponding issue
  *    on Redmine so that everyone can follow what's going on.
- * 4. Push all work to your personal repo.
+ * 4. Push all work to your personal repo. You can add your remote by running:
+ *	~~~
+ *	$git remote add (uniquename) git@maaverick.engin.umich.edu:ctrl-(uniquename).git
+ *	~~~
+ *	Push to your remote with:
+ *	~~~
+ *	$git push (uniquename) (branchname)
+ *	~~~
+ *
  * 5. Mark the issue as resolved in Redmine, with a note explaining the changes
  *    and what branch its on.
  *
