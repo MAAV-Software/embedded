@@ -128,7 +128,7 @@ cmake, or Linux terminal commands) or the team leads (anything and everything).
 maav CCS Project Instructions
 -----------------------------
 You will have to copy maav/.project.bak to maav/.project before importing the
-project. Likewise, you will have to copy maav/.cproject.back to maav/.cproject 
+project. Likewise, you will have to copy maav/.cproject.bak to maav/.cproject 
 before importing the CCS project.
 
 ***If your .cproject changes at any time and git wants you to commit it, restore
