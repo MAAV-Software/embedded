@@ -1,32 +1,57 @@
 \documentclass[]{article}
 \usepackage[letterpaper, margin=1in]{geometry}
-\usepackage{booktabs}
+
+%Requisite Packages for Test Rubric Box
+\usepackage{multirow}
 
 %opening
 \title{Controls Test Rubric}
 \author{Michigan Autonomous Aerial Vehicles}
 
 \begin{document}
-
 \maketitle
 
 \begin{abstract}
 
 \end{abstract}
 
+\large
 \begin{tabular}{
 p{\dimexpr 0.10\linewidth-2\tabcolsep}|
-p{\dimexpr 0.25\linewidth-2\tabcolsep}|
-p{\dimexpr 0.25\linewidth-2\tabcolsep}|
-p{\dimexpr 0.25\linewidth-2\tabcolsep}|
-p{\dimexpr 0.15\linewidth-2\tabcolsep}|
+p{\dimexpr 0.18\linewidth-2\tabcolsep}|
+p{\dimexpr 0.18\linewidth-2\tabcolsep}|
+p{\dimexpr 0.18\linewidth-2\tabcolsep}|
+p{\dimexpr 0.18\linewidth-2\tabcolsep}|
+p{\dimexpr 0.18\linewidth-2\tabcolsep}|
 }
-\hline
+%Header Line 1: Insert the proper test # instead of TEST\#
+\hline\hline
+\multicolumn{1}{|c|}{\multirow{3}{*}{\textbf{TEST\#}}} & 
+\multicolumn{1}{|c|}{\textbf{SR}} & 
+\multicolumn{1}{|c|}{\textbf{Test 1}} & 
+\multicolumn{1}{|c|}{\textbf{Test 2}} & 
+\multicolumn{1}{|c|}{\textbf{Test 3}} &
+\multicolumn{1}{|c|}{\textbf{Passed}}\\
+\cline{2-6}  
+%Header Line 2: Insert the proper system req # instead of SR\#
+\multicolumn{1}{|c|}{} & \multicolumn{1}{|c|}{\multirow{2}{*}{SR\#}} &  &  &  & \\
+\multicolumn{1}{|c|}{} &  &  &  &  & \\
 \hline 
-\multicolumn{1}{|c|}{TEST\#} & yolo & yolo & yolo & yolo \\
-\hline 
-     & yolo & yolo & yolo & yolo \\
-\cline{2-5} 
+%Description Box
+     & \multicolumn{5}{|p{\dimexpr 0.90\linewidth-2\tabcolsep}|}{
+           %Insert Description Here
+           Description
+     } \\
+%Comments box
+\cline{2-6}
+     & \multicolumn{5}{|p{\dimexpr 0.90\linewidth-2\tabcolsep}|}{
+           Comments:
+     } \\
+     & \multicolumn{5}{|c|}{}\\
+     & \multicolumn{5}{|c|}{}\\
+     & \multicolumn{5}{|c|}{}\\
+     & \multicolumn{5}{|c|}{}\\ \cline{2-6}\cline{2-6}
+     
 \end{tabular}
 
 \end{document}
