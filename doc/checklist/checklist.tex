@@ -1,10 +1,12 @@
 \documentclass[]{article}
 \usepackage[letterpaper, margin=1in]{geometry}
-
-%Requisite Packages for Test Rubric Box
+%\testrubric{TEST NUMBER}{SYSTEM REQUIREMENT NUMBER}{TEST DESRCIPTION}
+%Example usage can be found further on in this document
+%This command was designed for use with 1 inch margins, however should work reasonably well with other margin sizes. 
+% % % % % % % % % % % %
 \usepackage{multirow}
-
-\newcommand{\testrubric}[3]{
+\newcommand{\testrubric}[3]{{
+\centering
 \begin{tabular}{
 p{\dimexpr 0.10\linewidth-2\tabcolsep}|
 p{\dimexpr 0.18\linewidth-2\tabcolsep}|
@@ -13,18 +15,18 @@ p{\dimexpr 0.18\linewidth-2\tabcolsep}|
 p{\dimexpr 0.18\linewidth-2\tabcolsep}|
 p{\dimexpr 0.18\linewidth-2\tabcolsep}|
 }
-%Header Line 1: Insert the proper test # instead of TEST\#
-\hline\hline
-\multicolumn{1}{|c|}{\multirow{3}{*}{\textbf{#1}}} & 
-\multicolumn{1}{|c|}{\textbf{SR}} & 
-\multicolumn{1}{|c|}{\textbf{Test 1}} & 
-\multicolumn{1}{|c|}{\textbf{Test 2}} & 
-\multicolumn{1}{|c|}{\textbf{Test 3}} &
-\multicolumn{1}{|c|}{\textbf{Passed}}\\
+%Header Line 1: Insert the proper test #
+     \hline\hline
+     \multicolumn{1}{|c|}{\multirow{3}{*}{\textbf{#1}}} & 
+     \multicolumn{1}{|c|}{\textbf{SR}} & 
+     \multicolumn{1}{|c|}{\textbf{Test 1}} & 
+     \multicolumn{1}{|c|}{\textbf{Test 2}} & 
+     \multicolumn{1}{|c|}{\textbf{Test 3}} &
+     \multicolumn{1}{|c|}{\textbf{Passed}}\\
 \cline{2-6}  
-%Header Line 2: Insert the proper system req # instead of SR\#
-\multicolumn{1}{|c|}{} & \multicolumn{1}{|c|}{\multirow{2}{*}{#2}} &  &  &  & \\
-\multicolumn{1}{|c|}{} &  &  &  &  & \\
+%Header Line 2: Insert the proper system req #
+     \multicolumn{1}{|c|}{} & \multicolumn{1}{|c|}{\multirow{2}{*}{#2}}
+      &  &  &  & \\ \multicolumn{1}{|c|}{} &  &  &  &  & \\
 \hline 
 %Description Box
      & \multicolumn{5}{|p{\dimexpr 0.90\linewidth-2\tabcolsep}|}{
@@ -41,8 +43,9 @@ p{\dimexpr 0.18\linewidth-2\tabcolsep}|
      & \multicolumn{5}{|c|}{}\\
      & \multicolumn{5}{|c|}{}\\ \cline{2-6}\cline{2-6}
      
-\end{tabular}
-}
+\end{tabular} } %centering
+} % newcommand \testrubric
+% % % % % % % % % % % %
 
 %opening
 \title{Controls Test Rubric}
@@ -51,13 +54,42 @@ p{\dimexpr 0.18\linewidth-2\tabcolsep}|
 \begin{document}
 \maketitle
 
-\begin{abstract}
+% Counter for test number
+\newcounter{testno}
+\stepcounter{testno}
 
-\end{abstract}
+% Tests
+\section{Accuracy Tests}
+\testrubric{\arabic{testno}}{8.1}{Command the vehicle to a setpoint of 3m, 5m, and 10m of its starting position in the x direction and ensure it ends within 10\% of the setpoint}\\
+\stepcounter{testno}
 
-\large
-\testrubric{88}{13.37}{Bacon ipsum dolor amet id prosciutto ribeye, cupidatat laboris elit turducken. Sausage ham hock quis drumstick, nulla spare ribs sunt lorem. Cow doner non anim ham, salami eu ribeye tail tenderloin leberkas cupim deserunt. Meatloaf nostrud biltong ball tip bresaola.
+\testrubric{\arabic{testno}}{8.1}{Command the vehicle to a setpoint of 3m, 5m, and 10m of its starting position in the y direction and ensure it ends within 10\% of the setpoint}\\
+\stepcounter{testno}
 
-Laboris magna venison picanha. In ut capicola doner eu voluptate beef flank adipisicing pork loin occaecat landjaeger id aliqua. Dolore alcatra ham eiusmod pork belly shankle do chuck ground round pancetta corned beef aute est. Porchetta short ribs eu boudin tongue lorem pastrami flank meatloaf jowl jerky chicken tenderloin cupidatat.}
+\testrubric{\arabic{testno}}{8.1}{Command the vehicle to a setpoint of 3m, 5m, and 10m of its starting position in both the x and y directions and ensure it ends within 10\% of the setpoint}\\
+\stepcounter{testno}
+
+\section{Oscillation Tests}
+\testrubric{\arabic{testno}}{8.2}{Command the vehicle to any setpoint and ensure it does not oscillate more than 0.05m in any x, y, or z direction}\\
+\stepcounter{testno}
+
+\testrubric{\arabic{testno}}{8.2}{Command the vehicle to any setpoint and ensure it does not oscillate more than 0.1 radians in the yaw direction}\\
+\stepcounter{testno}
+
+\section{State Estimation Tests}
+\testrubric{\arabic{testno}}{8.3, 8.4}{Fly the vehicle manually to the heights of 0m, 0.5m and 1.5m. Read the log files and ensure that the estimated z is within +/-10\% at all of the heights.}\\
+\stepcounter{testno}
+
+\testrubric{\arabic{testno}}{8.3, 8.4}{Fly the vehicle manually in a 2m by 2m square three times. Read the log files and ensure that the estimated x and y are within +/-10\%.}\\
+\stepcounter{testno}
+
+\testrubric{\arabic{testno}}{8.3, 8.4}{Fly the vehicle manually in yaw from 0 to 2$\pi$ radians three times. Read the log files and ensure that the estimated yaw are within +/-10\%.}\\
+\stepcounter{testno}
+
+\testrubric{\arabic{testno}}{8.3, 8.4}{Fly the vehicle manually at a constant rate to cover a distance of 3m in 30 seconds in the x direction. Read the log files and ensure that the estimated x rate is within +/-10\%.}\\
+\stepcounter{testno}
+
+\testrubric{\arabic{testno}}{8.3, 8.4}{Fly the vehicle manually at a constant rate to cover a distance of 3m in 30 seconds in the y direction. Read the log files and ensure that the estimated y rate is within +/-10\%.}\\
+\stepcounter{testno}
 
 \end{document}
