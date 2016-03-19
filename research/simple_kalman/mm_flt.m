@@ -2,7 +2,7 @@ clear all;
 clc;
 close all;
 
-log = load('../Log_analysis/2016/q1/23feb2016/LOG94.TXT');
+log = load('../Log_analysis/2016/q1/9jan16_line_test/LOG27.TXT');
 
 %log = load('RunFilterTestLog.TXT');
 Time          = log(:,1);
@@ -28,12 +28,18 @@ mm_buf = zeros(3,1);
 mm_idx = 1;
 
 
-
 px4_filt = zeros(3,1);
 mm_size2 = 15;
+
 %THe third row is not used, just a placeholder of zero
 mm_buf2 = zeros(3,1);
 mm_idx2 = 1;
+
+%low pass filter for px4
+px4_low_pass_alpha = .15;
+
+px4_low_pass = zeros(3, log_length);
+% flt_output = alpha * input + (1 - alpha) * old_flt_output.
 
 for i = 1:log_length
     % rotation matrix that turns vectors in quadcopter frame to earth frame
@@ -74,6 +80,11 @@ for i = 1:log_length
    
     px4_flt_hist(:,i) = px4_flt;
     px4_hist(:,i) = px4;
+    
+    if i > 1
+      px4_low_pass(:, i) = px4_low_pass_alpha * px4 + (1 - px4_low_pass_alpha) * px4_low_pass(:, i - 1);
+    end
+    
 end
 
 figure(1)
@@ -97,13 +108,13 @@ title('AccZ Flt (red) & AccZ Raw (blk)');
 
 
 figure(4)
-plot(Time_hist, px4_hist(1,:), '*k', Time_hist, px4_flt_hist(1,:), 'r');
+plot(Time_hist, px4_hist(1,:), '*k', Time_hist, px4_flt_hist(1,:), 'r', Time_hist, px4_low_pass(1, :), 'b');
 ylabel('X Dot (m/s)');
 xlabel('Time (s)');
 title('XDot Flt (red) & X Raw (blk)');
 
 figure(5)
-plot(Time_hist, px4_hist(2, :), '*k', Time_hist, px4_flt_hist(2,:), 'r');
+plot(Time_hist, px4_hist(2, :), '*k', Time_hist, px4_flt_hist(2,:), 'r', Time_hist, px4_low_pass(2, :), 'b');
 ylabel('Y Dot (m/s)');
 xlabel('Time (s)');
 title('YDot Flt (red) & Y Raw (blk)');
