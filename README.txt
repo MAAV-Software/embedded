@@ -1,14 +1,14 @@
 MAAV CONTROLS REPOSITORY
 
 by Sajan Patel, Clark Zhang, Zhengjie Cui, Sasawat Prankprakma
---------------------------------------------------------------
+------------------------------------------------------------------------------
 
 This is the repository for MAAV's controls subteam.
 All controls code, documentation, and other important products/resources will go here.
 
 
 Installation Instructions (for test cases for hardware-independent code)
-------------------------------------------------------------------------
+------------------------------------------------------------------------------
 If working on CAEN, please followed the specialized CAEN instructions below
 
 Ensure that you have cmake, eigen3, lcm, and boost installed. Make a build 
@@ -55,7 +55,7 @@ Any other questions should first be addressed to Google (if it's about make,
 cmake, or Linux terminal commands) or the team leads (anything and everything).
 
 CAEN Installation Instructions (for test cases for hardware-independent code)
-------------------------------------------------------------------------
+------------------------------------------------------------------------------
 If working on CAEN, please followed the specialized CAEN instructions below
 
 Starting in the repository directory (by default "ctrl"), go up one level:
@@ -126,7 +126,7 @@ cmake, or Linux terminal commands) or the team leads (anything and everything).
 
 
 maav CCS Project Instructions
------------------------------
+------------------------------------------------------------------------------
 You will have to copy maav/.project.bak to maav/.project before importing the
 project. Likewise, you will have to copy maav/.cproject.bak to maav/.cproject 
 before importing the CCS project.
@@ -143,7 +143,7 @@ REPO_LOC: this is the path to the maav-controls/repo on your computer
 TIVAWARE_INSTALL: this is the path to your installation of Ti's TivaWare software library
 
 Repo Structure
---------------
+------------------------------------------------------------------------------
 maav		This is the main Code Composer Studio project for the flight controller running on the Tiva. 
 		main.cpp, interrupt vector table, and Tiva build files live here in this directory.
 
@@ -179,5 +179,19 @@ cmake 	Contains the cmake pakage searching scripts.
 
 lcmtypes	All lcm message specification files and auto-generated code goes here.
 
+
+Code Freeze
+------------------------------------------------------------------------------
+3 days before flight testing, all code is frozen. No features will be merged;
+only critical bugfixes.
+
+At some point during the code freeze, some member of the team should come into
+the office, boot up the vehicle and gcs, and make the following checks:
+ * check that the hardware independent test cases all pass
+ * check that we can spool up the motors and take off/hover if possible.
+ * check to make sure gcs is getting all data from the vehicle that it should
+ * check that logs produced by the vehicle can be read by Log_analysis.m
+ * check that if no SD card is inserted into the vehicle, the vehicle will 
+   refuse to fly
 
 Contact Sajan Patel at sajanptl@umich.edu for more information.
