@@ -1,5 +1,6 @@
 #ifndef KALMAN_FILTER_HPP
 #define KALMAN_FILTER_HPP
+#endif
 
 #ifdef LINUX
 #include "cmeigen.hpp"
@@ -7,9 +8,9 @@
 #include "arm_math.h"
 #endif
 
-#include <cassert>
 #include <cstdlib>
 #include <stdint.h>
+#include <cassert>
 #include "MaavMath.hpp"
 
 class KalmanFilter
@@ -35,7 +36,8 @@ public:
 	void correctCamera(const float x, const float y);
 
 	/*
-	 * Allows for setting Q and R matrices
+	 * Returns a pointer to the state data. Const because we do not want
+	 * people messing with the data.
 	 */
 	void setQ(float val1, float val2, float val3, float val4, float val5, float val6);
 
@@ -50,6 +52,7 @@ public:
 	 * @details Matrix is of form [x; xdot; y; ydot; z; zdot ]
 	 *
 	 * @returns the state matrix
+>>>>>>> 8e9dc7bbc2ab409d412dd161e7dc656ff38be2cc
 	 */
 	const arm_matrix_instance_f32& getState() const;
 
@@ -102,5 +105,3 @@ private:
 	arm_matrix_instance_f32 inter_2by2;
 	arm_matrix_instance_f32 inter_another_2by2;
 };
-
-#endif
