@@ -9,10 +9,14 @@ class ImuRunnable : public Runnable
 public:
 	ImuRunnable(ProgramState *pState);
 	void run();
+	void AccelCalib();
+	void CaptureGyroBias();
 	
 private:
 //	Imu *imu;
 	ProgramState *state;
+	float ReverseBytes(const uint8_t *raw, const unsigned int i);
+
 };
 
 #endif /* IMURUNNABLE_HPP_ */

@@ -30,37 +30,81 @@ Imu::Imu()
 	Timer = 1;
 }
 
-void Imu::parse(const uint8_t* data)
+void ParseMeasurments(const uint8_t* data)
 {
 	// Check checksum
-	int16_t tChksum = 0;
-	for (unsigned int i = 0; i < 77; ++i) tChksum += data[i];
+		int16_t tChksum = 0;
+		for (unsigned int i = 0; i < IMU_DATA_LENGTH-2; ++i) tChksum += data[i];
 
-	int16_t tResponseChksum = (((uint16_t)data[77]) << 8) | data[78];
+		int16_t tResponseChksum = (((uint16_t)data[IMU_DATA_LENGTH-2]) << 8) | data[IMU_DATA_LENGTH-1];
+		if (tChksum != tResponseChksum)
+		{
+			return;
+		}
+
+		AccX = MaavMath::Gravity * Bytes2Float(data, 1);
+		AccY = MaavMath::Gravity * Bytes2Float(data, 5);
+		AccZ = MaavMath::Gravity * Bytes2Float(data, 9);
+		AngRateX = Bytes2Float(data, 13);
+		AngRateY = Bytes2Float(data, 17);
+		AngRateZ = Bytes2Float(data, 21);
+		MagX = Bytes2Float(data, 25);
+		MagY = Bytes2Float(data, 29);
+		MagZ = Bytes2Float(data, 33);
+
+		for (unsigned int i = 0; i < NUM_M_VAL; ++i)
+			M[i] = Bytes2Float(data, (37 + (i * 4)));
+	/*
+	* Here are the corresponding M rotation matrix entries and their indecies
+	* M[0 1 2;
+	*   3 4 5;
+	*   6 7 8]
+	*/
+
+}
+
+void ParseAccCal(const uint8_t* data)
+{
+	//Checksum Code
+	int16_t tChksum = 0;
+	for (unsigned int i = 0; i < IMU_ACC_CALIBRATE_DATA_LENGTH-2; ++i) tChksum += data[i];
+
+	int16_t tResponseChksum = (((uint16_t)data[IMU_ACC_CALIBRATE_DATA_LENGTH-2]) << 8) | data[IMU_ACC_CALIBRATE_DATA_LENGTH-1];
 	if (tChksum != tResponseChksum)
 	{
 		return;
 	}
 
-	AccX = MaavMath::Gravity * Bytes2Float(data, 1);
-	AccY = MaavMath::Gravity * Bytes2Float(data, 5);
-	AccZ = MaavMath::Gravity * Bytes2Float(data, 9);
-	AngRateX = Bytes2Float(data, 13);
-	AngRateY = Bytes2Float(data, 17);
-	AngRateZ = Bytes2Float(data, 21);
-	MagX = Bytes2Float(data, 25);
-	MagY = Bytes2Float(data, 29);
-	MagZ = Bytes2Float(data, 33);
+	AccBiasX = Bytes2Float(data, 1);
+	AccBiasY = Bytes2Float(data, 5);
+    AccBiasZ = Bytes2Float(data, 9);
 
-	for (unsigned int i = 0; i < NUM_M_VAL; ++i)
-		M[i] = Bytes2Float(data, (37 + (i * 4)));
-/*
-* Here are the corresponding M rotation matrix entries and their indecies
-* M[0 1 2;
-*   3 4 5;
-*   6 7 8]
-*/
+}
 
+void ParseGyroBias(const uint8_t* data)
+{
+	int16_t tChksum = 0;
+	for (unsigned int i = 0; i < MaavImu::GyroBiasDataLength-2; ++i) tChksum += data[i];
+
+	int16_t tResponseChksum = (((uint16_t)data[MaavImu::GyroBiasDataLength-2]) << 8) | data[MaavImu::GyroBiasDataLength-1];
+	if (tChksum != tResponseChksum)
+	{
+		return;
+	}
+
+	GyroBiasX = Bytes2Float(data, 1);
+	GyroBiasY = Bytes2Float(data, 5);
+    GyroBiasZ = Bytes2Float(data, 9);
+}
+
+void Imu::parse(const uint8_t* data)
+{
+	switch(data[0])
+	{
+		case 0xCC : parseMeasuremnts(data);
+		case 0xC9 : parseAccCal(data);
+		case 0xCD : parseGyroBias(data);
+	}
 	Timer = Bytes2Int(data, 73);
 }
 
@@ -171,6 +215,7 @@ float Bytes2Float(const uint8_t *raw, const unsigned int i)
 	return data.number;
 }
 
+
 float Imu::getTimestamp() const
 {
 	return timestamp;
@@ -189,4 +234,29 @@ void Imu::setRefYaw(float newRefYaw)
 float Imu::getRefYaw()
 {
     return refYaw;
+}
+float getAccBiasX()
+{
+  return AccBiasX;
+}
+float getAccBiasY()
+{
+	return AccBiasY;
+}
+}
+float getAccBiasZ()
+{
+	return AccBiasZ;
+}
+float getGyroBiasX()
+{
+	return GyroBiasX;
+}
+float getGyroBiasY()
+{
+	return GyroBiasY;
+}
+float getGyroBiasZ()
+{
+	return GyroBiasZ;
 }

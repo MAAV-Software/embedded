@@ -34,9 +34,17 @@ bool imuDone = false;
 uint8_t imuIndex = 0;
 uint32_t imuTime = 0;
 uint8_t imuCmd = 0xCC;
-
+enum ImuStatus{Normal, Calib1, Calib2};
+static ImuStatus imuCalibrateStatus = Normal;
+float accumulatedAccX;
+float accumulatedAccY;
+float accumulatedAccZ;
+uint8_t measurementCmd = 0xCC;
+uint8_t accCalibCmd = 0xC9;
 // local global, not externed
 uint32_t uartBase = UART1_BASE;
+
+
 
 //****************************************************************************************
 void imuUartConfig(const uint32_t sysctlPeriphUart,
@@ -84,12 +92,19 @@ void imuUartConfig(const uint32_t sysctlPeriphUart,
 //****************************************************************************************
 void imuUartIntHandler()
 {
-    // Get the interrrupt status.
+	//Check flags and based on those flags set a calibration state
+	uint32_t length = 0;
+    switch(imuCmd)
+    {
+    	case MaavImu::ImuMeasurementCommand: length = IMU_DATA_LENGTH; break;
+    	case MaavImu::AccCalibCommand: length = IMU_ACC_CALIBRATE_DATA_LENGTH; break;
+    	case MaavImu::GyroCalibCommand: length = MaavImu::GyroBiasDataLength; break;
+    }
     uint32_t status = MAP_UARTIntStatus(uartBase, true);
-	
+
     // Clear the asserted interrupts.
     MAP_UARTIntClear(uartBase, status);
-	
+
     // Loop while there are characters in the receive FIFO.
     while (MAP_UARTCharsAvail(uartBase))
     {
@@ -97,7 +112,7 @@ void imuUartIntHandler()
         uint8_t dataGet = MAP_UARTCharGetNonBlocking(uartBase);
 
         if ((dataGet == imuCmd) &&
-        		((imuIndex == 0) || (imuIndex >= (uint8_t)IMU_DATA_LENGTH)))
+        		((imuIndex == 0) || (imuIndex >= (uint8_t)length)))
         {
         	imuIndex = 0;
         	imuDone = false;
@@ -105,12 +120,13 @@ void imuUartIntHandler()
 
         imuRawIn[imuIndex++] = dataGet;
 
-		if (imuIndex >= (uint8_t)IMU_DATA_LENGTH)
+		if (imuIndex >= (uint8_t)length)
 		{
-			imuMemcpy(imuRawFinal, imuRawIn, (int)IMU_DATA_LENGTH);
+			imuMemcpy(imuRawFinal, imuRawIn, (int)length);
 			imuDone = true;
 		}
-    }
+
+	}
 }
 
 //****************************************************************************************
@@ -126,57 +142,6 @@ void imuMemcpy(uint8_t* out, const uint8_t* in, const int len)
 	for (int i = 0; i < len; i++) out[i] = in[i];
 }
 
-void imuCalibrate(uint32_t AccelBiasX, uint32_t AccelBiasY, uint32_t AccelBiasZ)
-{
 
-	//Acceleration Calibration Packet Contents
-	//15 bytes sent to imu,
-	struct P{
-		uint8_t B1;
-		uint8_t B2;
-		uint8_t B3;
-		uint32_t AccelBiasX;
-		uint32_t AccelBiasY;
-		uint32_t AccelBiasZ;
-	};
-
-	union Packet
-	{
-	    P p_packet;
-		uint8_t raw[sizeof(P)];
-	}packet;
-
-	packet.p_packet.B1 = 0xC9;
-	packet.p_packet.B2 = 0xB7;
-	packet.p_packet.B3 = 0x44;
-	packet.p_packet.AccelBiasX = 0.123; //Dummy Values
-	packet.p_packet.AccelBiasY = 0.123;
-	packet.p_packet.AccelBiasZ = 0.123;
-
-	imuUartSend(packet.raw,sizeof(packet.p_packet));
-
-	//Gyro Packet
-	struct Gpacket
-	{
-		uint8_t B1;
-		uint8_t B2;
-		uint8_t B3;
-		uint16_t SamplingTime;
-	};
-
-	union GyroPacket
-	{
-		Gpacket g;
-		uint8_t raw[sizeof(Gpacket)];
-	}Gyro;
-
-	Gyro.g.B1 = 0xCD;
-	Gyro.g.B1 = 0xC1;
-	Gyro.g.B1 = 0x29;
-	Gyro.g.SamplingTime = 100000;
-
-	imuUartSend(Gyro.raw,sizeof(Gyro.g));
-	//Response Checking
-}
 
 

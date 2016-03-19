@@ -36,6 +36,13 @@ public:
 	void RecordTime(float time);
 	void setRefYaw(float newRefYaw);
 	float getRefYaw();
+	float getAccBiasX();
+	float getAccBiasY();
+	float getAccBiasZ();
+	float getGyroBiasX();
+	float getGyroBiasY();
+	float getGyroBiasZ();
+
 
 private:
 	float refYaw;
@@ -51,6 +58,12 @@ private:
 	float M[NUM_M_VAL];
 	float timestamp;
 	uint32_t Timer;
+	float GyroBiasX;
+	float GyroBiasY;
+	float GyroBiasZ;
+	float AccBiasX;
+	float AccBiasY;
+	float AccBiasZ;
 	/*
 	* Here are the corresponding M rotation matrix entries and their indecies
 	* M[0 1 2;
@@ -61,5 +74,9 @@ private:
 
 uint32_t Bytes2Int(const uint8_t *raw, const unsigned int i);
 float Bytes2Float(const uint8_t *raw, const unsigned int i);
+void ParseMeasurments(const uint8_t* data);
+void ParseAccCal(const uint8_t* data);
+void ParseGyroBias(const uint8_t* data);
+
 
 #endif /* IMU_UART_H_ */
