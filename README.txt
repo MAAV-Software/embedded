@@ -6,6 +6,9 @@ by Sajan Patel, Clark Zhang, Zhengjie Cui, Sasawat Prankprakma
 This is the repository for MAAV's controls subteam.
 All controls code, documentation, and other important products/resources will go here.
 
+For more information or questions, contact:
+ * Sasawat Prankprakma (psasawat@umich.edu)
+ * Sajan Patel (sajanptl@umich.edu)
 
 Installation Instructions (for test cases for hardware-independent code)
 ------------------------------------------------------------------------------
@@ -193,5 +196,3 @@ the office, boot up the vehicle and gcs, and make the following checks:
  * check that logs produced by the vehicle can be read by Log_analysis.m
  * check that if no SD card is inserted into the vehicle, the vehicle will 
    refuse to fly
-
-Contact Sajan Patel at sajanptl@umich.edu for more information.
