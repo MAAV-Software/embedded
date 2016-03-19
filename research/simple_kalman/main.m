@@ -134,3 +134,6 @@ plot(Time, x_hist(3, :));
 legend('filtered y');
 
 figure(7)
+
+x_save = x_hist';
+save('runFltAns2.txt','x_save','-ascii');
