@@ -128,8 +128,8 @@ BOOST_AUTO_TEST_CASE(correctPx4Test)
         {
             if(answerFile >> ans) 
             {
-                cout << "Should be: " << ans << ". Actual: " << 
-                    MaavMath::mat_at(testState, i, j) << endl;
+                //cout << "Should be: " << ans << ". Actual: " << 
+                //    MaavMath::mat_at(testState, i, j) << endl;
                 BOOST_CHECK_CLOSE(MaavMath::mat_at(testState, i, j), ans, 1.0);
             }
         }
@@ -141,8 +141,8 @@ BOOST_AUTO_TEST_CASE(correctPx4Test)
         {
             if(answerFile >> ans) 
             {
-                cout << "Should be: " << ans << ". Actual: " << 
-                    MaavMath::mat_at(testCovar, i, j) << endl;
+                //cout << "Should be: " << ans << ". Actual: " << 
+                //    MaavMath::mat_at(testCovar, i, j) << endl;
                 BOOST_CHECK_CLOSE(MaavMath::mat_at(testCovar, i, j), ans, 1.0);
             }
         }
