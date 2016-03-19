@@ -45,6 +45,8 @@ configure_file(RunFilterTestLog.TXT
 	${CMAKE_CURRENT_BINARY_DIR}/RunFilterTestLog.TXT @ONLY)
 configure_file(runFltAns.txt
 	${CMAKE_CURRENT_BINARY_DIR}/runFltAns.txt @ONLY)
+configure_file(Px4Correct.txt
+	${CMAKE_CURRENT_BINARY_DIR}/Px4Correct.txt @ONLY)
 
 foreach(test ${TESTS})
 	add_executable(${test} ${test}.cpp)
