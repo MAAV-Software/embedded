@@ -12,6 +12,7 @@
 #include "ImuDefines.hpp"
 #include "time_util.h"
 #include "MaavMath.hpp"
+#include "Apeshit.hpp"
 
 using namespace std;
 using namespace MaavMath;
@@ -48,10 +49,38 @@ Imu::Imu()
 	MagX = 0;
 	MagY = 0;
 	MagZ = 0;
+	GyroBiasX = 0;
+	GyroBiasY = 0;
+	GyroBiasZ = 0;
+	AccBiasX = 0;
+	AccBiasY = 0;
+	AccBiasZ = 0;
 	
     for (unsigned int i = 0; i < NUM_M_VAL; ++i) M[i] = 0;
 	
     Timer = 1;
+}
+
+MicroStrainCmd Imu::formatStopContMode()
+{
+	MicroStrainCmd m;
+	m.length = 3;
+	m.buf[0] = 0xFA;
+	m.buf[1] = 0x75;
+	m.buf[2] = 0xB4;
+
+	return m;
+}
+
+MicroStrainCmd Imu::formatSoftResetCmd()
+{
+	MicroStrainCmd m;
+	m.length = 3;
+	m.buf[0] = 0xFE;
+	m.buf[1] = 0x9E;
+	m.buf[2] = 0x3A;
+
+	return m;
 }
 
 MicroStrainCmd Imu::formatMeasCmd()
@@ -106,11 +135,16 @@ bool Imu::goodChecksum(const uint8_t* data, uint32_t size)
 
 void Imu::parseMeasurements(const uint8_t* data)
 {
-    if (!goodChecksum(data, MEASUREMENT_DATA_LENGTH)) return; // check checksum
+    if (!goodChecksum(data, MEASUREMENT_DATA_LENGTH)) //return; // check checksum
+    	goApeshit();
 
-    AccX = Gravity * Bytes2Float(data, 1);
-    AccY = Gravity * Bytes2Float(data, 5);
-    AccZ = Gravity * Bytes2Float(data, 9);
+    gAccX = Bytes2Float(data, 1);
+    gAccY = Bytes2Float(data, 5);
+    gAccZ = Bytes2Float(data, 9);
+
+    AccX = Gravity * getgAccX();
+    AccY = Gravity * getgAccY();
+    AccZ = Gravity * getgAccZ();
     AngRateX = Bytes2Float(data, 13);
     AngRateY = Bytes2Float(data, 17);
     AngRateZ = Bytes2Float(data, 21);
@@ -132,7 +166,8 @@ void Imu::parseMeasurements(const uint8_t* data)
 
 void Imu::parseAccCal(const uint8_t* data)
 {
-    if (!goodChecksum(data, ACCEL_BIAS_DATA_LENGTH)) return; // check checksum
+    if (!goodChecksum(data, ACCEL_BIAS_DATA_LENGTH)) //return; // check checksum
+    	goApeshit();
 
 	AccBiasX = Bytes2Float(data, 1);
 	AccBiasY = Bytes2Float(data, 5);
@@ -142,7 +177,8 @@ void Imu::parseAccCal(const uint8_t* data)
 
 void Imu::parseGyroBias(const uint8_t* data)
 {
-    if (!goodChecksum(data, GYRO_BIAS_DATA_LENGTH)) return; // check checksum
+    if (!goodChecksum(data, GYRO_BIAS_DATA_LENGTH)) //return; // check checksum
+    	goApeshit();
 
 	GyroBiasX = Bytes2Float(data, 1);
 	GyroBiasY = Bytes2Float(data, 5);
@@ -155,7 +191,7 @@ void Imu::parse(const uint8_t* data)
     // Switch on command response (first byte of data array)
 	switch (data[0])
 	{
-		case MEASUREMENT_CMD : parseMeasurements(data);  break;
+		case MEASUREMENT_CMD : parseMeasurements(data); break;
 		case ACCEL_CALIB_CMD : parseAccCal(data);       break;
 		case GYRO_CALIB_CMD  : parseGyroBias(data);     break;
         default: break;
@@ -173,6 +209,21 @@ const float* Imu::getRotMat() const
 }
 
 // Return data
+float Imu::getgAccX() const
+{
+	return gAccX;
+}
+
+float Imu::getgAccY() const
+{
+	return gAccY;
+}
+
+float Imu::getgAccZ() const
+{
+	return gAccZ;
+}
+
 float Imu::getAccX() const
 {
 	return AccX;
@@ -304,8 +355,8 @@ void u16ToBytes(uint8_t* dest, uint32_t idx, uint16_t num)
     BytesU16 data;
     data.number = num;
 
-    dest[idx]     = data.buf[3];
-    dest[idx + 1] = data.buf[2];
+    dest[idx]     = data.buf[1];
+    dest[idx + 1] = data.buf[0];
 }
 
 uint32_t Bytes2Int(const uint8_t *raw, const unsigned int i)

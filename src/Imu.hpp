@@ -33,11 +33,18 @@ public:
                                       const float accYBias,
                                       const float accZBias);
     MicroStrainCmd formatGyroBiasCmd(const uint16_t samplingTime);
+    MicroStrainCmd formatStopContMode();
+    MicroStrainCmd formatSoftResetCmd();
 
     // Return data
 	float getAccX() const;
 	float getAccY() const;
 	float getAccZ() const;
+
+	float getgAccX() const;
+	float getgAccY() const;
+	float getgAccZ() const;
+
 	float getRoll() const;
 	float getPitch() const;
 	float getYaw() const;
@@ -73,6 +80,11 @@ public:
 
 private:
 	float refYaw;
+
+	float gAccX;
+	float gAccY;
+	float gAccZ;
+
 	float AccX;
 	float AccY;
 	float AccZ;

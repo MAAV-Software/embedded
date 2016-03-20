@@ -8,6 +8,7 @@
 #include <stdint.h>
 #include <string.h>
 #include <stdio.h>
+#include <cmath>
 
 #include "runnables/ImuRunnable.hpp"
 #include "ImuHw.hpp"
@@ -29,7 +30,11 @@
 #include "utils/uartstdio.h"
 
 #include "time_util.h"
+#include "LED.h"
+#include "Apeshit.hpp"
+#include "MaavMath"
 
+using MaavMath::Gravity;
 using namespace MaavImu;
 
 void ImuRunnable::AccelCalib()
@@ -38,59 +43,68 @@ void ImuRunnable::AccelCalib()
     float accXBias = 0;
     float accYBias = 0;
     float accZBias = 0;
-
-    uint32_t startTime = MAP_TimerValueGet(TIMER4_BASE, TIMER_A);
-    uint32_t period = SYSCLOCK / 100; // period of 10 ms
     
-    // sample IMU at 10 ms period for 10 samples    
-    uint8_t numSamples = 10;
-    for (uint8_t i = 0; i < numSamples; ++i)
-    {
-        uint32_t startTime = millis();
+    TurnOff_LED(BLUE_LED);
 
+    // sample IMU at 10 ms period for 10 samples    
+    uint8_t numSamples = 0;
+    uint8_t numLoops = 11;
+    for (uint8_t i = 0; i < numLoops; ++i)
+    {
         MicroStrainCmd measCmd = state->imu->formatMeasCmd();
-        imuUartSend(measCmd.buf, measCmd.length)
+        imuUartSend(measCmd.buf, measCmd.length);
         
-        while (!IMU_DONE); // busy wait OK here
-        
+        while (!IMU_DONE) TurnOff_LED(RED_LED); // busy wait OK here
+        TurnOn_LED(RED_LED);
+
+        if (i == 0) continue;
+
+        ++numSamples;
         // parse the measrement message
         state->imu->parse(IMU_RAW_DATA);
         IMU_DONE = false;
+
+        accXBias += state->imu->getgAccX();
+        accYBias += state->imu->getgAccY();
+        accZBias += state->imu->getgAccZ() + 1;
         
-        accXBias += state->imu->getAccX();
-        accYBias += state->imu->getAccY();
-        accZBias += state->imu->getAccZ();
-        
-        uint32_t currTime = millis();
-        
-        // delay the remainder of the 10 ms period
-        MAP_SysCtlDelay(SYSCLOCK / 300 * (period - currTime - startTime));
+        MAP_SysCtlDelay(SYSCLOCK / 3 / 100 * 2);
     }
+    TurnOn_LED(BLUE_LED);
+
+    TurnOff_LED(GREEN_LED);
     
-    // normalize by numSamples
-    accXBias /= (float)numSamples;
-    accYBias /= (float)numSamples;
-    accZBias /= (float)numSamples;
-    accZBias -= 1.0; // subtract gravity
-    
+    if (numSamples > 0)
+    {
+    	// normalize by numSamples
+    	accXBias /= (float)numSamples;
+    	accYBias /= (float)numSamples;
+    	accZBias /= (float)numSamples;
+    }
+
+    IMU_DONE = false;
+
     // format and send command to register accel bias in the IMU
     MicroStrainCmd accBiasCmd = state->imu->formatAccelBiasCmd(accXBias, 
                                     accYBias, accZBias);
     imuUartSend(accBiasCmd.buf, accBiasCmd.length);
 
-    while (!IMU_DONE); // busy loop here is OK
+    while (!IMU_DONE) TurnOff_LED(RED_LED); // busy loop here is OK
+    TurnOn_LED(RED_LED);
     
     // parse the bias message
     state->imu->parse(IMU_RAW_DATA);
     IMU_DONE = false;
 
     // verify that biases were registered
-    if ((accXBias != state->imu->getAccBiasX) || 
-        (accYBias != state->imu->getAccBiasY) || 
-        (accZBias != state->imu->getAccBiasZ))
+    if ((accXBias != state->imu->getAccBiasX()) ||
+        (accYBias != state->imu->getAccBiasY()) ||
+        (accZBias != state->imu->getAccBiasZ()))
     {
         goApeshit();
     }
+
+    TurnOn_LED(GREEN_LED);
 }
 
 void ImuRunnable::CaptureGyroBias()
@@ -100,7 +114,8 @@ void ImuRunnable::CaptureGyroBias()
     MicroStrainCmd cmd = state->imu->formatGyroBiasCmd(10000);
     imuUartSend(cmd.buf, cmd.length);
 
-    while (!IMU_DONE); // busy loop here is OK
+    while (!IMU_DONE) TurnOff_LED(RED_LED); // busy loop here is OK
+    TurnOn_LED(RED_LED);
     
     // parse the bias message
     state->imu->parse(IMU_RAW_DATA);
@@ -113,10 +128,17 @@ ImuRunnable::ImuRunnable(ProgramState *pState) : state(pState), imuTime(0)
 				  GPIO_PC5_U1TX, GPIO_PORTC_BASE, GPIO_PIN_4, GPIO_PIN_5,
 				  UART1_BASE, INT_UART1);
 	
-	CaptureGyroBias();
+	softReset();
+
+	setMode();
+
     AccelCalib();
-	
-    for (int i = 0; i < 2; ++i) Toggle_LED(BLUE_LED, SYSCLOCK / 3 / 2);
+
+	Toggle_LED(BLUE_LED | GREEN_LED, SYSCLOCK / 3 / 2);
+
+	CaptureGyroBias();
+
+	for (int i = 0; i < 3; ++i) Toggle_LED(BLUE_LED, SYSCLOCK / 3 / 2);
 }
 
 void ImuRunnable::run()
@@ -124,7 +146,7 @@ void ImuRunnable::run()
 	uint32_t time = MAP_TimerValueGet(TIMER4_BASE, TIMER_A);
 
 	// Run at 100Hz (10ms)
-	if (!IMU_DONE && ((time - imuTime) > (SYSCLOCK / 100)))
+	if (!IMU_DONE && ((time - imuTime) > (SYSCLOCK / 1000 * 10)))
 	{
 		imuTime = time;
         MicroStrainCmd cmd = state->imu->formatMeasCmd();
@@ -137,4 +159,22 @@ void ImuRunnable::run()
 		state->imu->parse(IMU_RAW_DATA);
 		IMU_DONE = false;
 	}
+}
+
+void ImuRunnable::setMode()
+{
+	MicroStrainCmd cmd = state->imu->formatStopContMode();
+	imuUartSend(cmd.buf, cmd.length);
+	Toggle_LED(BLUE_LED | GREEN_LED, SYSCLOCK / 3 / 2);
+
+	IMU_DONE = false;
+}
+
+void ImuRunnable::softReset()
+{
+	MicroStrainCmd cmd = state->imu->formatSoftResetCmd();
+	imuUartSend(cmd.buf, cmd.length);
+	Toggle_LED(BLUE_LED | GREEN_LED, SYSCLOCK / 3 / 2);
+
+	IMU_DONE = false;
 }

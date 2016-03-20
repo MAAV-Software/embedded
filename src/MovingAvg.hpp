@@ -1,6 +1,8 @@
 #ifndef MOVINGAVG_HPP_
 #define MOVINGAVG_HPP_
 
+#include <stdint.h>
+
 /**
  * @brief Moving Averge Filter
  * @details Implements a simple moving averge filter for a set sample size
@@ -15,7 +17,7 @@ public:
      * 
      * @param size number of samples to average
      */
-    MovingAvg(size_t size);
+    MovingAvg(uint16_t size);
 
     /**
      * @brief MovingAvg Destructor
@@ -43,10 +45,10 @@ public:
     float state() const;
         
 private:
-    size_t size_;   /**< @brief sample size for the filter */
+    uint16_t size_;   /**< @brief sample size for the filter */
     float *buf_;    /**< @brief buffer of samples average */
     float state_;   /**< @brief current state/response of the filter */
-    size_t idx_;    /**< @brief index of current write head for buf */
+    uint16_t idx_;    /**< @brief index of current write head for buf */
 };
 
 #endif /* MOVINGAVG_HPP_ */

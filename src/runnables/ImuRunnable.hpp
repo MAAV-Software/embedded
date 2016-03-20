@@ -16,6 +16,8 @@ private:
     
     void AccelCalib();
 	void CaptureGyroBias();
+	void setMode();
+	void softReset();
 };
 
 #endif /* IMURUNNABLE_HPP_ */

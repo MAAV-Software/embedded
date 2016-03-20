@@ -33,12 +33,12 @@ using namespace MaavImu;
 // externed globals
 bool IMU_DONE = false;
 uint8_t IMU_RAW_DATA[MAX_IMU_DATA_LENGTH];
+uint8_t IMU_CMD = 0xCC;
 
 // file-scope globals
-uint8_t IMU_RAW_IN[MAX_IMU_DATA_LENGTH];
-uint8_t IMU_IDX = 0;
-uint8_t IMU_CMD = 0xCC;
-uint32_t UART_BASE = UART1_BASE;
+static uint8_t IMU_RAW_IN[MAX_IMU_DATA_LENGTH];
+static uint32_t IMU_IDX = 0;
+static uint32_t UART_BASE = UART1_BASE;
 
 //****************************************************************************************
 void imuUartConfig(const uint32_t sysctlPeriphUart,
@@ -87,21 +87,24 @@ void imuUartConfig(const uint32_t sysctlPeriphUart,
 //****************************************************************************************
 void imuUartIntHandler()
 {
-	//Check flags and based on those flags set a calibration state
-	uint32_t length = 0;
+    uint32_t status = MAP_UARTIntStatus(UART_BASE, true);
+
+    // Clear the asserted interrupts.
+    MAP_UARTIntClear(UART_BASE, status);	//Check flags and based on those flags set a calibration state
+
+    uint32_t length = 0;
     switch (IMU_CMD)
     {
     	case MEASUREMENT_CMD:   length = MEASUREMENT_DATA_LENGTH;   break;
     	case ACCEL_CALIB_CMD:   length = ACCEL_BIAS_DATA_LENGTH;    break;
     	case GYRO_CALIB_CMD:    length = GYRO_BIAS_DATA_LENGTH;     break;
-        default: goApeshit(); break;
+        default:
+        {
+        	//while (MAP_UARTCharsAvail(UART_BASE)) MAP_UARTCharGetNonBlocking(UART_BASE);
+        	return;
+        }
     }
     
-    uint32_t status = MAP_UARTIntStatus(UART_BASE, true);
-
-    // Clear the asserted interrupts.
-    MAP_UARTIntClear(UART_BASE, status);
-
     // Loop while there are characters in the receive FIFO.
     while (MAP_UARTCharsAvail(UART_BASE))
     {
@@ -117,11 +120,20 @@ void imuUartIntHandler()
 
         IMU_RAW_IN[IMU_IDX++] = data;
 
-		if (IMU_IDX >= (uint8_t)length)
+		if (IMU_IDX >= length)
 		{
 			//imuMemcpy(imuRawFinal, imuRawIn, (int)length);
 			memcpy(IMU_RAW_DATA, IMU_RAW_IN, length);
+
+			if (length < MAX_IMU_DATA_LENGTH)
+			{
+				for (uint32_t i = length; i < MAX_IMU_DATA_LENGTH; ++i)
+					IMU_RAW_DATA[i] = 0;
+			}
+
             IMU_DONE = true;
+            IMU_CMD = 0;
+            IMU_IDX = 0;
 		}
 	}
 }
@@ -136,13 +148,5 @@ void imuUartSend(const uint8_t *buffer, const uint32_t count)
     // Loop while there are more characters to send
     for (int i = 0; i < count; ++i) MAP_UARTCharPut(UART_BASE, *buffer++);
 }
-
-/*
-// TODO May want to rename as MemCpy and move to MAAV utility library
-void imuMemcpy(uint8_t* out, const uint8_t* in, const int len)
-{
-	for (int i = 0; i < len; i++) out[i] = in[i];
-}
-*/
 
 // End of File
