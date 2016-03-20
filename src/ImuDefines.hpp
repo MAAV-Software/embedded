@@ -4,27 +4,25 @@
  *  Created on: May 28, 2015
  *      Author: zjcui
  */
-namespace MaavImu{
-
 #ifndef IMUDEFINES_HPP_
 #define IMUDEFINES_HPP_
 
+#include <stdint.h>
+
 #define NUM_M_VAL 9
-#define IMU_DATA_LENGTH 79
-#define IMU_ACC_CALIBRATE_DATA_LENGTH 19
-#define IMU_GYRO_CALIBRATE_DATA_LENGTH 19
+#define MAX_IMU_DATA_LENGTH 79
 
-uint32_t MeasurementDataLength = 79;
-uint32_t AccelBiasDataLength = 19;
-uint32_t GyroBiasDataLength = 19;
+#define MEASUREMENT_CMD 0xCC
+#define ACCEL_CALIB_CMD 0xC9
+#define GYRO_CALIB_CMD 0xCD
 
-uint8_t ImuMeasurementCommand = 0xCC;
-uint8_t AccCalibCommand = 0xC9;
-uint8_t GyroCalibCommand = 0xCD;
+namespace MaavImu 
+{
 
-
-
-
-#endif /* IMU_DEFINES_HPP_ */
+extern const uint32_t MEASUREMENT_DATA_LENGTH;
+extern const uint32_t ACCEL_BIAS_DATA_LENGTH;
+extern const uint32_t GYRO_BIAS_DATA_LENGTH;
 
 }
+
+#endif /* IMU_DEFINES_HPP_ */

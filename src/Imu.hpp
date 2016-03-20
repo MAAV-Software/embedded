@@ -1,8 +1,10 @@
 /*
- * imu_uart.h
+ * Imu class
  *
  *  Created on: Feb 21, 2015
  *      Authors: Carl Chan, Zhengjie Cui
+ *  Updated July 2015 Zhengjie Cui, Sajan Patel
+ *  Updated March 2016 Sajan Patel, Jay Tayade
  */
 
 #ifndef IMU_HPP_
@@ -11,12 +13,28 @@
 #include <stdint.h>
 #include "ImuDefines.hpp"
 
+#define MAX_MS_CMD_LENGTH 15
+
+typedef struct MSCmd
+{
+    uint8_t buf[MAX_MS_CMD_LENGTH];
+    uint32_t length;
+} MicroStrainCmd;
+
 class Imu
 {
 public:
 	Imu();
-	void parse(const uint8_t * data);
-	// Return data
+	
+    void parse(const uint8_t* data);
+
+    MicroStrainCmd formatMeasCmd(); 
+    MicroStrainCmd formatAccelBiasCmd(const float accXBias, 
+                                      const float accYBias,
+                                      const float accZBias);
+    MicroStrainCmd formatGyroBiasCmd(const uint16_t samplingTime);
+
+    // Return data
 	float getAccX() const;
 	float getAccY() const;
 	float getAccZ() const;
@@ -31,18 +49,27 @@ public:
 	float getMagZ() const;
 	uint32_t getTimer() const;
 	void getRotMat(float dest[NUM_M_VAL]);
+	
+    
+    /* RotMat return matrix M.
+	* Here are the corresponding M rotation matrix entries and their indecies
+	* M[0 1 2;
+	*   3 4 5;
+	*   6 7 8]
+	*/
 	const float* getRotMat() const;
-	float getTimestamp() const;
+	
+    float getTimestamp() const;
 	void RecordTime(float time);
 	void setRefYaw(float newRefYaw);
-	float getRefYaw();
-	float getAccBiasX();
-	float getAccBiasY();
-	float getAccBiasZ();
-	float getGyroBiasX();
-	float getGyroBiasY();
-	float getGyroBiasZ();
+	float getRefYaw() const;
 
+	float getAccBiasX() const;
+	float getAccBiasY() const;
+	float getAccBiasZ() const;
+	float getGyroBiasX() const;
+	float getGyroBiasY() const;
+	float getGyroBiasZ() const;
 
 private:
 	float refYaw;
@@ -64,19 +91,17 @@ private:
 	float AccBiasX;
 	float AccBiasY;
 	float AccBiasZ;
-	/*
-	* Here are the corresponding M rotation matrix entries and their indecies
-	* M[0 1 2;
-	*   3 4 5;
-	*   6 7 8]
-	*/
+
+    bool goodChecksum(const uint8_t* data, uint32_t size);
+    void parseMeasurements(const uint8_t* data);
+    void parseAccCal(const uint8_t* data);
+    void parseGyroBias(const uint8_t* data);
 };
 
+// These all convert between raw bytes and data types and flip endianness
 uint32_t Bytes2Int(const uint8_t *raw, const unsigned int i);
 float Bytes2Float(const uint8_t *raw, const unsigned int i);
-void ParseMeasurments(const uint8_t* data);
-void ParseAccCal(const uint8_t* data);
-void ParseGyroBias(const uint8_t* data);
-
+void floatToBytes(uint8_t* dest, uint32_t idx, float num);
+void u16ToBytes(uint8_t* dest, uint32_t idx, uint16_t num);
 
 #endif /* IMU_UART_H_ */

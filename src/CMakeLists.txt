@@ -9,6 +9,7 @@ add_library(ctrl_sw SHARED
             MovingAvg
 			Pid
 			Dof
+            ImuDefines
 			Imu
 			Px4
 			Lidar

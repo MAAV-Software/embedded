@@ -52,7 +52,6 @@ public:
 	 * @details Matrix is of form [x; xdot; y; ydot; z; zdot ]
 	 *
 	 * @returns the state matrix
->>>>>>> 8e9dc7bbc2ab409d412dd161e7dc656ff38be2cc
 	 */
 	const arm_matrix_instance_f32& getState() const;
 
