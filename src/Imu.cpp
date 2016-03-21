@@ -12,7 +12,6 @@
 #include "ImuDefines.hpp"
 #include "time_util.h"
 #include "MaavMath.hpp"
-#include "Apeshit.hpp"
 
 using namespace std;
 using namespace MaavMath;
@@ -135,8 +134,7 @@ bool Imu::goodChecksum(const uint8_t* data, uint32_t size)
 
 void Imu::parseMeasurements(const uint8_t* data)
 {
-    if (!goodChecksum(data, MEASUREMENT_DATA_LENGTH)) //return; // check checksum
-    	goApeshit();
+    if (!goodChecksum(data, MEASUREMENT_DATA_LENGTH)) return; // check checksum
 
     gAccX = Bytes2Float(data, 1);
     gAccY = Bytes2Float(data, 5);
@@ -166,8 +164,7 @@ void Imu::parseMeasurements(const uint8_t* data)
 
 void Imu::parseAccCal(const uint8_t* data)
 {
-    if (!goodChecksum(data, ACCEL_BIAS_DATA_LENGTH)) //return; // check checksum
-    	goApeshit();
+    if (!goodChecksum(data, ACCEL_BIAS_DATA_LENGTH)) return; // check checksum
 
 	AccBiasX = Bytes2Float(data, 1);
 	AccBiasY = Bytes2Float(data, 5);
@@ -177,8 +174,7 @@ void Imu::parseAccCal(const uint8_t* data)
 
 void Imu::parseGyroBias(const uint8_t* data)
 {
-    if (!goodChecksum(data, GYRO_BIAS_DATA_LENGTH)) //return; // check checksum
-    	goApeshit();
+    if (!goodChecksum(data, GYRO_BIAS_DATA_LENGTH)) return; // check checksum
 
 	GyroBiasX = Bytes2Float(data, 1);
 	GyroBiasY = Bytes2Float(data, 5);
