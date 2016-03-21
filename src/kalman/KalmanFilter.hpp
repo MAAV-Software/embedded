@@ -1,6 +1,5 @@
 #ifndef KALMAN_FILTER_HPP
 #define KALMAN_FILTER_HPP
-#endif
 
 #ifdef LINUX
 #include "cmeigen.hpp"
@@ -104,3 +103,5 @@ private:
 	arm_matrix_instance_f32 inter_2by2;
 	arm_matrix_instance_f32 inter_another_2by2;
 };
+
+#endif
