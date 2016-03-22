@@ -1,7 +1,7 @@
 close all
 clc
 clf
-log = load('23feb2016/LOG94.TXT');
+log = load('2016/q1/19mar2016_imu_calib_test/LOG99.TXT');
 
 % parsing the data
 Time          = log(:,1);

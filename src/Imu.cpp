@@ -5,14 +5,36 @@
  *      Authors: Carl Chan Zhengjie Cui
  */
 
-
-#include "Imu.hpp"
-#include "time_util.h"
 #include <stdint.h>
 #include <cmath>
+
+#include "Imu.hpp"
+#include "ImuDefines.hpp"
+#include "time_util.h"
 #include "MaavMath.hpp"
 
 using namespace std;
+using namespace MaavMath;
+using namespace MaavImu;
+
+typedef union u16union
+{
+    uint16_t number;
+    uint8_t buf[sizeof(uint16_t)];
+} BytesU16;
+
+typedef union u32union
+{
+    uint32_t number;
+    uint8_t buf[sizeof(uint32_t)];
+} BytesU32;
+
+typedef union f32union
+{
+    float number;
+    uint8_t buf[sizeof(float)];
+} BytesF32;
+
 
 Imu::Imu()
 {
@@ -26,42 +48,150 @@ Imu::Imu()
 	MagX = 0;
 	MagY = 0;
 	MagZ = 0;
-	for (unsigned int i = 0; i < NUM_M_VAL; ++i) M[i] = 0;
-	Timer = 1;
+	GyroBiasX = 0;
+	GyroBiasY = 0;
+	GyroBiasZ = 0;
+	AccBiasX = 0;
+	AccBiasY = 0;
+	AccBiasZ = 0;
+	
+    for (unsigned int i = 0; i < NUM_M_VAL; ++i) M[i] = 0;
+	
+    Timer = 1;
+}
+
+MicroStrainCmd Imu::formatStopContMode()
+{
+	MicroStrainCmd m;
+	m.length = 3;
+	m.buf[0] = 0xFA;
+	m.buf[1] = 0x75;
+	m.buf[2] = 0xB4;
+
+	return m;
+}
+
+MicroStrainCmd Imu::formatSoftResetCmd()
+{
+	MicroStrainCmd m;
+	m.length = 3;
+	m.buf[0] = 0xFE;
+	m.buf[1] = 0x9E;
+	m.buf[2] = 0x3A;
+
+	return m;
+}
+
+MicroStrainCmd Imu::formatMeasCmd()
+{
+    MicroStrainCmd m;
+    m.buf[0] = (uint8_t)MEASUREMENT_CMD;
+    m.length = 1;
+    
+    return m;
+}
+
+MicroStrainCmd Imu::formatGyroBiasCmd(const uint16_t samplingTime)
+{
+    MicroStrainCmd m;
+    m.length = 5;
+    
+    m.buf[0] = (uint8_t)GYRO_CALIB_CMD;
+    m.buf[1] = 0xC1;
+    m.buf[2] = 0x29;
+    u16ToBytes(m.buf, 3, samplingTime);
+     
+    return m;
+}
+
+MicroStrainCmd Imu::formatAccelBiasCmd(const float accXBias,
+                                       const float accYBias,
+                                       const float accZBias)
+{
+    MicroStrainCmd m;
+    m.length = 15;
+    
+    m.buf[0] = (uint8_t)ACCEL_CALIB_CMD;
+    m.buf[1] = 0xB7;
+    m.buf[2] = 0x44;
+    floatToBytes(m.buf, 3, accXBias);
+    floatToBytes(m.buf, 7, accYBias); 
+    floatToBytes(m.buf, 11, accZBias); 
+    
+    return m;
+}
+                                
+
+bool Imu::goodChecksum(const uint8_t* data, uint32_t size)
+{
+    int16_t checksum = 0;
+    for (uint32_t i = 0; i < size - 2; ++i) checksum += data[i];
+
+    int16_t responseChecksum = ((uint16_t)data[size - 2] << 8) | data[size - 1];
+    
+    return checksum == responseChecksum;
+}
+
+void Imu::parseMeasurements(const uint8_t* data)
+{
+    if (!goodChecksum(data, MEASUREMENT_DATA_LENGTH)) return; // check checksum
+
+    gAccX = Bytes2Float(data, 1);
+    gAccY = Bytes2Float(data, 5);
+    gAccZ = Bytes2Float(data, 9);
+
+    AccX = Gravity * getgAccX();
+    AccY = Gravity * getgAccY();
+    AccZ = Gravity * getgAccZ();
+    AngRateX = Bytes2Float(data, 13);
+    AngRateY = Bytes2Float(data, 17);
+    AngRateZ = Bytes2Float(data, 21);
+    MagX = Bytes2Float(data, 25);
+    MagY = Bytes2Float(data, 29);
+    MagZ = Bytes2Float(data, 33);
+
+    for (unsigned int i = 0; i < NUM_M_VAL; ++i)
+        M[i] = Bytes2Float(data, (37 + (i * 4)));
+    /*
+    * Here are the corresponding M rotation matrix entries and their indecies
+    * M[0 1 2;
+    *   3 4 5;
+    *   6 7 8]
+    */
+
+    Timer = Bytes2Int(data, 73);
+}
+
+void Imu::parseAccCal(const uint8_t* data)
+{
+    if (!goodChecksum(data, ACCEL_BIAS_DATA_LENGTH)) return; // check checksum
+
+	AccBiasX = Bytes2Float(data, 1);
+	AccBiasY = Bytes2Float(data, 5);
+    AccBiasZ = Bytes2Float(data, 9);
+    Timer = Bytes2Int(data, 13);
+}
+
+void Imu::parseGyroBias(const uint8_t* data)
+{
+    if (!goodChecksum(data, GYRO_BIAS_DATA_LENGTH)) return; // check checksum
+
+	GyroBiasX = Bytes2Float(data, 1);
+	GyroBiasY = Bytes2Float(data, 5);
+    GyroBiasZ = Bytes2Float(data, 9);
+    Timer = Bytes2Int(data, 13);
 }
 
 void Imu::parse(const uint8_t* data)
 {
-	// Check checksum
-	int16_t tChksum = 0;
-	for (unsigned int i = 0; i < 77; ++i) tChksum += data[i];
-
-	int16_t tResponseChksum = (((uint16_t)data[77]) << 8) | data[78];
-	if (tChksum != tResponseChksum)
+    // Switch on command response (first byte of data array)
+	switch (data[0])
 	{
-		return;
+		case MEASUREMENT_CMD : parseMeasurements(data); break;
+		case ACCEL_CALIB_CMD : parseAccCal(data);       break;
+		case GYRO_CALIB_CMD  : parseGyroBias(data);     break;
+        default: break;
 	}
-
-	AccX = MaavMath::Gravity * Bytes2Float(data, 1);
-	AccY = MaavMath::Gravity * Bytes2Float(data, 5);
-	AccZ = MaavMath::Gravity * Bytes2Float(data, 9);
-	AngRateX = Bytes2Float(data, 13);
-	AngRateY = Bytes2Float(data, 17);
-	AngRateZ = Bytes2Float(data, 21);
-	MagX = Bytes2Float(data, 25);
-	MagY = Bytes2Float(data, 29);
-	MagZ = Bytes2Float(data, 33);
-
-	for (unsigned int i = 0; i < NUM_M_VAL; ++i)
-		M[i] = Bytes2Float(data, (37 + (i * 4)));
-/*
-* Here are the corresponding M rotation matrix entries and their indecies
-* M[0 1 2;
-*   3 4 5;
-*   6 7 8]
-*/
-
-	Timer = Bytes2Int(data, 73);
 }
 
 void Imu::getRotMat(float dest[NUM_M_VAL])
@@ -69,11 +199,27 @@ void Imu::getRotMat(float dest[NUM_M_VAL])
 	for (int i = 0; i < NUM_M_VAL; ++i) dest[i] = M[i];
 }
 
-const float* Imu::getRotMat() const {
+const float* Imu::getRotMat() const 
+{
 	return M;
 }
 
 // Return data
+float Imu::getgAccX() const
+{
+	return gAccX;
+}
+
+float Imu::getgAccY() const
+{
+	return gAccY;
+}
+
+float Imu::getgAccZ() const
+{
+	return gAccZ;
+}
+
 float Imu::getAccX() const
 {
 	return AccX;
@@ -139,38 +285,6 @@ uint32_t Imu::getTimer() const
 	return Timer / 62500;
 }
 
-uint32_t Bytes2Int(const uint8_t *raw, const unsigned int i)
-{
-	union B2I
-	{
-	   uint8_t buf[4];
-	   uint32_t number;
-	} data;
-
-	data.buf[0] = raw[i+3];
-	data.buf[1] = raw[i+2];
-	data.buf[2] = raw[i+1];
-	data.buf[3] = raw[i+0];
-
-	return data.number;
-}
-
-float Bytes2Float(const uint8_t *raw, const unsigned int i)
-{
-	union B2F
-	{
-	   unsigned char buf[4];
-	   float number;
-	} data;
-
-	data.buf[0] = raw[i+3];
-	data.buf[1] = raw[i+2];
-	data.buf[2] = raw[i+1];
-	data.buf[3] = raw[i+0];
-
-	return data.number;
-}
-
 float Imu::getTimestamp() const
 {
 	return timestamp;
@@ -186,7 +300,81 @@ void Imu::setRefYaw(float newRefYaw)
     refYaw = newRefYaw;
 }
 
-float Imu::getRefYaw()
+float Imu::getRefYaw() const 
 {
     return refYaw;
+}
+
+float Imu::getAccBiasX() const
+{
+  return AccBiasX;
+}
+
+float Imu::getAccBiasY() const
+{
+	return AccBiasY;
+}
+
+float Imu::getAccBiasZ() const
+{
+	return AccBiasZ;
+}
+
+float Imu::getGyroBiasX() const
+{
+	return GyroBiasX;
+}
+
+float Imu::getGyroBiasY() const 
+{
+	return GyroBiasY;
+}
+
+float Imu::getGyroBiasZ() const
+{
+	return GyroBiasZ;
+}
+
+void floatToBytes(uint8_t* dest, uint32_t idx, float num)
+{
+    BytesF32 data;
+    data.number = num;
+    
+    dest[idx]     = data.buf[3];
+    dest[idx + 1] = data.buf[2];
+    dest[idx + 2] = data.buf[1];
+    dest[idx + 3] = data.buf[0];
+}
+
+void u16ToBytes(uint8_t* dest, uint32_t idx, uint16_t num)
+{
+    BytesU16 data;
+    data.number = num;
+
+    dest[idx]     = data.buf[1];
+    dest[idx + 1] = data.buf[0];
+}
+
+uint32_t Bytes2Int(const uint8_t *raw, const unsigned int i)
+{
+    BytesU32 data;
+
+	data.buf[0] = raw[i + 3];
+	data.buf[1] = raw[i + 2];
+	data.buf[2] = raw[i + 1];
+	data.buf[3] = raw[i + 0];
+
+	return data.number;
+}
+
+float Bytes2Float(const uint8_t *raw, const unsigned int i)
+{
+    BytesF32 data;
+
+	data.buf[0] = raw[i + 3];
+	data.buf[1] = raw[i + 2];
+	data.buf[2] = raw[i + 1];
+	data.buf[3] = raw[i + 0];
+
+	return data.number;
 }

@@ -25,7 +25,7 @@ using namespace std;
 
 
 // global that's not externed
-uint32_t UART_BASE;
+static uint32_t UART_BASE;
 
 // globals that are externed
 RingBuffer<256> DL_RBUFF; // init rbuff with rbBack array

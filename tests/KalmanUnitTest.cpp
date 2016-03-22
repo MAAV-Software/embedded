@@ -1,9 +1,15 @@
 #define BOOST_TEST_MODULE "KalmanFilterTest"
 #include <boost/test/unit_test.hpp>
 #include <boost/test/floating_point_comparison.hpp>
+#include <fstream>
+#include <string>
 
 #include "kalman/KalmanFilter.hpp"
 #include "cmeigen.hpp"
+#include "MaavMath.hpp"
+#include <iostream>
+
+using namespace std;
 
 struct Fixture
 {
@@ -101,11 +107,52 @@ BOOST_AUTO_TEST_CASE(resetTest)
 BOOST_AUTO_TEST_CASE(correctPx4Test)
 {
 	Fixture f;
+
+    f.kf.setQ(.5, .9, .7, .2, .1, 1.0);//same as those used for Matlab testing
+    f.kf.setR_Px4(.1, .55);
+
     f.kf.predict(f.xddotImu, f.yddotImu, f.zddotImu, f.dt);    
     f.kf.correctPx4(f.xdotPx4, f.ydotPx4);
 
-//	const arm_matrix_instance_f32& x = f.kf.getState();
-//	const arm_matrix_instance_f32& P = f.kf.getCovar();
+    const arm_matrix_instance_f32& testState = f.kf.getState();
+    const arm_matrix_instance_f32& testCovar = f.kf.getCovar();
+
+    float ans;
+
+    ifstream answerFile("Px4Correct.txt");
+    
+    BOOST_CHECK(answerFile.is_open());
+
+    for(int i = 0; i < testState.numRows; ++i)
+    {
+        for(int j = 0; j < testState.numCols; ++j)
+        {
+            if(answerFile >> ans) 
+            {
+                cout << "Should be: " << ans << ". Actual: " << 
+                    MaavMath::mat_at(testState, i, j) << endl;
+                BOOST_CHECK_CLOSE(MaavMath::mat_at(testState, i, j), ans, 1.0);
+            }
+        }
+    }
+
+    for(int i = 0; i < testCovar.numRows; ++i)
+    {
+        for(int j = 0; j < testCovar.numCols; ++j)
+        {
+            if(answerFile >> ans) 
+            {
+                cout << "Should be: " << ans << ". Actual: " << 
+                    MaavMath::mat_at(testCovar, i, j) << endl;
+                BOOST_CHECK_CLOSE(MaavMath::mat_at(testCovar, i, j), ans, 1.0);
+            }
+        }
+    }
+
+    //answerfile should no longer be open
+    answerFile.close();
+
+    BOOST_CHECK( !(answerFile.is_open()) );
 }
 
 /*

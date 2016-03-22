@@ -2,8 +2,9 @@
 #include "MovingAvg.hpp"
 
 using std::calloc;
+using std::free;
 
-MovingAvg::MovingAvg(size_t size)
+MovingAvg::MovingAvg(uint16_t size)
     : size_(size), buf_((float*)calloc(size, sizeof(float))), 
       state_(0), idx_(0) {}
 
@@ -18,7 +19,7 @@ float MovingAvg::run(const float input)
     if (idx_ >= size_) idx_ = 0;
     
     float sum = 0.0;
-    for (size_t i = 0; i < size_; ++i) sum += buf_[i];
+    for (uint16_t i = 0; i < size_; ++i) sum += buf_[i];
   
     state_ = sum / (float)size_;
         

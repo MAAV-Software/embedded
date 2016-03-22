@@ -11,8 +11,13 @@ public:
 	void run();
 	
 private:
-//	Imu *imu;
 	ProgramState *state;
+    uint32_t imuTime; 
+    
+    void AccelCalib();
+	void CaptureGyroBias();
+	void setMode();
+	void softReset();
 };
 
 #endif /* IMURUNNABLE_HPP_ */

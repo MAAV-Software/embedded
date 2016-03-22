@@ -17,6 +17,6 @@ B(4, 2) = deltaT;
 B(6, 3) = deltaT;
 
 x = A * x_old + B * u;
-P = A * P_old * A' + Q * deltaT;
+P = A * P_old * A' + Q;
 
 

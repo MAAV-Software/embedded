@@ -59,23 +59,31 @@ void KillRunnable::run()
 
 float KillRunnable::getYawOffset()
 {
-    Imu imu;
-    imuDone = false;
-    imuUartSend(&imuCmd, 1);
-    while(!imuDone);
-    imu.parse(imuRawFinal);
-    imuDone = false;
+    Imu imu; // create clean and temporary imu instance
+    IMU_DONE = false;
+
+    MicroStrainCmd cmd = imu.formatMeasCmd();
+
+    imuUartSend(cmd.buf, cmd.length);
+
+    while(!IMU_DONE); // busy loop OK here
+
+    imu.parse(IMU_RAW_DATA);
+    IMU_DONE = false;
+
     return imu.getYaw();
 }
 
 void KillRunnable::resetYaw()
 {
-    getYawOffset();
+    getYawOffset(); // throws away garbage reading
     float yoff = 0;
-    for(int i = 0; i < 3; ++i)
+
+    for (int i = 0; i < 3; ++i)
     {
-        yoff += 1.0/3.0 * getYawOffset();
+        yoff += 1.0 / 3.0 * getYawOffset();
     }
+
     state->imu->setRefYaw(yoff);
     Toggle_LED(BLUE_LED, SYSCLOCK / 2);
 }

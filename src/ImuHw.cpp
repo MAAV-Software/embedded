@@ -6,12 +6,16 @@
  */
 
 #include <stdint.h>
+#include <string.h>
 
 #include "ImuHw.hpp"
+#include "ImuDefines.hpp"
+#include "Apeshit.hpp"
+#include "time_util.h"
+#include "LED.h"
 
 #include "inc/hw_memmap.h"
 #include "inc/hw_types.h"
-//#include "inc/hw_ints.h"
 #include "inc/tm4c123gh6pm.h"
 #include "driverlib/debug.h"
 #include "driverlib/gpio.h"
@@ -23,19 +27,18 @@
 #include "driverlib/systick.h"
 #include "driverlib/uart.h"
 
-#include "time_util.h"
+using std::memcpy;
+using namespace MaavImu;
 
-#include "LED.h"
+// externed globals
+bool IMU_DONE = false;
+uint8_t IMU_RAW_DATA[MAX_IMU_DATA_LENGTH];
+uint8_t IMU_CMD = 0xCC;
 
-uint8_t imuRawIn[IMU_DATA_LENGTH];
-uint8_t imuRawFinal[IMU_DATA_LENGTH];
-bool imuDone = false;
-uint8_t imuIndex = 0;
-uint32_t imuTime = 0;
-uint8_t imuCmd = 0xCC;
-
-// local global, not externed
-uint32_t uartBase = UART1_BASE;
+// file-scope globals
+static uint8_t IMU_RAW_IN[MAX_IMU_DATA_LENGTH];
+static uint32_t IMU_IDX = 0;
+static uint32_t UART_BASE = UART1_BASE;
 
 //****************************************************************************************
 void imuUartConfig(const uint32_t sysctlPeriphUart,
@@ -48,7 +51,7 @@ void imuUartConfig(const uint32_t sysctlPeriphUart,
 				   const uint32_t _uartBase,
 				   const uint32_t uartInterrupt)
 {
-	uartBase = _uartBase;
+	UART_BASE = _uartBase;
     
 	// Enable the GPIO Peripheral used by the UART1 on PC. UART0 on PA.
     MAP_SysCtlPeripheralEnable(sysctlPeriphGPIO);
@@ -60,70 +63,90 @@ void imuUartConfig(const uint32_t sysctlPeriphUart,
     MAP_GPIOPinTypeUART(gpioPortBase, gpioRxPin | gpioTxPin);
 
 	// Configure UART Clock.
-	MAP_UARTClockSourceSet(uartBase, UART_CLOCK_SYSTEM);
+	MAP_UARTClockSourceSet(UART_BASE, UART_CLOCK_SYSTEM);
 
 	//Configure UART for operation in the specified data format.
-    MAP_UARTConfigSetExpClk(uartBase, SYSCLOCK, 115200,
+    MAP_UARTConfigSetExpClk(UART_BASE, SYSCLOCK, 115200,
 			(UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE | UART_CONFIG_PAR_NONE));
 
-    MAP_UARTEnable(uartBase);
+    MAP_UARTEnable(UART_BASE);
 
     // Register and Enable UART1 RX Interrupt.
-    UARTIntRegister(uartBase, imuUartIntHandler);
+    UARTIntRegister(UART_BASE, imuUartIntHandler);
     MAP_IntMasterEnable();
     MAP_IntEnable(uartInterrupt);
-    MAP_UARTIntEnable(uartBase, UART_INT_RX | UART_INT_RT);
+    MAP_UARTIntEnable(UART_BASE, UART_INT_RX | UART_INT_RT);
     
 	// delay for initialization
-	for (int i = 0; i < 3; ++i) Toggle_LED(BLUE_LED, SYSCLOCK / 3 / 2);//MAP_SysCtlDelay(SYSCLOCK / 3);
+	for (int i = 0; i < 3; ++i) Toggle_LED(BLUE_LED, SYSCLOCK / 3 / 2);
+    //MAP_SysCtlDelay(SYSCLOCK / 3);
 	
-	imuDone = false;
+	IMU_DONE = false;
 }
 
 //****************************************************************************************
 void imuUartIntHandler()
 {
-    // Get the interrrupt status.
-    uint32_t status = MAP_UARTIntStatus(uartBase, true);
-	
-    // Clear the asserted interrupts.
-    MAP_UARTIntClear(uartBase, status);
-	
-    // Loop while there are characters in the receive FIFO.
-    while (MAP_UARTCharsAvail(uartBase))
-    {
-        // Read next data.
-        uint8_t dataGet = MAP_UARTCharGetNonBlocking(uartBase);
+    uint32_t status = MAP_UARTIntStatus(UART_BASE, true);
 
-        if ((dataGet == imuCmd) &&
-        		((imuIndex == 0) || (imuIndex >= (uint8_t)IMU_DATA_LENGTH)))
+    // Clear the asserted interrupts.
+    MAP_UARTIntClear(UART_BASE, status);	//Check flags and based on those flags set a calibration state
+
+    uint32_t length = 0;
+    switch (IMU_CMD)
+    {
+    	case MEASUREMENT_CMD:   length = MEASUREMENT_DATA_LENGTH;   break;
+    	case ACCEL_CALIB_CMD:   length = ACCEL_BIAS_DATA_LENGTH;    break;
+    	case GYRO_CALIB_CMD:    length = GYRO_BIAS_DATA_LENGTH;     break;
+        default:
         {
-        	imuIndex = 0;
-        	imuDone = false;
+        	//while (MAP_UARTCharsAvail(UART_BASE)) MAP_UARTCharGetNonBlocking(UART_BASE);
+        	return;
+        }
+    }
+    
+    // Loop while there are characters in the receive FIFO.
+    while (MAP_UARTCharsAvail(UART_BASE))
+    {
+        // Read next data byte
+        uint8_t data = MAP_UARTCharGetNonBlocking(UART_BASE);
+
+        if ((data == IMU_CMD) 
+                && ((IMU_IDX == 0) || (IMU_IDX >= (uint8_t)length)))
+        {
+        	IMU_IDX = 0;
+        	IMU_DONE = false;
         }
 
-        imuRawIn[imuIndex++] = dataGet;
+        IMU_RAW_IN[IMU_IDX++] = data;
 
-		if (imuIndex >= (uint8_t)IMU_DATA_LENGTH)
+		if (IMU_IDX >= length)
 		{
-			imuMemcpy(imuRawFinal, imuRawIn, (int)IMU_DATA_LENGTH);
-			imuDone = true;
+			//imuMemcpy(imuRawFinal, imuRawIn, (int)length);
+			memcpy(IMU_RAW_DATA, IMU_RAW_IN, length);
+
+			if (length < MAX_IMU_DATA_LENGTH)
+			{
+				for (uint32_t i = length; i < MAX_IMU_DATA_LENGTH; ++i)
+					IMU_RAW_DATA[i] = 0;
+			}
+
+            IMU_DONE = true;
+            IMU_CMD = 0;
+            IMU_IDX = 0;
 		}
-    }
+	}
 }
 
 //****************************************************************************************
 void imuUartSend(const uint8_t *buffer, const uint32_t count)
 {
+    if ((buffer == NULL) && (count < 1)) return;
+    
+    IMU_CMD = buffer[0]; // first byte is always the cmd
+    
     // Loop while there are more characters to send
-    for (int i = 0; i < count; ++i) MAP_UARTCharPut(uartBase, *buffer++);
+    for (int i = 0; i < count; ++i) MAP_UARTCharPut(UART_BASE, *buffer++);
 }
 
-// TODO May want to rename as MemCpy and move to MAAV utility library
-void imuMemcpy(uint8_t* out, const uint8_t* in, const int len)
-{
-	for (int i = 0; i < len; i++) out[i] = in[i];
-}
-
-
-
+// End of File

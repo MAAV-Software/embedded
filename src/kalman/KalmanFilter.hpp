@@ -7,9 +7,9 @@
 #include "arm_math.h"
 #endif
 
-#include <cassert>
 #include <cstdlib>
 #include <stdint.h>
+#include <cassert>
 #include "MaavMath.hpp"
 
 class KalmanFilter
@@ -35,7 +35,8 @@ public:
 	void correctCamera(const float x, const float y);
 
 	/*
-	 * Allows for setting Q and R matrices
+	 * Returns a pointer to the state data. Const because we do not want
+	 * people messing with the data.
 	 */
 	void setQ(float val1, float val2, float val3, float val4, float val5, float val6);
 
