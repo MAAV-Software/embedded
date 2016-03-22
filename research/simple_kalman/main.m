@@ -2,8 +2,8 @@ clear all;
 close all;
 
 % log reading
-%log = load('RunFilterTestLog.TXT');
-log = load('../Log_analysis/23feb2016/LOG94.TXT');
+log = load('RunFilterTestLog.TXT');
+%log = load('../Log_analysis/23feb2016/LOG94.TXT');
 
 Time          = log(:,1);
 Imu_AccX      = log(:,3);
