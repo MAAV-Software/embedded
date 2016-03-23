@@ -38,9 +38,9 @@ P = zeros(6);
 
 % noise matrices
 %Q = diag([0.5, 0.1, 0.5, 0.1, 0.1, 0.1]); % Original Clark Values
-Q = diag([0.5, 0.1, 0.5, 0.1, 0.002^2, 0.005^2]); % Sajan Values for z zd
+Q = diag([0.5, 0.1, 0.5, 0.1, 0.009^2, 0.005^2]); % New Values for z zd
 %R_lidar = diag([0.025, 0.05]); % Original Clark Values
-R_lidar = diag([0.016, 0.01]); % Sajan values
+R_lidar = diag([0.0009, 0.01]); % New values
 R_optical_flow = diag([.8, 0.8]);
 
 for i = 1:log_length
@@ -110,31 +110,31 @@ heightVar = heightVar(:);
 upperVar = -x_hist(5, :) + sqrt(heightVar');
 lowerVar = -x_hist(5, :) - sqrt(heightVar');
 plot(Time,-x_hist(5, :), Time, -lidar_hist, Time, upperVar, Time, lowerVar);
-legend('z');
+%legend('z');
 hold off;
 %legend('filtered z', 'lidar rotated', 'upper var', 'lower var');
 
 figure(2)
 plot(Time, -x_hist(6, :));
-legend('z rate');
+%legend('z rate');
 
 figure(3)
 px4_x = px4_hist(1, 1, :);
 plot(Time, x_hist(2, :), Time, px4_x(:), '*');
-legend('filtered x rate', 'px4 x rate');
+%legend('filtered x rate', 'px4 x rate');
 
 figure(4)
 px4_y = px4_hist(2, 1, :);
 plot(Time, x_hist(4, :), Time, px4_y(:), '*');
-legend('filtered y rate', 'px4 y rate');
+%legend('filtered y rate', 'px4 y rate');
 
 figure(5)
 plot(Time, x_hist(1, :));
-legend('filtered x');
+%legend('filtered x');
 
 figure(6)
 plot(Time, x_hist(3, :));
-legend('filtered y');
+%legend('filtered y');
 
 figure(7)
 
