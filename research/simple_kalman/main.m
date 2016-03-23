@@ -37,8 +37,10 @@ P = zeros(6);
 %P = diag([0.1, 0.1, 0.1, 0.1, 0.1, 0.1]);
 
 % noise matrices
-Q = diag([0.5, 0.1, 0.5, 0.1, 0.1, 0.1]);
-R_lidar = diag([0.025, 0.05]);
+%Q = diag([0.5, 0.1, 0.5, 0.1, 0.1, 0.1]); % Original Clark Values
+Q = diag([0.5, 0.1, 0.5, 0.1, 0.002^2, 0.005^2]); % Sajan Values for z zd
+%R_lidar = diag([0.025, 0.05]); % Original Clark Values
+R_lidar = diag([0.016, 0.01]); % Sajan values
 R_optical_flow = diag([.8, 0.8]);
 
 for i = 1:log_length
@@ -108,6 +110,7 @@ heightVar = heightVar(:);
 upperVar = -x_hist(5, :) + sqrt(heightVar');
 lowerVar = -x_hist(5, :) - sqrt(heightVar');
 plot(Time,-x_hist(5, :), Time, -lidar_hist, Time, upperVar, Time, lowerVar);
+legend('z');
 hold off;
 %legend('filtered z', 'lidar rotated', 'upper var', 'lower var');
 
@@ -135,5 +138,5 @@ legend('filtered y');
 
 figure(7)
 
-x_save = x_hist';
-save('runFltAns2.txt','x_save','-ascii');
+%x_save = x_hist';
+%save('runFltAns2.txt','x_save','-ascii');
