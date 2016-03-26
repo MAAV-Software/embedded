@@ -2,7 +2,7 @@ clear all;
 clc;
 close all;
 
-log = load('../Log_analysis/2016/q1/9jan16_line_test/LOG27.TXT');
+log = load('../Log_analysis/2016/q1/3-26_WillowRun_Linear_XandY/LOG92.TXT');
 
 %log = load('RunFilterTestLog.TXT');
 Time          = log(:,1);
