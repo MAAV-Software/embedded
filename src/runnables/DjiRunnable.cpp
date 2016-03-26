@@ -14,7 +14,7 @@
 #include "driverlib/pin_map.h"
 
 DjiRunnable::DjiRunnable(ProgramState* pState)
-	: state(pState) { }
+	: state(pState), ppmXdlast(0), ppmYdlast(0), ppmFzlast(0), ppmYawdlast(0) { }
 
 // TODO Add 10% Z Pulse Guard
 void DjiRunnable::run()
@@ -70,10 +70,24 @@ void DjiRunnable::run()
 			PPM_setPulse(3, servoIn_getPulse(RC_CHAN4)); // directly pass through yaw ratr
 			break;
 		case MANUAL:
-			PPM_setPulse(0, servoIn_getPulse(RC_CHAN1));	// X Accel
-			PPM_setPulse(1, servoIn_getPulse(RC_CHAN2));	// Y Accel
-			PPM_setPulse(2, servoIn_getPulse(RC_CHAN3));	// Z Accel
-			PPM_setPulse(3, servoIn_getPulse(RC_CHAN4));	// Yaw Rate
+		    //Try to filter out garbage values
+		    uint32_t ppmXd = servoIn_getPulse(RC_CHAN1);
+		    uint32_t ppmYd = servoIn_getPulse(RC_CHAN2);
+		    uint32_t ppmFz = servoIn_getPulse(RC_CHAN3);
+		    uint32_t ppmYawd = servoIn_getPulse(RC_CHAN4);
+		    if(ppmXd > 200000)   ppmXd = ppmXdlast;
+		    else                 ppmXdlast = ppmXd;
+            if(ppmYd > 200000)   ppmYd = ppmYdlast;
+            else                 ppmYdlast = ppmYd;
+            if(ppmFz > 200000)   ppmFz = ppmFzlast;
+            else                 ppmFzlast = ppmFz;
+            if(ppmYawd > 200000) ppmYawd = ppmYawdlast;
+            else                 ppmYawdlast = ppmYawd;
+            //Set values
+			PPM_setPulse(0, ppmXd);  // X Accel
+			PPM_setPulse(1, ppmYd);  // Y Accel
+			PPM_setPulse(2, ppmFz);  // Z Accel
+			PPM_setPulse(3, ppmYawd);// Yaw Rate
 			break;
 		default: break;
 	}
