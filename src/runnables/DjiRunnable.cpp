@@ -22,6 +22,11 @@ void DjiRunnable::run()
 	uint32_t throttle;
 	Dji dji = state->vehicle->getDjiVals();
 
+    uint32_t ppmXd = servoIn_getPulse(RC_CHAN1);
+    uint32_t ppmYd = servoIn_getPulse(RC_CHAN2);
+    uint32_t ppmFz = servoIn_getPulse(RC_CHAN3);
+    uint32_t ppmYawd = servoIn_getPulse(RC_CHAN4);
+
 	switch(state->mode)
 	{
 		case AUTONOMOUS: // currently do this for safety
@@ -51,7 +56,9 @@ void DjiRunnable::run()
 		    break;
 		case ASSISTED:
 			//PPM_setPulse(0, (uint32_t)map(dji.pitch, -0.5, 0.5, 105600, 135000));
-            PPM_setPulse(0, servoIn_getPulse(RC_CHAN1));    // X Accel
+            if(ppmXd > 200000)   ppmXd = ppmXdlast;
+            else                 ppmXdlast = ppmXd;
+            PPM_setPulse(0, ppmXd);    // X Accel
 
             PPM_setPulse(1, (uint32_t)map(dji.roll, -0.5, 0.5, 104200, 135000)); // Y Accel
             //PM_setPulse(1, servoIn_getPulse(RC_CHAN2));    // Y Accel
@@ -67,14 +74,12 @@ void DjiRunnable::run()
 
 			PPM_setPulse(2, throttle);
 
-			PPM_setPulse(3, servoIn_getPulse(RC_CHAN4)); // directly pass through yaw ratr
+            if(ppmYawd > 200000) ppmYawd = ppmYawdlast;
+            else                 ppmYawdlast = ppmYawd;
+			PPM_setPulse(3, ppmYawd); // directly pass through yaw ratr
 			break;
 		case MANUAL:
 		    //Try to filter out garbage values
-		    uint32_t ppmXd = servoIn_getPulse(RC_CHAN1);
-		    uint32_t ppmYd = servoIn_getPulse(RC_CHAN2);
-		    uint32_t ppmFz = servoIn_getPulse(RC_CHAN3);
-		    uint32_t ppmYawd = servoIn_getPulse(RC_CHAN4);
 		    if(ppmXd > 200000)   ppmXd = ppmXdlast;
 		    else                 ppmXdlast = ppmXd;
             if(ppmYd > 200000)   ppmYd = ppmYdlast;
