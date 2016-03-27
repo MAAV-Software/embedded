@@ -1,7 +1,7 @@
 close all
 clc
 clf
-log = load('/home/ubuntux64/Documents/maav/ctrl/research/Log_analysis/2016/q1/3-26_WillowRun_Linear_Crash/LOG88.TXT');
+log = load('./2016/q1/3-26_WillowRun_Linear_Crash/LOG88.TXT');
 
 % parsing the datas
 Time          = log(2:end,1);
@@ -154,19 +154,19 @@ ylabel('Rate Z')
 figure(3)
 title('RC Pilot Input (R, P, Y, T)');
 subplot(221)
-plot(Time(2400:end), DJI_Roll(2400:end), 'b')
+plot(Time(:), DJI_Roll(:), 'b')
 xlabel('Time');
 ylabel('DJI Roll PWM');
 subplot(222)
-plot(Time(2400:end), DJI_Pitch(2400:end), 'b')
+plot(Time(:), DJI_Pitch(:), 'b')
 xlabel('Time');
 ylabel('DJI Pitch PWM');
 subplot(223)
-plot(Time(2400:end), DJI_Yawdot(2400:end), 'b')
+plot(Time(:), DJI_Yawdot(:), 'b')
 xlabel('Time');
 ylabel('DJI Yaw Dot PWM');
 subplot(224)
-plot(Time(2400:end), DJI_Fz(2400:end), '*b')
+plot(Time(:), DJI_Fz(:), '*b')
 xlabel('Time');
 ylabel('DJI Fz PWM');
 
