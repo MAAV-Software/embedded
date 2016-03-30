@@ -139,4 +139,4 @@ plot(Time, x_hist(3, :));
 figure(7)
 
 %x_save = x_hist';
-%save('runFltAns2.txt','x_save','-ascii');
+%save('runFltAns2.txt','x_save','-ascii','-double','-tabs');

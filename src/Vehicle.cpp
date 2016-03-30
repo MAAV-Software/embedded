@@ -101,9 +101,9 @@ Vehicle::Vehicle(const float valueGains[NUM_DOFS][NUM_PID_GAINS],
 
 	//initializing Q and R matrices
 	//                x    xdot  y    ydot  z     zdot
-	kalmanFilter.setQ(0.1, 0.01, 0.1, 0.01, 0.07, 0.9);
+	kalmanFilter.setQ(0.1, 0.01, 0.1, 0.01, 0.0001, 0.000025);
 	//                      z        zdot
-	kalmanFilter.setR_lidar(0.47236, 0.47236);
+	kalmanFilter.setR_lidar(0.0009, 0.01);
 	//                    xdot ydot
 	kalmanFilter.setR_Px4(0.1, 0.1);
 	//camera not in use
