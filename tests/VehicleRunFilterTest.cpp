@@ -44,10 +44,10 @@ struct Fixture
 		qxd(0.1),
 		qy (0.5),
 		qyd(0.1),
-		qz (0.1),
-		qzd(0.1),
-		rlidarz (0.05),
-		rlidarzd(0.05),
+		qz (0.0001),
+		qzd(0.000025),
+		rlidarz (0.0009),
+		rlidarzd(0.01),
 		rpx4xd(0.8),
 		rpx4yd(0.8)
 	{	

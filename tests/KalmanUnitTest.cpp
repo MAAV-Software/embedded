@@ -104,6 +104,48 @@ BOOST_AUTO_TEST_CASE(resetTest)
     }
 }
 
+//Takes in a file name, and the state and covariance matrices
+//Makes sure they match. (File should have numbers separated by whitespace)
+//Files should have form state matrix, then covariance matrix
+void compareFileToMatrices(const char * const filename, const arm_matrix_instance_f32 &state_mat, const arm_matrix_instance_f32 &covar_mat) {
+    float ans;
+
+    ifstream answerFile(filename);
+    
+    BOOST_CHECK(answerFile.is_open());
+
+    for(int i = 0; i < state_mat.numRows; ++i)
+    {
+        for(int j = 0; j < state_mat.numCols; ++j)
+        {
+            if(answerFile >> ans) 
+            {
+                cout << "Should be: " << ans << ". Actual: " << 
+                    MaavMath::mat_at(state_mat, i, j) << endl;
+                BOOST_CHECK_CLOSE(MaavMath::mat_at(state_mat, i, j), ans, 1.0);
+            }
+        }
+    }
+
+    for(int i = 0; i < covar_mat.numRows; ++i)
+    {
+        for(int j = 0; j < covar_mat.numCols; ++j)
+        {
+            if(answerFile >> ans) 
+            {
+                cout << "Should be: " << ans << ". Actual: " << 
+                    MaavMath::mat_at(covar_mat, i, j) << endl;
+                BOOST_CHECK_CLOSE(MaavMath::mat_at(covar_mat, i, j), ans, 1.0);
+            }
+        }
+    }
+
+    //answerfile should no longer be open
+    answerFile.close();
+
+    BOOST_CHECK( !(answerFile.is_open()) );
+}
+
 BOOST_AUTO_TEST_CASE(correctPx4Test)
 {
 	Fixture f;
@@ -117,53 +159,29 @@ BOOST_AUTO_TEST_CASE(correctPx4Test)
     const arm_matrix_instance_f32& testState = f.kf.getState();
     const arm_matrix_instance_f32& testCovar = f.kf.getCovar();
 
-    float ans;
+    cout << "Testing the Px4..." << endl;
 
-    ifstream answerFile("Px4Correct.txt");
-    
-    BOOST_CHECK(answerFile.is_open());
-
-    for(int i = 0; i < testState.numRows; ++i)
-    {
-        for(int j = 0; j < testState.numCols; ++j)
-        {
-            if(answerFile >> ans) 
-            {
-                cout << "Should be: " << ans << ". Actual: " << 
-                    MaavMath::mat_at(testState, i, j) << endl;
-                BOOST_CHECK_CLOSE(MaavMath::mat_at(testState, i, j), ans, 1.0);
-            }
-        }
-    }
-
-    for(int i = 0; i < testCovar.numRows; ++i)
-    {
-        for(int j = 0; j < testCovar.numCols; ++j)
-        {
-            if(answerFile >> ans) 
-            {
-                cout << "Should be: " << ans << ". Actual: " << 
-                    MaavMath::mat_at(testCovar, i, j) << endl;
-                BOOST_CHECK_CLOSE(MaavMath::mat_at(testCovar, i, j), ans, 1.0);
-            }
-        }
-    }
-
-    //answerfile should no longer be open
-    answerFile.close();
-
-    BOOST_CHECK( !(answerFile.is_open()) );
+    compareFileToMatrices("Px4Correct.txt", testState, testCovar);
 }
 
-/*
 BOOST_AUTO_TEST_CASE(correctLidarTest)
 {
 	Fixture f;
 
-	const arm_matrix_instance_f32& x = f.kf.getState();
-	const arm_matrix_instance_f32& P = f.kf.getCovar();
-}
+    f.kf.setQ(.5, .9, .7, .2, .1, 1.0);//same as those used for Matlab testing
+    f.kf.setR_lidar(.1, .55);
 
+    f.kf.predict(f.xddotImu, f.yddotImu, f.zddotImu, f.dt);    
+    f.kf.correctLidar(f.zLidar, f.zdotLidar);
+
+    const arm_matrix_instance_f32& testState = f.kf.getState();
+    const arm_matrix_instance_f32& testCovar = f.kf.getCovar();
+
+    cout << "Testing the Lidar..." << endl;
+
+    compareFileToMatrices("LidarCorrect.txt", testState, testCovar);
+}
+/*
 BOOST_AUTO_TEST_CASE(correctCameraTest)
 {
 	Fixture f;

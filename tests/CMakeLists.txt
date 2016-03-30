@@ -47,6 +47,8 @@ configure_file(runFltAns.txt
 	${CMAKE_CURRENT_BINARY_DIR}/runFltAns.txt @ONLY)
 configure_file(Px4Correct.txt
 	${CMAKE_CURRENT_BINARY_DIR}/Px4Correct.txt @ONLY)
+configure_file(LidarCorrect.txt
+    ${CMAKE_CURRENT_BINARY_DIR}/LidarCorrect.txt @ONLY)
 
 foreach(test ${TESTS})
 	add_executable(${test} ${test}.cpp)
