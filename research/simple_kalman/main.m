@@ -38,7 +38,7 @@ P = zeros(6);
 
 % noise matrices
 %Q = diag([0.5, 0.1, 0.5, 0.1, 0.1, 0.1]); % Original Clark Values
-Q = diag([0.5, 0.1, 0.5, 0.1, 0.009^2, 0.005^2]); % New Values for z zd
+Q = diag([0.5, 0.1, 0.5, 0.1, 0.01^2, 0.005^2]); % New Values for z zd
 %R_lidar = diag([0.025, 0.05]); % Original Clark Values
 R_lidar = diag([0.0009, 0.01]); % New values
 R_optical_flow = diag([.8, 0.8]);
