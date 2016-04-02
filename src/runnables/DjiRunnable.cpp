@@ -14,11 +14,12 @@
 #include "driverlib/pin_map.h"
 
 DjiRunnable::DjiRunnable(ProgramState* pState)
-	: state(pState), ppmXdlast(0), ppmYdlast(0), ppmFzlast(0), ppmYawdlast(0) { }
+	: state(pState) { }
 
 // TODO Add 10% Z Pulse Guard
 void DjiRunnable::run()
 {
+    uint8_t error = 0;
 	uint32_t throttle;
 	Dji dji = state->vehicle->getDjiVals();
 
@@ -26,9 +27,32 @@ void DjiRunnable::run()
     uint32_t ppmYd = servoIn_getPulse(RC_CHAN2);
     uint32_t ppmFz = servoIn_getPulse(RC_CHAN3);
     uint32_t ppmYawd = servoIn_getPulse(RC_CHAN4);
+    //Try to filter out garbage values
+    state->vehicle->clearRCInputError();
+    if(ppmXd > 200000 || ppmXd < 60000)
+    {
+        ppmXd = (uint32_t)map(0, -0.5, 0.5, 105600, 135000);
+        error |= DJI_SERVOIN_XD_OOB;
+    }
+    if(ppmYd > 200000 || ppmYd < 60000)
+    {
+        ppmYd = (uint32_t)map(0, -0.5, 0.5, 104200, 135000);
+        error |= DJI_SERVOIN_YD_OOB;
+    }
+    if(ppmFz > 200000 || ppmFz < 60000)
+    {
+        ppmFz = (uint32_t)map(0.5, 0, 1, 114000, 124000);
+        error |= DJI_SERVOIN_FZ_OOB;
+    }
+    if(ppmYawd > 200000 || ppmYawd < 60000)
+    {
+        ppmYawd = (uint32_t)map(0, -1, 1, 113000, 120400);
+        error |= DJI_SERVOIN_YAWD_OOB;
+    }
+    state->vehicle->setRCInputError(error);
 
-	switch(state->mode)
-	{
+    switch(state->mode)
+    {
 		case AUTONOMOUS: // currently do this for safety
 			//PPM_setPulse(0, (uint32_t)map(dji.pitch, -0.5, 0.5, 105600, 135000));
             PPM_setPulse(0, servoIn_getPulse(RC_CHAN1));    // X Accel
@@ -56,8 +80,6 @@ void DjiRunnable::run()
 		    break;
 		case ASSISTED:
 			//PPM_setPulse(0, (uint32_t)map(dji.pitch, -0.5, 0.5, 105600, 135000));
-            if(ppmXd > 200000)   ppmXd = ppmXdlast;
-            else                 ppmXdlast = ppmXd;
             PPM_setPulse(0, ppmXd);    // X Accel
 
             PPM_setPulse(1, (uint32_t)map(dji.roll, -0.5, 0.5, 104200, 135000)); // Y Accel
@@ -74,20 +96,9 @@ void DjiRunnable::run()
 
 			PPM_setPulse(2, throttle);
 
-            if(ppmYawd > 200000) ppmYawd = ppmYawdlast;
-            else                 ppmYawdlast = ppmYawd;
 			PPM_setPulse(3, ppmYawd); // directly pass through yaw ratr
 			break;
 		case MANUAL:
-		    //Try to filter out garbage values
-		    if(ppmXd > 200000)   ppmXd = ppmXdlast;
-		    else                 ppmXdlast = ppmXd;
-            if(ppmYd > 200000)   ppmYd = ppmYdlast;
-            else                 ppmYdlast = ppmYd;
-            if(ppmFz > 200000)   ppmFz = ppmFzlast;
-            else                 ppmFzlast = ppmFz;
-            if(ppmYawd > 200000) ppmYawd = ppmYawdlast;
-            else                 ppmYawdlast = ppmYawd;
             //Set values
 			PPM_setPulse(0, ppmXd);  // X Accel
 			PPM_setPulse(1, ppmYd);  // Y Accel

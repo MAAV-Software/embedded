@@ -207,7 +207,7 @@ void CtrlRunnable::run()
 			"%f\t%f\t%f\t%f\t"
 			"%u\t%u\t%u\t%u\t"
 			"%u\t"
-			"%f\t%f\t%f\t%f\t%f\n",
+			"%f\t%f\t%f\t%f\t%f\t%f\n",
 			time,
 			ps->mode,
 			ps->imu->getAccX(), ps->imu->getAccY(), ps->imu->getAccZ(),
@@ -252,7 +252,8 @@ void CtrlRunnable::run()
 			ps->px4->getTimestamp(),
 			ps->imu->getTimestamp(),
 			poseTimestamp,
-			ps->imu->getRefYaw());
+			ps->imu->getRefYaw(),
+			(float)ps->vehicle->getRCInputError());
 	ps->sdcard->write(msg, len);
 }
 

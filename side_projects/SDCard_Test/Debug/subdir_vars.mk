@@ -11,12 +11,12 @@ CMD_SRCS += \
 ../tm4c123gh6pm.cmd 
 
 LIB_SRCS += \
-/home/sheldon/ti/SW-TM4C-2.1.0.12573/driverlib/ccs/Debug/driverlib.lib 
+C:/home/sheldon/ti/SW-TM4C-2.1.0.12573/driverlib/ccs/Debug/driverlib.lib 
 
 C_SRCS += \
-/home/sheldon/ti/SW-TM4C-2.1.0.12573/third_party/fatfs/port/mmc-dk-tm4c123g.c \
+C:/home/sheldon/ti/SW-TM4C-2.1.0.12573/third_party/fatfs/port/mmc-dk-tm4c123g.c \
 ../tm4c123gh6pm_startup_ccs.c \
-/home/sheldon/ti/SW-TM4C-2.1.0.12573/utils/uartstdio.c 
+C:/home/sheldon/ti/SW-TM4C-2.1.0.12573/utils/uartstdio.c 
 
 OBJS += \
 ./Sd.obj \
@@ -55,8 +55,8 @@ CPP_SRCS__QUOTED += \
 "../main.cpp" 
 
 C_SRCS__QUOTED += \
-"/home/sheldon/ti/SW-TM4C-2.1.0.12573/third_party/fatfs/port/mmc-dk-tm4c123g.c" \
+"C:/home/sheldon/ti/SW-TM4C-2.1.0.12573/third_party/fatfs/port/mmc-dk-tm4c123g.c" \
 "../tm4c123gh6pm_startup_ccs.c" \
-"/home/sheldon/ti/SW-TM4C-2.1.0.12573/utils/uartstdio.c" 
+"C:/home/sheldon/ti/SW-TM4C-2.1.0.12573/utils/uartstdio.c" 
 
 
