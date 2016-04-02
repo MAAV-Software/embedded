@@ -62,7 +62,7 @@ public:
 	
 	// Assigns setpoints based on the controller mode
 	void setSetpt(const float setpt[NUM_DOFS][NUM_DOF_STATES], 
-				  const FlightMode mode);
+				  const FlightMode mode, bool rateSetpoint);
 	
 	// Assigns gains to the DOFs within this Vehicle
 	void setGains(const float valueGains[NUM_DOFS][NUM_PID_GAINS],
@@ -111,8 +111,6 @@ private:
 
 	float currYawSin;			// precaculated sin and cos (in next line) of current vehicle yaw
 	float currYawCos;
-	
-	uint8_t inputerror; //flags for bad input error
 
 	// State Estimator Specific Members	
 	KalmanFilter kalmanFilter;
@@ -123,6 +121,10 @@ private:
 	float lastLidarArenaZ;
 	bool first;
 	
+    uint8_t inputerror; //flags for bad input error
+
+    bool rateOnly;
+
 	// Calculates Roll, Pitch, Z Force, and Yaw Rate to send to the DJI
 	void calcDJIValues(const FlightMode mode);
 

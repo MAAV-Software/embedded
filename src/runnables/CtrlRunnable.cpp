@@ -37,7 +37,7 @@ void CtrlRunnable::run()
 		setpt[Y_AXIS][DOF_RATE] = ms2XY_rate(pulse2ms(servoIn_getPulse(RC_CHAN2)));
 		setpt[Z_AXIS][DOF_VAL]  = ms2height(pulse2ms(servoIn_getPulse(RC_CHAN3)));
 
-		ps->vehicle->setSetpt(setpt, ASSISTED);
+		ps->vehicle->setSetpt(setpt, ASSISTED, false);
 	}
 
 	ps->vehicle->runFilter(ps->imu->getRotMat(), ps->imu->getYaw(),

@@ -63,9 +63,9 @@ Vehicle::Vehicle(const float valueGains[NUM_DOFS][NUM_PID_GAINS],
 		{0, 0, 0, lastPredictTime},
 	};
 	uint8_t valueFlags[NUM_DOFS] = {
-		DERR_DT_MASK,
-		DERR_DT_MASK,
-		DERR_DT_MASK,
+		0,
+		0,
+		0,
 		DERR_DT_MASK | DISC_DERIV_MASK | WRAP_AROUND_MASK,
 	};
 	uint8_t rateFlags[NUM_DOFS] = {
@@ -167,9 +167,11 @@ void Vehicle::runFilter(const float rotationMatrix[9], float yaw,
 			float px4X, float px4Y, float px4Time, 
 			float cameraX, float cameraY, float cameraTime) 
 {
-	if(first)
+	if (first)
 	{
 		first = false;
+		rateOnly = false;
+		inputerror = 0;
 		lastPredictTime = currTime;
 		return;
 	}
@@ -265,8 +267,8 @@ void Vehicle::runCtrl(const FlightMode mode)
 	switch (mode) // mode only affects x, y dofs
 	{
 		case AUTONOMOUS: 
-			dofs[X_AXIS].run(false);
-			dofs[Y_AXIS].run(false);
+			dofs[X_AXIS].run(rateOnly);
+			dofs[Y_AXIS].run(rateOnly);
 			break;
 		case ASSISTED: 	 
 			dofs[X_AXIS].run(true);
@@ -290,8 +292,9 @@ void Vehicle::runCtrl(const FlightMode mode)
 
 // Assigns setpoints based on the controller mode
 void Vehicle::setSetpt(const float setpt[NUM_DOFS][NUM_DOF_STATES], 
-					   const FlightMode mode)
+					   const FlightMode mode, bool rateSetpoint)
 {
+    rateOnly = rateSetpoint;
 	switch (mode) // mode only affects x, y dofs
 	{
 		case AUTONOMOUS: 

@@ -137,9 +137,9 @@ struct Fixture
 			 {21, 22, 23},};
 		*/
 		//for (i = 0; )
-		valueFlags[0] = DERR_DT_MASK;
-		valueFlags[1] = DERR_DT_MASK;
-		valueFlags[2] = DERR_DT_MASK;
+		valueFlags[0] = 0;
+		valueFlags[1] = 0;
+		valueFlags[2] = 0;
 		valueFlags[3] = DERR_DT_MASK | DISC_DERIV_MASK | WRAP_AROUND_MASK;
 		rateFlags[0] = DERR_DT_MASK | DISC_DERIV_MASK;
 		rateFlags[1] = DERR_DT_MASK | DISC_DERIV_MASK;
@@ -257,7 +257,7 @@ BOOST_AUTO_TEST_CASE(ctorTest)
 BOOST_AUTO_TEST_CASE(setptTest_AUTONOMOUS)
 {
 	Fixture f;
-	f.v1->setSetpt(f.setpts, AUTONOMOUS);
+	f.v1->setSetpt(f.setpts, AUTONOMOUS, false);
 	f.v1->prepareLog(f.vlog, f.plog);
 	for (int i = 0; i < NUM_DOFS; i++)
 	{
@@ -277,7 +277,7 @@ BOOST_AUTO_TEST_CASE(setptTest_AUTONOMOUS)
 BOOST_AUTO_TEST_CASE(setptTest_ASSISTED)
 {
 	Fixture f;
-	f.v1->setSetpt(f.setpts, ASSISTED);
+	f.v1->setSetpt(f.setpts, ASSISTED, false);
 	f.v1->prepareLog(f.vlog, f.plog);
 	BOOST_CHECK_CLOSE(f.plog[0][0].setpt, (float)0, 0.01);
 	BOOST_CHECK_CLOSE(f.plog[0][1].setpt, f.setpts[0][1], 0.01);
@@ -303,7 +303,7 @@ BOOST_AUTO_TEST_CASE(setptTest_ASSISTED)
 BOOST_AUTO_TEST_CASE(setptTest_Bound)
 {
 	Fixture f;
-	f.v1->setSetpt(f.setpts2, ASSISTED);
+	f.v1->setSetpt(f.setpts2, ASSISTED, false);
 	f.v1->prepareLog(f.vlog, f.plog);
 	BOOST_CHECK_CLOSE(f.plog[3][0].setpt, (float)PI, 0.01);
 }
