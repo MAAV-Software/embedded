@@ -2,24 +2,26 @@
 # Automatically-generated file. Do not edit!
 ################################################################################
 
-CG_TOOL_ROOT := /home/sheldon/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.4
+SHELL = cmd.exe
+
+CG_TOOL_ROOT := c:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.4
 
 ORDERED_OBJS += \
+$(GEN_CMDS__FLAG) \
 "./Sd.obj" \
 "./main.obj" \
 "./mmc-dk-tm4c123g.obj" \
 "./tm4c123gh6pm_startup_ccs.obj" \
 "./uartstdio.obj" \
 "./sdlib/ff.obj" \
-"/home/sheldon/ti/SW-TM4C-2.1.0.12573/driverlib/ccs/Debug/driverlib.lib" \
+"C:/home/sheldon/ti/SW-TM4C-2.1.0.12573/driverlib/ccs/Debug/driverlib.lib" \
 "../tm4c123gh6pm.cmd" \
-$(GEN_CMDS__FLAG) \
 -l"libc.a" \
 
 -include ../makefile.init
 
-RM := rm -rf
-RMDIR := rm -rf
+RM := DEL /F
+RMDIR := RMDIR /S/Q
 
 # All of the sources participating in the build are defined here
 -include sources.mk
@@ -54,11 +56,11 @@ endif
 ifneq ($(strip $(C67_DEPS)),)
 -include $(C67_DEPS)
 endif
-ifneq ($(strip $(CLA_DEPS)),)
--include $(CLA_DEPS)
-endif
 ifneq ($(strip $(C??_DEPS)),)
 -include $(C??_DEPS)
+endif
+ifneq ($(strip $(CLA_DEPS)),)
+-include $(CLA_DEPS)
 endif
 ifneq ($(strip $(CPP_DEPS)),)
 -include $(CPP_DEPS)
@@ -87,9 +89,6 @@ endif
 ifneq ($(strip $(C43_DEPS)),)
 -include $(C43_DEPS)
 endif
-ifneq ($(strip $(INO_DEPS)),)
--include $(INO_DEPS)
-endif
 ifneq ($(strip $(S67_DEPS)),)
 -include $(S67_DEPS)
 endif
@@ -101,9 +100,6 @@ ifneq ($(strip $(S43_DEPS)),)
 endif
 ifneq ($(strip $(OPT_DEPS)),)
 -include $(OPT_DEPS)
-endif
-ifneq ($(strip $(PDE_DEPS)),)
--include $(PDE_DEPS)
 endif
 ifneq ($(strip $(S64_DEPS)),)
 -include $(S64_DEPS)
@@ -139,13 +135,13 @@ all: SDCard_Test.out
 SDCard_Test.out: $(OBJS) $(CMD_SRCS) $(LIB_SRCS) $(GEN_CMDS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: ARM Linker'
-	"/home/sheldon/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.4/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 --abi=eabi -me -g --c99 --c++03 --gcc --define=ccs="ccs" --define=TARGET_IS_TM4C123_RB1 --define=PART_TM4C123GH6PM --display_error_number --diag_warning=225 --diag_wrap=off -z -m"SDCard_Test.map" --heap_size=0 --stack_size=16384 -i"/home/sheldon/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.4/lib" -i"/home/sheldon/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.4/include" --reread_libs --warn_sections --display_error_number --diag_wrap=off --xml_link_info="SDCard_Test_linkInfo.xml" --rom_model -o "SDCard_Test.out" $(ORDERED_OBJS)
+	"c:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.4/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 --abi=eabi -me -g --c99 --c++03 --gcc --define=ccs="ccs" --define=TARGET_IS_TM4C123_RB1 --define=PART_TM4C123GH6PM --display_error_number --diag_warning=225 --diag_wrap=off -z -m"SDCard_Test.map" --heap_size=0 --stack_size=16384 -i"c:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.4/lib" -i"c:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.4/include" --reread_libs --warn_sections --display_error_number --diag_wrap=off --xml_link_info="SDCard_Test_linkInfo.xml" --rom_model -o "SDCard_Test.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
 SDCard_Test.hex: $(EXE_OUTPUTS)
 	@echo 'Invoking: ARM Hex Utility'
-	"/home/sheldon/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.4/bin/armhex"  -o "SDCard_Test.hex" $(EXE_OUTPUTS__QUOTED)
+	"c:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.4/bin/armhex"  -o "SDCard_Test.hex" $(EXE_OUTPUTS__QUOTED)
 	@echo 'Finished building: $@'
 	@echo ' '
 
@@ -153,8 +149,8 @@ SDCard_Test.hex: $(EXE_OUTPUTS)
 clean:
 	-$(RM) $(EXE_OUTPUTS__QUOTED)$(BIN_OUTPUTS__QUOTED)
 	-$(RM) "Sd.pp" "main.pp" 
-	-$(RM) "mmc-dk-tm4c123g.pp" "tm4c123gh6pm_startup_ccs.pp" "uartstdio.pp" "sdlib/ff.pp" 
-	-$(RM) "Sd.obj" "main.obj" "mmc-dk-tm4c123g.obj" "tm4c123gh6pm_startup_ccs.obj" "uartstdio.obj" "sdlib/ff.obj" 
+	-$(RM) "mmc-dk-tm4c123g.pp" "tm4c123gh6pm_startup_ccs.pp" "uartstdio.pp" "sdlib\ff.pp" 
+	-$(RM) "Sd.obj" "main.obj" "mmc-dk-tm4c123g.obj" "tm4c123gh6pm_startup_ccs.obj" "uartstdio.obj" "sdlib\ff.obj" 
 	-@echo 'Finished clean'
 	-@echo ' '
 

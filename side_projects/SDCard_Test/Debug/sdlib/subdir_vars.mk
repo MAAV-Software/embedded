@@ -13,10 +13,10 @@ C_DEPS += \
 ./sdlib/ff.pp 
 
 C_DEPS__QUOTED += \
-"sdlib/ff.pp" 
+"sdlib\ff.pp" 
 
 OBJS__QUOTED += \
-"sdlib/ff.obj" 
+"sdlib\ff.obj" 
 
 C_SRCS__QUOTED += \
 "../sdlib/ff.c" 
