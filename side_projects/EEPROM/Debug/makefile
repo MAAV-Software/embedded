@@ -4,14 +4,14 @@
 
 SHELL = cmd.exe
 
-CG_TOOL_ROOT := C:/ti_v6_1/ccsv6/tools/compiler/ti-cgt-arm_5.2.4
+CG_TOOL_ROOT := c:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.4
 
 ORDERED_OBJS += \
+$(GEN_CMDS__FLAG) \
 "./main.obj" \
 "./tm4c123gh6pm_startup_ccs.obj" \
 "C:/ti/SW-TM4C-2.1.0.12573/driverlib/ccs/Debug/driverlib.lib" \
 "../tm4c123gh6pm.cmd" \
-$(GEN_CMDS__FLAG) \
 -l"libc.a" \
 
 -include ../makefile.init
@@ -50,11 +50,11 @@ endif
 ifneq ($(strip $(C67_DEPS)),)
 -include $(C67_DEPS)
 endif
-ifneq ($(strip $(CLA_DEPS)),)
--include $(CLA_DEPS)
-endif
 ifneq ($(strip $(C??_DEPS)),)
 -include $(C??_DEPS)
+endif
+ifneq ($(strip $(CLA_DEPS)),)
+-include $(CLA_DEPS)
 endif
 ifneq ($(strip $(CPP_DEPS)),)
 -include $(CPP_DEPS)
@@ -83,9 +83,6 @@ endif
 ifneq ($(strip $(C43_DEPS)),)
 -include $(C43_DEPS)
 endif
-ifneq ($(strip $(INO_DEPS)),)
--include $(INO_DEPS)
-endif
 ifneq ($(strip $(S67_DEPS)),)
 -include $(S67_DEPS)
 endif
@@ -97,9 +94,6 @@ ifneq ($(strip $(S43_DEPS)),)
 endif
 ifneq ($(strip $(OPT_DEPS)),)
 -include $(OPT_DEPS)
-endif
-ifneq ($(strip $(PDE_DEPS)),)
--include $(PDE_DEPS)
 endif
 ifneq ($(strip $(S64_DEPS)),)
 -include $(S64_DEPS)
@@ -135,13 +129,13 @@ all: EEPROM.out
 EEPROM.out: $(OBJS) $(CMD_SRCS) $(LIB_SRCS) $(GEN_CMDS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: ARM Linker'
-	"C:/ti_v6_1/ccsv6/tools/compiler/ti-cgt-arm_5.2.4/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 --abi=eabi -me --gcc --define=ccs="ccs" --define=PART_TM4C123GH6PM -z -m"app_TM4C123GH6PM_ccs.map" --heap_size=0 --stack_size=512 -i"C:/ti_v6_1/ccsv6/tools/compiler/ti-cgt-arm_5.2.4/lib" -i"C:/ti_v6_1/ccsv6/tools/compiler/ti-cgt-arm_5.2.4/include" --reread_libs --warn_sections --rom_model -o "EEPROM.out" $(ORDERED_OBJS)
+	"c:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.4/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 --abi=eabi -me --gcc --define=ccs="ccs" --define=PART_TM4C123GH6PM -z -m"app_TM4C123GH6PM_ccs.map" --heap_size=0 --stack_size=512 -i"c:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.4/lib" -i"c:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.4/include" --reread_libs --warn_sections --rom_model -o "EEPROM.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
 EEPROM.hex: $(EXE_OUTPUTS)
 	@echo 'Invoking: ARM Hex Utility'
-	"C:/ti_v6_1/ccsv6/tools/compiler/ti-cgt-arm_5.2.4/bin/armhex"  -o "EEPROM.hex" $(EXE_OUTPUTS__QUOTED)
+	"c:/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.4/bin/armhex"  -o "EEPROM.hex" $(EXE_OUTPUTS__QUOTED)
 	@echo 'Finished building: $@'
 	@echo ' '
 
