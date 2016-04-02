@@ -159,7 +159,7 @@ void DataLinkRunnable::updateVehicleSetpt()
             spArr[Y_AXIS][DOF_VAL] = setpt.y;
             spArr[Z_AXIS][DOF_VAL] = setpt.z;
             spArr[YAW][DOF_VAL]    = setpt.yaw;
-            ps->vehicle->setSetpt(spArr, AUTONOMOUS);
+            ps->vehicle->setSetpt(spArr, AUTONOMOUS, false);
             break;
         }
         case SETPT_T_TAKEOFF:
@@ -168,7 +168,7 @@ void DataLinkRunnable::updateVehicleSetpt()
             spArr[Y_AXIS][DOF_VAL] = ps->feedback->y[FEEDBACK_T_VAL];
             spArr[Z_AXIS][DOF_VAL] = 1.5f;
             spArr[YAW][DOF_VAL]    = ps->feedback->yaw;
-            ps->vehicle->setSetpt(spArr, AUTONOMOUS);
+            ps->vehicle->setSetpt(spArr, AUTONOMOUS, false);
             break;
         }
         case SETPT_T_LAND:
@@ -177,7 +177,7 @@ void DataLinkRunnable::updateVehicleSetpt()
             spArr[Y_AXIS][DOF_VAL] = ps->feedback->y[FEEDBACK_T_VAL];
             spArr[Z_AXIS][DOF_VAL] = 0.0f;
             spArr[YAW][DOF_VAL]    = ps->feedback->yaw;
-            ps->vehicle->setSetpt(spArr, AUTONOMOUS);
+            ps->vehicle->setSetpt(spArr, AUTONOMOUS, false);
             break;
         }
         case SETPT_T_IDLE:
@@ -196,6 +196,15 @@ void DataLinkRunnable::updateVehicleSetpt()
         	PPM_setPulse(2, 90000);    	// Chan 3
         	PPM_setPulse(3, 119784);    // Chan 4 - mid
         	break;
+        }
+        case SETPT_T_RATE:
+        {
+            spArr[X_AXIS][DOF_RATE] = setpt.x;
+            spArr[Y_AXIS][DOF_RATE] = setpt.y;
+            spArr[Z_AXIS][DOF_RATE] = setpt.z;
+            spArr[YAW][DOF_RATE]    = setpt.yaw;
+            ps->vehicle->setSetpt(spArr, AUTONOMOUS, true);
+            break;
         }
         default:
             break;

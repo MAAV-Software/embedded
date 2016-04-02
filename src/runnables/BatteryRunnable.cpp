@@ -38,7 +38,7 @@ void BatteryRunnable::run()
         spArr[Z_AXIS][DOF_VAL] = 0.0f;
         spArr[YAW][DOF_VAL]    = state->feedback->yaw;
 
-        state->vehicle->setSetpt(spArr, AUTONOMOUS);
+        state->vehicle->setSetpt(spArr, AUTONOMOUS, false);
 	}
 }
 
