@@ -16,6 +16,12 @@
 enum xyzhEnum {X_AXIS, Y_AXIS, Z_AXIS, YAW};
 enum rpEnum {ROLL, PITCH};
 
+// Error codes for servoIn being out of bounds
+#define DJI_SERVOIN_FZ_OOB 0x01;
+#define DJI_SERVOIN_XD_OOB 0x02;
+#define DJI_SERVOIN_YD_OOB 0x04;
+#define DJI_SERVOIN_YAWD_OOB 0x08;
+
 class Vehicle
 {
 public:
@@ -89,6 +95,13 @@ public:
 
 	void setDofStates(const float state[NUM_DOFS][NUM_DOF_STATES]);
 
+	// Gets RCInputError which has flags set as per DJI_SERVOIN_XXX_OOB
+	uint8_t getRCInputError();
+	// Sets one or more RCInputError flags (|= with whatever already set)
+	void setRCInputError(uint8_t flag);
+	// Clears all RCInputError flags
+	void clearRCInputError();
+
 private:
 	// Controller specific Members
 	Dof dofs[NUM_DOFS]; 		// DOF classes for xyzh
@@ -99,6 +112,8 @@ private:
 	float currYawSin;			// precaculated sin and cos (in next line) of current vehicle yaw
 	float currYawCos;
 	
+	uint8_t inputerror; //flags for bad input error
+
 	// State Estimator Specific Members	
 	KalmanFilter kalmanFilter;
 	float lastPredictTime;

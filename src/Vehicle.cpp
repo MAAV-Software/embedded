@@ -417,4 +417,19 @@ void Vehicle::prepareLog(VehicleLog &vlog, PidLog plogs[NUM_DOFS][2])
 	vlog.yawFilt   = 0;
 }
 
+uint8_t Vehicle::getRCInputError()
+{
+    return inputerror;
+}
+
+void Vehicle::setRCInputError(uint8_t flag)
+{
+    inputerror |= flag;
+}
+
+void Vehicle::clearRCInputError()
+{
+    inputerror = 0;
+}
+
 // End of File
