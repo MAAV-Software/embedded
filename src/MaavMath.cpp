@@ -71,5 +71,11 @@ void mat_copy(const arm_matrix_instance_f32 &src, arm_matrix_instance_f32 &dest)
     }
 }
 
+// Maps x which is in the range of [fromLow, fromHigh] into the range of
+// [toLow, toHigh] and returns the result.
+float map(float x, float fromLow, float fromHigh, float toLow, float toHigh)
+{
+	return (((x - fromLow) * (toHigh - toLow)) / (fromHigh - fromLow)) + toLow;
+}
 
 }

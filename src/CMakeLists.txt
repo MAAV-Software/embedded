@@ -28,6 +28,7 @@ add_library(ctrl_sw SHARED
 			messaging/gains_t
 			messaging/raw_pose_t
 			messaging/setpt_t
+            RcController
            )
 
 # external include directories

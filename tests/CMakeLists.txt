@@ -38,6 +38,7 @@ set(TESTS
 	KalmanUnitTest
 	VehicleRunFilterTest
     MovingAvgTest
+    RcControllerTest
     )
 
 # Log file for VehicleRunFilterTest
