@@ -1,7 +1,7 @@
 close all
 clc
 clf
-log = load('./2016/q1/3-26_WillowRun_Linear_Crash/LOG88.TXT');
+log = load('/media/psasawat/0A8F-D126/FIVE.TXT');
 
 % parsing the datas
 Time          = log(2:end,1);
@@ -97,6 +97,7 @@ px4Time = log(2:end, 96);
 imuTime = log(2:end, 97);
 poseTime = log(2:end, 98);
 refYaw = log(2:end, 99);
+%RCinError = log(2:end, 100);
 
 clf
 
@@ -336,6 +337,13 @@ plot(Time(2:end), lidarTime(2:end), 'g');
 ylabel('Latest Lidar Timestamp');
 xlabel('Time');
 hold off;
+%{
+figure(102)
+hold on;
+plot(Time(2:end), RCinError(2:end), 'g');
+xlabel('Time');
+ylabel('Error Code');
+hold off;}%
 
 %%
 Real_Time_for_this_log = (Time(end) - Time(1)) / 60

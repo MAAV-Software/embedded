@@ -1,0 +1,10 @@
+ThrottleY min 88548
+ThrottleY max 155182
+ThrottleX min 88468
+ThrottleX max 154804
+Roll      min 88554
+Roll      max 154482
+Pitch     min 88556
+Pitch     max 154642
+
+Summary: all channels on the Futaba appear to go from 88500 to 15600 at mid trim
