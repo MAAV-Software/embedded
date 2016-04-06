@@ -44,6 +44,8 @@
 #include "DataLinkHw.hpp"
 #include "ProgramState.hpp"
 #include "EEPROM.h"
+#include "RcController.hpp"
+#include "RcProfiles.hpp"
 #include "kalman/KalmanFilter.hpp"
 
 #include "runnables/DataLinkRunnable.hpp"
@@ -143,7 +145,12 @@ int main()
 
 	Battery battery;
 	feedback_t fbMsg;
-	ProgramState pState(&v, &imu, &px4, &lidar, &sdcard, &battery, MANUAL, &dl, sw, &fbMsg);
+
+	RcController kill(Maav::hitec, Maav::hitecNumch);
+	RcController pilot(Maav::futaba, Maav::futabaNumch);
+
+	ProgramState pState(&v, &imu, &px4, &lidar, &sdcard, &battery, MANUAL,
+	        &dl, sw, &fbMsg, &kill, &pilot);
 	
 	// Constructing Runnables also initializes the hardware for them
 	FlightModeRunnable flightModeRunnable(&pState);
@@ -170,11 +177,11 @@ int main()
 	mainLoop.regEvent(&batteryRunnable, 	1000, 	8);
 
 	// tricky way to get rid of the initial large values!
-	while (servoIn_getPulse(KILL_CHAN3) > 120000);
+	while (kill.dutyCycle(servoIn_getPulse(KILL_CHAN3), 3) > 0.95);
 
 	// check if the stick is up, PPM range(59660, 127400)
 	// might change after the calibration (87552, 153108)
-	while (servoIn_getPulse(KILL_CHAN3) < 120000);
+	while (kill.dutyCycle(servoIn_getPulse(KILL_CHAN3), 3) < 0.95);
 
 /*
 	while (!sw[2].readState)

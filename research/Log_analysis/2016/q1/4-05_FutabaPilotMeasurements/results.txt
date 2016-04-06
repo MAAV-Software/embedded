@@ -7,4 +7,4 @@ Roll      max 154482
 Pitch     min 88556
 Pitch     max 154642
 
-Summary: all channels on the Futaba appear to go from 88500 to 15600 at mid trim
+Summary: all channels on the Futaba appear to go from 88500 to 156000 at mid trim

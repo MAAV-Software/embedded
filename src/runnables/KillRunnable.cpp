@@ -22,7 +22,7 @@ KillRunnable::KillRunnable(ProgramState *pState) : state(pState)
 
 void KillRunnable::run()
 {
-	if ((servoIn_getPulse(KILL_CHAN3)) < 120000)
+	if (state->kill->dutyCycle(servoIn_getPulse(KILL_CHAN3), 3) > 0.95)
 	//if (!state->sw[2].readState)
 	{
 		state->sdcard->sync();
@@ -35,7 +35,7 @@ void KillRunnable::run()
 		state->dLink->send(&msg);
 
 		// waiting for unkill signal
-		while((servoIn_getPulse(KILL_CHAN3)) < 120000);
+		while(state->kill->dutyCycle(servoIn_getPulse(KILL_CHAN3), 3) < 0.95);
 
 		resetYaw();
 

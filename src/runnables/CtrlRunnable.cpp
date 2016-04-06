@@ -33,9 +33,9 @@ void CtrlRunnable::run()
 			}
 			setpt[d][DOF_TIME] = time;
 		}
-		setpt[X_AXIS][DOF_RATE] = ms2XY_rate(pulse2ms(servoIn_getPulse(RC_CHAN1)));
-		setpt[Y_AXIS][DOF_RATE] = ms2XY_rate(pulse2ms(servoIn_getPulse(RC_CHAN2)));
-		setpt[Z_AXIS][DOF_VAL]  = ms2height(pulse2ms(servoIn_getPulse(RC_CHAN3)));
+		setpt[X_AXIS][DOF_RATE] = ms2XY_rate(ps->pilot->pulse((servoIn_getPulse(RC_CHAN1)), 1));
+		setpt[Y_AXIS][DOF_RATE] = ms2XY_rate(ps->pilot->pulse((servoIn_getPulse(RC_CHAN2)), 2));
+		setpt[Z_AXIS][DOF_VAL]  = ms2height(ps->pilot->pulse((servoIn_getPulse(RC_CHAN3)), 3));
 
 		ps->vehicle->setSetpt(setpt, ASSISTED, false);
 	}
@@ -240,10 +240,10 @@ void CtrlRunnable::run()
 			plogs[X_AXIS][DOF_VAL].flags, plogs[Y_AXIS][DOF_VAL].flags, plogs[Z_AXIS][DOF_VAL].flags,
 			plogs[X_AXIS][DOF_RATE].flags, plogs[Y_AXIS][DOF_RATE].flags, plogs[Z_AXIS][DOF_RATE].flags, plogs[YAW][DOF_RATE].flags,
 			ps->battery->getVolts(),
-			servoIn_getPulse(RC_CHAN2),
-			servoIn_getPulse(RC_CHAN1),
-			servoIn_getPulse(RC_CHAN4),
-			servoIn_getPulse(RC_CHAN3),
+			ps->pilot->dutyCycle(servoIn_getPulse(RC_CHAN2), 2),
+			ps->pilot->dutyCycle(servoIn_getPulse(RC_CHAN1), 1),
+			ps->pilot->dutyCycle(servoIn_getPulse(RC_CHAN4), 4),
+			ps->pilot->dutyCycle(servoIn_getPulse(RC_CHAN3), 3),
 			ps->dLink->getSetptMsg().flags,
 			dji.pitch, dji.roll, dji.thrust, dji.yawRate,
 			ppmRoll, ppmPitch, throttle, ppmYawRate,

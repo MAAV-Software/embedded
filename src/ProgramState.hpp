@@ -11,6 +11,7 @@
 #include "messaging/feedback_t.h"
 #include "switch.h"
 #include "Battery.hpp"
+#include "RcController.hpp"
 
 struct ProgramState
 {
@@ -24,9 +25,12 @@ struct ProgramState
 	DataLink *dLink;
 	SwitchData_t *sw;
 	feedback_t *feedback;
+	RcController *pilot;
+	RcController *kill;
 
-	ProgramState(Vehicle *v, Imu *i, Px4 *p, Lidar *l, SdCard *s, Battery *b, 
-				 FlightMode m, DataLink *dl, SwitchData_t *ls, feedback_t *fb);
+	ProgramState(Vehicle *v, Imu *i, Px4 *px, Lidar *l, SdCard *s, Battery *b,
+				 FlightMode m, DataLink *dl, SwitchData_t *ls, feedback_t *fb,
+				 RcController *k, RcController *pi);
 };
 
 #endif /* PROGRAMSTATE_HPP_ */
