@@ -15,8 +15,10 @@
  *
  * @section intro Introduction
  *
- * If you got this far you probably don't need much more help. Although you may
- * want to check out the contributing section.
+ * This is where our contorols documentation lives. You can check out our style
+ * guide and contributing guide on the "Related Pages" tab. Most of the 
+ * documentation you will be looking for can be found under the "Classes" tab.
+ *  
  * @section contrib Contributing
  *
  * Check out page @ref contributing. After that, read @ref stylecpp. Finally,
