@@ -41,6 +41,7 @@
  * every step in this guide and it still won't work, let the lead know and it
  * should get fixed.
  *
+ * __MODIFY LINKS SO THEY OPEN IN A NEW TAB, GOOGLE "markdown open link in new tab"__
  *
  * -# Download CCS. [You can click here]
  * 		(http://processors.wiki.ti.com/index.php/Download_CCS), or if the link
@@ -55,6 +56,23 @@
  *
  * 		__If your .cproject changes at any time and git wants you to commit it, restore
  * 		your .cproject file to the orignal .cproject.bak file.__
+ *
+ * 		Then press the following buttons:
+ * 			-# File
+ * 			-# Import
+ * 			-# Git
+ * 			-# Projects From Git
+ * 			-# Next
+ * 			-# Existing Local Repository
+ * 			-# Next
+ * 			-# ctrl (you may have to navigate to the locations of
+ * 			 your ctrl repo)
+ * 			-# Next
+ * 			-# Working Directory
+ * 			-# Next
+ * 			-# Deselect All
+ * 			-# Find "maav" and check the box
+ * 			-# Finish
  *
  * -# Download TivaWare. [Click here](http://www.ti.com/tool/sw-tm4c), or if that
  * 		does not work, google "tivaware". Click the "Get Software" button on
@@ -71,7 +89,10 @@
  * 		 @code
  * 		 	~/ti/CMSIS/
  * 		 @endcode
- * -#
+ * -# Modify CMSIS so it can be used with the Tiva. [Read this pdf]
+ * 		(http://www.ti.com/lit/an/spma041g/spma041g.pdf). [This part
+ * 		is still under construction. If you read this, yell at
+ * 		Nicholas Eckardt]
  *
  */
 
