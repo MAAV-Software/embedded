@@ -22,7 +22,7 @@ KillRunnable::KillRunnable(ProgramState *pState) : state(pState)
 
 void KillRunnable::run()
 {
-	if (state->kill->dutyCycle(servoIn_getPulse(KILL_CHAN3), 2) > 0.95)
+	if (state->kill->dutyCycle(servoIn_getPulse(KILL_CHAN3), 2) < 0.95)
 	//if (!state->sw[2].readState)
 	{
 		state->sdcard->sync();
