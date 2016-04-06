@@ -178,11 +178,11 @@ int main()
 	mainLoop.regEvent(&batteryRunnable, 	1000, 	8);
 
 	// tricky way to get rid of the initial large values!
-	while (kill.dutyCycle(servoIn_getPulse(KILL_CHAN3), 3) > 0.95);
+	while (kill.dutyCycle(servoIn_getPulse(KILL_CHAN3), 2) > 0.95);
 
 	// check if the stick is up, PPM range(59660, 127400)
 	// might change after the calibration (87552, 153108)
-	while (kill.dutyCycle(servoIn_getPulse(KILL_CHAN3), 3) < 0.95);
+	while (kill.dutyCycle(servoIn_getPulse(KILL_CHAN3), 2) < 0.95);
 
 /*
 	while (!sw[2].readState)

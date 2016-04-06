@@ -23,10 +23,10 @@ void DjiRunnable::run()
 	uint32_t throttle;
 	Dji dji = state->vehicle->getDjiVals();
 
-    float dutyXd = state->pilot->dutyCycle(servoIn_getPulse(RC_CHAN1), 1);
-    float dutyYd = state->pilot->dutyCycle(servoIn_getPulse(RC_CHAN2), 2);
-    float dutyFz = state->pilot->dutyCycle(servoIn_getPulse(RC_CHAN3), 3);
-    float dutyYawd = state->pilot->dutyCycle(servoIn_getPulse(RC_CHAN4), 4);
+    float dutyXd = state->pilot->dutyCycle(servoIn_getPulse(RC_CHAN1), 0);
+    float dutyYd = state->pilot->dutyCycle(servoIn_getPulse(RC_CHAN2), 1);
+    float dutyFz = state->pilot->dutyCycle(servoIn_getPulse(RC_CHAN3), 2);
+    float dutyYawd = state->pilot->dutyCycle(servoIn_getPulse(RC_CHAN4), 3);
     //Try to filter out garbage values
     state->vehicle->clearRCInputError();
     if(dutyXd < 0.0 || dutyXd > 1.0)
