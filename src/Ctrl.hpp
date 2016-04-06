@@ -18,6 +18,12 @@
  * This is where our contorols documentation lives. You can check out our style
  * guide and contributing guide on the "Related Pages" tab. Most of the 
  * documentation you will be looking for can be found under the "Classes" tab.
+ *
+ * @section programming How to get CCS to work
+ *
+ * CCS is the IDE we use for writing our code for the Tiva microcontroller. It can
+ * be a pain to install. Check out the page @ref CCS for installation help. You
+ * will need it.
  *  
  * @section contrib Contributing
  *
@@ -25,7 +31,42 @@
  * become addicted to coffee.
  */
 
-
+/**
+ * @page CCS Installing CCS
+ *
+ * @section intro Introduction
+ *
+ *
+ * This should be a comprehensive overview of how to install CCS. If you follow
+ * every step in this guide and it still won't work, let the lead know and it
+ * should get fixed.
+ *
+ *
+ * -# Download CCS. [You can click here]
+ * 		(http://processors.wiki.ti.com/index.php/Download_CCS), or if the link
+ * 		is broken just google "Code Composer Studio" and you should find the
+ * 		proper place to download it. You will have to make a Texas Instruments
+ * 		account to get it.
+ * -# Install CCS. [This part of the guide is under construction. If you read this,
+ * 		yell at Nicholas Eckardt]
+ * -# Download TivaWare. [Click here](http://www.ti.com/tool/sw-tm4c), or if that
+ * 		does not work, google "tivaware". Click the "Get Software" button on
+ * 		"SW-TM4C", then download the full release. Hope you remembered your
+ * 		Texas Instruments login info. I reccomend putting it here after extracting:
+ * 		@code
+ * 			~/ti/TivaWare/
+ * 		@endcode
+ * -# Download CMSIS. [Link]
+ * 		(http://www.arm.com/products/processors/cortex-m/cortex-microcontroller-software-interface-standard.php)
+ * 		 or google "CMSIS". On the page there is a "Download CMSIS" tab, but its
+ * 		 a bit hidden. Then make an account with ARM to get the software. Once again
+ * 		 I reccomend putting it under
+ * 		 @code
+ * 		 	~/ti/CMSIS/
+ * 		 @endcode
+ * -#
+ *
+ */
 
 /**
  * @page contributing Contributing
