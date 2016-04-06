@@ -49,6 +49,13 @@
  * 		account to get it.
  * -# Install CCS. [This part of the guide is under construction. If you read this,
  * 		yell at Nicholas Eckardt]
+ * -# Import the project. You will have to copy maav/.project.bak to maav/.project
+ * 		before importing the project. Likewise, you will have to copy
+ * 		maav/.cproject.bak to maav/.cproject before importing the CCS project.
+ *
+ * 		__If your .cproject changes at any time and git wants you to commit it, restore
+ * 		your .cproject file to the orignal .cproject.bak file.__
+ *
  * -# Download TivaWare. [Click here](http://www.ti.com/tool/sw-tm4c), or if that
  * 		does not work, google "tivaware". Click the "Get Software" button on
  * 		"SW-TM4C", then download the full release. Hope you remembered your
