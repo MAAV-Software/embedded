@@ -34,6 +34,9 @@ void KillRunnable::run()
 		msg.status = (int8_t)EMERGENCY_T_KILL;
 		state->dLink->send(&msg);
 
+		// disable flight mode LED
+		MAP_GPIOPinWrite(GPIO_PORTF_BASE, RED_LED | GREEN_LED | BLUE_LED, 0);
+
 		// waiting for unkill signal
 		while(state->kill->dutyCycle(servoIn_getPulse(KILL_CHAN3), 2) < 0.95);
 

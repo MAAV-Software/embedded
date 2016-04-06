@@ -14,19 +14,23 @@
 #include "driverlib/sysctl.h"
 
 
-FlightMode flightModeGet()
+FlightMode flightModeGet(FlightMode last)
 {
-	if (pulseUpperThird(servoIn_getPulse(RC_CHAN5))) // was RC_CHAN5
+	if (pulseUpperThird(servoIn_getPulse(RC_CHAN5))) // Futaba Top Left Switch
 	{
 		return MANUAL;
 	}
-	if (pulseUpperThird(servoIn_getPulse(KILL_CHAN5))) // was KILL_CHAN5
+	if (pulseUpperThird(servoIn_getPulse(RC_CHAN6))) // Futaba Center Knob
 	{
 		return ASSISTED;
 	}
-	else
+	else if (pulseLowerThird(servoIn_getPulse(RC_CHAN6))) //Futaba Center Knob
 	{
 		return AUTONOMOUS;
+	}
+	else
+	{
+	    return last;
 	}
 }
 

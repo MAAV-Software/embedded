@@ -18,8 +18,8 @@
 #define RC_CHAN2 GPIO_PORTA_BASE,3
 #define RC_CHAN3 GPIO_PORTA_BASE,4
 #define RC_CHAN4 GPIO_PORTA_BASE,5
-#define RC_CHAN5 GPIO_PORTA_BASE,6 // shoulder button
-#define RC_CHAN6 GPIO_PORTA_BASE,7
+#define RC_CHAN5 GPIO_PORTA_BASE,6 // futaba top left switch
+#define RC_CHAN6 GPIO_PORTA_BASE,7 // futaba center knob
 
 // GPIO Port Basses for Kill Switch (also an RC controller)
 #define KILL_CHAN1 GPIO_PORTE_BASE,4

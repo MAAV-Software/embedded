@@ -4,6 +4,6 @@
 #include "FlightMode.hpp"
 
 // Gets the flight mode state from the RC input channels on the Tiva
-FlightMode flightModeGet();
+FlightMode flightModeGet(FlightMode);
 
 #endif /* FlightModeHw.hpp */

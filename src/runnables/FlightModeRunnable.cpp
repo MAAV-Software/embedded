@@ -17,7 +17,7 @@ FlightModeRunnable::FlightModeRunnable(ProgramState *pState) : state(pState) {}
 
 void FlightModeRunnable::run() 
 {
-	state->mode = flightModeGet();
+	state->mode = flightModeGet(state->mode);
 	switch(state->mode)
 	{
 		case ASSISTED:

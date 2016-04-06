@@ -1,7 +1,7 @@
 close all
 clc
 clf
-log = load('/media/psasawat/0A8F-D126/FIVE.TXT');
+log = load('F:\LOG6.TXT');
 
 % parsing the datas
 Time          = log(2:end,1);
@@ -97,7 +97,7 @@ px4Time = log(2:end, 96);
 imuTime = log(2:end, 97);
 poseTime = log(2:end, 98);
 refYaw = log(2:end, 99);
-%RCinError = log(2:end, 100);
+RCinError = log(2:end, 100);
 
 clf
 
@@ -337,13 +337,13 @@ plot(Time(2:end), lidarTime(2:end), 'g');
 ylabel('Latest Lidar Timestamp');
 xlabel('Time');
 hold off;
-%{
-figure(102)
+
+figure(88)
 hold on;
 plot(Time(2:end), RCinError(2:end), 'g');
 xlabel('Time');
 ylabel('Error Code');
-hold off;}%
+hold off;
 
 %%
 Real_Time_for_this_log = (Time(end) - Time(1)) / 60
