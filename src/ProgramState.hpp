@@ -12,6 +12,7 @@
 #include "switch.h"
 #include "Battery.hpp"
 #include "RcController.hpp"
+#include "RcOutput.hpp"
 
 struct ProgramState
 {
@@ -27,10 +28,11 @@ struct ProgramState
 	feedback_t *feedback;
 	RcController *pilot;
 	RcController *kill;
+	RcOutput *djiout;
 
 	ProgramState(Vehicle *v, Imu *i, Px4 *px, Lidar *l, SdCard *s, Battery *b,
 				 FlightMode m, DataLink *dl, SwitchData_t *ls, feedback_t *fb,
-				 RcController *k, RcController *pi);
+				 RcController *k, RcController *pi, RcOutput *d);
 };
 
 #endif /* PROGRAMSTATE_HPP_ */

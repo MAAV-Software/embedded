@@ -34,3 +34,12 @@ const Maav::Pair<uint32_t, uint32_t> Maav::hitec[5] =
 };
 
 const uint8_t Maav::hitecNumch = 5;
+
+const Maav::Pair<uint32_t, uint32_t> Maav::dji[4] =
+{
+        {86000, 155000}, //Channel 1
+        {85000, 125000}, //Channel 2
+        {70000, 155000}, //Channel 3
+        {85000, 154000} //Channel 4
+};
+const uint8_t Maav::djiNumch = 4;

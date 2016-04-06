@@ -23,30 +23,30 @@ void DjiRunnable::run()
 	uint32_t throttle;
 	Dji dji = state->vehicle->getDjiVals();
 
-    uint32_t ppmXd = servoIn_getPulse(RC_CHAN1);
-    uint32_t ppmYd = servoIn_getPulse(RC_CHAN2);
-    uint32_t ppmFz = servoIn_getPulse(RC_CHAN3);
-    uint32_t ppmYawd = servoIn_getPulse(RC_CHAN4);
+    float dutyXd = state->pilot->dutyCycle(servoIn_getPulse(RC_CHAN1), 1);
+    float dutyYd = state->pilot->dutyCycle(servoIn_getPulse(RC_CHAN2), 2);
+    float dutyFz = state->pilot->dutyCycle(servoIn_getPulse(RC_CHAN3), 3);
+    float dutyYawd = state->pilot->dutyCycle(servoIn_getPulse(RC_CHAN4), 4);
     //Try to filter out garbage values
     state->vehicle->clearRCInputError();
-    if(ppmXd > 200000 || ppmXd < 60000)
+    if(dutyXd < 0.0 || dutyXd > 1.0)
     {
-        ppmXd = (uint32_t)map(0, -0.5, 0.5, 105600, 135000);
+        dutyXd = 0.5;
         error |= DJI_SERVOIN_XD_OOB;
     }
-    if(ppmYd > 200000 || ppmYd < 60000)
+    if(dutyYd < 0.0 || dutyYd > 1.0)
     {
-        ppmYd = (uint32_t)map(0, -0.5, 0.5, 104200, 135000);
+        dutyYd = 0.5;
         error |= DJI_SERVOIN_YD_OOB;
     }
-    if(ppmFz > 200000 || ppmFz < 60000)
+    if(dutyFz < 0.0 || dutyFz > 1.0)
     {
-        ppmFz = (uint32_t)map(0.5, 0, 1, 114000, 124000);
+        dutyFz = 0.5;
         error |= DJI_SERVOIN_FZ_OOB;
     }
-    if(ppmYawd > 200000 || ppmYawd < 60000)
+    if(dutyYawd < 0.0 || dutyYawd > 1.0)
     {
-        ppmYawd = (uint32_t)map(0, -1, 1, 113000, 120400);
+        dutyYawd = 0.5;
         error |= DJI_SERVOIN_YAWD_OOB;
     }
     state->vehicle->setRCInputError(error);
@@ -80,7 +80,7 @@ void DjiRunnable::run()
 		    break;
 		case ASSISTED:
 			//PPM_setPulse(0, (uint32_t)map(dji.pitch, -0.5, 0.5, 105600, 135000));
-            PPM_setPulse(0, ppmXd);    // X Accel
+            PPM_setPulse(0, dutyXd);    // X Accel
 
             PPM_setPulse(1, (uint32_t)map(dji.roll, -0.5, 0.5, 104200, 135000)); // Y Accel
             //PM_setPulse(1, servoIn_getPulse(RC_CHAN2));    // Y Accel
@@ -96,14 +96,14 @@ void DjiRunnable::run()
 
 			PPM_setPulse(2, throttle);
 
-			PPM_setPulse(3, ppmYawd); // directly pass through yaw ratr
+			PPM_setPulse(3, dutyYawd); // directly pass through yaw ratr
 			break;
 		case MANUAL:
             //Set values
-			PPM_setPulse(0, ppmXd);  // X Accel
-			PPM_setPulse(1, ppmYd);  // Y Accel
-			PPM_setPulse(2, ppmFz);  // Z Accel
-			PPM_setPulse(3, ppmYawd);// Yaw Rate
+			PPM_setPulse(0, state->djiout->dutyCycle(dutyXd, 0));  // X Accel
+			PPM_setPulse(1, state->djiout->dutyCycle(dutyYd, 1));  // Y Accel
+			PPM_setPulse(2, state->djiout->dutyCycle(dutyFz, 2));  // Z Accel
+			PPM_setPulse(3, state->djiout->dutyCycle(dutyYawd, 3));// Yaw Rate
 			break;
 		default: break;
 	}

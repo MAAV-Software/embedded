@@ -148,9 +148,10 @@ int main()
 
 	RcController kill(Maav::hitec, Maav::hitecNumch);
 	RcController pilot(Maav::futaba, Maav::futabaNumch);
+	RcOutput djiout(Maav::dji, Maav::djiNumch);
 
 	ProgramState pState(&v, &imu, &px4, &lidar, &sdcard, &battery, MANUAL,
-	        &dl, sw, &fbMsg, &kill, &pilot);
+	        &dl, sw, &fbMsg, &kill, &pilot, &djiout);
 	
 	// Constructing Runnables also initializes the hardware for them
 	FlightModeRunnable flightModeRunnable(&pState);

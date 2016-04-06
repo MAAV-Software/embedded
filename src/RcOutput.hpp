@@ -43,7 +43,7 @@ public:
      * @brief Calculates the calibrated ppm for a given pulse
      * @details Returns the ppm in ticks for the given pulse input.
      *          The ppm will be in the range given in the pair.
-     *          Returns -1 on error.
+     *          Returns 0xFFFFFFFF on error.
      * @param pulse     pulse will in the standard 1-2ms range.
      * @param channel   Channel index (0-based index)
      */
@@ -53,7 +53,7 @@ public:
      * @brief Calculates the calibrated ppm for a given duty cycle
      * @details Returns the ppm in ticks for the given duty cycle input.
      *          The ppm will be in the range given in the pair.
-     *          Returns -1 on error.
+     *          Returns 0xFFFFFFFF on error.
      * @param duty      Duty cycle from 0.0f to 1.0f
      * @param channel   Channel index (0-based index)
      */

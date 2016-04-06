@@ -7,8 +7,10 @@
 
 #include "RcOutput.hpp"
 #include "MaavMath.hpp"
+#include "Pair.hpp"
 
 using MaavMath::map;
+using Maav::Pair;
 
 RcOutput::RcOutput(const Maav::Pair<uint32_t, uint32_t> *channelProfiles,
         uint8_t size)
@@ -25,14 +27,14 @@ RcOutput::~RcOutput()
 
 uint32_t RcOutput::pulse(float pulse, uint8_t channel)
 {
-    if (channel > numChan) return -1.0;
-    if(pulse < 1.0f || pulse > 2.0f) return -1.0;
+    if (channel > numChan) return 0xFFFFFFFF;
+    if(pulse < 1.0f || pulse > 2.0f) return 0xFFFFFFFF;
     return map(pulse, 1.0f, 2.0f, profiles[channel].first, profiles[channel].second);
 }
 
 uint32_t RcOutput::dutyCycle(float duty, uint8_t channel)
 {
-    if (channel > numChan) return -1.0;
-    if(duty < 0.0f || duty > 1.0f) return -1.0;
-    return map(raw, 0.0f, 1.0f, profiles[channel].first, profiles[channel].second);
+    if (channel > numChan) return 0xFFFFFFFF;
+    if(duty < 0.0f || duty > 1.0f) return 0xFFFFFFFF;
+    return map(duty, 0.0f, 1.0f, profiles[channel].first, profiles[channel].second);
 }
