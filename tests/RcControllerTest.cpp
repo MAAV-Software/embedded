@@ -38,10 +38,14 @@ struct Fixture
 
 BOOST_AUTO_TEST_CASE(MaavMathMapTest)
 {
-    BOOST_CHECK_CLOSE(map(0.5f, 0.0f, 1.0f, 1.0f, 2.0f), 1.5f, 0.0001);
-    BOOST_CHECK_CLOSE(map(1.5f, 1.0f, 2.0f, 1.0f, 2.0f), 1.5f, 0.0001);
-    BOOST_CHECK_CLOSE(map(0.5f, 0.0f, 1.0f, 0.0f, 1.0f), 0.5f, 0.0001);
-    BOOST_CHECK_CLOSE(map(1.5f, 1.0f, 2.0f, 0.0f, 1.0f), 0.5f, 0.0001);
+    BOOST_CHECK_CLOSE(MaavMath::map(0.5f, 0.0f, 1.0f, 1.0f, 2.0f), 
+    	1.5f, 0.0001);
+    BOOST_CHECK_CLOSE(MaavMath::map(1.5f, 1.0f, 2.0f, 1.0f, 2.0f), 
+    	1.5f, 0.0001);
+    BOOST_CHECK_CLOSE(MaavMath::map(0.5f, 0.0f, 1.0f, 0.0f, 1.0f), 
+    	0.5f, 0.0001);
+    BOOST_CHECK_CLOSE(MaavMath::map(1.5f, 1.0f, 2.0f, 0.0f, 1.0f), 
+    	0.5f, 0.0001);
 }
 
 BOOST_AUTO_TEST_CASE(errTest)
