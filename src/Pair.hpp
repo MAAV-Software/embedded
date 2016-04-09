@@ -9,7 +9,8 @@ struct Pair
 {
     T1 first;
     T2 second;
-
+    
+    Pair() {}
     Pair(const T1& first_, const T2& second_) : first(first_), second(second_) {}
 };
 
