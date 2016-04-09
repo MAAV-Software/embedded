@@ -2,7 +2,26 @@
 #include "rc.hpp"
 #include "time_util.h"
 
+#include "Pair.hpp"
+
 using namespace std;
+
+using Maav::Pair;
+
+const Pair<uint32_t, uint8_t> RC_CHAN1 = Pair<uint32_t, uint8_t>(GPIO_PORTA_BASE, 2);
+const Pair<uint32_t, uint8_t> RC_CHAN2 = Pair<uint32_t, uint8_t>(GPIO_PORTA_BASE, 3);
+const Pair<uint32_t, uint8_t> RC_CHAN3 = Pair<uint32_t, uint8_t>(GPIO_PORTA_BASE, 4);
+const Pair<uint32_t, uint8_t> RC_CHAN4 = Pair<uint32_t, uint8_t>(GPIO_PORTA_BASE, 5);
+const Pair<uint32_t, uint8_t> RC_CHAN5 = Pair<uint32_t, uint8_t>(GPIO_PORTA_BASE, 6);
+const Pair<uint32_t, uint8_t> RC_CHAN6 = Pair<uint32_t, uint8_t>(GPIO_PORTA_BASE, 7);
+
+const Pair<uint32_t, uint8_t> KILL_CHAN1 = Pair<uint32_t, uint8_t>(GPIO_PORTE_BASE, 4);
+const Pair<uint32_t, uint8_t> KILL_CHAN2 = Pair<uint32_t, uint8_t>(GPIO_PORTE_BASE, 5);
+const Pair<uint32_t, uint8_t> KILL_CHAN3 = Pair<uint32_t, uint8_t>(GPIO_PORTE_BASE, 3);
+const Pair<uint32_t, uint8_t> KILL_CHAN4 = Pair<uint32_t, uint8_t>(GPIO_PORTE_BASE, 2);
+const Pair<uint32_t, uint8_t> KILL_CHAN5 = Pair<uint32_t, uint8_t>(GPIO_PORTE_BASE, 1);
+const Pair<uint32_t, uint8_t> KILL_CHAN6 = Pair<uint32_t, uint8_t>(GPIO_PORTE_BASE, 0);
+
 
 // Returns true if the pulse is longer than 1.66ms
 bool pulseUpperThird(volatile uint32_t pulseWidth)

@@ -11,30 +11,25 @@
 #include "driverlib/sysctl.h"
 #include "driverlib/pin_map.h"
 
+#include "Pair.hpp"
+
 // STUFF FOR RADIO CONTROL
 
 // GPIO Port Basses for pilot RC controller
-#define RC_CHAN1 GPIO_PORTA_BASE,2
-#define RC_CHAN2 GPIO_PORTA_BASE,3
-#define RC_CHAN3 GPIO_PORTA_BASE,4
-#define RC_CHAN4 GPIO_PORTA_BASE,5
-#define RC_CHAN5 GPIO_PORTA_BASE,6 // futaba top left switch
-#define RC_CHAN6 GPIO_PORTA_BASE,7 // futaba center knob
+extern const Maav::Pair<uint32_t, uint8_t> RC_CHAN1;
+extern const Maav::Pair<uint32_t, uint8_t> RC_CHAN2;
+extern const Maav::Pair<uint32_t, uint8_t> RC_CHAN3;
+extern const Maav::Pair<uint32_t, uint8_t> RC_CHAN4;
+extern const Maav::Pair<uint32_t, uint8_t> RC_CHAN5; // futaba top left switch
+extern const Maav::Pair<uint32_t, uint8_t> RC_CHAN6; // futaba center knob
 
 // GPIO Port Basses for Kill Switch (also an RC controller)
-#define KILL_CHAN1 GPIO_PORTE_BASE,4
-#define KILL_CHAN2 GPIO_PORTE_BASE,5
-#define KILL_CHAN3 GPIO_PORTE_BASE,3
-#define KILL_CHAN4 GPIO_PORTE_BASE,2
-#define KILL_CHAN5 GPIO_PORTE_BASE,1
-#define KILL_CHAN6 GPIO_PORTE_BASE,0
-
-/*
-typedef struct _RC_CHAN 
-{
-	uint32_t gpioPortBase;
-} RC_CHAN;
-*/
+extern const Maav::Pair<uint32_t, uint8_t> KILL_CHAN1;
+extern const Maav::Pair<uint32_t, uint8_t> KILL_CHAN2;
+extern const Maav::Pair<uint32_t, uint8_t> KILL_CHAN3;
+extern const Maav::Pair<uint32_t, uint8_t> KILL_CHAN4;
+extern const Maav::Pair<uint32_t, uint8_t> KILL_CHAN5;
+extern const Maav::Pair<uint32_t, uint8_t> KILL_CHAN6;
 
 // Returns true if the pulse is longer than 1.66ms
 bool pulseUpperThird(volatile uint32_t pulseWidth);
