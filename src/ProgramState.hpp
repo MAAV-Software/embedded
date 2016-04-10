@@ -9,10 +9,10 @@
 #include "SdCard.hpp"
 #include "messaging/DataLink.hpp"
 #include "messaging/feedback_t.h"
-#include "switch.h"
 #include "Battery.hpp"
 #include "RcController.hpp"
 #include "RcOutput.hpp"
+#include "Switch.hpp"
 
 struct ProgramState
 {
@@ -24,14 +24,14 @@ struct ProgramState
 	Battery *battery;
 	FlightMode mode;
 	DataLink *dLink;
-	SwitchData_t *sw;
+	ThreeSwitch *sw;
 	feedback_t *feedback;
 	RcController *pilot;
 	RcController *kill;
 	RcOutput *djiout;
 
 	ProgramState(Vehicle *v, Imu *i, Px4 *px, Lidar *l, SdCard *s, Battery *b,
-				 FlightMode m, DataLink *dl, SwitchData_t *ls, feedback_t *fb,
+				 FlightMode m, DataLink *dl, ThreeSwitch *ls, feedback_t *fb,
 				 RcController *k, RcController *pi, RcOutput *d);
 };
 

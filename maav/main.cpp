@@ -31,7 +31,6 @@
 #include "utils/uartstdio.h"
 
 #include "servoIn.hpp"
-#include "switch.h"
 #include "PPM.h"
 #include "time_util.h"
 #include "rc.hpp"
@@ -47,6 +46,7 @@
 #include "RcController.hpp"
 #include "RcProfiles.hpp"
 #include "kalman/KalmanFilter.hpp"
+#include "Switch.hpp"
 
 #include "runnables/DataLinkRunnable.hpp"
 #include "runnables/DjiRunnable.hpp"
@@ -78,8 +78,13 @@ int main()
 	servoIn_init(SYSCTL_PERIPH_TIMER4, TIMER4_BASE); 						// Chose timer4 until encapsulated
 	servoIn_attachPin();
 
-	SwitchData_t sw[3];
-	switchesInit(sw);
+	//Initialize Switches
+	ThreeSwitch sw[3] =
+	{
+	        ThreeSwitch(SYSCTL_PERIPH_GPIOF, GPIO_PORTF_BASE, GPIO_PIN_4),
+	        ThreeSwitch(SYSCTL_PERIPH_GPIOB, GPIO_PORTB_BASE, GPIO_PIN_0),
+	        ThreeSwitch(SYSCTL_PERIPH_GPIOB, GPIO_PORTB_BASE, GPIO_PIN_1)
+	};
 
 	float valueGains[NUM_DOFS][NUM_PID_GAINS];
 	float rateGains[NUM_DOFS][NUM_PID_GAINS];

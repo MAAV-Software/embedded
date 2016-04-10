@@ -1,13 +1,10 @@
 #include "runnables/SwitchRunnable.hpp"
-#include "switch.h"
+#include "Switch.hpp"
 #include "ProgramState.hpp"
 
 void SwitchRunnable::run()
 {
-	switchesUpdate(_sw);
+	for(int i = 0; i < 3; ++i) _sw[i].update();
 }
 
-SwitchRunnable::SwitchRunnable(ProgramState *ps) : _sw(ps->sw)
-{ 
-	switchesInit(_sw);
-}
+SwitchRunnable::SwitchRunnable(ProgramState *ps) : _sw(ps->sw) { }

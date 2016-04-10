@@ -2,7 +2,7 @@
 #define SWITCHRUNNABLE_HPP_
 
 #include "Runnable.hpp"
-#include "switch.h"
+#include "Switch.hpp"
 #include "ProgramState.hpp"
 
 class SwitchRunnable : public Runnable
@@ -12,7 +12,7 @@ public:
 	void run();
 
 private:
-	SwitchData_t *_sw;
+	ThreeSwitch *_sw;
 };
 
 #endif
