@@ -179,8 +179,9 @@ int main()
 	mainLoop.regEvent(&djiRunnable, 		10, 	5);
 
 	mainLoop.regEvent(&dlinkRunnable, 		20, 	6);
-	mainLoop.regEvent(&switchRunnable, 		50, 	7);
-	mainLoop.regEvent(&batteryRunnable, 	1000, 	8);
+	//mainLoop.regEvent(&switchRunnable, 		50, 	7);
+	//mainLoop.regEvent(&batteryRunnable, 	1000, 	8);
+	mainLoop.regEvent(&batteryRunnable,     1000,   7);
 
 	// tricky way to get rid of the initial large values!
 	while (kill.dutyCycle(servoIn_getPulse(KILL_CHAN3), 2) > 0.75);
