@@ -188,32 +188,18 @@ int main()
 
 	// check if the stick is up, PPM range(59660, 127400)
 	// might change after the calibration (87552, 153108)
-	while (kill.dutyCycle(servoIn_getPulse(KILL_CHAN3), 2) < 0.75);
-
-/*
-	while (!sw[2].readState)
+	while (kill.dutyCycle(servoIn_getPulse(KILL_CHAN3), 2) < 0.75)
 	{
-		switchesUpdate(sw);
+	    //update switch configurations when killed
+	    //do we want to this or force restart on config update
+	    for(int i = 0; i < 3; ++i) state->sw[i].update();
 	}
-*/
+
 	//The first unkill the kill runnable isn't running yet
 	//So we have to manually do the unkill tasks
 	killRunnable.resetYaw();
 	sdcard.createFile();
 
-//	char buf[100];
-//	while (!sw[2].readState)
-//	{
-//		uint32_t len = snprintf(buf, sizeof(buf), "%u\t%u\t%u\t%u\t%u\n",
-//				servoIn_getPulse(RC_CHAN1),
-//			    servoIn_getPulse(RC_CHAN2),
-//			    servoIn_getPulse(RC_CHAN3),
-//			    servoIn_getPulse(RC_CHAN4),
-//			    millis());
-//		sdcard.write(buf, len);
-//
-//		switchesUpdate(sw);
-//	}
 //
 //	sdcard.closeFile();
 

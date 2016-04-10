@@ -38,7 +38,12 @@ void KillRunnable::run()
 		MAP_GPIOPinWrite(GPIO_PORTF_BASE, RED_LED | GREEN_LED | BLUE_LED, 0);
 
 		// waiting for unkill signal
-		while(state->kill->dutyCycle(servoIn_getPulse(KILL_CHAN3), 2) < 0.75);
+		while(state->kill->dutyCycle(servoIn_getPulse(KILL_CHAN3), 2) < 0.75)
+		{
+		    //update switch configurations when killed
+		    //do we want to this or force restart on config update
+		    for(int i = 0; i < 3; ++i) state->sw[i].update();
+		}
 
 		resetYaw();
 
