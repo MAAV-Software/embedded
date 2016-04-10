@@ -33,6 +33,8 @@ struct ProgramState
 	ProgramState(Vehicle *v, Imu *i, Px4 *px, Lidar *l, SdCard *s, Battery *b,
 				 FlightMode m, DataLink *dl, ThreeSwitch *ls, feedback_t *fb,
 				 RcController *k, RcController *pi, RcOutput *d);
+
+	bool isAssistedXYPassThrough() const { return sw[0].getReadValue() == 0; }
 };
 
 #endif /* PROGRAMSTATE_HPP_ */

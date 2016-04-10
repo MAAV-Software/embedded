@@ -80,10 +80,14 @@ void DjiRunnable::run()
 		    break;
 		case ASSISTED:
 			//PPM_setPulse(0, (uint32_t)map(dji.pitch, -0.5, 0.5, 105600, 135000));
-            PPM_setPulse(0, dutyXd);    // X Accel
+		    //X Accel
+            if(state->isAssistedXYPassThrough()) PPM_setPulse(0, state->djiout->dutyCycle(dutyXd, 0));
+            else                                 PPM_setPulse(0, (uint32_t)map(dji.pitch, -0.5, 0.5, 105600, 135000));
 
-            PPM_setPulse(1, (uint32_t)map(dji.roll, -0.5, 0.5, 104200, 135000)); // Y Accel
-            //PM_setPulse(1, servoIn_getPulse(RC_CHAN2));    // Y Accel
+            //PPM_setPulse(1, (uint32_t)map(dji.roll, -0.5, 0.5, 104200, 135000));
+            //Y Accel
+            if(state->isAssistedXYPassThrough()) PPM_setPulse(1, state->djiout->dutyCycle(dutyYd, 1));
+            else                                 PPM_setPulse(1, (uint32_t)map(dji.roll, -0.5, 0.5, 104200, 135000));
 
 			//PPM_setPulse(2, servoIn_getPulse(RC_CHAN3));	// Z Accel
 			//throttle = ms2pulse(thrust2ms(dji.thrust));
