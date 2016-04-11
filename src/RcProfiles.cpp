@@ -15,12 +15,12 @@ namespace Maav
 //Thrust and Roll manually flipped to match the HiTec directions
 const Pair<uint32_t, uint32_t> futaba[6] =
 {
-        Pair<uint32_t, uint32_t>(85000, 156000), //Channel 1
-        Pair<uint32_t, uint32_t>(88500, 156000), //Channel 2
-        Pair<uint32_t, uint32_t>(88500, 156000), //Channel 3
-        Pair<uint32_t, uint32_t>(88500, 156000), //Channel 4
-        Pair<uint32_t, uint32_t>(88500, 156000), //Channel 5
-        Pair<uint32_t, uint32_t>(88500, 156000) //Channel 6
+        Pair<uint32_t, uint32_t>(75000, 166000), //Channel 1
+        Pair<uint32_t, uint32_t>(78500, 166000), //Channel 2
+        Pair<uint32_t, uint32_t>(78500, 166000), //Channel 3
+        Pair<uint32_t, uint32_t>(78500, 166000), //Channel 4
+        Pair<uint32_t, uint32_t>(78500, 166000), //Channel 5
+        Pair<uint32_t, uint32_t>(78500, 166000) //Channel 6
 };
 
 const uint8_t futabaNumch = 6;
