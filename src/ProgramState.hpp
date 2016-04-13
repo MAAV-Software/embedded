@@ -34,7 +34,11 @@ struct ProgramState
 				 FlightMode m, DataLink *dl, ThreeSwitch *ls, feedback_t *fb,
 				 RcController *k, RcController *pi, RcOutput *d);
 
-	bool isAssistedXYPassThrough() const { return sw[0].getReadValue() == 0; }
+	/**
+	 * Returns true if the switches say that XY should be passed through in
+	 * assisted mode (Middle Switch RED), and false otherwise
+	 */
+	bool isAssistedXYPassThrough() const { return sw[1].getReadValue() == 0; }
 };
 
 #endif /* PROGRAMSTATE_HPP_ */

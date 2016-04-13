@@ -192,7 +192,10 @@ int main()
 	{
 	    //update switch configurations when killed
 	    //do we want to this or force restart on config update
-	    for(int i = 0; i < 3; ++i) pState.sw[i].update();
+	    for(int i = 0; i < 3; ++i)
+	    {
+	        pState.sw[i].update();
+	    }
 	}
 
 	//The first unkill the kill runnable isn't running yet
