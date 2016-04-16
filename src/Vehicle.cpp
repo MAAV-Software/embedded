@@ -369,10 +369,12 @@ void Vehicle::calcDJIValues(const FlightMode mode)
 	arm_sqrt_f32(tmp, &forceMag);
 
 	// Calculate roll and pitch
+	forceMag = forceMag < 0.0001 ? 0.0001 : forceMag;
 	angle[ROLL]  = -asin(forceVy[Y_AXIS] / forceMag);
 	tmp = (forceMag * forceMag) - (forceVy[Y_AXIS] * forceVy[Y_AXIS]);
 	float res = 0;
 	arm_sqrt_f32(tmp, &res);
+	res = res < 0.0001 ? 0.0001 : res;
 	angle[PITCH] =  asin(forceVy[X_AXIS] / res);
 
 	// cap roll and pitch

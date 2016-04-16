@@ -100,7 +100,7 @@ void DjiRunnable::run()
 
 			PPM_setPulse(2, throttle);
 
-			PPM_setPulse(3, dutyYawd); // directly pass through yaw ratr
+			PPM_setPulse(3, state->djiout->dutyCycle(dutyYawd, 3)); // directly pass through yaw ratr
 			break;
 		case MANUAL:
             //Set values
