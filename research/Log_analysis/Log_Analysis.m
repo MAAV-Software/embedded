@@ -1,7 +1,7 @@
 close all
 clc
 clf
-log = load('F:\LOG6.TXT');
+log = load('/media/psasawat/0A8F-D126/LOG66.TXT');
 
 % parsing the datas
 Time          = log(2:end,1);
@@ -273,10 +273,23 @@ plot(Time, Mode, 'b');
 ylabel('Mode')
 grid on
 
+%{
+figure(221)
+plot(Time, PPM_1, 'b');
+ylabel('Chan 1 PPM')
 
-figure(22)
+figure(222)
+plot(Time, PPM_2, 'b');
+ylabel('Chan 2 PPM')
+
+figure(223)
 plot(Time, PPM_3, 'b');
 ylabel('Chan 3 PPM')
+
+figure(224)
+plot(Time, PPM_4, 'b');
+ylabel('Chan 4 PPM')
+%}
 
 figure(124)
 plot(Time, PPM_1, Time, PPM_2, Time, PPM_3, Time, PPM_4);
