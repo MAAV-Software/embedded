@@ -252,9 +252,9 @@ void Vehicle::runFilter(const float rotationMatrix[9], float yaw,
 	state[Y_AXIS][DOF_VAL]   = filterState.pData[2];
 	state[Y_AXIS][DOF_RATE]  = filterState.pData[3];
 	state[Y_AXIS][DOF_ACCEL] = imuArenaY;
-	state[Z_AXIS][DOF_VAL]   = filterState.pData[4];
-	state[Z_AXIS][DOF_RATE]  = filterState.pData[5];
-	state[Z_AXIS][DOF_ACCEL] = imuArenaZ;
+	state[Z_AXIS][DOF_VAL]   = -filterState.pData[4];
+	state[Z_AXIS][DOF_RATE]  = -filterState.pData[5];
+	state[Z_AXIS][DOF_ACCEL] = -imuArenaZ;
 	state[YAW][DOF_VAL]      = yaw;
 	state[YAW][DOF_RATE]     = 0;
 	state[YAW][DOF_ACCEL]    = 0;
