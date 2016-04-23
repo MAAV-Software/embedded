@@ -16,22 +16,47 @@
 
 FlightMode flightModeGet(FlightMode last)
 {
+    static int changecount = 0;
+
+    FlightMode next;
 	if (pulseUpperThird(servoIn_getPulse(RC_CHAN5))) // Futaba Top Left Switch
 	{
-		return MANUAL;
+		next = MANUAL;
 	}
-	if (pulseUpperThird(servoIn_getPulse(RC_CHAN6))) // Futaba Center Knob
+	else if (pulseLowerThird(servoIn_getPulse(RC_CHAN5)
+	        && pulseUpperThird(servoIn_getPulse(RC_CHAN6))) // Futaba Center Knob
 	{
-		return ASSISTED;
+		next = ASSISTED;
 	}
-	else if (pulseLowerThird(servoIn_getPulse(RC_CHAN6))) //Futaba Center Knob
+	else if (pulseLowerThird(servoIn_getPulse(RC_CHAN5)
+            && pulseLowerThird(servoIn_getPulse(RC_CHAN6))) //Futaba Center Knob
 	{
-		return AUTONOMOUS;
+		next = AUTONOMOUS;
 	}
 	else
 	{
-	    return last;
+	    next = last;
 	}
+
+	if(next == last)
+	{
+	    changecount = 0;
+	    return next;
+	}
+	else
+	{
+	    ++changecount;
+	    if(changecount > CHANGE_ONLY_IF_EXCEEDS)
+	    {
+	        changecount = 0;
+	        return next;
+	    }
+	    else
+	    {
+	        return last;
+	    }
+	}
+	return last;
 }
 
 
