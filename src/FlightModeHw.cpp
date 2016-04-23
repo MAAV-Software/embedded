@@ -23,12 +23,12 @@ FlightMode flightModeGet(FlightMode last)
 	{
 		next = MANUAL;
 	}
-	else if (pulseLowerThird(servoIn_getPulse(RC_CHAN5)
+	else if (pulseLowerThird(servoIn_getPulse(RC_CHAN5))
 	        && pulseUpperThird(servoIn_getPulse(RC_CHAN6))) // Futaba Center Knob
 	{
 		next = ASSISTED;
 	}
-	else if (pulseLowerThird(servoIn_getPulse(RC_CHAN5)
+	else if (pulseLowerThird(servoIn_getPulse(RC_CHAN5))
             && pulseLowerThird(servoIn_getPulse(RC_CHAN6))) //Futaba Center Knob
 	{
 		next = AUTONOMOUS;
