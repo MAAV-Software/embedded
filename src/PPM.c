@@ -67,7 +67,11 @@ void PPM_init(uint32_t timerPeripheral, uint32_t _sysClock, uint32_t _timerBase,
 	ROM_TimerControlStall(timerBase, TIMER_A, true);
 
 	// Configure GPIO for the PPM driver pins
-	ROM_SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOB);
+//	ROM_SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOB); // THIS IS FOR THE 2015 SIGNAL BOARD
+
+	// THIS IS FOR THE 2016 SIGNAL BOARD
+	ROM_SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOE); // THIS IS FOR THE 2015 SIGNAL BOARD
+
 	ROM_GPIOPinTypeGPIOOutput(	GPIO_portBase, GPIO_pinMask);
 	ROM_GPIOPadConfigSet(		GPIO_portBase, GPIO_pinMask, GPIO_STRENGTH_2MA, GPIO_PIN_TYPE_STD);	// standard push-pull output pin
 	ROM_GPIOPinWrite(			GPIO_portBase, GPIO_pinMask, GPIO_pinMask);					// Set initial position to HIGH

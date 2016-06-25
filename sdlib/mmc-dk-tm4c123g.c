@@ -46,9 +46,10 @@
 
 /* Peripheral definitions for DK-TM4C123G board */
 // SSI port
-// Edited by Zhengjie
+// Edited by Zhengjie (2014-15) and Sajan (2016)
 //#define SDC_SSI_BASE            SSI0_BASE
 //#define SDC_SSI_SYSCTL_PERIPH   SYSCTL_PERIPH_SSI0
+
 #define SDC_SSI_BASE            SSI1_BASE
 #define SDC_SSI_SYSCTL_PERIPH   SYSCTL_PERIPH_SSI1
 
@@ -61,6 +62,7 @@
 //#define SDC_SSI_FSS             GPIO_PIN_3
 //#define SDC_SSI_PINS            (SDC_SSI_TX | SDC_SSI_RX | SDC_SSI_CLK |      \
 //                                 SDC_SSI_FSS)
+
 #define SDC_GPIO_PORT_BASE      GPIO_PORTD_BASE
 #define SDC_GPIO_SYSCTL_PERIPH  SYSCTL_PERIPH_GPIOD
 #define SDC_SSI_CLK             GPIO_PIN_0
@@ -72,7 +74,6 @@
 
 //THIS PIN IS FOR 2016 SIGNAL BOARD SD CARD CHIP SELECT
 #define SDC_SSI_FSS				GPIO_PIN_1
-
 
 #define SDC_SSI_PINS            (SDC_SSI_TX | SDC_SSI_RX | SDC_SSI_CLK | SDC_SSI_FSS)
 
