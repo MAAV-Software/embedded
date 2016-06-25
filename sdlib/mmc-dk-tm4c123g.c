@@ -66,7 +66,14 @@
 #define SDC_SSI_CLK             GPIO_PIN_0
 #define SDC_SSI_TX              GPIO_PIN_3
 #define SDC_SSI_RX              GPIO_PIN_2
-#define SDC_SSI_FSS             GPIO_PIN_4
+
+//THIS PIN IS FOR 2015 SIGNAL BOARD SD CARD CHIP SELECT
+//#define SDC_SSI_FSS             GPIO_PIN_4
+
+//THIS PIN IS FOR 2016 SIGNAL BOARD SD CARD CHIP SELECT
+#define SDC_SSI_FSS				GPIO_PIN_1
+
+
 #define SDC_SSI_PINS            (SDC_SSI_TX | SDC_SSI_RX | SDC_SSI_CLK | SDC_SSI_FSS)
 
 // asserts the CS pin to the card

@@ -33,6 +33,7 @@ I2CRunnable::I2CRunnable(ProgramState *pState) : ps(pState)
 //	ConfigI2C(SYSCTL_PERIPH_I2C3, SYSCTL_PERIPH_GPIOD, GPIO_PD0_I2C3SCL,
 //			  GPIO_PD1_I2C3SDA, GPIO_PORTD_BASE, GPIO_PIN_0, GPIO_PIN_1,
 //			  I2C3_BASE, INT_I2C3, true); // this should move to main before the loop
+	// THESE ARE GOOD FOR BOTH 2015 AND 2016 SIGNAL BOARDS
 	ConfigI2C(SYSCTL_PERIPH_I2C0, SYSCTL_PERIPH_GPIOB, GPIO_PB2_I2C0SCL,
 				  GPIO_PB3_I2C0SDA, GPIO_PORTB_BASE, GPIO_PIN_2, GPIO_PIN_3,
 				  I2C0_BASE, INT_I2C0, true); // this should move to main before the loop

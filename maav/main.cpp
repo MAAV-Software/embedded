@@ -73,17 +73,30 @@ int main()
 	Config_LED();
 	Config_EEPROM();
 	time_init(SYSCTL_PERIPH_TIMER1, SYSCLOCK, TIMER1_BASE, INT_TIMER1A);	// Chose any open timer
+
+// THESE ARE FOR 2015 SIGNAL BOARD
+//	PPM_init(SYSCTL_PERIPH_TIMER2, SYSCLOCK, TIMER2_BASE, INT_TIMER2A,		// Chose any open timer
+//			 GPIO_PORTB_BASE, GPIO_PIN_6, 4);								// Chose any open port/pin
+
+// THESE ARE FOR 2016 SIGNAL BOARD
 	PPM_init(SYSCTL_PERIPH_TIMER2, SYSCLOCK, TIMER2_BASE, INT_TIMER2A,		// Chose any open timer
-			 GPIO_PORTB_BASE, GPIO_PIN_6, 4);								// Chose any open port/pin
+			 GPIO_PORTE_BASE, GPIO_PIN_4, 4);								// Chose any open port/pin
+
 	servoIn_init(SYSCTL_PERIPH_TIMER4, TIMER4_BASE); 						// Chose timer4 until encapsulated
 	servoIn_attachPin();
 
 	//Initialize Switches
 	ThreeSwitch sw[3] =
 	{
-	        ThreeSwitch(SYSCTL_PERIPH_GPIOF, GPIO_PORTF_BASE, GPIO_PIN_4),
-	        ThreeSwitch(SYSCTL_PERIPH_GPIOB, GPIO_PORTB_BASE, GPIO_PIN_0),
-	        ThreeSwitch(SYSCTL_PERIPH_GPIOB, GPIO_PORTB_BASE, GPIO_PIN_1)
+	        // THESE ARE FOR 2015 SINGAL BOARD
+			//ThreeSwitch(SYSCTL_PERIPH_GPIOF, GPIO_PORTF_BASE, GPIO_PIN_4),
+	        //ThreeSwitch(SYSCTL_PERIPH_GPIOB, GPIO_PORTB_BASE, GPIO_PIN_0),
+	        //ThreeSwitch(SYSCTL_PERIPH_GPIOB, GPIO_PORTB_BASE, GPIO_PIN_1)
+
+			// THESE ARE FOR 2016 SIGNAL BOARD
+			ThreeSwitch(SYSCTL_PERIPH_GPIOD, GPIO_PORTD_BASE, GPIO_PIN_4),
+	        ThreeSwitch(SYSCTL_PERIPH_GPIOD, GPIO_PORTD_BASE, GPIO_PIN_5),
+	        ThreeSwitch(SYSCTL_PERIPH_GPIOD, GPIO_PORTD_BASE, GPIO_PIN_6)
 	};
 
 	float valueGains[NUM_DOFS][NUM_PID_GAINS];

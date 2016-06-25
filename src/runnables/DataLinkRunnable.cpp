@@ -21,6 +21,7 @@
 DataLinkRunnable::DataLinkRunnable(ProgramState *pState)
     : ps(pState), lastSetptTime(0), lastGainsTime(0), lastRawPoseTime(0)
 {
+	// THIS IS FOR BOTH 2015 AND 2016 SIGNAL BOARDS
 	DataLinkUartConfig(SYSCTL_PERIPH_UART0, SYSCTL_PERIPH_GPIOA, GPIO_PA0_U0RX,
 					   GPIO_PA1_U0TX, GPIO_PORTA_BASE, GPIO_PIN_0, GPIO_PIN_1,
 					   UART0_BASE, INT_UART0);

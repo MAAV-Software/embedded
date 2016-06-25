@@ -124,6 +124,7 @@ void ImuRunnable::CaptureGyroBias()
 
 ImuRunnable::ImuRunnable(ProgramState *pState) : state(pState), imuTime(0)
 {
+	// THESE ARE FOR BOTH 2015 AND 2016 SIGNAL BOARDS
 	imuUartConfig(SYSCTL_PERIPH_UART1, SYSCTL_PERIPH_GPIOC, GPIO_PC4_U1RX,
 				  GPIO_PC5_U1TX, GPIO_PORTC_BASE, GPIO_PIN_4, GPIO_PIN_5,
 				  UART1_BASE, INT_UART1);

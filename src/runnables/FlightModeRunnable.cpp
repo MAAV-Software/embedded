@@ -20,6 +20,7 @@ void FlightModeRunnable::run()
 	state->mode = flightModeGet(state->mode);
 	switch(state->mode)
 	{
+		// THESE ARE GOOD FOR BOTH 2015 AND 2016 SIGNAL BOARDS
 		case ASSISTED:
 			MAP_GPIOPinWrite(GPIO_PORTF_BASE, RED_LED | GREEN_LED | BLUE_LED, RED_LED);
 			break;
