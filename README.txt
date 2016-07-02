@@ -41,9 +41,10 @@ To run the test cases automatically:
 
 	make test
 
-To build the HTML documentation:
+To build the HTML documentation you will need to install doxygen. To build it, 
+run the command: 
     
-    make doc
+    	make doc
 
 If you need to clean anything up or remove the built files:
 
