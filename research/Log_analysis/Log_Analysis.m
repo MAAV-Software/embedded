@@ -1,7 +1,7 @@
 close all
 clc
 clf
-log = load('/media/psasawat/0A8F-D126/LOG66.TXT');
+log = load('2016/q2/LOG14.TXT');
 
 % parsing the datas
 Time          = log(2:end,1);

@@ -26,7 +26,7 @@
 #include "driverlib/debug.h"
 #include "driverlib/ssi.h"
 
-#include "utils/uartstdio.h"
+//#include "utils/uartstdio.h"
 
 #define SD_BUFFER_SIZE	200
 

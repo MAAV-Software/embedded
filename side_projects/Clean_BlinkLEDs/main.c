@@ -43,20 +43,39 @@ void Toggle_LED(uint32_t led, uint32_t time)
 	SysCtlDelay(time);
 }
 
+void togglePin(uint32_t port, uint32_t pin, uint32_t time)
+{
+	// Turn off LED.
+	GPIOPinWrite(port, pin, pin);
+	SysCtlDelay(time);
+	// Turn on LED.
+	GPIOPinWrite(port, pin, 0);
+	SysCtlDelay(time);
+}
+
+
 //****************************************************************************************
 int main(void)
 {
 	Config_sys_Clock();
 
+	// Enable the GPIO port that is used for the on-board LED.
+//	SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOE);
+
+	// Enable the GPIO pins for the LED (PF1 & PF2 & PF3).
+//	GPIOPinTypeGPIOOutput(GPIO_PORTE_BASE, GPIO_PIN_4);
+
+	// Turn off All LEDs.
+//	GPIOPinWrite(GPIO_PORTE_BASE, GPIO_PIN_4, 0);
+
 	Config_LED();
 
-	while(1)
+	while (1)
 	{
-		Toggle_LED(GPIO_PIN_1, SysCtlClockGet()/3);
+//		togglePin(GPIO_PORTE_BASE, GPIO_PIN_4, SysCtlClockGet()/300000);
 
-		Toggle_LED(GPIO_PIN_2, SysCtlClockGet()/3);
-
+//		Toggle_LED(GPIO_PIN_1, SysCtlClockGet()/3);
+//		Toggle_LED(GPIO_PIN_2, SysCtlClockGet()/3);
 		Toggle_LED(GPIO_PIN_3, SysCtlClockGet()/3);
 	}
-	
 }

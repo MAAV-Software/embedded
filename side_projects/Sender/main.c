@@ -19,11 +19,13 @@
 void sender_uart_config_sys_clock(void)
 {
     // Set the clocking to run from the PLL at 50MHz
-    SysCtlClockSet(SYSCTL_SYSDIV_4 | SYSCTL_USE_PLL | SYSCTL_OSC_MAIN | SYSCTL_XTAL_16MHZ);
+   // SysCtlClockSet(SYSCTL_SYSDIV_4 | SYSCTL_USE_PLL | SYSCTL_OSC_MAIN | SYSCTL_XTAL_16MHZ);
+    SysCtlClockSet(SYSCTL_SYSDIV_2_5 | SYSCTL_USE_PLL | SYSCTL_OSC_MAIN | SYSCTL_XTAL_16MHZ);
 //    SysCtlPeripheralClockGating(true);
 }
 
 //****************************************************************************************
+/*
 void sender_uart_int_handler(void)
 {
     uint32_t ui32Status;
@@ -42,7 +44,7 @@ void sender_uart_int_handler(void)
     }
 
 }
-
+*/
 //****************************************************************************************
 void sender_uart_config_uart(void)
 {
@@ -81,7 +83,7 @@ void sender_uart_config_uart(void)
 
 }
 //****************************************************************************************
-void sender_uart_send(uint32_t Base, const uint8_t *pui8Buffer, uint32_t ui32Count)
+void sender_uart_send(uint32_t Base, unsigned char *pui8Buffer, uint32_t ui32Count)
 {
     // Loop while there are more characters to send.
     while(ui32Count--)
@@ -95,16 +97,15 @@ int main(void)
 {
 	// Might not be callled if it has already been called somewhere else
 	sender_uart_config_sys_clock();
-
     sender_uart_config_uart();
 
-    uint8_t cmd[] = {'a','b','c','\n','\r'};
+    unsigned char buff[] = {'a','b','c','\n','\r'};
+
     // Main application loop.
     while(1)
     {
-    	sender_uart_send(UART1_BASE, cmd, sizeof(cmd));
-    	SysCtlDelay(SysCtlClockGet()/3/1000*50);
-		sender_uart_send(UART0_BASE, cmd, sizeof(cmd));
+    	sender_uart_send(UART1_BASE, buff, sizeof(buff));
+		sender_uart_send(UART0_BASE, buff, sizeof(buff));
 		SysCtlDelay(SysCtlClockGet()/3/1000*50);
     }
 

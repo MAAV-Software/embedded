@@ -127,9 +127,27 @@ void
 ConfigureUART(void)
 {
     // Enable the GPIO Peripheral used by the UART.
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOC);
+
+    // Enable UART1
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_UART1);
+
+    // Configure GPIO Pins for UART mode.
+    GPIOPinConfigure(GPIO_PC4_U1RX);
+    GPIOPinConfigure(GPIO_PC5_U1TX);
+    GPIOPinTypeUART(GPIO_PORTC_BASE, GPIO_PIN_4 | GPIO_PIN_5);
+
+    // Use the internal 16MHz oscillator as the UART clock source.
+    UARTClockSourceSet(UART1_BASE, UART_CLOCK_PIOSC);
+
+    // Initialize the UART for console I/O.
+    UARTStdioConfig(1, 115200, 16000000);
+
+	/*
+    // Enable the GPIO Peripheral used by the UART.
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
 
-    // Enable UART0
+    // Enable UART1
     SysCtlPeripheralEnable(SYSCTL_PERIPH_UART0);
 
     // Configure GPIO Pins for UART mode.
@@ -142,7 +160,7 @@ ConfigureUART(void)
 
     // Initialize the UART for console I/O.
     UARTStdioConfig(0, 115200, 16000000);
-
+	*/
 }
 // The callback function that is called when I2C transations to/from the LIDAR have completed.
 static void
@@ -288,29 +306,29 @@ int main(void)
     UARTprintf("LIDAR Start Testing\n");
 
     // The I2C3 peripheral must be enabled before use.
-    SysCtlPeripheralEnable(SYSCTL_PERIPH_I2C3);
-    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOD);
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_I2C0);
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOB);
 
     // Configure the pin muxing for I2C3 functions on port D0 and D1.
-    GPIOPinConfigure(GPIO_PD0_I2C3SCL);
-    GPIOPinConfigure(GPIO_PD1_I2C3SDA);
+    GPIOPinConfigure(GPIO_PB2_I2C0SCL);
+    GPIOPinConfigure(GPIO_PB3_I2C0SDA);
 
     // Select the I2C function for these pins.
-    GPIOPinTypeI2CSCL(GPIO_PORTD_BASE, GPIO_PIN_0);
-    GPIOPinTypeI2C(GPIO_PORTD_BASE, GPIO_PIN_1);
+    GPIOPinTypeI2CSCL(GPIO_PORTB_BASE, GPIO_PIN_2);
+    GPIOPinTypeI2C(GPIO_PORTB_BASE, GPIO_PIN_3);
 
     // Initialize the GPIO for the LED.
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
     GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE, GPIO_PIN_1);
     GPIOPinWrite(GPIO_PORTF_BASE, GPIO_PIN_1, 0x00);
 
-    I2CIntRegister(I2C3_BASE, LIDARI2CIntHandler);
+    I2CIntRegister(I2C0_BASE, LIDARI2CIntHandler);
 
     // Enable interrupts to the processor.
     IntMasterEnable();
 
-    // Initialize the I2C3 peripheral. Fill Tx and Rx with 0xff
-    I2CMInit(&g_sI2CInst, I2C3_BASE, INT_I2C3, 0xff, 0xff, SysCtlClockGet());
+    // Initialize the I2C0 peripheral. Fill Tx and Rx with 0xff
+    I2CMInit(&g_sI2CInst, I2C0_BASE, INT_I2C0, 0xff, 0xff, SysCtlClockGet());
 
     // Initialize the LIDAR.
     LIDARInit(&g_sLIDARInst, &g_sI2CInst, LIDAR_I2C_ADDRESS, LIDARAppCallback, &g_sLIDARInst);

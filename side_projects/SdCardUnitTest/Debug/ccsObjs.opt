@@ -1,0 +1,1 @@
+"./Apeshit.obj" "./EEPROM.obj" "./LED.obj" "./SdCard.obj" "./main.obj" "./tm4c123gh6pm_startup_ccs.obj" "./sdlib/ff.obj" "./sdlib/mmc-dk-tm4c123g.obj" "../tm4c123gh6pm.cmd" -l"libc.a" 
