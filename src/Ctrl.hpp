@@ -43,13 +43,24 @@
  *
  * __MODIFY LINKS SO THEY OPEN IN A NEW TAB, GOOGLE "markdown open link in new tab"__
  *
- * -# Download CCS. [You can click here]
- * 		(http://processors.wiki.ti.com/index.php/Download_CCS), or if the link
+ *
+ * -# Download CCS.
+ * 		<a href="http://processors.wiki.ti.com/index.php/Download_CCS"
+ * 		target="_blank">You can click here</a>,
+ * 		or if the link
  * 		is broken just google "Code Composer Studio" and you should find the
  * 		proper place to download it. You will have to make a Texas Instruments
  * 		account to get it.
- * -# Install CCS. [This part of the guide is under construction. If you read this,
- * 		yell at Nicholas Eckardt]
+ * -# Follow the instructions for installing CCS. The download should come with a
+ * 		README. Read it. The README linkes to
+ * 		<a href="http://processors.wiki.ti.com/index.php/Linux_Host_Support_CCSv6"
+ * 		target="_blank">here</a>
+ * 		where you can find instrutions for installing CCS on specific distributions
+ * 		of linux. Make sure to follow the guide for your version.
+ *
+ * 		Next, run the CCS installer.  When installing, you only need to chose the
+ * 		options that are for ARM or Tiva C Series (the new MSP430 options sometimes
+ * 		cause the installation to fail on Linux).
  * -# Import the project. You will have to copy maav/.project.bak to maav/.project
  * 		before importing the project. Likewise, you will have to copy
  * 		maav/.cproject.bak to maav/.cproject before importing the CCS project.
@@ -74,25 +85,64 @@
  * 			-# Find "maav" and check the box
  * 			-# Finish
  *
- * -# Download TivaWare. [Click here](http://www.ti.com/tool/sw-tm4c), or if that
+ * -# Download TivaWare.
+ * 		<a href="http://www.ti.com/tool/sw-tm4c"
+ * 		target="_blank">Click here</a>,
+ * 		or if that
  * 		does not work, google "tivaware". Click the "Get Software" button on
  * 		"SW-TM4C", then download the full release. Hope you remembered your
  * 		Texas Instruments login info. I reccomend putting it here after extracting:
  * 		@code
  * 			~/ti/TivaWare/
  * 		@endcode
- * -# Download CMSIS. [Link]
- * 		(http://www.arm.com/products/processors/cortex-m/cortex-microcontroller-software-interface-standard.php)
+ * -# Download CMSIS.
+ * 		<a href="http://www.arm.com/products/processors/cortex-m/cortex-microcontroller-software-interface-standard.php"
+ * 		target="_blank">Click here</a>
  * 		 or google "CMSIS". On the page there is a "Download CMSIS" tab, but its
  * 		 a bit hidden. Then make an account with ARM to get the software. Once again
  * 		 I reccomend putting it under
  * 		 @code
  * 		 	~/ti/CMSIS/
  * 		 @endcode
- * -# Modify CMSIS so it can be used with the Tiva. [Read this pdf]
- * 		(http://www.ti.com/lit/an/spma041g/spma041g.pdf). [This part
- * 		is still under construction. If you read this, yell at
- * 		Nicholas Eckardt]
+ * -# Modify CMSIS so it can be used with the Tiva.
+ * 		<a href="http://www.ti.com/lit/an/spma041g/spma041g.pdf"
+ * 		target="_blank">Read this pdf</a>.
+ * 		The pdf basically says that you have to download an update to CMSIS,
+ * 		which will modify ARM Math. download the update, and merge with your
+ * 		existing CMSIS folder, replacing any files that are different.
+ * -# Update Project Variables.
+ * 		Now that you have all the necessary files, you have to update the project
+ * 		variables inside of CCS. Right click on the maav project, select properties,
+ * 		then navigate to Resource/Linked Resources. There, update the variables
+ * 		TIVAWARE_INSTALL, CMSIS_LOC, and REPO_LOC to the proper file locations
+ * 		on your system.
+ * -# Modify stdlib.h
+ * 		Now navigate to stdlib.h and add the following line of code:
+ * 		@code
+ * 			// $YOUR_NAME made this change on $DATE as part of the Build Process for CMSIS DspLib
+ *			#define _IDECL extern _CODE_ACCESS
+ *		@endcode
+ * -# Update Predefined Symbols
+ *		Right click on the maav project, select properties, then navigate to
+ *		CCS Build/ARM Compiler/Advanced Options/Predefined Symbols. There,
+ *		replace
+ *		@code
+ *			__GNUC__
+ *		@endcode
+ *		with
+ *		@code
+ *		__TMS470__
+ *		@endcode
+ * -# Import folders with virtual link.
+ *		import sdlib with virtual link folder relative to REPO_LOC. Go to maav->import->import->filesystem.
+ *		Then select $REPO_LOC/sdlib from the "from directory" thing. Hit select all. Make sure all the options
+ *		are checked. Then go to advanced. Make sure all the options are checked. Select "REPO_LOC" where
+ *		it asks "Create link locations relative to".
+ * -# Press the build button
+ * 		Now the project should build. Hit the build button, and hope it works. If there are errors,
+ * 		do your best to fix them (google is your friend). If you still can't get it, we'll do
+ * 		our best to help you.
+ *
  *
  */
 
