@@ -1,8 +1,9 @@
-/*
- * Sd.hpp
+/**
+ * 	SdCard.hpp
  *
- *  Created on: Jul 10, 2015
- *      Author: Zhengjie
+ *  @date Jul 10, 2015
+ *  @brief The class which allows us to interface with the sd card
+ *  @author Zhengjie
  */
 
 #ifndef SD_HPP_

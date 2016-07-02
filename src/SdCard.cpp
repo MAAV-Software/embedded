@@ -1,8 +1,8 @@
 /*
- * Sd.cpp
+ * 	SdCard.cpp
  *
  *  Created on: Jul 10, 2015
- *      Author: Zhengjie
+ *
  */
 
 #include <stdlib.h>
@@ -10,6 +10,9 @@
 #include "EEPROM.h"
 #include "Apeshit.hpp"
 
+/**
+ * 	@brief Default Constructor
+ */
 SdCard::SdCard()
 {
 //	for (int i = 0; i < SD_BUFFER_SIZE; i++) buffer[i] = 0;
@@ -29,7 +32,10 @@ SdCard::SdCard()
 	}
 	FileCounter = Read_LOG_EEPROM();
 }
-
+/**
+ * 	@brief mounts the SD card.
+ *	@returns true on success
+ */
 bool SdCard::mount()
 {
 	if (SDMounted) return SDMounted;
@@ -60,12 +66,18 @@ bool SdCard::mount()
 	return SDMounted;
 
 }
-
+/**
+ * @brief Unmounts the sd card
+ */
 void SdCard::unmount()
 {
 	FResult = f_mount(0, "", 1);
 }
-
+/**
+ * @brief Opens the file at the supplied file location
+ * @param Filename A char array of the filename to open
+ * @returns true on success
+ */
 bool SdCard::open(char* Filename)
 {
 	if (SDMounted)
@@ -83,7 +95,11 @@ bool SdCard::open(char* Filename)
 	}
 	return FileOpened;
 }
-
+/**
+ * 	@brief creates a new file with the given name
+ *	@param Filename the name of the file to create
+ *	@returns true on success
+ */
 bool SdCard::createWithName(char* Filename)
 {
 	if (SDMounted)
@@ -101,7 +117,12 @@ bool SdCard::createWithName(char* Filename)
 	}
 	return FileOpened;
 }
-
+/**
+ * @brief creates a log file following the last log file made
+ * @details For example, if the last log is log88.txt, this one will
+ * be named log89.txt
+ * @returns true on success
+ */
 bool SdCard::createFile()
 {
 	FileCounter = Read_LOG_EEPROM();
@@ -114,12 +135,20 @@ bool SdCard::createFile()
 
 	return createWithName(fileName);
 }
-
+/**
+ * @brief closes the currently open file
+ */
 void SdCard::closeFile()
 {
 	f_close(&FileObject);
 }
-
+/**
+ * @brief reads the given number of characters to the passed buffer
+ * @param BufferRead the buffer to read to
+ * @param Readlen the length of the passed buffer
+ * @returns the actual length of characters read, as the file may
+ * not contain as many characters as Readlen requested
+ */
 uint32_t SdCard::read(char* BufferRead, uint32_t Readlen)
 {
 	uint32_t ActualReadLen = 0;
@@ -129,7 +158,12 @@ uint32_t SdCard::read(char* BufferRead, uint32_t Readlen)
 	}
 	return ActualReadLen;
 }
-
+/**
+ * @brief writes the passed buffer to the currently open file
+ * @param BufferWrite a pointer to the buffer to write to the file
+ * @param WriteLen the number of characters in the buffer
+ * @returns the actual length of characters written.
+ */
 uint32_t SdCard::write(char* BufferWrite, uint32_t WriteLen)
 {
 	uint32_t ActualWriteLen = 0;
@@ -139,7 +173,9 @@ uint32_t SdCard::write(char* BufferWrite, uint32_t WriteLen)
 	}
 	return ActualWriteLen;
 }
-
+/**
+ * @brief flushes the buffer to the file. Call this before shutting down
+ */
 void SdCard::sync()
 {
 	f_sync(&FileObject);
