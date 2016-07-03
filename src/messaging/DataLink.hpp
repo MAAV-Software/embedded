@@ -1,11 +1,24 @@
-/*
- * DataLink is the communications protocol, combining LCM with a custom Transport Layer,
+/**
+ * @brief Allows communication with the atom
+ *
+ * @details DataLink is the communications protocol, combining LCM with a custom Transport Layer,
  * used over the serial link between Navigation and Controls on the quadrotor. '
  * Consider the typical LCM link stack of LCM, UDP, IP, Ethernet.
  * The stack for LCM on the quadrotor would be DataLink/LCM, UART driver, UART.
  *
- *  Created on: May 20, 2015
- *      Author: Clark Zhang, Sasawat Prankprakma
+ * A Data link layer packet will look at like
+ * <start delimiter> - 1 byte
+ * <length of message> - 2 to 4 bytes (depending if they have to be escaped) (big endian)
+ * <msg> - msg with escaped characters.
+ * <checksum> - 1 to 2 bytes (depending if it needs to be escaped)
+ *
+ * checksum is the sum of all the data bytes (unescaped), take only the least significant byte, and subtract from 0xFF.
+ * NOTE: probably should include the length bytes in the checksum
+ *
+ * As our RingBuffer will be 256 for reading in, that means the maximum size of a decoded/pre-encoded message is 120 bytes.
+ *
+ *  @date May 20, 2015
+ *  @author Clark Zhang, Sasawat Prankprakma
  */
 
 #ifndef DATALINK_HPP_
@@ -24,18 +37,7 @@
 #include "messaging/TransmitHandler.hpp"
 #include "messaging/Decoder.hpp"
 
-/*
-A Data link layer packet will look at like
-<start delimiter> - 1 byte
-<length of message> - 2 to 4 bytes (depending if they have to be escaped) (big endian)
-<msg> - msg with escaped characters
-<checksum> - 1 to 2 bytes (depending if it needs to be escaped)
 
-checksum is the sum of all the data bytes (unescaped), take only the least significant byte, and subtract from 0xFF.
-NOTE: probably should include the length bytes in the checksum
-
-As our RingBuffer will be 256 for reading in, that means the maximum size of a decoded/pre-encoded message is 120 bytes.
-*/
 class DataLink
 {
 public:

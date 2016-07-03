@@ -1,3 +1,7 @@
+/**
+ * @brief A struct containing the state of almost everything.
+ */
+
 #ifndef PROGRAMSTATE_HPP_
 #define PROGRAMSTATE_HPP_
 

@@ -14,6 +14,10 @@
 #include "messaging/DataLink.hpp"
 #include "Vehicle.hpp"
 
+/**
+ * @brief configures the ADC for the battery.
+ * @param pState input program state
+ */
 BatteryRunnable::BatteryRunnable(ProgramState *pState): state(pState)
 {
 	// THIS IS FOR 2015 SIGNAL BOARD
@@ -23,7 +27,9 @@ BatteryRunnable::BatteryRunnable(ProgramState *pState): state(pState)
 	ConfigADC(SYSCTL_PERIPH_ADC0, ADC0_BASE, SYSCTL_PERIPH_GPIOE, GPIO_PORTE_BASE, GPIO_PIN_0, ADC_CTL_CH3);
 }
 
-
+/**
+ * @brief checks the state of the battery.
+ */
 void BatteryRunnable::run()
 {
 	state->battery->update(getADC(ADC0_BASE));
