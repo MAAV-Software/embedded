@@ -56,7 +56,7 @@ FlightMode flightModeGet(FlightMode last)
 	        return last;
 	    }
 	}
-	return last;
+	//return last;
 }
 
 
