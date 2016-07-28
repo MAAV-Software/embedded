@@ -122,6 +122,7 @@ void CtrlRunnable::run()
     ps->feedback->z[1]  = vlog.zdotFilt;
     ps->feedback->z[2]  = 0;
     ps->feedback->flags = ps->dLink->getSetptMsg().flags;
+    ps->feedback->batteryVoltage = ps->battery->getVolts();
     ps->dLink->send(ps->feedback);
 
 /*

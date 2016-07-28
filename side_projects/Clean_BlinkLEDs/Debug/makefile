@@ -4,6 +4,9 @@
 
 CG_TOOL_ROOT := /home/sheldon/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.4
 
+GEN_OPTS__FLAG := 
+GEN_CMDS__FLAG := 
+
 ORDERED_OBJS += \
 "./main.obj" \
 "./tm4c123gh6pm_startup_ccs.obj" \
@@ -133,7 +136,7 @@ all: Clean_BlinkLEDs.out
 Clean_BlinkLEDs.out: $(OBJS) $(CMD_SRCS) $(LIB_SRCS) $(GEN_CMDS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: ARM Linker'
-	"/home/sheldon/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.4/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 --abi=eabi -me -g --gcc --define=ccs="ccs" --define=PART_TM4C123GH6PM --display_error_number --diag_warning=225 --diag_wrap=off -z -m"Clean_BlinkLEDs.map" --heap_size=0 --stack_size=512 -i"/home/sheldon/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.4/lib" -i"/home/sheldon/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.4/include" --reread_libs --warn_sections --display_error_number --diag_wrap=off --xml_link_info="Clean_BlinkLEDs_linkInfo.xml" --rom_model -o "Clean_BlinkLEDs.out" $(ORDERED_OBJS)
+	"/home/sheldon/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.4/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 --abi=eabi -me -g --gcc --define=ccs="ccs" --define=PART_TM4C123GH6PM --diag_wrap=off --display_error_number --diag_warning=225 -z -m"Clean_BlinkLEDs.map" --heap_size=0 --stack_size=512 -i"/home/sheldon/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.4/lib" -i"/home/sheldon/ti/ccsv6/tools/compiler/ti-cgt-arm_5.2.4/include" --reread_libs --diag_wrap=off --warn_sections --display_error_number --xml_link_info="Clean_BlinkLEDs_linkInfo.xml" --rom_model -o "Clean_BlinkLEDs.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 

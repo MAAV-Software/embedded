@@ -29,6 +29,7 @@ struct _feedback_t
     float      yaw;
     int8_t     flags;
     int64_t    utime;
+    float      batteryVoltage;
 };
 
 /**
@@ -81,7 +82,7 @@ int feedback_t_encoded_size(const feedback_t *p);
 
 // LCM support functions. Users should not call these
 int64_t __feedback_t_get_hash(void);
-int64_t __feedback_t_hash_recursive(const __lcm_hash_ptr *p);
+uint64_t __feedback_t_hash_recursive(const __lcm_hash_ptr *p);
 int     __feedback_t_encode_array(void *buf, int offset, int maxlen, const feedback_t *p, int elements);
 int     __feedback_t_decode_array(const void *buf, int offset, int maxlen, feedback_t *p, int elements);
 int     __feedback_t_decode_array_cleanup(feedback_t *p, int elements);

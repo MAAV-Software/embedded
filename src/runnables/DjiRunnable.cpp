@@ -55,9 +55,17 @@ void DjiRunnable::run()
     {
 		case AUTONOMOUS: // currently do this for safety
 			//PPM_setPulse(0, (uint32_t)map(dji.pitch, -0.5, 0.5, 105600, 135000));
-            PPM_setPulse(0, servoIn_getPulse(RC_CHAN1));    // X Accel
 
-            PPM_setPulse(1, (uint32_t)map(dji.roll, -0.5, 0.5, 104200, 135000)); // Y Accel
+            //for tuning, X, Y and yaw are manual
+			PPM_setPulse(0, state->djiout->dutyCycle(dutyXd, 0));  // X Accel
+			PPM_setPulse(1, state->djiout->dutyCycle(dutyYd, 1));  // Y Accel
+			PPM_setPulse(3, state->djiout->dutyCycle(dutyYawd, 3));// Yaw Rate
+
+            //proper way to set x
+            //PPM_setPulse(0, servoIn_getPulse(RC_CHAN1));    // X Accel
+
+            //proper way to set x
+            //PPM_setPulse(1, (uint32_t)map(dji.roll, -0.5, 0.5, 104200, 135000)); // Y Accel
             //PPM_setPulse(1, servoIn_getPulse(RC_CHAN2));    // Y Accel
 
 //			//PPM_setPulse(2, servoIn_getPulse(RC_CHAN3));	// Z Accel
@@ -74,10 +82,12 @@ void DjiRunnable::run()
 
             PPM_setPulse(2, throttle);    // Z Accel
 
+            
             //PPM_setPulse(3, servoIn_getPulse(RC_CHAN4));    // Yaw Rate
-            PPM_setPulse(3, (uint32_t)map(dji.yawRate, -1, 1, 113000, 120400));
+            //PPM_setPulse(3, (uint32_t)map(dji.yawRate, -1, 1, 113000, 120400));
 
 		    break;
+            
 		case ASSISTED:
 			//PPM_setPulse(0, (uint32_t)map(dji.pitch, -0.5, 0.5, 105600, 135000));
 		    //X Accel
@@ -102,6 +112,7 @@ void DjiRunnable::run()
 
 			PPM_setPulse(3, state->djiout->dutyCycle(dutyYawd, 3)); // directly pass through yaw ratr
 			break;
+
 		case MANUAL:
             //Set values
 			PPM_setPulse(0, state->djiout->dutyCycle(dutyXd, 0));  // X Accel
@@ -109,6 +120,7 @@ void DjiRunnable::run()
 			PPM_setPulse(2, state->djiout->dutyCycle(dutyFz, 2));  // Z Accel
 			PPM_setPulse(3, state->djiout->dutyCycle(dutyYawd, 3));// Yaw Rate
 			break;
+
 		default: break;
 	}
 }

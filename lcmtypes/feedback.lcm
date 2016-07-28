@@ -1,4 +1,4 @@
-struct feedback_t 
+struct feedback_t
 {
 	float x[3];
 	float y[3];
@@ -9,4 +9,5 @@ struct feedback_t
 	int8_t flags;
 	int64_t utime;
 	const int8_t VAL = 0, RATE = 1, ACCEL = 2;
+	float batteryVoltage;
 }
