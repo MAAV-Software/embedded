@@ -142,43 +142,43 @@ void DataLinkRunnable::updateVehicleSetpt()
     }
 
     float time = (float)millis() / 1000.0f;
-    float spArr[NUM_DOFS][NUM_DOF_STATES];
+    //float spArr[NUM_DOFS][NUM_DOF_STATES];
     for (uint8_t i = 0; i < NUM_DOFS; ++i)
     {
         for (uint8_t j = 0; j < NUM_DOF_STATES - 1; ++j)
         {
-            spArr[i][j] = 0;
+            ps->spArr[i][j] = 0;
         }
-        spArr[i][DOF_TIME] = time;
+        ps->spArr[i][DOF_TIME] = time;
     }
 
     switch (setpt.flags)
     {
         case SETPT_T_POSE:
         {
-            spArr[X_AXIS][DOF_VAL] = setpt.x;
-            spArr[Y_AXIS][DOF_VAL] = setpt.y;
-            spArr[Z_AXIS][DOF_VAL] = setpt.z;
-            spArr[YAW][DOF_VAL]    = setpt.yaw;
-            ps->vehicle->setSetpt(spArr, AUTONOMOUS, false);
+            ps->spArr[X_AXIS][DOF_VAL] = setpt.x;
+            ps->spArr[Y_AXIS][DOF_VAL] = setpt.y;
+            ps->spArr[Z_AXIS][DOF_VAL] = setpt.z;
+            ps->spArr[YAW][DOF_VAL]    = setpt.yaw;
+            //ps->vehicle->setSetpt(spArr, AUTONOMOUS, false);
             break;
         }
         case SETPT_T_TAKEOFF:
         {
-            spArr[X_AXIS][DOF_VAL] = ps->feedback->x[FEEDBACK_T_VAL];
-            spArr[Y_AXIS][DOF_VAL] = ps->feedback->y[FEEDBACK_T_VAL];
-            spArr[Z_AXIS][DOF_VAL] = 1.5f;
-            spArr[YAW][DOF_VAL]    = ps->feedback->yaw;
-            ps->vehicle->setSetpt(spArr, AUTONOMOUS, false);
+            ps->spArr[X_AXIS][DOF_VAL] = ps->feedback->x[FEEDBACK_T_VAL];
+            ps->spArr[Y_AXIS][DOF_VAL] = ps->feedback->y[FEEDBACK_T_VAL];
+            ps->spArr[Z_AXIS][DOF_VAL] = 1.5f;
+            ps->spArr[YAW][DOF_VAL]    = ps->feedback->yaw;
+            //ps->vehicle->setSetpt(spArr, AUTONOMOUS, false);
             break;
         }
         case SETPT_T_LAND:
         {
-            spArr[X_AXIS][DOF_VAL] = ps->feedback->x[FEEDBACK_T_VAL];
-            spArr[Y_AXIS][DOF_VAL] = ps->feedback->y[FEEDBACK_T_VAL];
-            spArr[Z_AXIS][DOF_VAL] = 0.0f;
-            spArr[YAW][DOF_VAL]    = ps->feedback->yaw;
-            ps->vehicle->setSetpt(spArr, AUTONOMOUS, false);
+            ps->spArr[X_AXIS][DOF_VAL] = ps->feedback->x[FEEDBACK_T_VAL];
+            ps->spArr[Y_AXIS][DOF_VAL] = ps->feedback->y[FEEDBACK_T_VAL];
+            ps->spArr[Z_AXIS][DOF_VAL] = 0.0f;
+            ps->spArr[YAW][DOF_VAL]    = ps->feedback->yaw;
+            //ps->vehicle->setSetpt(spArr, AUTONOMOUS, false);
             break;
         }
         case SETPT_T_IDLE:
@@ -192,19 +192,25 @@ void DataLinkRunnable::updateVehicleSetpt()
         		PPM_setPulse(3, 152888);    // Chan 4 - max
         	}
 
-        	PPM_setPulse(0, 120364);    // Chan 1 - mid
-        	PPM_setPulse(1, 119735);    // Chan 2 - mid
-        	PPM_setPulse(2, 90000);    	// Chan 3
-        	PPM_setPulse(3, 119784);    // Chan 4 - mid
+			PPM_setPulse(0, ps->djiout->dutyCycle(0.50, 0));  // X Accel mid
+			PPM_setPulse(1, ps->djiout->dutyCycle(0.50, 1));  // Y Accel mid
+			PPM_setPulse(2, ps->djiout->dutyCycle(0.15, 2));  // Z Accel 15%
+			PPM_setPulse(3, ps->djiout->dutyCycle(0.50, 3));// Yaw Rate mid
+
+        	//PPM_setPulse(0, 120364);    // Chan 1 - mid
+        	//PPM_setPulse(1, 119735);    // Chan 2 - mid
+        	//PPM_setPulse(2, 90000);    	// Chan 3
+        	//PPM_setPulse(3, 119784);    // Chan 4 - mid
+
         	break;
         }
         case SETPT_T_RATE:
         {
-            spArr[X_AXIS][DOF_RATE] = setpt.x;
-            spArr[Y_AXIS][DOF_RATE] = setpt.y;
-            spArr[Z_AXIS][DOF_RATE] = setpt.z;
-            spArr[YAW][DOF_RATE]    = setpt.yaw;
-            ps->vehicle->setSetpt(spArr, AUTONOMOUS, true);
+            ps->spArr[X_AXIS][DOF_RATE] = setpt.x;
+            ps->spArr[Y_AXIS][DOF_RATE] = setpt.y;
+            ps->spArr[Z_AXIS][DOF_RATE] = setpt.z;
+            ps->spArr[YAW][DOF_RATE]    = setpt.yaw;
+            //ps->vehicle->setSetpt(spArr, AUTONOMOUS, true);
             break;
         }
         default:

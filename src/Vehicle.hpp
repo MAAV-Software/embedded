@@ -85,7 +85,8 @@ public:
 			float imuX, float imuY, float imuZ, float currTime,
 			float lidar, float lidarTime,
 			float px4X, float px4Y, float px4Time,
-			float cameraX, float cameraY, float cameraTime);
+			float cameraX, float cameraY, float cameraTime, float spArr[NUM_DOFS][NUM_DOF_STATES],
+			FlightMode mode);
 	
 	// returns the DJI values needed to send to it
 	Dji getDjiVals() const;

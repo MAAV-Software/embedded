@@ -29,6 +29,7 @@ struct ProgramState
 	RcController *pilot;
 	RcController *kill;
 	RcOutput *djiout;
+	float spArr[NUM_DOFS][NUM_DOF_STATES];
 
 	ProgramState(Vehicle *v, Imu *i, Px4 *px, Lidar *l, SdCard *s, Battery *b,
 				 FlightMode m, DataLink *dl, ThreeSwitch *ls, feedback_t *fb,

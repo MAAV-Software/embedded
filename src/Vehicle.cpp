@@ -165,7 +165,8 @@ void Vehicle::runFilter(const float rotationMatrix[9], float yaw,
 			float imuX, float imuY, float imuZ, float currTime,
 			float lidar, float lidarTime,
 			float px4X, float px4Y, float px4Time, 
-			float cameraX, float cameraY, float cameraTime) 
+			float cameraX, float cameraY, float cameraTime, float spArr[NUM_DOFS][NUM_DOF_STATES],
+			FlightMode mode)
 {
 	if (first)
 	{
@@ -246,12 +247,37 @@ void Vehicle::runFilter(const float rotationMatrix[9], float yaw,
 	const arm_matrix_instance_f32& filterState = kalmanFilter.getState();
 	float state[NUM_DOFS][NUM_DOF_STATES];
 	for (int i = 0; i < NUM_DOFS; ++i) state[i][DOF_TIME] = currTime;
-	state[X_AXIS][DOF_VAL]   = filterState.pData[0];
-	state[X_AXIS][DOF_RATE]  = filterState.pData[1];
-	state[X_AXIS][DOF_ACCEL] = imuArenaX;
-	state[Y_AXIS][DOF_VAL]   = filterState.pData[2];
-	state[Y_AXIS][DOF_RATE]  = filterState.pData[3];
-	state[Y_AXIS][DOF_ACCEL] = imuArenaY;
+
+	float xflt, xdotflt, yflt, ydotflt;
+	xflt   = filterState.pData[0];
+	xdotflt  = filterState.pData[1];
+	yflt   = filterState.pData[2];
+	ydotflt  = filterState.pData[3];
+
+	float errX = currYawCos * (spArr[X_AXIS][DOF_VAL] - xflt) - currYawSin * (spArr[Y_AXIS][DOF_VAL] - yflt);
+	float errY = currYawSin * (spArr[X_AXIS][DOF_VAL] - xflt) + currYawCos * (spArr[Y_AXIS][DOF_VAL] - yflt);
+	float errXdot = currYawCos * (spArr[X_AXIS][DOF_RATE] - xdotflt) - currYawSin * (spArr[Y_AXIS][DOF_RATE] - ydotflt);
+	float errYdot = currYawSin * (spArr[X_AXIS][DOF_RATE] - xdotflt) + currYawCos * (spArr[Y_AXIS][DOF_RATE] - ydotflt);
+
+
+	//state[X_AXIS][DOF_VAL]   = filterState.pData[0];
+	state[X_AXIS][DOF_VAL] = errX;
+
+	//state[X_AXIS][DOF_RATE]  = filterState.pData[1];
+	state[X_AXIS][DOF_RATE] = (mode == AUTONOMOUS) ? errXdot : spArr[X_AXIS][DOF_VAL];
+
+	//state[X_AXIS][DOF_ACCEL] = imuArenaX;
+	state[X_AXIS][DOF_ACCEL] = imuX;
+
+	//state[Y_AXIS][DOF_VAL]   = filterState.pData[2];
+	state[Y_AXIS][DOF_VAL] = errY;
+
+	//state[Y_AXIS][DOF_RATE]  = filterState.pData[3];
+	state[Y_AXIS][DOF_RATE] = (mode == AUTONOMOUS) ? errYdot : spArr[Y_AXIS][DOF_VAL];
+
+	//state[Y_AXIS][DOF_ACCEL] = imuArenaY;
+	state[Y_AXIS][DOF_ACCEL] = imuY;
+
 	state[Z_AXIS][DOF_VAL]   = -filterState.pData[4];
 	state[Z_AXIS][DOF_RATE]  = -filterState.pData[5];
 	state[Z_AXIS][DOF_ACCEL] = -imuArenaZ;
@@ -359,8 +385,12 @@ void Vehicle::calcDJIValues(const FlightMode mode)
 	forceVe[Z_AXIS] = (dofs[Z_AXIS].getRate() * mass) + (mass * MaavMath::Gravity);
 
 	// Convert earth frame forces to body frame
-	forceVy[X_AXIS] =  (currYawCos * forceVe[X_AXIS]) + (currYawSin * forceVe[Y_AXIS]);
-	forceVy[Y_AXIS] = -(currYawSin * forceVe[X_AXIS]) + (currYawCos * forceVe[Y_AXIS]);
+	//forceVy[X_AXIS] =  (currYawCos * forceVe[X_AXIS]) + (currYawSin * forceVe[Y_AXIS]);
+	//forceVy[Y_AXIS] = -(currYawSin * forceVe[X_AXIS]) + (currYawCos * forceVe[Y_AXIS]);
+
+	forceVy[X_AXIS] = forceVe[X_AXIS];
+	forceVy[Y_AXIS] = forceVe[Y_AXIS];
+
 	forceVy[Z_AXIS] = forceVe[Z_AXIS];
 
 	// calculate ||F|| = sqrt(Fx^2 + Fy^2 + Fz^2) (L2-Norm)

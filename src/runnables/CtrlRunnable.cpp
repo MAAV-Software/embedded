@@ -24,6 +24,7 @@ void CtrlRunnable::run()
 
 	if ((ps->mode == ASSISTED) || (ps->mode == MANUAL)) // set setpts here from rc pilot ctrl in assisted mode
 	{
+		/*
 		float setpt[NUM_DOFS][NUM_DOF_STATES];
 		for (uint8_t d = 0; d < NUM_DOFS; ++d)
 		{
@@ -33,18 +34,25 @@ void CtrlRunnable::run()
 			}
 			setpt[d][DOF_TIME] = time;
 		}
+		*/
+
+		/*
 		setpt[X_AXIS][DOF_RATE] = ms2XY_rate(ps->pilot->pulse((servoIn_getPulse(RC_CHAN1)), 1));
 		setpt[Y_AXIS][DOF_RATE] = ms2XY_rate(ps->pilot->pulse((servoIn_getPulse(RC_CHAN2)), 2));
 		setpt[Z_AXIS][DOF_VAL]  = ms2height(ps->pilot->pulse((servoIn_getPulse(RC_CHAN3)), 3));
+		 */
+		ps->spArr[X_AXIS][DOF_RATE] = ms2XY_rate(ps->pilot->pulse((servoIn_getPulse(RC_CHAN1)), 1));
+		ps->spArr[Y_AXIS][DOF_RATE] = ms2XY_rate(ps->pilot->pulse((servoIn_getPulse(RC_CHAN2)), 2));
+		ps->spArr[Z_AXIS][DOF_VAL]  = ms2height(ps->pilot->pulse((servoIn_getPulse(RC_CHAN3)), 3));
 
-		ps->vehicle->setSetpt(setpt, ASSISTED, false);
+		//ps->vehicle->setSetpt(setpt, ASSISTED, false);
 	}
 
 	ps->vehicle->runFilter(ps->imu->getRotMat(), ps->imu->getYaw(),
 		ps->imu->getAccX(), ps->imu->getAccY(), ps->imu->getAccZ(), time,
 		ps->lidar->getDist(), ps->lidar->getTimestamp(),
 		ps->px4->getXFlow(), ps->px4->getYFlow(), ps->px4->getTimestamp(),
-		0, 0, 0);
+		0, 0, 0, ps->spArr, ps->mode);
 
 
 	// if ((ps->mode == AUTONOMOUS) && (ps->dLink->getRawPoseMsg().utime > lastPoseTime))

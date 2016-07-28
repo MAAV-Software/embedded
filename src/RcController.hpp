@@ -50,6 +50,8 @@ public:
      */
     float dutyCycle(uint32_t raw, uint8_t channel);
     
+ //   Maav::Pair<uint32_t, uint32_t> chanProf(uint8_t ch) const { return profiles[ch]; }
+
 private:
     Maav::Pair<uint32_t, uint32_t> *profiles; /**< array of channel calibration profiles */
     uint8_t numChan; /**< number of channels for this RC controller */
