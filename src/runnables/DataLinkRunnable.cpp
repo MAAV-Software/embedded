@@ -145,10 +145,10 @@ void DataLinkRunnable::updateVehicleSetpt()
     //float spArr[NUM_DOFS][NUM_DOF_STATES];
     for (uint8_t i = 0; i < NUM_DOFS; ++i)
     {
-        for (uint8_t j = 0; j < NUM_DOF_STATES - 1; ++j)
-        {
-            ps->spArr[i][j] = 0;
-        }
+ //       for (uint8_t j = 0; j < NUM_DOF_STATES - 1; ++j)
+ //       {
+ //           ps->spArr[i][j] = 0;
+ //       }
         ps->spArr[i][DOF_TIME] = time;
     }
 
@@ -194,13 +194,15 @@ void DataLinkRunnable::updateVehicleSetpt()
 
 			PPM_setPulse(0, ps->djiout->dutyCycle(0.50, 0));  // X Accel mid
 			PPM_setPulse(1, ps->djiout->dutyCycle(0.50, 1));  // Y Accel mid
-			PPM_setPulse(2, ps->djiout->dutyCycle(0.15, 2));  // Z Accel 15%
+			PPM_setPulse(2, ps->djiout->dutyCycle(0.10, 2));  // Z Accel 0%
 			PPM_setPulse(3, ps->djiout->dutyCycle(0.50, 3));// Yaw Rate mid
 
-        	//PPM_setPulse(0, 120364);    // Chan 1 - mid
-        	//PPM_setPulse(1, 119735);    // Chan 2 - mid
-        	//PPM_setPulse(2, 90000);    	// Chan 3
-        	//PPM_setPulse(3, 119784);    // Chan 4 - mid
+			/*
+        	PPM_setPulse(0, 120364);    // Chan 1 - mid
+        	PPM_setPulse(1, 119735);    // Chan 2 - mid
+        	PPM_setPulse(2,  65500);    // Chan 3
+        	PPM_setPulse(3, 119784);    // Chan 4 - mid
+			*/
 
         	break;
         }

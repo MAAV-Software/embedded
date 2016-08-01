@@ -1,7 +1,10 @@
+function Log_Analysis(filename)
+
 close all
 clc
 clf
-log = load('2016/q2/7-26/LOG17.TXT');
+filename
+log = load(filename);
 
 % parsing the datas
 Time          = log(2:end,1);
@@ -121,7 +124,7 @@ xlabel('Time')
 ylabel('Value Y')
 
 subplot(223)
-plot(Time, Lidar_Dist, 'b', Time, Setpt_Z, 'g')
+plot(Time, -Filter_Z, 'b', Time, Setpt_Z, 'g') %, Time, PID_Uz, 'r', Time, (Setpt_Z + Filter_Z), 'k')
 xlabel('Time')
 ylabel('Value Z')
 
@@ -134,22 +137,23 @@ ylabel('Value Yaw')
 
 % figure 2 rates
 figure(2)
-subplot(221)
+subplot(211)
 plot(Time, Filter_Xdot, 'b', Time, Setpt_Xdot, 'g')
 xlabel('Time')
 ylabel('Rate X')
 
-subplot(222)
+subplot(212)
 xlabel('Time')
 ylabel('Rate Y')
 plot(Time, Filter_Ydot, 'b', Time, Setpt_Ydot, 'g')
 
-
-subplot(223)
+%
+%subplot(223)
 % plot(Time, Filter_Zdot, 'b', Time, Setpt_Zdot, 'g')
-plot(Time, disc_Zdot, 'b', Time, Setpt_Zdot, 'g')
-xlabel('Time')
-ylabel('Rate Z')
+%plot(Time, disc_Zdot, 'b', Time, Setpt_Zdot, 'g')
+%xlabel('Time')
+%ylabel('Rate Z')
+%
 
 % figure 3 DJI
 figure(3)
@@ -181,23 +185,23 @@ plot(Time, Battery, 'b')
 
 
 %% figure 5 DJI RAW
-figure(5)
-subplot(221)
-xlabel('Time')
-ylabel('DJI Roll Raw')
-plot(Time, DJI_Roll_RAW, 'b')
-subplot(222)
-xlabel('Time')
-ylabel('DJI Pitch Raw')
-plot(Time, DJI_Pitch_RAW, 'b')
-subplot(224)
-xlabel('Time')
-ylabel('DJI Yaw Dot Raw')
-plot(Time, DJI_YawRate_RAW, 'b')
-subplot(223)
-plot(Time, DJI_Fz_RAW, 'b')
-xlabel('Time')
-ylabel('DJI Fz Raw')
+figure(5);
+%subplot(221);
+%xlabel('Time');
+%ylabel('DJI Roll Raw');
+%plot(Time, DJI_Roll_RAW, 'b');
+%subplot(222);
+%xlabel('Time');
+%ylabel('DJI Pitch Raw');
+%plot(Time, DJI_Pitch_RAW, 'b');
+%subplot(224);
+%xlabel('Time');
+%ylabel('DJI Yaw Dot Raw');
+%plot(Time, DJI_YawRate_RAW, 'b');
+%subplot(223);
+plot(Time, DJI_Fz_RAW, 'b');
+xlabel('Time');
+ylabel('DJI Fz Raw');
 
 figure(6)
 subplot(221)
@@ -209,27 +213,28 @@ ylabel('pid uz')
 %figure(7)
 %
 %plot(Time, Rate_P_Z, 'b')
-
+%% Z Gains
 % figure 6 PID 
 figure(80)
-subplot(231)
+subplot(131)
 plot(Time, Val_P_Z, 'b')
 xlabel('Time')
-ylabel('VAL P')
+ylabel('VAL P Z')
 grid on
 
-subplot(232)
+subplot(132)
 plot(Time, Val_I_Z, 'b')
 xlabel('Time')
-ylabel('VAL I')
+ylabel('VAL I Z')
 grid on
 
-subplot(233)
+subplot(133)
 plot(Time, Val_D_Z, 'b')
 xlabel('Time')
-ylabel('VAL D')
+ylabel('VAL D Z')
 grid on
 
+%{
 subplot(234)
 plot(Time, Rate_P_Z, 'b')
 xlabel('Time')
@@ -247,8 +252,10 @@ plot(Time, Rate_D_Z, 'b')
 xlabel('Time')
 ylabel('Rate D')
 grid on
+%}
 
 %% 
+%
 figure(20)
 subplot(221)
 plot(Time, Px4_Xdot, 'b')
@@ -267,6 +274,7 @@ plot(Time, Px4_Qual, 'b')
 xlabel('Time')
 ylabel('Qual')
 grid on
+%}
 
 figure(21)
 plot(Time, Mode, 'b');
@@ -309,6 +317,7 @@ plot(Time, atan2(Imu_Rot(:, 2), Imu_Rot(:, 1)), 'b')
 ylabel('Yaw')
 
 %%
+%{
 figure(24)
 subplot(221)
 plot(Time, Val_P_Z)
@@ -321,7 +330,7 @@ ylabel('VAL_I_Z')
 subplot(223)
 plot(Time, Val_D_Z)
 ylabel('VAL_D_Z')
-
+%}
 
 figure(25)
 subplot(221)
@@ -339,24 +348,35 @@ ylabel('Az');
 figure(100)
 hold on;
 plot(Time, Lidar_Dist, 'k');
-%plot(Time, -Filter_Z, '--r');
+plot(Time, -Filter_Z, '--r');
 hold off;
 ylabel('Z Filter')
 xlabel('Time')
 
+figure(110)
+plot(Time, AtomFlag);
+xlabel('Time')
+ylabel('AtomFlag')
+
+%{
 figure(101)
 hold on;
 plot(Time(2:end), lidarTime(2:end), 'g');
 ylabel('Latest Lidar Timestamp');
 xlabel('Time');
 hold off;
+%}
 
+%{
 figure(88)
 hold on;
 plot(Time(2:end), RCinError(2:end), 'g');
 xlabel('Time');
 ylabel('Error Code');
 hold off;
+%}
 
 %%
 Real_Time_for_this_log = (Time(end) - Time(1)) / 60
+
+end

@@ -39,7 +39,7 @@ struct ProgramState
 	 * Returns true if the switches say that XY should be passed through in
 	 * assisted mode (Middle Switch RED), and false otherwise
 	 */
-	bool isAssistedXYPassThrough() const { return true; }//sw[1].getReadValue() == 0; }
+	bool isAssistedXYPassThrough() const { return false; }//sw[1].getReadValue() == 0; }
 };
 
 #endif /* PROGRAMSTATE_HPP_ */

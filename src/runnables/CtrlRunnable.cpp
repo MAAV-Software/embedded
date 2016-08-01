@@ -24,17 +24,17 @@ void CtrlRunnable::run()
 
 	if ((ps->mode == ASSISTED) || (ps->mode == MANUAL)) // set setpts here from rc pilot ctrl in assisted mode
 	{
-		/*
-		float setpt[NUM_DOFS][NUM_DOF_STATES];
+
+		//float setpt[NUM_DOFS][NUM_DOF_STATES];
 		for (uint8_t d = 0; d < NUM_DOFS; ++d)
 		{
 			for (uint8_t s = 0; s < (NUM_DOF_STATES - 1); ++s)
 			{
-				setpt[d][s] = 0;
+				ps->spArr[d][s] = 0;
 			}
-			setpt[d][DOF_TIME] = time;
+			ps->spArr[d][DOF_TIME] = time;
 		}
-		*/
+
 
 		/*
 		setpt[X_AXIS][DOF_RATE] = ms2XY_rate(ps->pilot->pulse((servoIn_getPulse(RC_CHAN1)), 1));
@@ -43,7 +43,7 @@ void CtrlRunnable::run()
 		 */
 		ps->spArr[X_AXIS][DOF_RATE] = ms2XY_rate(ps->pilot->pulse((servoIn_getPulse(RC_CHAN1)), 1));
 		ps->spArr[Y_AXIS][DOF_RATE] = ms2XY_rate(ps->pilot->pulse((servoIn_getPulse(RC_CHAN2)), 2));
-		ps->spArr[Z_AXIS][DOF_VAL]  = ms2height(ps->pilot->pulse((servoIn_getPulse(RC_CHAN3)), 3));
+		ps->spArr[Z_AXIS][DOF_VAL]  = ms2height(ps->pilot->pulse((servoIn_getPulse(RC_CHAN3)), 3)); // don't negate this here
 
 		//ps->vehicle->setSetpt(setpt, ASSISTED, false);
 	}
@@ -176,11 +176,16 @@ void CtrlRunnable::run()
 
 	Dji dji = ps->vehicle->getDjiVals();
 
-	uint32_t throttle = (uint32_t)map(dji.thrust, 0, 46.6956, 114000, 124000);
-	if (throttle < 75700)
-		throttle = 75700;
-	else if (throttle > 153300)
-		throttle = 153300;
+//	uint32_t throttle = (uint32_t)map(dji.thrust, 0, 46.6956, 114000, 124000);
+//	if (throttle < 75700)
+//		throttle = 75700;
+//	else if (throttle > 153300)
+//		throttle = 153300;
+
+	uint32_t throttle = (uint32_t)map(dji.thrust, 0, 46.6956, ps->djiout->dutyCycle(0.09, 2), ps->djiout->dutyCycle(1.00, 2));
+	if (throttle < ps->djiout->dutyCycle(0.09, 2)) throttle = ps->djiout->dutyCycle(0.09, 2);
+	else if (throttle > ps->djiout->dutyCycle(1.00, 2)) throttle = ps->djiout->dutyCycle(1.00, 2);
+
 
 	uint32_t ppmYawRate = (uint32_t)map(dji.yawRate, -1, 1, 113000, 120400);
 	uint32_t ppmPitch = (uint32_t)map(dji.pitch, -0.5, 0.5, 105600, 135000);
@@ -212,11 +217,11 @@ void CtrlRunnable::run()
 			"%u\t%u\t%u\t%u\t%u\t%u\t%u\t"//Flags
 			"%f\t"//Battery Volts
 			"%u\t%u\t%u\t%u\t"//RC Pilot Duty Cycles
-			"%d\t"//Setpt Message Flags
+			"%f\t"//Setpt Message Flags
 			"%f\t%f\t%f\t%f\t"//DJI RPFzY
 			"%u\t%u\t%u\t%u\t"//PPM RPFzY
 			"%u\t"//msTime
-			"%f\t%f\t%f\t%f\t%f\t%f\n",//
+			"%f\t%f\t%f\t%f\t%f\t%u\n",//
 			time,
 			ps->mode,
 			ps->imu->getAccX(), ps->imu->getAccY(), ps->imu->getAccZ(),
@@ -253,7 +258,7 @@ void CtrlRunnable::run()
 			ps->pilot->dutyCycle(servoIn_getPulse(RC_CHAN1), 0),
 			ps->pilot->dutyCycle(servoIn_getPulse(RC_CHAN4), 3),
 			ps->pilot->dutyCycle(servoIn_getPulse(RC_CHAN3), 2),
-			ps->dLink->getSetptMsg().flags,
+			(float)((int)ps->dLink->getSetptMsg().flags),
 			dji.pitch, dji.roll, dji.thrust, dji.yawRate,
 			ppmRoll, ppmPitch, throttle, ppmYawRate,
 			msTime,
@@ -262,7 +267,7 @@ void CtrlRunnable::run()
 			ps->imu->getTimestamp(),
 			poseTimestamp,
 			ps->imu->getRefYaw(),
-			(float)ps->vehicle->getRCInputError());
+			ps->vehicle->getRCInputError());
 	ps->sdcard->write(msg, len);
 }
 

@@ -256,24 +256,29 @@ void Vehicle::runFilter(const float rotationMatrix[9], float yaw,
 
 	float errX = currYawCos * (spArr[X_AXIS][DOF_VAL] - xflt) - currYawSin * (spArr[Y_AXIS][DOF_VAL] - yflt);
 	float errY = currYawSin * (spArr[X_AXIS][DOF_VAL] - xflt) + currYawCos * (spArr[Y_AXIS][DOF_VAL] - yflt);
-	float errXdot = currYawCos * (spArr[X_AXIS][DOF_RATE] - xdotflt) - currYawSin * (spArr[Y_AXIS][DOF_RATE] - ydotflt);
-	float errYdot = currYawSin * (spArr[X_AXIS][DOF_RATE] - xdotflt) + currYawCos * (spArr[Y_AXIS][DOF_RATE] - ydotflt);
+//	float errXdot = currYawCos * (spArr[X_AXIS][DOF_RATE] - xdotflt) - currYawSin * (spArr[Y_AXIS][DOF_RATE] - ydotflt);
+//	float errYdot = currYawSin * (spArr[X_AXIS][DOF_RATE] - xdotflt) + currYawCos * (spArr[Y_AXIS][DOF_RATE] - ydotflt);
 
+	float rotFltXdot = currYawCos * xdotflt - currYawSin * ydotflt;
+	float rotFltYdot = currYawSin * xdotflt + currYawCos * ydotflt;
 
 	//state[X_AXIS][DOF_VAL]   = filterState.pData[0];
 	state[X_AXIS][DOF_VAL] = errX;
 
 	//state[X_AXIS][DOF_RATE]  = filterState.pData[1];
-	state[X_AXIS][DOF_RATE] = (mode == AUTONOMOUS) ? errXdot : spArr[X_AXIS][DOF_VAL];
+	//state[X_AXIS][DOF_RATE] = (mode == AUTONOMOUS) ? errXdot : spArr[X_AXIS][DOF_VAL] - rotFltXdot;
+	state[X_AXIS][DOF_RATE] = rotFltXdot;
 
 	//state[X_AXIS][DOF_ACCEL] = imuArenaX;
 	state[X_AXIS][DOF_ACCEL] = imuX;
 
+
 	//state[Y_AXIS][DOF_VAL]   = filterState.pData[2];
 	state[Y_AXIS][DOF_VAL] = errY;
+	state[Y_AXIS][DOF_VAL] = rotFltYdot;
 
 	//state[Y_AXIS][DOF_RATE]  = filterState.pData[3];
-	state[Y_AXIS][DOF_RATE] = (mode == AUTONOMOUS) ? errYdot : spArr[Y_AXIS][DOF_VAL];
+	//state[Y_AXIS][DOF_RATE] = (mode == AUTONOMOUS) ? errYdot : spArr[Y_AXIS][DOF_VAL] - rotFltYdot;
 
 	//state[Y_AXIS][DOF_ACCEL] = imuArenaY;
 	state[Y_AXIS][DOF_ACCEL] = imuY;
@@ -284,6 +289,14 @@ void Vehicle::runFilter(const float rotationMatrix[9], float yaw,
 	state[YAW][DOF_VAL]      = yaw;
 	state[YAW][DOF_RATE]     = 0;
 	state[YAW][DOF_ACCEL]    = 0;
+
+	// always do Z and Yaw val setpt and local X and Y setpts;
+	//spArr[Z_AXIS][DOF_VAL] *= -1.0;
+	dofs[X_AXIS].setSetpt(spArr[X_AXIS], true);
+	dofs[Y_AXIS].setSetpt(spArr[Y_AXIS], true);
+	dofs[Z_AXIS].setSetpt(spArr[Z_AXIS], false);
+	dofs[YAW].setSetpt(spArr[YAW], false);
+
 	setDofStates(state);
 }
 
@@ -412,6 +425,8 @@ void Vehicle::calcDJIValues(const FlightMode mode)
 	if (angle[ROLL]  < -rpLimits[ROLL])  angle[ROLL]  = -rpLimits[ROLL];
 	if (angle[PITCH] >  rpLimits[PITCH]) angle[PITCH] =  rpLimits[PITCH];
 	if (angle[PITCH] < -rpLimits[PITCH]) angle[PITCH] = -rpLimits[PITCH];
+
+//	if (forceVe[Z_AXIS] < 0) forceVe[Z_AXIS] = 0;
 
 	// assign DJI values
 	dji.roll    = (mode == MANUAL) ? 0.0 : angle[ROLL];
