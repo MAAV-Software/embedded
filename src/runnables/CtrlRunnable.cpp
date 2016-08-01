@@ -35,19 +35,20 @@ void CtrlRunnable::run()
 			ps->spArr[d][DOF_TIME] = time;
 		}
 
-
 		/*
 		setpt[X_AXIS][DOF_RATE] = ms2XY_rate(ps->pilot->pulse((servoIn_getPulse(RC_CHAN1)), 1));
 		setpt[Y_AXIS][DOF_RATE] = ms2XY_rate(ps->pilot->pulse((servoIn_getPulse(RC_CHAN2)), 2));
 		setpt[Z_AXIS][DOF_VAL]  = ms2height(ps->pilot->pulse((servoIn_getPulse(RC_CHAN3)), 3));
 		 */
-		ps->spArr[X_AXIS][DOF_RATE] = ms2XY_rate(ps->pilot->pulse((servoIn_getPulse(RC_CHAN1)), 1));
-		ps->spArr[Y_AXIS][DOF_RATE] = ms2XY_rate(ps->pilot->pulse((servoIn_getPulse(RC_CHAN2)), 2));
-		ps->spArr[Z_AXIS][DOF_VAL]  = ms2height(ps->pilot->pulse((servoIn_getPulse(RC_CHAN3)), 3)); // don't negate this here
+		// FUCK SASAWAT!!!! INDEXES ARE 0-BASED FOR PILOT->PULSE()
+		ps->spArr[X_AXIS][DOF_RATE] = ms2XY_rate(ps->pilot->pulse((servoIn_getPulse(RC_CHAN1)), 0));
+		ps->spArr[Y_AXIS][DOF_RATE] = ms2XY_rate(ps->pilot->pulse((servoIn_getPulse(RC_CHAN2)), 1));
+		ps->spArr[Z_AXIS][DOF_VAL]  = ms2height(ps->pilot->pulse((servoIn_getPulse(RC_CHAN3)), 2)); // don't negate this here
 
 		//ps->vehicle->setSetpt(setpt, ASSISTED, false);
 	}
 
+	// setpoints now get set in run filter
 	ps->vehicle->runFilter(ps->imu->getRotMat(), ps->imu->getYaw(),
 		ps->imu->getAccX(), ps->imu->getAccY(), ps->imu->getAccZ(), time,
 		ps->lidar->getDist(), ps->lidar->getTimestamp(),
@@ -186,10 +187,27 @@ void CtrlRunnable::run()
 	if (throttle < ps->djiout->dutyCycle(0.09, 2)) throttle = ps->djiout->dutyCycle(0.09, 2);
 	else if (throttle > ps->djiout->dutyCycle(1.00, 2)) throttle = ps->djiout->dutyCycle(1.00, 2);
 
-
+/*
 	uint32_t ppmYawRate = (uint32_t)map(dji.yawRate, -1, 1, 113000, 120400);
 	uint32_t ppmPitch = (uint32_t)map(dji.pitch, -0.5, 0.5, 105600, 135000);
 	uint32_t ppmRoll  = (uint32_t)map(dji.roll, -0.5, 0.5, 104200, 135000);
+*/
+
+	uint32_t ppmYawRate = (uint32_t)map(dji.yawRate, -1, 1, ps->djiout->dutyCycle(0.1, 3), ps->djiout->dutyCycle(0.9, 3));
+	if (ppmYawRate < ps->djiout->dutyCycle(0.1, 3)) ppmYawRate = ps->djiout->dutyCycle(0.1, 3);
+	else if (ppmYawRate > ps->djiout->dutyCycle(0.9, 3)) ppmYawRate = ps->djiout->dutyCycle(0.9, 3);
+
+	//uint32_t ppmPitch = (uint32_t)map(dji.pitch, -0.5, 0.5, 105600, 135000);
+	uint32_t ppmPitch = (uint32_t)map(dji.pitch, -0.5, 0.5, ps->djiout->dutyCycle(0.00, 0), ps->djiout->dutyCycle(1.00, 0));
+	if (ppmPitch < ps->djiout->dutyCycle(0.00, 0)) ppmPitch = ps->djiout->dutyCycle(0.00, 0);
+	else if (ppmPitch > ps->djiout->dutyCycle(1.00, 0)) ppmPitch = ps->djiout->dutyCycle(1.00, 0);
+
+
+	//uint32_t ppmRoll  = (uint32_t)map(dji.roll, -0.5, 0.5, 104200, 135000);
+	uint32_t ppmRoll  = (uint32_t)map(dji.roll, -0.5, 0.5, ps->djiout->dutyCycle(0.00, 1), ps->djiout->dutyCycle(1.00, 1));
+	if (ppmRoll < ps->djiout->dutyCycle(0.00, 1)) ppmRoll = ps->djiout->dutyCycle(0.00, 1);
+	else if (ppmRoll > ps->djiout->dutyCycle(1.00, 1)) ppmRoll = ps->djiout->dutyCycle(1.00, 1);
+
 
 	char msg[1024];
 	// time, IMU, px4, lidar, camera

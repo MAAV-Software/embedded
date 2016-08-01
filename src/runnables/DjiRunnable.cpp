@@ -26,10 +26,10 @@ void DjiRunnable::run()
 //	uint32_t roll;
 	Dji dji = state->vehicle->getDjiVals();
 
-    float dutyXd = state->pilot->dutyCycle(servoIn_getPulse(RC_CHAN1), 0);
-    float dutyYd = state->pilot->dutyCycle(servoIn_getPulse(RC_CHAN2), 1);
-    float dutyFz = state->pilot->dutyCycle(servoIn_getPulse(RC_CHAN3), 2);
-    float dutyYawd = state->pilot->dutyCycle(servoIn_getPulse(RC_CHAN4), 3);
+    float dutyXd = state->pilot->dutyCycle(servoIn_getPulse(RC_CHAN1), 0); // pitch (vertical right stick)
+    float dutyYd = state->pilot->dutyCycle(servoIn_getPulse(RC_CHAN2), 1); // roll (horizontal right stick)
+    float dutyFz = state->pilot->dutyCycle(servoIn_getPulse(RC_CHAN3), 2); // thrust (verticle left stick)
+    float dutyYawd = state->pilot->dutyCycle(servoIn_getPulse(RC_CHAN4), 3); // yaw rate (horizontal right stick)
 
     /*
     //Try to filter out garbage values

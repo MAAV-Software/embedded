@@ -129,9 +129,14 @@ int main()
     rateGains[YAW][KI]     = pidEeprom[22];
     rateGains[YAW][KD]     = pidEeprom[23];
 
-//	valueGains[X_AXIS][KP] = 0.1;
-//	valueGains[X_AXIS][KI] = 0;
-//	valueGains[X_AXIS][KD] = 0;
+
+// THESE ARE COMMENTED OUT SINCE UPON THE FIRST FLASH OF A NEW
+// UNPROGRAMMED TIVA, BASE GAINS NEED TO EXIST AT THE EEPROM
+// LOCATIONS. USE THIS FOR BENCHTOP TESTING WITHOUT THE ATOM
+// ONLY.
+//	  valueGains[X_AXIS][KP] = 0.1;
+//	  valueGains[X_AXIS][KI] = 0;
+//	  valueGains[X_AXIS][KD] = 0;
 //    valueGains[Y_AXIS][KP] = 0.1;
 //    valueGains[Y_AXIS][KI] = 0;
 //    valueGains[Y_AXIS][KD] = 0;
