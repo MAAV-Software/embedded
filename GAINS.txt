@@ -1,0 +1,32 @@
+2016 IARC GAINS
+---------------
+
+Z Value PID (no rate PID)
+    P = 5.3
+    I = 0.0
+    D = 3.0
+
+Yaw Value PID (no rate PID)
+    P = 1.0
+    I = 0.005
+    D = 0.1
+
+X Rate PID
+    P =
+    I =
+    D =
+
+Y Rate PID
+    P = 
+    I = 
+    D = 
+
+X Value PID
+    P =
+    I =
+    D =
+
+Y Value PID
+    P =
+    I =
+    D =
