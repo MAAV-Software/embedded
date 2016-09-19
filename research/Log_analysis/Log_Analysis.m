@@ -1,10 +1,7 @@
-function Log_Analysis(filename)
-
 close all
 clc
 clf
-filename
-log = load(filename);
+log = load('2016/comp/LOG99.TXT');
 
 % parsing the datas
 Time          = log(2:end,1);
@@ -110,6 +107,14 @@ for i = 2:length(Time)
     disc_Zdot(i) = (Lidar_Dist(i) - Lidar_Dist(i - 1)) / (Time(i) - Time(i-1));
 end
 
+IMU_YAW = atan2(Imu_Rot(:,2), Imu_Rot(:,1));
+rotFltXdot = Filter_Xdot;
+rotFltYdot = Filter_Ydot;
+for i = 2:length(Time)
+   rotFltXdot(i) = (cos(IMU_YAW(i)) * Filter_Xdot(i)) - (sin(IMU_YAW(i)) * Filter_Ydot(i));
+   rotFltYdot(i) = (sin(IMU_YAW(i)) * Filter_Xdot(i)) - (cos(IMU_YAW(i)) * Filter_Ydot(i));
+end
+
 %% plot
 % figure 1 values
 figure(1)
@@ -134,19 +139,18 @@ xlabel('Time')
 ylabel('Value Yaw')
 
 
-
 % figure 2 rates
 figure(2)
 subplot(211)
-plot(Time, Filter_Xdot, 'b', Time, Setpt_Xdot, 'g')
+%plot(Time, Filter_Xdot, 'b', Time, Setpt_Xdot, 'g')
+plot(Time(2:end), rotFltXdot(2:end), 'b', Time(2:end), Setpt_Xdot(2:end), 'g')
 xlabel('Time')
 ylabel('Rate X')
 
 subplot(212)
+plot(Time, Filter_Ydot, 'b', Time, Setpt_Ydot, 'g')
 xlabel('Time')
 ylabel('Rate Y')
-plot(Time, Filter_Ydot, 'b', Time, Setpt_Ydot, 'g')
-
 %
 %subplot(223)
 % plot(Time, Filter_Zdot, 'b', Time, Setpt_Zdot, 'g')
@@ -204,14 +208,69 @@ xlabel('Time');
 ylabel('DJI Fz Raw');
 
 figure(6)
-subplot(221)
+subplot(241)
 plot(Time, PID_Uz, 'b')
 xlabel('time')
 ylabel('pid uz')
+subplot(242)
+plot(Time, PID_Yawdot, 'b');
+xlabel('time')
+ylabel('pid yawdot')
+subplot(243)
+plot(Time, PID_Ux, 'b');
+xlabel('time')
+ylabel('pid ux')
+subplot(244)
+plot(Time, PID_Uy, 'b');
+xlabel('time')
+ylabel('pid uy')
+%%
+figure(7)
+subplot(131)
+plot(Time, Rate_P_X, 'b');
+ylabel('P Xdot')
+subplot(132)
+plot(Time, Rate_I_X, 'b');
+ylabel('I Xdot')
+subplot(133)
+plot(Time, Rate_D_X, 'b');
+ylabel('D Xdot')
+%%
+figure(70)
+subplot(131)
+plot(Time, Val_P_X, 'b');
+ylabel('P X')
+subplot(132)
+plot(Time, Val_I_X, 'b');
+ylabel('I X')
+subplot(133)
+plot(Time, Val_D_X, 'b');
+ylabel('D X')
+%%
+figure(71)
+subplot(131)
+plot(Time, Val_P_Y, 'b');
+ylabel('P Y')
+subplot(132)
+plot(Time, Val_I_Y, 'b');
+ylabel('I Y')
+subplot(133)
+plot(Time, Val_D_Y, 'b');
+ylabel('D Y')
 
+%%
+figure(72)
+subplot(131)
+plot(Time, Rate_P_Y, 'b');
+ylabel('P Ydot')
+subplot(132)
+plot(Time, Rate_I_Y, 'b');
+ylabel('I Ydot')
+subplot(133)
+plot(Time, Rate_D_Y, 'b');
+ylabel('D Xdot')
+%%
 
-%figure(7)
-%
 %plot(Time, Rate_P_Z, 'b')
 %% Z Gains
 % figure 6 PID 
@@ -234,6 +293,28 @@ xlabel('Time')
 ylabel('VAL D Z')
 grid on
 
+%% Yaw Gains
+% figure 6 PID 
+figure(180)
+subplot(131)
+plot(Time, Val_P_Yaw, 'b')
+xlabel('Time')
+ylabel('VAL P Yaw')
+grid on
+
+subplot(132)
+plot(Time, Val_I_Yaw, 'b')
+xlabel('Time')
+ylabel('VAL I Yaw')
+grid on
+
+subplot(133)
+plot(Time, Val_D_Yaw, 'b')
+xlabel('Time')
+ylabel('VAL D Yaw')
+grid on
+
+%%
 %{
 subplot(234)
 plot(Time, Rate_P_Z, 'b')
@@ -258,13 +339,16 @@ grid on
 %
 figure(20)
 subplot(221)
-plot(Time, Px4_Xdot, 'b')
+%plot(Time, Px4_Xdot, 'b', Time, Filter_Xdot, 'r')
+plot(Time, rotFltXdot, 'r')
+
 xlabel('Time')
 ylabel('Px4 X vel')
 grid on
 
 subplot(222)
-plot(Time, Px4_Ydot, 'b')
+%plot(Time, Px4_Ydot, 'b')
+plot(Time, rotFltYdot, 'r')
 xlabel('Time')
 ylabel('Px4 Y vel')
 grid on
@@ -353,11 +437,12 @@ hold off;
 ylabel('Z Filter')
 xlabel('Time')
 
+%{
 figure(110)
 plot(Time, AtomFlag);
 xlabel('Time')
 ylabel('AtomFlag')
-
+%}
 %{
 figure(101)
 hold on;
@@ -378,5 +463,3 @@ hold off;
 
 %%
 Real_Time_for_this_log = (Time(end) - Time(1)) / 60
-
-end
