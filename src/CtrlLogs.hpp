@@ -28,10 +28,13 @@ struct VehicleLog
 	float rollFilt;
 	float pitchFilt;
 	float yawFilt;
+	float Ax;
+	float Ay;
+	float Az;
 
 	VehicleLog() : xUval(0), yUval(0), zUval(0), xFilt(0), yFilt(0), zFilt(0),
 				   xdotFilt(0), ydotFilt(0), zdotFilt(0), rollFilt(0),
-				   pitchFilt(0), yawFilt(0) {}
+				   pitchFilt(0), yawFilt(0), Ax(0), Ay(0), Az(0) {}
 };
 
 /* Note that these are minimalist log objects.

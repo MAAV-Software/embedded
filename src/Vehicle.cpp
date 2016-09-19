@@ -75,8 +75,8 @@ Vehicle::Vehicle(const float valueGains[NUM_DOFS][NUM_PID_GAINS],
 		DERR_DT_MASK | DISC_DERIV_MASK,
 	};
 	float stateBounds[4] = {0, 0, 0, MaavMath::Pi};
-	float rateUpLims[4]  = {2, 2, 10, 1};
-	float rateLwLims[4]  = {-2, -2, -10, -1};
+	float rateUpLims[4]  = {1, 1, 10, 1};
+	float rateLwLims[4]  = {-1, -1, -10, -1};
 	float accelUpLims[4] = {1, 1, 10, 1};
 	float accelLwLims[4] = {-1, -1, -10, -1};
 
@@ -87,7 +87,7 @@ Vehicle::Vehicle(const float valueGains[NUM_DOFS][NUM_PID_GAINS],
 	float rateErrorLpCoeffs[NUM_DOFS]  = {0, 0, 0, 0};
 
 	//for (int i = 0; i < NUM_ANGLES; ++i) rpLimits[i] = PI / 4.0f;
-	for (int i = 0; i < NUM_ANGLES; ++i) rpLimits[i] = 0.5;
+	for (int i = 0; i < NUM_ANGLES; ++i) rpLimits[i] = 0.05; // 3 deg in radians
 
 	for (int i = 0; i < NUM_DOFS; ++i)
 	{
@@ -101,15 +101,17 @@ Vehicle::Vehicle(const float valueGains[NUM_DOFS][NUM_PID_GAINS],
 
 	//initializing Q and R matrices
 	//                x    xdot  y    ydot  z     zdot
-	kalmanFilter.setQ(0.1, 0.01, 0.1, 0.01, 0.0001, 0.000025);
+	kalmanFilter.setQ(0.02, 0.0002, 0.02, 0.0002, 0.0001, 0.000025);
 	//                      z        zdot
 	kalmanFilter.setR_lidar(0.0009, 0.01);
 	//                    xdot ydot
-	kalmanFilter.setR_Px4(0.1, 0.1);
+	kalmanFilter.setR_Px4(0.08, 0.08);
 	//camera not in use
-	kalmanFilter.setR_camera(0.0, 0.0);
+	kalmanFilter.setR_camera(0.01, 0.01);
 
-
+	vlogAx = 0;
+	vlogAy = 0;
+	vlogAz = 0;
 
 }
 
@@ -168,20 +170,41 @@ void Vehicle::runFilter(const float rotationMatrix[9], float yaw,
 			float cameraX, float cameraY, float cameraTime, float spArr[NUM_DOFS][NUM_DOF_STATES],
 			FlightMode mode)
 {
+	currYawSin = arm_sin_f32(yaw);
+	currYawCos = arm_cos_f32(yaw);
+
 	if (first)
 	{
 		first = false;
 		rateOnly = false;
 		inputerror = 0;
 		lastPredictTime = currTime;
+
+
+		float state[NUM_DOFS][NUM_DOF_STATES];
+		for (int i = 0; i < NUM_DOFS; ++i)
+		{
+			state[i][DOF_VAL] = 0;
+			state[i][DOF_RATE] = 0;
+			state[i][DOF_ACCEL] = 0;
+			state[i][DOF_TIME] = currTime;
+		}
+
+		// local frame setpoints
+		spArr[X_AXIS][DOF_VAL] = currYawCos * spArr[X_AXIS][DOF_VAL] - currYawSin * spArr[Y_AXIS][DOF_VAL];
+		spArr[Y_AXIS][DOF_VAL] = currYawSin * spArr[X_AXIS][DOF_VAL] + currYawCos * spArr[Y_AXIS][DOF_VAL];
+
+		vlogAx = 0;
+		vlogAy = 0;
+		vlogAz = 0;
+
+		setSetpt(spArr, mode, false);
+		setDofStates(state);
 		return;
 	}
 #ifdef BENCHTOP
 	UARTprintf("Running Filter at t = %3.2fs ", currTime);
 #endif
-
-	currYawSin = arm_sin_f32(yaw);
-	currYawCos = arm_cos_f32(yaw);
 
 	// new IMU measurement
 	float imuArenaX, imuArenaY, imuArenaZ;
@@ -254,8 +277,14 @@ void Vehicle::runFilter(const float rotationMatrix[9], float yaw,
 	yflt   = filterState.pData[2];
 	ydotflt  = filterState.pData[3];
 
-	float errX = currYawCos * (spArr[X_AXIS][DOF_VAL] - xflt) - currYawSin * (spArr[Y_AXIS][DOF_VAL] - yflt);
-	float errY = currYawSin * (spArr[X_AXIS][DOF_VAL] - xflt) + currYawCos * (spArr[Y_AXIS][DOF_VAL] - yflt);
+	// errX, errY is now just local frame rotated feedback
+	float errX = currYawCos * xflt - currYawSin * yflt;
+	float errY = currYawSin * xflt + currYawCos * yflt;
+
+	// local frame setpoints
+	spArr[X_AXIS][DOF_VAL] = currYawCos * spArr[X_AXIS][DOF_VAL] - currYawSin * spArr[Y_AXIS][DOF_VAL];
+	spArr[Y_AXIS][DOF_VAL] = currYawSin * spArr[X_AXIS][DOF_VAL] + currYawCos * spArr[Y_AXIS][DOF_VAL];
+
 //	float errXdot = currYawCos * (spArr[X_AXIS][DOF_RATE] - xdotflt) - currYawSin * (spArr[Y_AXIS][DOF_RATE] - ydotflt);
 //	float errYdot = currYawSin * (spArr[X_AXIS][DOF_RATE] - xdotflt) + currYawCos * (spArr[Y_AXIS][DOF_RATE] - ydotflt);
 
@@ -271,7 +300,7 @@ void Vehicle::runFilter(const float rotationMatrix[9], float yaw,
 
 	//state[X_AXIS][DOF_ACCEL] = imuArenaX;
 	state[X_AXIS][DOF_ACCEL] = imuX;
-
+	vlogAx = imuArenaX;
 
 	//state[Y_AXIS][DOF_VAL]   = filterState.pData[2];
 	state[Y_AXIS][DOF_VAL] = errY;
@@ -282,20 +311,26 @@ void Vehicle::runFilter(const float rotationMatrix[9], float yaw,
 
 	//state[Y_AXIS][DOF_ACCEL] = imuArenaY;
 	state[Y_AXIS][DOF_ACCEL] = imuY;
+	vlogAy = imuArenaY;
 
 	state[Z_AXIS][DOF_VAL]   = -filterState.pData[4];
 	state[Z_AXIS][DOF_RATE]  = -filterState.pData[5];
 	state[Z_AXIS][DOF_ACCEL] = -imuArenaZ;
+	vlogAz = -imuArenaZ;
+
 	state[YAW][DOF_VAL]      = yaw;
 	state[YAW][DOF_RATE]     = 0;
 	state[YAW][DOF_ACCEL]    = 0;
 
+
+	setSetpt(spArr, mode, false);
+
 	// always do Z and Yaw val setpt and local X and Y setpts;
 	//spArr[Z_AXIS][DOF_VAL] *= -1.0;
-	dofs[X_AXIS].setSetpt(spArr[X_AXIS], true);
-	dofs[Y_AXIS].setSetpt(spArr[Y_AXIS], true);
-	dofs[Z_AXIS].setSetpt(spArr[Z_AXIS], false);
-	dofs[YAW].setSetpt(spArr[YAW], false);
+	//dofs[X_AXIS].setSetpt(spArr[X_AXIS], true);
+	//dofs[Y_AXIS].setSetpt(spArr[Y_AXIS], true);
+	//dofs[Z_AXIS].setSetpt(spArr[Z_AXIS], false);
+	//dofs[YAW].setSetpt(spArr[YAW], false);
 
 	setDofStates(state);
 }
@@ -393,7 +428,9 @@ void Vehicle::calcDJIValues(const FlightMode mode)
 	//for (int i = 0; i < 3; ++i) forceVe[i] = dofs[i].getUval();
 	//forceVe[Z_AXIS] += mass * GRAVITY;
 
-	for (int i = 0; i < 2; ++i) forceVe[i] = dofs[i].getUval();
+	for (int i = 0; i < 2; ++i) forceVe[i] = dofs[i].getRate() * mass;
+
+//	for (int i = 0; i < 2; ++i) forceVe[i] = dofs[i].getUval();
 
 	forceVe[Z_AXIS] = (dofs[Z_AXIS].getRate() * mass) + (mass * MaavMath::Gravity);
 
@@ -465,6 +502,9 @@ void Vehicle::prepareLog(VehicleLog &vlog, PidLog plogs[NUM_DOFS][2])
 	vlog.rollFilt  = 0;
 	vlog.pitchFilt = 0;
 	vlog.yawFilt   = 0;
+	vlog.Ax = vlogAx;
+	vlog.Ay = vlogAy;
+	vlog.Az = vlogAz;
 }
 
 uint8_t Vehicle::getRCInputError()

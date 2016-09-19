@@ -126,6 +126,10 @@ private:
 
     bool rateOnly;
 
+    float vlogAx;
+    float vlogAy;
+    float vlogAz;
+
 	// Calculates Roll, Pitch, Z Force, and Yaw Rate to send to the DJI
 	void calcDJIValues(const FlightMode mode);
 

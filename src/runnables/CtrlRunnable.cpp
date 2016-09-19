@@ -53,7 +53,8 @@ void CtrlRunnable::run()
 		ps->imu->getAccX(), ps->imu->getAccY(), ps->imu->getAccZ(), time,
 		ps->lidar->getDist(), ps->lidar->getTimestamp(),
 		ps->px4->getXFlow(), ps->px4->getYFlow(), ps->px4->getTimestamp(),
-		0, 0, 0, ps->spArr, ps->mode);
+		ps->dLink->getRawPoseMsg().x, ps->dLink->getRawPoseMsg().y,
+		(float)ps->dLink->getRawPoseMsg().utime, ps->spArr, ps->mode);
 
 
 	// if ((ps->mode == AUTONOMOUS) && (ps->dLink->getRawPoseMsg().utime > lastPoseTime))
@@ -123,13 +124,13 @@ void CtrlRunnable::run()
     ps->feedback->yaw   = ps->imu->getYaw();
     ps->feedback->x[0]  = vlog.xFilt;
     ps->feedback->x[1]  = vlog.xdotFilt;
-    ps->feedback->x[2]  = 0;
+    ps->feedback->x[2]  = vlog.Ax;
     ps->feedback->y[0]  = vlog.yFilt;
     ps->feedback->y[1]  = vlog.ydotFilt;
-    ps->feedback->y[2]  = 0;
+    ps->feedback->y[2]  = vlog.Ay;
     ps->feedback->z[0]  = vlog.zFilt;
     ps->feedback->z[1]  = vlog.zdotFilt;
-    ps->feedback->z[2]  = 0;
+    ps->feedback->z[2]  = vlog.Az;
     ps->feedback->flags = ps->dLink->getSetptMsg().flags;
     ps->feedback->batteryVoltage = ps->battery->getVolts();
     ps->dLink->send(ps->feedback);
