@@ -4,6 +4,7 @@
 #include <math.h>
 #include "cmeigen.hpp"
 #include "Vehicle.hpp"
+#include "FlightMode.hpp"
 #include "MaavMath.hpp"
 
 
@@ -255,11 +256,51 @@ int main(int argc, char **argv)
 	)
 	{
 		float yaw = atan2(Imu_Rot[1], Imu_Rot[0]);
+
+		// setpoint array 
+		float spArr[NUM_DOFS][NUM_DOF_STATES];
+		spArr[X_AXIS][DOF_RATE] = Setpt_Xdot;
+		spArr[X_AXIS][DOF_VAL]  = Setpt_X;
+		spArr[Y_AXIS][DOF_RATE] = Setpt_Ydot;
+		spArr[Y_AXIS][DOF_VAL]  = Setpt_Y;
+		spArr[Z_AXIS][DOF_RATE] = Setpt_Zdot;
+		spArr[Z_AXIS][DOF_VAL]  = Setpt_Z;
+		spArr[YAW][DOF_VAL]     = Setpt_Yaw;
+
+		// flight mode
+		FlightMode mode = (FlightMode)(int)Mode;
+
+		// populate flight mode array with proper data
+		// for assisted/manual
+		if(mode == ASSISTED || mode == MANUAL)
+		{
+			for(unsigned char d = 0; d < NUM_DOFS; ++d)
+			{
+				for(
+					unsigned char s = 0; 
+					s < NUM_DOF_STATES - 1; 
+					++s)
+				{
+					spArr[d][s] = 0;
+				}
+				spArr[d][DOF_TIME] = Time;
+			}
+		// We don't record the information to calculate these values in
+		// our logs so they cannot be calculated. However, if we were
+		// sensible, the result of these calculations should be stored
+		// in the setpoints we log anyways
+		//	spArr[X_AXIS][DOF_RATE] = 0; //NOT SUPPORTED
+		//	spArr[Y_AXIS][DOF_RATE] = 0; //NOT SUPPORTED
+		//	spArr[Z_AXIS][DOF_VAL]  = 0; //NOT SUPPORTED
+
+		}
+
 		v.runFilter(Imu_Rot, yaw,
 			Imu_AccX, Imu_AccY, Imu_AccZ, Time,
 			Lidar_Dist, lidarTime,
 			Px4_Xdot, Px4_Ydot, px4Time, 
-			0, 0, 0);
+			0, 0, 0,
+			spArr, mode);
 
 		//log the state estimate
 		v.prepareLog(vlog, plogs);

@@ -41,6 +41,7 @@ void CtrlRunnable::run()
 		setpt[Z_AXIS][DOF_VAL]  = ms2height(ps->pilot->pulse((servoIn_getPulse(RC_CHAN3)), 3));
 		 */
 		// FUCK SASAWAT!!!! INDEXES ARE 0-BASED FOR PILOT->PULSE()
+		// FUCK YOU TOO -- SASAWAT
 		ps->spArr[X_AXIS][DOF_RATE] = ms2XY_rate(ps->pilot->pulse((servoIn_getPulse(RC_CHAN1)), 0));
 		ps->spArr[Y_AXIS][DOF_RATE] = ms2XY_rate(ps->pilot->pulse((servoIn_getPulse(RC_CHAN2)), 1));
 		ps->spArr[Z_AXIS][DOF_VAL]  = ms2height(ps->pilot->pulse((servoIn_getPulse(RC_CHAN3)), 2)); // don't negate this here
