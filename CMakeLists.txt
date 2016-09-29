@@ -9,6 +9,10 @@ if(NOT CMAKE_BUILD_TYPE)
     	message(STATUS "Build Type Automatically set to Debug")
 endif()
 
+if(NOT TIVAWARE_INSTALL)
+	message(STATUS "TIVAWARE_INSTALL not defined. Hardware Tests may not build.")
+endif()
+
 
 if(CMAKE_BUILD_TYPE MATCHES "Hardware")
     set(CMAKE_C_COMPILER "arm-none-eabi-gcc")
