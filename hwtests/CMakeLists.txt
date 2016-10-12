@@ -7,11 +7,11 @@ message("Defined Repository Root Location: "
 file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/vars.txt 
 "		<variable>
 			<name>TIVAWARE_INSTALL</name>
-			<value>${TIVAWARE_INSTALL}</value>
+			<value>file:${TIVAWARE_INSTALL}</value>
 		</variable>
 		<variable>
 			<name>REPO_LOC</name>
-			<value>${REPO_LOC}</value>
+			<value>file:${REPO_LOC}</value>
 		</variable>\n"
 )
 

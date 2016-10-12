@@ -22,3 +22,28 @@
 		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
 	</natures>
 	<linkedResources>
+		<link>
+			<name>cmdline.c</name>
+			<type>1</type>
+			<locationURI>TIVAWARE_INSTALL/utils/cmdline.c</locationURI>
+		</link>
+		<link>
+			<name>driverlib.lib</name>
+			<type>1</type>
+			<locationURI>TIVAWARE_INSTALL/driverlib/ccs/Debug/driverlib.lib</locationURI>
+		</link>
+		<link>
+			<name>dsplib.lib</name>
+			<type>1</type>
+			<locationURI>REPO_LOC/libs/dsplib.lib</locationURI>
+		</link>
+		<link>
+			<name>sdlib</name>
+			<type>2</type>
+			<locationURI>REPO_LOC/sdlib</locationURI>
+		</link>
+		<link>
+			<name>sensorlib.lib</name>
+			<type>1</type>
+			<locationURI>TIVAWARE_INSTALL/sensorlib/ccs/Debug/sensorlib.lib</locationURI>
+		</link>
