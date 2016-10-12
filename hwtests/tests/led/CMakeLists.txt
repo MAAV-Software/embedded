@@ -22,6 +22,12 @@ foreach(TESTELEMENT ${COVERAGE_MANIFEST})
 		</link>" OUTPUT_VARIABLE TESTLINK)
 	file(APPEND ${CMAKE_CURRENT_BINARY_DIR}/project/.project ${TESTLINK})
 endforeach()
+file(APPEND ${CMAKE_CURRENT_BINARY_DIR}/project/.project 
+"		<link>
+			<name>testcase</name>
+			<type>2</type>
+			<locationURI>${CMAKE_CURRENT_SOURCE_DIR}</locationURI>
+		</link>\n")
 file(APPEND ${CMAKE_CURRENT_BINARY_DIR}/project/.project ${CCS_DOTPROJECT_LINKRESVARLISTSEP})
 file(APPEND ${CMAKE_CURRENT_BINARY_DIR}/project/.project ${PROJVARS})
 file(APPEND ${CMAKE_CURRENT_BINARY_DIR}/project/.project ${CCS_DOTPROJECT_FOOTER})

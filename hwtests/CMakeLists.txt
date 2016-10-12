@@ -20,6 +20,11 @@ file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/links.txt
 			<name>driverlib.lib</name>
 			<type>1</type>
 			<locationURI>TIVAWARE_INSTALL/driverlib/ccs/Debug/driverlib.lib</locationURI>
+		</link>
+		<link>
+			<name>src/time_util.c</name>
+			<type>1</type>
+			<locationURI>REPO_LOC/src/time_util.c</locationURI>
 		</link>\n"
 )
 
