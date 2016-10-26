@@ -11,7 +11,7 @@ void ConfigADC(const uint32_t sysctlPeriphADC, const uint32_t adcBase,  const ui
 		ROM_GPIOPinTypeADC(gpioPortBase, gpioADCPin);
 
 		// SEQ 1 has 4 steps, priority 0
-		ROM_ADCSequenceConfigure(adcBase, 1, ADC_TRIGGER_PROCESSOR, 0);
+		ADCSequenceConfigure(adcBase, 1, ADC_TRIGGER_PROCESSOR, 0);
 
 		// Configure each step to sample on channel 10
 		ROM_ADCSequenceStepConfigure(adcBase, 1, 0, adcChannel);
