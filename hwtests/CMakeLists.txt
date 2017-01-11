@@ -3,11 +3,17 @@ message("Defined Tivaware Installation Location: "
 	${TIVAWARE_INSTALL})
 message("Defined Repository Root Location: "
 	${REPO_LOC})
+message("Defined CMSIS Installation Location: "
+	${CMSIS_LOC})
 
 file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/vars.txt 
 "		<variable>
 			<name>TIVAWARE_INSTALL</name>
 			<value>file:${TIVAWARE_INSTALL}</value>
+		</variable>
+		<variable>
+			<name>CMSIS_LOC</name>
+			<value>file:${CMSIS_LOC}</value>
 		</variable>
 		<variable>
 			<name>REPO_LOC</name>

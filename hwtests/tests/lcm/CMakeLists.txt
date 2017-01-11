@@ -8,7 +8,7 @@ file(READ ${CMAKE_CURRENT_BINARY_DIR}/../../vars.txt PROJVARS)
 file(READ ${CMAKE_CURRENT_BINARY_DIR}/../../links.txt PROJLINKS)
 
 file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/project/.project ${CCS_DOTPROJECT_HEADER})
-file(APPEND ${CMAKE_CURRENT_BINARY_DIR}/project/.project "<name>UARTTest</name>\n")
+file(APPEND ${CMAKE_CURRENT_BINARY_DIR}/project/.project "<name>LCMTests</name>\n")
 file(APPEND ${CMAKE_CURRENT_BINARY_DIR}/project/.project ${CCS_DOTPROJECT_MIDCONTENT})
 file(APPEND ${CMAKE_CURRENT_BINARY_DIR}/project/.project ${PROJLINKS})
 file(APPEND ${CMAKE_CURRENT_BINARY_DIR}/project/.project 
