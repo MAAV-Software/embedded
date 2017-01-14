@@ -55,6 +55,15 @@ void TestFunction::run()
 		    // blink the LED
 		    Toggle_LED(BLUE_LED, SYSCLOCK / 1000);
 		}
+		
+		feedback_t msg;
+		msg.flags = setpt.flags;
+		msg.pitch = msg.roll = msg.yaw = 0;
+		msg.x[0] = 10;  msg.x[1] = 1; msg.x[2] = 0;
+		msg.y[0] = 20;  msg.y[1] = 0; msg.y[2] = 0;
+		msg.z[0] = 1.5; msg.z[1] = 0; msg.z[2] = 0;
+		msg.utime = millis();
+		dl.send(&msg);
 
 	}
 
