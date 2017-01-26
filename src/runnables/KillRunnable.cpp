@@ -22,6 +22,7 @@ KillRunnable::KillRunnable(ProgramState *pState) : state(pState)
 
 void KillRunnable::run()
 {
+	return;
 	if (state->kill->dutyCycle(servoIn_getPulse(KILL_CHAN3), 2) < 0.75)
 	//if (!state->sw[2].readState)
 	{

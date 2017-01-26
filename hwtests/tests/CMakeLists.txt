@@ -1,3 +1,5 @@
 add_subdirectory(./led)
 add_subdirectory(./uart)
 add_subdirectory(./lcm)
+add_subdirectory(./lidar)
+add_subdirectory(./px4)

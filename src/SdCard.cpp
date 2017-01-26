@@ -28,7 +28,7 @@ SdCard::SdCard()
 	FResult = FR_OK;
 	if(!mount())
 	{
-	    goApeshit();
+	    //goApeshit();
 	}
 	FileCounter = Read_LOG_EEPROM();
 }

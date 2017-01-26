@@ -201,19 +201,19 @@ int main()
 	mainLoop.regEvent(&batteryRunnable, 	1000, 	8);
 
 	// tricky way to get rid of the initial large values!
-	while (kill.dutyCycle(servoIn_getPulse(KILL_CHAN3), 2) > 0.75);
+	//while (kill.dutyCycle(servoIn_getPulse(KILL_CHAN3), 2) > 0.75);
 
 	// check if the stick is up, PPM range(59660, 127400)
 	// might change after the calibration (87552, 153108)
-	while (kill.dutyCycle(servoIn_getPulse(KILL_CHAN3), 2) < 0.75)
-	{
+	//while (kill.dutyCycle(servoIn_getPulse(KILL_CHAN3), 2) < 0.75)
+	//{
 	    //update switch configurations when killed
 	    //do we want to this or force restart on config update
-	    for (int i = 0; i < 3; ++i)
-	    {
-	        pState.sw[i].update();
-	    }
-	}
+	    //for (int i = 0; i < 3; ++i)
+	    //{
+	        //pState.sw[i].update();
+	    //}
+	//}
 
 	//The first unkill the kill runnable isn't running yet
 	//So we have to manually do the unkill tasks
