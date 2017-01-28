@@ -14,6 +14,8 @@
 extern "C" {
 #endif
 
+#include "lidar_t.h"
+#include "imu_t.h"
 #define FEEDBACK_T_VAL 0
 #define FEEDBACK_T_RATE 1
 #define FEEDBACK_T_ACCEL 2
@@ -21,6 +23,8 @@ extern "C" {
 typedef struct _feedback_t feedback_t;
 struct _feedback_t
 {
+    lidar_t    lidar;
+    imu_t      imu;
     float      x[3];
     float      y[3];
     float      z[3];
@@ -83,11 +87,11 @@ int feedback_t_encoded_size(const feedback_t *p);
 // LCM support functions. Users should not call these
 int64_t __feedback_t_get_hash(void);
 uint64_t __feedback_t_hash_recursive(const __lcm_hash_ptr *p);
-int     __feedback_t_encode_array(void *buf, int offset, int maxlen, const feedback_t *p, int elements);
-int     __feedback_t_decode_array(const void *buf, int offset, int maxlen, feedback_t *p, int elements);
-int     __feedback_t_decode_array_cleanup(feedback_t *p, int elements);
-int     __feedback_t_encoded_array_size(const feedback_t *p, int elements);
-int     __feedback_t_clone_array(const feedback_t *p, feedback_t *q, int elements);
+int __feedback_t_encode_array(void *buf, int offset, int maxlen, const feedback_t *p, int elements);
+int __feedback_t_decode_array(const void *buf, int offset, int maxlen, feedback_t *p, int elements);
+int __feedback_t_decode_array_cleanup(feedback_t *p, int elements);
+int __feedback_t_encoded_array_size(const feedback_t *p, int elements);
+int __feedback_t_clone_array(const feedback_t *p, feedback_t *q, int elements);
 
 #ifdef __cplusplus
 }

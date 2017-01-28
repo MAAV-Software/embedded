@@ -25,6 +25,8 @@ add_library(ctrl_sw SHARED
 			messaging/MessageHandler
 			messaging/emergency_t
 			messaging/feedback_t
+			messaging/lidar_t
+			messaging/imu_t
 			messaging/gains_t
 			messaging/raw_pose_t
 			messaging/setpt_t
