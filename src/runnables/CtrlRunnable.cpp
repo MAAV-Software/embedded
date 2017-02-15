@@ -117,21 +117,6 @@ void CtrlRunnable::run()
 
 	ps->vehicle->runCtrl(ps->mode);
 	ps->vehicle->prepareLog(vlog, plogs);
-
-	ps->feedback->lidar.dist = ps->lidar->getDist();
-	ps->feedback->lidar.vel = ps->lidar->getVel();
-	ps->feedback->lidar.timestamp = ps->lidar->getTimestamp();
-	
-	ps->feedback->imu.AccX = ps->imu->getAccX();
-	ps->feedback->imu.AccY = ps->imu->getAccY();
-	ps->feedback->imu.AccZ = ps->imu->getAccZ();
-	ps->feedback->imu.AngRateX = ps->imu->getAngRateX();
-	ps->feedback->imu.AngRateY = ps->imu->getAngRateY();
-	ps->feedback->imu.AngRateZ = ps->imu->getAngRateZ();
-	ps->feedback->imu.roll = ps->imu->getRoll();
-	ps->feedback->imu.pitch = ps->imu->getPitch();
-	ps->feedback->imu.yaw = ps->imu->getYaw();
-	ps->feedback->imu.timestamp = ps->imu->getTimestamp();
 	
     ps->feedback->utime = time;
     ps->feedback->roll  = ps->imu->getRoll();
@@ -148,7 +133,7 @@ void CtrlRunnable::run()
     ps->feedback->z[2]  = vlog.Az;
     ps->feedback->flags = ps->dLink->getSetptMsg().flags;
     ps->feedback->batteryVoltage = ps->battery->getVolts();
-    ps->dLink->send(ps->feedback);
+    //ps->dLink->send(ps->feedback);
 
 /*
     ps->feedback->utime = time;

@@ -30,6 +30,8 @@
 #include "messaging/lcmlite.h"
 #include "messaging/emergency_t.h"
 #include "messaging/feedback_t.h"
+#include "messaging/lidar_t.h"
+#include "messaging/imu_t.h"
 #include "messaging/gains_t.h"
 #include "messaging/raw_pose_t.h"
 #include "messaging/setpt_t.h"
@@ -50,6 +52,8 @@ public:
 	// Msg senders
 	void send(emergency_t *msg);
 	void send(feedback_t *msg);
+	void send(lidar_t *msg);
+	void send(imu_t *msg);
 
 	// Getters for received messages
 	gains_t getGainsMsg() const { return msgHandler.gains; }

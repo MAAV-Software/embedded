@@ -17,6 +17,8 @@
 #include "messaging/MessageHandler.hpp"
 #include "messaging/TransmitHandler.hpp"
 #include "messaging/feedback_t.h"
+#include "messaging/lidar_t.h"
+#include "messaging/imu_t.h"
 
 //LCM Sender Address (we don't use UDP, it just has to be something)
 static const uint64_t ATOM_ADDR = 9001;
@@ -58,6 +60,24 @@ void DataLink::send(feedback_t *msg)
     char buf[128];
     int len = feedback_t_encode(buf, 0, 128, msg);
 	lcmlite_publish(&lcm, "FEB", buf, len);
+}
+
+void DataLink::send(lidar_t *msg)
+{
+
+	char buf[128];
+	int len = lidar_t_encode(buf, 0, 128, msg);
+	lcmlite_publish(&lcm, "LID", buf, len);
+
+}
+
+void DataLink::send(imu_t *msg)
+{
+
+	char buf[128];
+	int len = imu_t_encode(buf, 0, 128, msg);
+	lcmlite_publish(&lcm, "IMU", buf, len);
+
 }
 
 void DataLink::processRecv(const uint8_t raw)

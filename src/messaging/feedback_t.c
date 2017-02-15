@@ -21,9 +21,7 @@ uint64_t __feedback_t_hash_recursive(const __lcm_hash_ptr *p)
     cp.v = (void*)__feedback_t_get_hash;
     (void) cp;
 
-    uint64_t hash = (uint64_t)0x621dd4793f4e52c2LL
-         + __lidar_t_hash_recursive(&cp)
-         + __imu_t_hash_recursive(&cp)
+    uint64_t hash = (uint64_t)0x053e73d54f9225d9LL
          + __float_hash_recursive(&cp)
          + __float_hash_recursive(&cp)
          + __float_hash_recursive(&cp)
@@ -54,12 +52,6 @@ int __feedback_t_encode_array(void *buf, int offset, int maxlen, const feedback_
     int thislen;
 
     for (element = 0; element < elements; element++) {
-
-        thislen = __lidar_t_encode_array(buf, offset + pos, maxlen - pos, &(p[element].lidar), 1);
-        if (thislen < 0) return thislen; else pos += thislen;
-
-        thislen = __imu_t_encode_array(buf, offset + pos, maxlen - pos, &(p[element].imu), 1);
-        if (thislen < 0) return thislen; else pos += thislen;
 
         thislen = __float_encode_array(buf, offset + pos, maxlen - pos, p[element].x, 3);
         if (thislen < 0) return thislen; else pos += thislen;
@@ -111,10 +103,6 @@ int __feedback_t_encoded_array_size(const feedback_t *p, int elements)
     int size = 0, element;
     for (element = 0; element < elements; element++) {
 
-        size += __lidar_t_encoded_array_size(&(p[element].lidar), 1);
-
-        size += __imu_t_encoded_array_size(&(p[element].imu), 1);
-
         size += __float_encoded_array_size(p[element].x, 3);
 
         size += __float_encoded_array_size(p[element].y, 3);
@@ -147,12 +135,6 @@ int __feedback_t_decode_array(const void *buf, int offset, int maxlen, feedback_
     int pos = 0, thislen, element;
 
     for (element = 0; element < elements; element++) {
-
-        thislen = __lidar_t_decode_array(buf, offset + pos, maxlen - pos, &(p[element].lidar), 1);
-        if (thislen < 0) return thislen; else pos += thislen;
-
-        thislen = __imu_t_decode_array(buf, offset + pos, maxlen - pos, &(p[element].imu), 1);
-        if (thislen < 0) return thislen; else pos += thislen;
 
         thislen = __float_decode_array(buf, offset + pos, maxlen - pos, p[element].x, 3);
         if (thislen < 0) return thislen; else pos += thislen;
@@ -189,10 +171,6 @@ int __feedback_t_decode_array_cleanup(feedback_t *p, int elements)
 {
     int element;
     for (element = 0; element < elements; element++) {
-
-        __lidar_t_decode_array_cleanup(&(p[element].lidar), 1);
-
-        __imu_t_decode_array_cleanup(&(p[element].imu), 1);
 
         __float_decode_array_cleanup(p[element].x, 3);
 
@@ -241,10 +219,6 @@ int __feedback_t_clone_array(const feedback_t *p, feedback_t *q, int elements)
 {
     int element;
     for (element = 0; element < elements; element++) {
-
-        __lidar_t_clone_array(&(p[element].lidar), &(q[element].lidar), 1);
-
-        __imu_t_clone_array(&(p[element].imu), &(q[element].imu), 1);
 
         __float_clone_array(p[element].x, q[element].x, 3);
 

@@ -82,6 +82,12 @@ void I2CRunnable::run(void)
 					ps->lidar->RecordTime(time);
 					ps->lidar->parse(rawLidar, LIDAR_DIST_SIZE);
 
+					lidar_t lidarMsg;
+					lidarMsg.dist = ps->lidar->getDist();
+					lidarMsg.vel = ps->lidar->getVel();
+					lidarMsg.timestamp = ps->lidar->getTimestamp();
+					ps->dLink->send(&lidarMsg);
+
 					LidarTime = getTime; // the time of lidar start
 					I2CMDone = false;
 					I2CMWrite(&I2CMInst, LIDAR_I2C_ADDRESS, command, 2, I2CMCallback, 0);
