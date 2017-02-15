@@ -57,33 +57,33 @@ void TestFunction::run()
 		// If the yaw is greater than 0.5, flash the active LEDs
 		if (dutyYawd > 0.5) {
 
-			// Check the duty cycle values for pitch, roll, and thrust and turn on appropriate LEDs
+			// If duty cycle value for pitch is greater than 0.6, turn on the blue LED
 			if (dutyXd > 0.6) {
 
 				TurnOff_LED(BLUE_LED);                 //TurnOn_LED and TurnOff_LED do the opposite things
-				SysCtlDelay(SYSCLOCK / 3 / 2);
-				TurnOn_LED(BLUE_LED);
-				SysCtlDelay(SYSCLOCK / 3 / 2);
 
 			}
 
+			// If duty cycle value for roll is greater than 0.5, turn on the red LED
 			if (dutyYd > 0.5) {
 
 				TurnOff_LED(RED_LED);
-				SysCtlDelay(SYSCLOCK / 3 / 2);
-				TurnOn_LED(RED_LED);
-				SysCtlDelay(SYSCLOCK / 3 / 2);
 
 			}
 
+			// If duty cycle value for thrust is greater than 0.5, turn on the green LED
 			if (dutyFz > 0.5) {
 
 				TurnOff_LED(GREEN_LED);
-				SysCtlDelay(SYSCLOCK / 3 / 2);
-				TurnOn_LED(GREEN_LED);
-				SysCtlDelay(SYSCLOCK / 3 / 2);
 
 			}
+
+			// Keep the LEDs on for a bit, then turn them all off and wait a bit (flash them)
+			SysCtlDelay(SYSCLOCK / 3 / 2);
+			TurnOn_LED(BLUE_LED);
+			TurnOn_LED(RED_LED);
+			TurnOn_LED(GREEN_LED);
+			SysCtlDelay(SYSCLOCK / 3 / 2);
 
 		// Otherwise, keep the LEDs on solid
 		} else {
