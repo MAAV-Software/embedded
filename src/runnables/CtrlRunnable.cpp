@@ -114,7 +114,7 @@ void CtrlRunnable::run()
 	ps->vehicle->setDofStates(states);
 	// end for debug only
 */
-
+/*
 	ps->vehicle->runCtrl(ps->mode);
 	ps->vehicle->prepareLog(vlog, plogs);
 	
@@ -133,8 +133,8 @@ void CtrlRunnable::run()
     ps->feedback->z[2]  = vlog.Az;
     ps->feedback->flags = ps->dLink->getSetptMsg().flags;
     ps->feedback->batteryVoltage = ps->battery->getVolts();
-    //ps->dLink->send(ps->feedback);
-
+    ps->dLink->send(ps->feedback);
+*/
 /*
     ps->feedback->utime = time;
     ps->feedback->roll  = ps->imu->getRoll();

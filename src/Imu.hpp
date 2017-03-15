@@ -12,6 +12,7 @@
 
 #include <stdint.h>
 #include "ImuDefines.hpp"
+#include "messaging/imu_t.h"
 
 #define MAX_MS_CMD_LENGTH 15
 
@@ -37,6 +38,8 @@ public:
     MicroStrainCmd formatSoftResetCmd();
 
     // Return data
+    imu_t* getImuData();
+
 	float getAccX() const;
 	float getAccY() const;
 	float getAccZ() const;
@@ -54,7 +57,7 @@ public:
 	float getMagX() const;
 	float getMagY() const;
 	float getMagZ() const;
-	uint32_t getTimer() const;
+	int32_t getTimer() const;
 	void getRotMat(float dest[NUM_M_VAL]);
 	
     
@@ -79,6 +82,9 @@ public:
 	float getGyroBiasZ() const;
 
 private:
+
+	imu_t dataStruct;
+/*
 	float refYaw;
 
 	float gAccX;
@@ -103,7 +109,7 @@ private:
 	float AccBiasX;
 	float AccBiasY;
 	float AccBiasZ;
-
+*/
     bool goodChecksum(const uint8_t* data, uint32_t size);
     void parseMeasurements(const uint8_t* data);
     void parseAccCal(const uint8_t* data);

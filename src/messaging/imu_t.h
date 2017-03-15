@@ -17,16 +17,28 @@ extern "C" {
 typedef struct _imu_t imu_t;
 struct _imu_t
 {
+    float      refYaw;
+    float      gAccX;
+    float      gAccY;
+    float      gAccZ;
     float      AccX;
     float      AccY;
     float      AccZ;
     float      AngRateX;
     float      AngRateY;
     float      AngRateZ;
-    float      roll;
-    float      pitch;
-    float      yaw;
+    float      MagX;
+    float      MagY;
+    float      MagZ;
+    float      M[9];
     float      timestamp;
+    int32_t    Timer;
+    float      GyroBiasX;
+    float      GyroBiasY;
+    float      GyroBiasZ;
+    float      AccBiasX;
+    float      AccBiasY;
+    float      AccBiasZ;
 };
 
 /**

@@ -160,6 +160,8 @@ void ImuRunnable::run()
 		state->imu->parse(IMU_RAW_DATA);
 		IMU_DONE = false;
 
+		state->dLink->send(state->imu->getImuData());
+		/*
 		imu_t imuMsg;
 		imuMsg.AccX = state->imu->getAccX();
 		imuMsg.AccY = state->imu->getAccY();
@@ -172,6 +174,7 @@ void ImuRunnable::run()
 		imuMsg.yaw = state->imu->getYaw();
 		imuMsg.timestamp = state->imu->getTimestamp();
 		state->dLink->send(&imuMsg);
+		*/
 	}
 }
 

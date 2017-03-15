@@ -38,26 +38,26 @@ typedef union f32union
 
 Imu::Imu()
 {
-	refYaw = 0;
-	AccX = 0;
-	AccY = 0;
-	AccZ = 0;
-	AngRateX = 0;
-	AngRateY = 0;
-	AngRateZ = 0;
-	MagX = 0;
-	MagY = 0;
-	MagZ = 0;
-	GyroBiasX = 0;
-	GyroBiasY = 0;
-	GyroBiasZ = 0;
-	AccBiasX = 0;
-	AccBiasY = 0;
-	AccBiasZ = 0;
+	dataStruct.refYaw = 0;
+	dataStruct.AccX = 0;
+	dataStruct.AccY = 0;
+	dataStruct.AccZ = 0;
+	dataStruct.AngRateX = 0;
+	dataStruct.AngRateY = 0;
+	dataStruct.AngRateZ = 0;
+	dataStruct.MagX = 0;
+	dataStruct.MagY = 0;
+	dataStruct.MagZ = 0;
+	dataStruct.GyroBiasX = 0;
+	dataStruct.GyroBiasY = 0;
+	dataStruct.GyroBiasZ = 0;
+	dataStruct.AccBiasX = 0;
+	dataStruct.AccBiasY = 0;
+	dataStruct.AccBiasZ = 0;
 	
-    for (unsigned int i = 0; i < NUM_M_VAL; ++i) M[i] = 0;
+    for (unsigned int i = 0; i < NUM_M_VAL; ++i) dataStruct.M[i] = 0;
 	
-    Timer = 1;
+    dataStruct.Timer = 1;
 }
 
 MicroStrainCmd Imu::formatStopContMode()
@@ -136,22 +136,22 @@ void Imu::parseMeasurements(const uint8_t* data)
 {
     if (!goodChecksum(data, MEASUREMENT_DATA_LENGTH)) return; // check checksum
 
-    gAccX = Bytes2Float(data, 1);
-    gAccY = Bytes2Float(data, 5);
-    gAccZ = Bytes2Float(data, 9);
+    dataStruct.gAccX = Bytes2Float(data, 1);
+    dataStruct.gAccY = Bytes2Float(data, 5);
+    dataStruct.gAccZ = Bytes2Float(data, 9);
 
-    AccX = Gravity * getgAccX();
-    AccY = Gravity * getgAccY();
-    AccZ = Gravity * getgAccZ();
-    AngRateX = Bytes2Float(data, 13);
-    AngRateY = Bytes2Float(data, 17);
-    AngRateZ = Bytes2Float(data, 21);
-    MagX = Bytes2Float(data, 25);
-    MagY = Bytes2Float(data, 29);
-    MagZ = Bytes2Float(data, 33);
+    dataStruct.AccX = Gravity * getgAccX();
+    dataStruct.AccY = Gravity * getgAccY();
+    dataStruct.AccZ = Gravity * getgAccZ();
+    dataStruct.AngRateX = Bytes2Float(data, 13);
+    dataStruct.AngRateY = Bytes2Float(data, 17);
+    dataStruct.AngRateZ = Bytes2Float(data, 21);
+    dataStruct.MagX = Bytes2Float(data, 25);
+    dataStruct.MagY = Bytes2Float(data, 29);
+    dataStruct.MagZ = Bytes2Float(data, 33);
 
     for (unsigned int i = 0; i < NUM_M_VAL; ++i)
-        M[i] = Bytes2Float(data, (37 + (i * 4)));
+    	dataStruct.M[i] = Bytes2Float(data, (37 + (i * 4)));
     /*
     * Here are the corresponding M rotation matrix entries and their indecies
     * M[0 1 2;
@@ -159,27 +159,27 @@ void Imu::parseMeasurements(const uint8_t* data)
     *   6 7 8]
     */
 
-    Timer = Bytes2Int(data, 73);
+    dataStruct.Timer = Bytes2Int(data, 73);
 }
 
 void Imu::parseAccCal(const uint8_t* data)
 {
     if (!goodChecksum(data, ACCEL_BIAS_DATA_LENGTH)) return; // check checksum
 
-	AccBiasX = Bytes2Float(data, 1);
-	AccBiasY = Bytes2Float(data, 5);
-    AccBiasZ = Bytes2Float(data, 9);
-    Timer = Bytes2Int(data, 13);
+    dataStruct.AccBiasX = Bytes2Float(data, 1);
+    dataStruct.AccBiasY = Bytes2Float(data, 5);
+    dataStruct.AccBiasZ = Bytes2Float(data, 9);
+    dataStruct.Timer = Bytes2Int(data, 13);
 }
 
 void Imu::parseGyroBias(const uint8_t* data)
 {
     if (!goodChecksum(data, GYRO_BIAS_DATA_LENGTH)) return; // check checksum
 
-	GyroBiasX = Bytes2Float(data, 1);
-	GyroBiasY = Bytes2Float(data, 5);
-    GyroBiasZ = Bytes2Float(data, 9);
-    Timer = Bytes2Int(data, 13);
+    dataStruct.GyroBiasX = Bytes2Float(data, 1);
+    dataStruct.GyroBiasY = Bytes2Float(data, 5);
+    dataStruct.GyroBiasZ = Bytes2Float(data, 9);
+    dataStruct.Timer = Bytes2Int(data, 13);
 }
 
 void Imu::parse(const uint8_t* data)
@@ -194,145 +194,150 @@ void Imu::parse(const uint8_t* data)
 	}
 }
 
+imu_t* Imu::getImuData()
+{
+	return &dataStruct;
+}
+
 void Imu::getRotMat(float dest[NUM_M_VAL])
 {
-	for (int i = 0; i < NUM_M_VAL; ++i) dest[i] = M[i];
+	for (int i = 0; i < NUM_M_VAL; ++i) dest[i] = dataStruct.M[i];
 }
 
 const float* Imu::getRotMat() const 
 {
-	return M;
+	return dataStruct.M;
 }
 
 // Return data
 float Imu::getgAccX() const
 {
-	return gAccX;
+	return dataStruct.gAccX;
 }
 
 float Imu::getgAccY() const
 {
-	return gAccY;
+	return dataStruct.gAccY;
 }
 
 float Imu::getgAccZ() const
 {
-	return gAccZ;
+	return dataStruct.gAccZ;
 }
 
 float Imu::getAccX() const
 {
-	return AccX;
+	return dataStruct.AccX;
 }
 
 float Imu::getAccY() const
 {
-	return AccY;
+	return dataStruct.AccY;
 }
 
 float Imu::getAccZ() const
 {
-	return AccZ;
+	return dataStruct.AccZ;
 }
 
 float Imu::getRoll() const
 {
-	return atan2(M[5], M[8]);
+	return atan2(dataStruct.M[5], dataStruct.M[8]);
 }
 
 float Imu::getPitch() const
 {
-	return asin(-M[2]);
+	return asin(-dataStruct.M[2]);
 }
 
 float Imu::getYaw() const
 {
-	return atan2(M[1], M[0]) - refYaw;
+	return atan2(dataStruct.M[1], dataStruct.M[0]) - dataStruct.refYaw;
 }
 
 float Imu::getAngRateX() const
 {
-	return AngRateX;
+	return dataStruct.AngRateX;
 }
 
 float Imu::getAngRateY() const
 {
-	return AngRateY;
+	return dataStruct.AngRateY;
 }
 
 float Imu::getAngRateZ() const
 {
-	return AngRateZ;
+	return dataStruct.AngRateZ;
 }
 
 float Imu::getMagX() const
 {
-	return MagX;
+	return dataStruct.MagX;
 }
 
 float Imu::getMagY() const
 {
-	return MagY;
+	return dataStruct.MagY;
 }
 
 float Imu::getMagZ() const
 {
-	return MagZ;
+	return dataStruct.MagZ;
 }
 
-uint32_t Imu::getTimer() const
+int32_t Imu::getTimer() const
 {
-	return Timer / 62500;
+	return dataStruct.Timer / 62500;
 }
 
 float Imu::getTimestamp() const
 {
-	return timestamp;
+	return dataStruct.timestamp;
 }
 
 void Imu::RecordTime(float time)
 {
-	timestamp = time;
+	dataStruct.timestamp = time;
 }
 
 void Imu::setRefYaw(float newRefYaw)
 {
-    refYaw = newRefYaw;
+	dataStruct.refYaw = newRefYaw;
 }
 
 float Imu::getRefYaw() const 
 {
-    return refYaw;
+    return dataStruct.refYaw;
 }
 
 float Imu::getAccBiasX() const
 {
-  return AccBiasX;
+  return dataStruct.AccBiasX;
 }
 
 float Imu::getAccBiasY() const
 {
-	return AccBiasY;
+	return dataStruct.AccBiasY;
 }
 
 float Imu::getAccBiasZ() const
 {
-	return AccBiasZ;
+	return dataStruct.AccBiasZ;
 }
 
 float Imu::getGyroBiasX() const
 {
-	return GyroBiasX;
+	return dataStruct.GyroBiasX;
 }
 
 float Imu::getGyroBiasY() const 
 {
-	return GyroBiasY;
+	return dataStruct.GyroBiasY;
 }
 
 float Imu::getGyroBiasZ() const
 {
-	return GyroBiasZ;
+	return dataStruct.GyroBiasZ;
 }
 
 void floatToBytes(uint8_t* dest, uint32_t idx, float num)
