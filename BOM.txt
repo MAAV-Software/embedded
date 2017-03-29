@@ -1,0 +1,13 @@
+-------------------------------------------------------------------------------
+                        MAAV Controls Bill of Materials                          
+===============================================================================
+
+LORD Microstrain 3DM GX3 25 IMU
+
+Pulsed Light LIDARLite Laser Rangefinder
+
+DJI NAZA Innerloop Controller
+
+//TODO: Add Futaba and HiTec transmitters and receivers
+
+Texas Instruments Tiva C TM4C123G6HPM Microcontroller
