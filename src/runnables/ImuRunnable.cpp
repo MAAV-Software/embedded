@@ -161,20 +161,6 @@ void ImuRunnable::run()
 		IMU_DONE = false;
 
 		state->dLink->send(state->imu->getImuData());
-		/*
-		imu_t imuMsg;
-		imuMsg.AccX = state->imu->getAccX();
-		imuMsg.AccY = state->imu->getAccY();
-		imuMsg.AccZ = state->imu->getAccZ();
-		imuMsg.AngRateX = state->imu->getAngRateX();
-		imuMsg.AngRateY = state->imu->getAngRateY();
-		imuMsg.AngRateZ = state->imu->getAngRateZ();
-		imuMsg.roll = state->imu->getRoll();
-		imuMsg.pitch = state->imu->getPitch();
-		imuMsg.yaw = state->imu->getYaw();
-		imuMsg.timestamp = state->imu->getTimestamp();
-		state->dLink->send(&imuMsg);
-		*/
 	}
 }
 

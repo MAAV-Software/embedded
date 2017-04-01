@@ -8,7 +8,7 @@ class Encoder
 {
 public:
 	// REQUIRES: message is at least as large as messageSize and no larger
-	//           than 120 bytes.
+	//           than 240 bytes.
 	// EFFECTS:  Encodes the first messageSize bytes of the message.
 	uint32_t encode(const uint8_t* message, uint32_t messageSize);
 
@@ -23,7 +23,7 @@ public:
 	//Encoder(); // Does not need one
 private:
 	uint32_t pktSize;
-	uint8_t pkt[256];
+	uint8_t pkt[512];
 };
 
 

@@ -19,7 +19,7 @@ struct _lidar_t
 {
     float      dist;
     float      vel;
-    float      timestamp;
+    int64_t    timestamp;
 };
 
 /**

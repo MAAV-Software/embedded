@@ -74,8 +74,8 @@ void DataLink::send(lidar_t *msg)
 void DataLink::send(imu_t *msg)
 {
 
-	char buf[128];
-	int len = imu_t_encode(buf, 0, 128, msg);
+	char buf[256];
+	int len = imu_t_encode(buf, 0, 256, msg);
 	lcmlite_publish(&lcm, "IMU", buf, len);
 
 }

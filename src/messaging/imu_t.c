@@ -21,7 +21,7 @@ uint64_t __imu_t_hash_recursive(const __lcm_hash_ptr *p)
     cp.v = (void*)__imu_t_get_hash;
     (void) cp;
 
-    uint64_t hash = (uint64_t)0xa445386ddb8310e5LL
+    uint64_t hash = (uint64_t)0x45ba7e71ef47d805LL
          + __float_hash_recursive(&cp)
          + __float_hash_recursive(&cp)
          + __float_hash_recursive(&cp)
@@ -36,7 +36,7 @@ uint64_t __imu_t_hash_recursive(const __lcm_hash_ptr *p)
          + __float_hash_recursive(&cp)
          + __float_hash_recursive(&cp)
          + __float_hash_recursive(&cp)
-         + __float_hash_recursive(&cp)
+         + __int64_t_hash_recursive(&cp)
          + __int32_t_hash_recursive(&cp)
          + __float_hash_recursive(&cp)
          + __float_hash_recursive(&cp)
@@ -108,7 +108,7 @@ int __imu_t_encode_array(void *buf, int offset, int maxlen, const imu_t *p, int 
         thislen = __float_encode_array(buf, offset + pos, maxlen - pos, p[element].M, 9);
         if (thislen < 0) return thislen; else pos += thislen;
 
-        thislen = __float_encode_array(buf, offset + pos, maxlen - pos, &(p[element].timestamp), 1);
+        thislen = __int64_t_encode_array(buf, offset + pos, maxlen - pos, &(p[element].timestamp), 1);
         if (thislen < 0) return thislen; else pos += thislen;
 
         thislen = __int32_t_encode_array(buf, offset + pos, maxlen - pos, &(p[element].Timer), 1);
@@ -183,7 +183,7 @@ int __imu_t_encoded_array_size(const imu_t *p, int elements)
 
         size += __float_encoded_array_size(p[element].M, 9);
 
-        size += __float_encoded_array_size(&(p[element].timestamp), 1);
+        size += __int64_t_encoded_array_size(&(p[element].timestamp), 1);
 
         size += __int32_t_encoded_array_size(&(p[element].Timer), 1);
 
@@ -256,7 +256,7 @@ int __imu_t_decode_array(const void *buf, int offset, int maxlen, imu_t *p, int 
         thislen = __float_decode_array(buf, offset + pos, maxlen - pos, p[element].M, 9);
         if (thislen < 0) return thislen; else pos += thislen;
 
-        thislen = __float_decode_array(buf, offset + pos, maxlen - pos, &(p[element].timestamp), 1);
+        thislen = __int64_t_decode_array(buf, offset + pos, maxlen - pos, &(p[element].timestamp), 1);
         if (thislen < 0) return thislen; else pos += thislen;
 
         thislen = __int32_t_decode_array(buf, offset + pos, maxlen - pos, &(p[element].Timer), 1);
@@ -317,7 +317,7 @@ int __imu_t_decode_array_cleanup(imu_t *p, int elements)
 
         __float_decode_array_cleanup(p[element].M, 9);
 
-        __float_decode_array_cleanup(&(p[element].timestamp), 1);
+        __int64_t_decode_array_cleanup(&(p[element].timestamp), 1);
 
         __int32_t_decode_array_cleanup(&(p[element].Timer), 1);
 
@@ -391,7 +391,7 @@ int __imu_t_clone_array(const imu_t *p, imu_t *q, int elements)
 
         __float_clone_array(p[element].M, q[element].M, 9);
 
-        __float_clone_array(&(p[element].timestamp), &(q[element].timestamp), 1);
+        __int64_t_clone_array(&(p[element].timestamp), &(q[element].timestamp), 1);
 
         __int32_t_clone_array(&(p[element].Timer), &(q[element].Timer), 1);
 
