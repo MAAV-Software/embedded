@@ -2,16 +2,11 @@
 #define MESSAGEHANDLER_HPP_
 
 #include "messaging/lcmlite.h"
-#include "messaging/gains_t.h"
-#include "messaging/raw_pose_t.h"
-#include "messaging/setpt_t.h"
-
+#include "messaging/dji_t.h"
 
 struct MessageHandler
 {
-	gains_t gains;
-	raw_pose_t rawPose;
-	setpt_t setpt;
+	dji_t dji;
 
 	MessageHandler();
 };

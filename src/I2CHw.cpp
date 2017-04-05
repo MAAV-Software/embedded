@@ -25,7 +25,6 @@
 
 #include "sensorlib/i2cm_drv.h"
 
-#include "Px4Defines.hpp"
 #include "LidarDefines.hpp"
 #include "I2CDefines.hpp"
 #include "I2CHw.hpp"
@@ -38,8 +37,6 @@ uint8_t command[4] = {LIDAR_REG_MEA, LIDAR_MEA_VALE, LIDAR_FULL_BYTE, PX4_MEA};
 bool I2CMDone = true;
 tI2CMInstance I2CMInst;
 uint32_t LidarTime = 0;
-uint32_t PX4Time = 0;
-uint8_t rawPx4[sizeof(px4Frame)];
 uint8_t rawLidar[LIDAR_DIST_SIZE];
 uint32_t i2cBase;
 

@@ -7,7 +7,6 @@
 
 #include "Vehicle.hpp"
 #include "Imu.hpp"
-#include "Px4.hpp"
 #include "Lidar.hpp"
 #include "FlightMode.hpp"
 #include "SdCard.hpp"
@@ -22,7 +21,6 @@ struct ProgramState
 {
 	Vehicle *vehicle;
 	Imu 	*imu;
-	Px4 	*px4;
 	Lidar 	*lidar;
 	SdCard	*sdcard;
 	Battery *battery;
@@ -33,9 +31,8 @@ struct ProgramState
 	RcController *pilot;
 	RcController *kill;
 	RcOutput *djiout;
-	float spArr[NUM_DOFS][NUM_DOF_STATES];
 
-	ProgramState(Vehicle *v, Imu *i, Px4 *px, Lidar *l, SdCard *s, Battery *b,
+	ProgramState(Vehicle *v, Imu *i, Lidar *l, SdCard *s, Battery *b,
 				 FlightMode m, DataLink *dl, ThreeSwitch *ls, feedback_t *fb,
 				 RcController *k, RcController *pi, RcOutput *d);
 

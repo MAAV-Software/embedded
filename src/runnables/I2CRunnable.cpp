@@ -54,20 +54,13 @@ void I2CRunnable::run(void)
 		switch(currentState)
 		{
 			case Lidar_1: // have sent the 1st Lidar command, ready to send px4 command
-				if ((getTime - PX4Time) > (sysClock / 1000.0 * 1.5))// wait for 1.5ms after px4 done
-				{
-					PX4Time = getTime; // the time of px4 start
-					I2CMDone = false;
-					I2CMRead(&I2CMInst, PX4_I2C_ADDRESS, command + 3, 1, rawPx4, (uint_fast16_t)sizeof(px4Frame), I2CMCallback, 0);
-					nextState = PX4_1;
-				}
+				I2CMDone = true;
+				nextState = PX4_1;
 				break;
 			case PX4_1: // have sent px4 command, ready to parse px4 and send 2nd lidar command
 				if ((getTime - LidarTime) > (sysClock / 1000.0 * 20.0)) // wait for 20ms after lidar1 done
 				{
 					time = (float)millis() / 1000.0f;
-					ps->px4->RecordTime(time);
-					ps->px4->parse(rawPx4);
 
 					LidarTime = getTime; // the time of lidar2 start
 					I2CMDone = false;

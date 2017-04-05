@@ -11,7 +11,6 @@
 #include <stdint.h>
 #include "sensorlib/i2cm_drv.h"
 #include "I2CDefines.hpp"
-#include "Px4Defines.hpp"
 #include "LidarDefines.hpp"
 
 // The I2C master driver instance data.
@@ -30,7 +29,6 @@ extern uint32_t LidarTime, PX4Time;
 
 extern uint8_t command[4];
 
-extern uint8_t rawPx4[sizeof(px4Frame)];
 extern uint8_t rawLidar[LIDAR_DIST_SIZE];
 
 

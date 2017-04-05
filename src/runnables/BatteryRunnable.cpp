@@ -41,14 +41,8 @@ void BatteryRunnable::run()
 		msg.status = (int8_t)EMERGENCY_T_LOW_BATTERY;
 		state->dLink->send(&msg);
 
-		// create and landing setpt
-		float spArr[NUM_DOFS][NUM_DOF_STATES];
-        spArr[X_AXIS][DOF_VAL] = state->feedback->x[FEEDBACK_T_VAL];
-        spArr[Y_AXIS][DOF_VAL] = state->feedback->y[FEEDBACK_T_VAL];
-        spArr[Z_AXIS][DOF_VAL] = 0.0f;
-        spArr[YAW][DOF_VAL]    = state->feedback->yaw;
+		// TODO: land
 
-        state->vehicle->setSetpt(spArr, AUTONOMOUS, false);
 	}
 }
 

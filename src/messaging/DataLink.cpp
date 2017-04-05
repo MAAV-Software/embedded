@@ -19,6 +19,7 @@
 #include "messaging/feedback_t.h"
 #include "messaging/lidar_t.h"
 #include "messaging/imu_t.h"
+#include "messaging/dji_t.h"
 
 //LCM Sender Address (we don't use UDP, it just has to be something)
 static const uint64_t ATOM_ADDR = 9001;
@@ -32,20 +33,12 @@ DataLink::DataLink(void (*f)(const uint8_t*, uint32_t))
     lcmlite_init(&lcm, transmitPacket, &msgSender);
 
     //Initialize LCM subscriptions
-    gainsSub.callback = callback;
-    gainsSub.channel = "GNS";
-    gainsSub.user = &msgHandler;
-    rawPoseSub.callback = callback;
-    rawPoseSub.channel = "RWP";
-    rawPoseSub.user = &msgHandler;
-    setptSub.callback = callback;
-    setptSub.channel = "SET";
-    setptSub.user = &msgHandler;
+    djiSub.callback = callback;
+    djiSub.channel = "DJI";
+    djiSub.user = &msgHandler;
 
     //Subscribe LCM subscriptions
-    lcmlite_subscribe(&lcm, &gainsSub);
-    lcmlite_subscribe(&lcm, &rawPoseSub);
-    lcmlite_subscribe(&lcm, &setptSub);
+    lcmlite_subscribe(&lcm, &djiSub);
 }
 
 void DataLink::send(emergency_t *msg)

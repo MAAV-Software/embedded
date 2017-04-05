@@ -32,9 +32,7 @@
 #include "messaging/feedback_t.h"
 #include "messaging/lidar_t.h"
 #include "messaging/imu_t.h"
-#include "messaging/gains_t.h"
-#include "messaging/raw_pose_t.h"
-#include "messaging/setpt_t.h"
+#include "messaging/dji_t.h"
 #include "messaging/MessageHandler.hpp"
 #include "messaging/TransmitHandler.hpp"
 #include "messaging/Decoder.hpp"
@@ -56,17 +54,13 @@ public:
 	void send(imu_t *msg);
 
 	// Getters for received messages
-	gains_t getGainsMsg() const { return msgHandler.gains; }
-	setpt_t getSetptMsg() const { return msgHandler.setpt; }
-	raw_pose_t getRawPoseMsg() const { return msgHandler.rawPose; }
+	dji_t getDjiMsg() const { return msgHandler.dji; }
 
 private:
 	lcmlite_t lcm; // lcmlite struct
 
 	// subscription types for the messages received
-	lcmlite_subscription_t gainsSub;	
-	lcmlite_subscription_t setptSub;
-	lcmlite_subscription_t rawPoseSub;
+	lcmlite_subscription_t djiSub;
 
 	// Lcm Message Handler for recieved messages
 	MessageHandler msgHandler;
