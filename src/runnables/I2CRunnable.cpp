@@ -71,14 +71,14 @@ void I2CRunnable::run(void)
 			case Lidar_2: // have sent the 2nd lidar command, ready to parse lidar and send 1st lidar command
 				if ((getTime - LidarTime) > (sysClock / 1000.0 * 0.1)) //wait for 0.1ms after lidar2 done
 				{
-					time = (float)millis() / 1000.0f;
+					time = millis();
 					ps->lidar->RecordTime(time);
 					ps->lidar->parse(rawLidar, LIDAR_DIST_SIZE);
 
 					lidar_t lidarMsg;
 					lidarMsg.dist = ps->lidar->getDist();
 					lidarMsg.vel = ps->lidar->getVel();
-					lidarMsg.utime = ps->lidar->getTimestamp();
+					lidarMsg.time = ps->lidar->getTimestamp();
 					ps->dLink->send(&lidarMsg);
 
 					LidarTime = getTime; // the time of lidar start

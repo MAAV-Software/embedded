@@ -57,6 +57,7 @@ Imu::Imu()
 	
     for (unsigned int i = 0; i < NUM_M_VAL; ++i) dataStruct.M[i] = 0;
 	
+    dataStruct.time = 0;
     dataStruct.Timer = 1;
 }
 
@@ -290,14 +291,14 @@ int32_t Imu::getTimer() const
 	return dataStruct.Timer / 62500;
 }
 
-float Imu::getTimestamp() const
+int64_t Imu::getTimestamp() const
 {
-	return dataStruct.utime;
+	return dataStruct.time;
 }
 
-void Imu::RecordTime(float time)
+void Imu::RecordTime(int64_t time)
 {
-	dataStruct.utime = time;
+	dataStruct.time = time;
 }
 
 void Imu::setRefYaw(float newRefYaw)

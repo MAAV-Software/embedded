@@ -31,7 +31,7 @@ struct _imu_t
     float      MagY;
     float      MagZ;
     float      M[9];
-    int64_t    utime;
+    int64_t    time;
     int32_t    Timer;
     float      GyroBiasX;
     float      GyroBiasY;

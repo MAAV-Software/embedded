@@ -156,7 +156,7 @@ void ImuRunnable::run()
 
 	if (IMU_DONE) // parse the measurement message if done
 	{
-		state->imu->RecordTime((float)millis() / 1000.0f);
+		state->imu->RecordTime(millis());
 		state->imu->parse(IMU_RAW_DATA);
 		IMU_DONE = false;
 

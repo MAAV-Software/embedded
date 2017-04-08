@@ -69,8 +69,8 @@ public:
 	*/
 	const float* getRotMat() const;
 	
-    float getTimestamp() const;
-	void RecordTime(float time);
+    int64_t getTimestamp() const;
+	void RecordTime(int64_t time);
 	void setRefYaw(float newRefYaw);
 	float getRefYaw() const;
 

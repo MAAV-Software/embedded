@@ -21,7 +21,7 @@ uint64_t __lidar_t_hash_recursive(const __lcm_hash_ptr *p)
     cp.v = (void*)__lidar_t_get_hash;
     (void) cp;
 
-    uint64_t hash = (uint64_t)0x371bcb32bc32a109LL
+    uint64_t hash = (uint64_t)0xe6c3e7f4e566c72eLL
          + __float_hash_recursive(&cp)
          + __float_hash_recursive(&cp)
          + __int64_t_hash_recursive(&cp)
@@ -53,7 +53,7 @@ int __lidar_t_encode_array(void *buf, int offset, int maxlen, const lidar_t *p, 
         thislen = __float_encode_array(buf, offset + pos, maxlen - pos, &(p[element].vel), 1);
         if (thislen < 0) return thislen; else pos += thislen;
 
-        thislen = __int64_t_encode_array(buf, offset + pos, maxlen - pos, &(p[element].utime), 1);
+        thislen = __int64_t_encode_array(buf, offset + pos, maxlen - pos, &(p[element].time), 1);
         if (thislen < 0) return thislen; else pos += thislen;
 
     }
@@ -83,7 +83,7 @@ int __lidar_t_encoded_array_size(const lidar_t *p, int elements)
 
         size += __float_encoded_array_size(&(p[element].vel), 1);
 
-        size += __int64_t_encoded_array_size(&(p[element].utime), 1);
+        size += __int64_t_encoded_array_size(&(p[element].time), 1);
 
     }
     return size;
@@ -106,7 +106,7 @@ int __lidar_t_decode_array(const void *buf, int offset, int maxlen, lidar_t *p, 
         thislen = __float_decode_array(buf, offset + pos, maxlen - pos, &(p[element].vel), 1);
         if (thislen < 0) return thislen; else pos += thislen;
 
-        thislen = __int64_t_decode_array(buf, offset + pos, maxlen - pos, &(p[element].utime), 1);
+        thislen = __int64_t_decode_array(buf, offset + pos, maxlen - pos, &(p[element].time), 1);
         if (thislen < 0) return thislen; else pos += thislen;
 
     }
@@ -122,7 +122,7 @@ int __lidar_t_decode_array_cleanup(lidar_t *p, int elements)
 
         __float_decode_array_cleanup(&(p[element].vel), 1);
 
-        __int64_t_decode_array_cleanup(&(p[element].utime), 1);
+        __int64_t_decode_array_cleanup(&(p[element].time), 1);
 
     }
     return 0;
@@ -158,7 +158,7 @@ int __lidar_t_clone_array(const lidar_t *p, lidar_t *q, int elements)
 
         __float_clone_array(&(p[element].vel), &(q[element].vel), 1);
 
-        __int64_t_clone_array(&(p[element].utime), &(q[element].utime), 1);
+        __int64_t_clone_array(&(p[element].time), &(q[element].time), 1);
 
     }
     return 0;
