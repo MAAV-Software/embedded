@@ -78,7 +78,7 @@ void I2CRunnable::run(void)
 					lidar_t lidarMsg;
 					lidarMsg.dist = ps->lidar->getDist();
 					lidarMsg.vel = ps->lidar->getVel();
-					lidarMsg.timestamp = ps->lidar->getTimestamp();
+					lidarMsg.utime = ps->lidar->getTimestamp();
 					ps->dLink->send(&lidarMsg);
 
 					LidarTime = getTime; // the time of lidar start

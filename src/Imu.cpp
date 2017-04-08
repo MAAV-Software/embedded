@@ -292,12 +292,12 @@ int32_t Imu::getTimer() const
 
 float Imu::getTimestamp() const
 {
-	return dataStruct.timestamp;
+	return dataStruct.utime;
 }
 
 void Imu::RecordTime(float time)
 {
-	dataStruct.timestamp = time;
+	dataStruct.utime = time;
 }
 
 void Imu::setRefYaw(float newRefYaw)
