@@ -39,6 +39,7 @@ void BatteryRunnable::run()
 
 		emergency_t msg;
 		msg.status = (int8_t)EMERGENCY_T_LOW_BATTERY;
+		msg.time = millis();
 		state->dLink->send(&msg);
 
 		// TODO: land

@@ -22,6 +22,7 @@ typedef struct _emergency_t emergency_t;
 struct _emergency_t
 {
     int8_t     status;
+    int64_t    time;
 };
 
 /**
@@ -74,12 +75,12 @@ int emergency_t_encoded_size(const emergency_t *p);
 
 // LCM support functions. Users should not call these
 int64_t __emergency_t_get_hash(void);
-int64_t __emergency_t_hash_recursive(const __lcm_hash_ptr *p);
-int     __emergency_t_encode_array(void *buf, int offset, int maxlen, const emergency_t *p, int elements);
-int     __emergency_t_decode_array(const void *buf, int offset, int maxlen, emergency_t *p, int elements);
-int     __emergency_t_decode_array_cleanup(emergency_t *p, int elements);
-int     __emergency_t_encoded_array_size(const emergency_t *p, int elements);
-int     __emergency_t_clone_array(const emergency_t *p, emergency_t *q, int elements);
+uint64_t __emergency_t_hash_recursive(const __lcm_hash_ptr *p);
+int __emergency_t_encode_array(void *buf, int offset, int maxlen, const emergency_t *p, int elements);
+int __emergency_t_decode_array(const void *buf, int offset, int maxlen, emergency_t *p, int elements);
+int __emergency_t_decode_array_cleanup(emergency_t *p, int elements);
+int __emergency_t_encoded_array_size(const emergency_t *p, int elements);
+int __emergency_t_clone_array(const emergency_t *p, emergency_t *q, int elements);
 
 #ifdef __cplusplus
 }

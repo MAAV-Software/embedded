@@ -7,9 +7,9 @@
 #include "messaging/emergency_t.h"
 
 static int __emergency_t_hash_computed;
-static int64_t __emergency_t_hash;
+static uint64_t __emergency_t_hash;
 
-int64_t __emergency_t_hash_recursive(const __lcm_hash_ptr *p)
+uint64_t __emergency_t_hash_recursive(const __lcm_hash_ptr *p)
 {
     const __lcm_hash_ptr *fp;
     for (fp = p; fp != NULL; fp = fp->parent)
@@ -21,8 +21,9 @@ int64_t __emergency_t_hash_recursive(const __lcm_hash_ptr *p)
     cp.v = (void*)__emergency_t_get_hash;
     (void) cp;
 
-    int64_t hash = (int64_t)0xf676555cfb6f48c0LL
+    uint64_t hash = (uint64_t)0xfa1254ba0baa43aeLL
          + __int8_t_hash_recursive(&cp)
+         + __int64_t_hash_recursive(&cp)
         ;
 
     return (hash<<1) + ((hash>>63)&1);
@@ -31,7 +32,7 @@ int64_t __emergency_t_hash_recursive(const __lcm_hash_ptr *p)
 int64_t __emergency_t_get_hash(void)
 {
     if (!__emergency_t_hash_computed) {
-        __emergency_t_hash = __emergency_t_hash_recursive(NULL);
+        __emergency_t_hash = (int64_t)__emergency_t_hash_recursive(NULL);
         __emergency_t_hash_computed = 1;
     }
 
@@ -40,11 +41,15 @@ int64_t __emergency_t_get_hash(void)
 
 int __emergency_t_encode_array(void *buf, int offset, int maxlen, const emergency_t *p, int elements)
 {
-    int pos = 0, thislen, element;
+    int pos = 0, element;
+    int thislen;
 
     for (element = 0; element < elements; element++) {
 
         thislen = __int8_t_encode_array(buf, offset + pos, maxlen - pos, &(p[element].status), 1);
+        if (thislen < 0) return thislen; else pos += thislen;
+
+        thislen = __int64_t_encode_array(buf, offset + pos, maxlen - pos, &(p[element].time), 1);
         if (thislen < 0) return thislen; else pos += thislen;
 
     }
@@ -72,6 +77,8 @@ int __emergency_t_encoded_array_size(const emergency_t *p, int elements)
 
         size += __int8_t_encoded_array_size(&(p[element].status), 1);
 
+        size += __int64_t_encoded_array_size(&(p[element].time), 1);
+
     }
     return size;
 }
@@ -90,6 +97,9 @@ int __emergency_t_decode_array(const void *buf, int offset, int maxlen, emergenc
         thislen = __int8_t_decode_array(buf, offset + pos, maxlen - pos, &(p[element].status), 1);
         if (thislen < 0) return thislen; else pos += thislen;
 
+        thislen = __int64_t_decode_array(buf, offset + pos, maxlen - pos, &(p[element].time), 1);
+        if (thislen < 0) return thislen; else pos += thislen;
+
     }
     return pos;
 }
@@ -100,6 +110,8 @@ int __emergency_t_decode_array_cleanup(emergency_t *p, int elements)
     for (element = 0; element < elements; element++) {
 
         __int8_t_decode_array_cleanup(&(p[element].status), 1);
+
+        __int64_t_decode_array_cleanup(&(p[element].time), 1);
 
     }
     return 0;
@@ -132,6 +144,8 @@ int __emergency_t_clone_array(const emergency_t *p, emergency_t *q, int elements
     for (element = 0; element < elements; element++) {
 
         __int8_t_clone_array(&(p[element].status), &(q[element].status), 1);
+
+        __int64_t_clone_array(&(p[element].time), &(q[element].time), 1);
 
     }
     return 0;

@@ -200,6 +200,7 @@ int main()
 
 	emergency_t ems;
 	ems.status = (int8_t)EMERGENCY_T_NORMAL;
+	ems.time = millis();
 	dl.send(&ems);
 
 #ifdef BENCHTOP

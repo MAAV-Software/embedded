@@ -45,7 +45,7 @@ void DataLink::send(emergency_t *msg)
 {
     char buf[128];
     int len = emergency_t_encode(buf, 0, 128, msg);
-	lcmlite_publish(&lcm, "EMS", msg, len);
+	lcmlite_publish(&lcm, "EMS", buf, len);
 }
 
 void DataLink::send(feedback_t *msg)

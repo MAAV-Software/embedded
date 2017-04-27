@@ -22,17 +22,18 @@ KillRunnable::KillRunnable(ProgramState *pState) : state(pState)
 
 void KillRunnable::run()
 {
-	return;
+	//return;
 	if (state->kill->dutyCycle(servoIn_getPulse(KILL_CHAN3), 2) < 0.75)
 	//if (!state->sw[2].readState)
 	{
-		state->sdcard->sync();
+		//state->sdcard->sync();
 
 		// close the file
-		state->sdcard->closeFile();
+		//state->sdcard->closeFile();
 
 		emergency_t msg;
 		msg.status = (int8_t)EMERGENCY_T_KILL;
+		msg.time = millis();
 		state->dLink->send(&msg);
 
 		// disable flight mode LED
@@ -58,7 +59,7 @@ void KillRunnable::run()
 		// Start a new file
 //		snprintf(fileName, sizeof(fileName), "log%u.txt", fileNumber++);
 //		state->sdcard->createFile(fileName);
-		state->sdcard->createFile();
+		//state->sdcard->createFile();
 
 		msg.status = (int8_t)EMERGENCY_T_NORMAL;
 		state->dLink->send(&msg);
