@@ -7,11 +7,8 @@ add_library(ctrl_sw SHARED
 			Battery
 			LowPass
             MovingAvg
-			Pid
-			Dof
             ImuDefines
 			Imu
-			Px4
 			Lidar
             Vehicle
             MaavMath
@@ -27,9 +24,6 @@ add_library(ctrl_sw SHARED
 			messaging/feedback_t
 			messaging/lidar_t
 			messaging/imu_t
-			messaging/gains_t
-			messaging/raw_pose_t
-			messaging/setpt_t
 			messaging/dji_t
             RcController
            )

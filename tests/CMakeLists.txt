@@ -29,25 +29,13 @@ endforeach()
 # Tests that use both cmeigen and ctrl_sw get added here
 set(TESTS
 	LowPassTest
-	pidTest
-	dofTest
-	Px4SwTest
 	LidarSwTest
 	BatteryTest
-	VehicleSwTest
 	KalmanUnitTest
-	VehicleRunFilterTest
     MovingAvgTest
     RcControllerTest
     )
 
-# Log file for VehicleRunFilterTest
-configure_file(RunFilterTestLog.TXT
-	${CMAKE_CURRENT_BINARY_DIR}/RunFilterTestLog.TXT @ONLY)
-configure_file(runFltAns.txt
-	${CMAKE_CURRENT_BINARY_DIR}/runFltAns.txt @ONLY)
-configure_file(Px4Correct.txt
-	${CMAKE_CURRENT_BINARY_DIR}/Px4Correct.txt @ONLY)
 configure_file(LidarCorrect.txt
     ${CMAKE_CURRENT_BINARY_DIR}/LidarCorrect.txt @ONLY)
 
