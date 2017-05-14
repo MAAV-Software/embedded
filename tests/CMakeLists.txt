@@ -31,7 +31,6 @@ set(TESTS
 	LowPassTest
 	LidarSwTest
 	BatteryTest
-	KalmanUnitTest
     MovingAvgTest
     RcControllerTest
     )
