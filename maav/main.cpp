@@ -78,7 +78,7 @@ int main()
 
 // THESE ARE FOR 2016 SIGNAL BOARD
 	PPM_init(SYSCTL_PERIPH_TIMER2, SYSCLOCK, TIMER2_BASE, INT_TIMER2A,		// Chose any open timer
-			 GPIO_PORTE_BASE, GPIO_PIN_4, 4);								// Chose any open port/pin
+			 GPIO_PORTE_BASE, GPIO_PIN_4, 8);								// Chose any open port/pin
 
 	servoIn_init(SYSCTL_PERIPH_TIMER4, TIMER4_BASE); 						// Chose timer4 until encapsulated
 	servoIn_attachPin();
