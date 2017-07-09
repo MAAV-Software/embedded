@@ -23,6 +23,9 @@ extern const uint8_t hitecNumch;
 extern const Pair<uint32_t, uint32_t> dji[];
 extern const uint8_t djiNumch;
 
+extern const Pair<uint32_t, uint32_t> pixhawk[];
+extern const uint8_t pixhawkNumch;
+
 }
 
 #endif /* RCPROFILES_HPP_ */

@@ -136,9 +136,9 @@ int main()
 	Battery battery;
 	feedback_t fbMsg;
 
-	RcController kill(Maav::hitec, Maav::hitecNumch);
+	RcController kill(Maav::futaba, Maav::futabaNumch);
 	RcController pilot(Maav::futaba, Maav::futabaNumch);
-	RcOutput djiout(Maav::dji, Maav::djiNumch);
+	RcOutput djiout(Maav::pixhawk, Maav::pixhawkNumch);
 
 	ProgramState pState(&v, &imu, &lidar, &sdcard, &battery, MANUAL,
 	        &dl, sw, &fbMsg, &kill, &pilot, &djiout);
