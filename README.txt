@@ -1,6 +1,6 @@
 MAAV CONTROLS REPOSITORY
 
-by Sajan Patel, Clark Zhang, Zhengjie Cui, Sasawat Prankprakma
+by Sajan Patel, Clark Zhang, Zhengjie Cui, Sasawat Prankprakma, Nicholas Eckardt
 ------------------------------------------------------------------------------
 
 This is the repository for MAAV's controls subteam.
