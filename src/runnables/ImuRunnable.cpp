@@ -37,6 +37,9 @@
 using MaavMath::Gravity;
 using namespace MaavImu;
 
+//TODO remove, counting iterations per second
+static int cycleCount = 0;
+
 void ImuRunnable::AccelCalib()
 {
     //Accumulate the bias over 10 measurements
@@ -156,6 +159,13 @@ void ImuRunnable::run()
 
 	if (IMU_DONE) // parse the measurement message if done
 	{
+
+		cycleCount++;
+		if(cycleCount % 20 == 0)
+		{
+			cycleCount++;
+		}
+
 		state->imu->RecordTime(millis());
 		state->imu->parse(IMU_RAW_DATA);
 		IMU_DONE = false;
