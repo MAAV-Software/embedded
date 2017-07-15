@@ -157,13 +157,13 @@ int main()
 	BatteryRunnable batteryRunnable(&pState);
 
 	Loop mainLoop;
-	mainLoop.regEvent(&killRunnable, 		50, 		0);
-	mainLoop.regEvent(&flightModeRunnable, 	50, 	1);
+	mainLoop.regEvent(&killRunnable, 		0, 		0);
+	mainLoop.regEvent(&flightModeRunnable,	1,		1);
 	//mainLoop.regEvent(&imuRunnable, 		5000, 		2);
 	mainLoop.regEvent(&i2cRunnable, 		0, 		2);
 
 	//mainLoop.regEvent(&ctrlRunnable, 		10, 	4);
-	mainLoop.regEvent(&djiRunnable, 		50, 	3);
+	mainLoop.regEvent(&djiRunnable, 		20, 	3);
 
 	mainLoop.regEvent(&dlinkRunnable, 		20, 	4);
 	//mainLoop.regEvent(&switchRunnable, 		50, 	7);
@@ -184,7 +184,7 @@ int main()
 	}
 	//The first unkill the kill runnable isn't running yet
 	//So we have to manually do the unkill tasks
-	killRunnable.resetYaw();
+//	killRunnable.resetYaw();
 //	sdcard.createFile();
 
 //
