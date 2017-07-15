@@ -151,8 +151,8 @@ int main()
 	KillRunnable killRunnable(&pState);
 	ImuRunnable	imuRunnable(&pState);
 	I2CRunnable i2cRunnable(&pState);
-	CtrlRunnable ctrlRunnable(&pState);
-	SwitchRunnable switchRunnable(&pState);
+	//CtrlRunnable ctrlRunnable(&pState);
+	//SwitchRunnable switchRunnable(&pState);
 	DataLinkRunnable dlinkRunnable(&pState);
 	BatteryRunnable batteryRunnable(&pState);
 
@@ -160,14 +160,14 @@ int main()
 	mainLoop.regEvent(&killRunnable, 		0, 		0);
 	mainLoop.regEvent(&flightModeRunnable, 	10, 	1);
 	mainLoop.regEvent(&imuRunnable, 		0, 		2);
-	mainLoop.regEvent(&i2cRunnable, 		0, 		3);
+	mainLoop.regEvent(&i2cRunnable, 		20, 		3);
 
-	mainLoop.regEvent(&ctrlRunnable, 		10, 	4);
-	mainLoop.regEvent(&djiRunnable, 		10, 	5);
+	//mainLoop.regEvent(&ctrlRunnable, 		10, 	4);
+	mainLoop.regEvent(&djiRunnable, 		10, 	4);
 
-	mainLoop.regEvent(&dlinkRunnable, 		20, 	6);
-	mainLoop.regEvent(&switchRunnable, 		50, 	7);
-	mainLoop.regEvent(&batteryRunnable, 	1000, 	8);
+	mainLoop.regEvent(&dlinkRunnable, 		20, 	5);
+	//mainLoop.regEvent(&switchRunnable, 		50, 	7);
+	mainLoop.regEvent(&batteryRunnable, 	1000, 	6);
 
 	// tricky way to get rid of the initial large values!
 	while (kill.dutyCycle(servoIn_getPulse(KILL_CHAN3), 2) > 0.75);
