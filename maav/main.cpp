@@ -149,7 +149,7 @@ int main()
 	FlightModeRunnable flightModeRunnable(&pState);
 	DjiRunnable djiRunnable(&pState);
 	KillRunnable killRunnable(&pState);
-	ImuRunnable	imuRunnable(&pState);
+	//ImuRunnable	imuRunnable(&pState);
 	I2CRunnable i2cRunnable(&pState);
 	//CtrlRunnable ctrlRunnable(&pState);
 	//SwitchRunnable switchRunnable(&pState);
@@ -157,17 +157,17 @@ int main()
 	BatteryRunnable batteryRunnable(&pState);
 
 	Loop mainLoop;
-	mainLoop.regEvent(&killRunnable, 		0, 		0);
-	mainLoop.regEvent(&flightModeRunnable, 	10, 	1);
-	mainLoop.regEvent(&imuRunnable, 		0, 		2);
-	mainLoop.regEvent(&i2cRunnable, 		20, 		3);
+	mainLoop.regEvent(&killRunnable, 		50, 		0);
+	mainLoop.regEvent(&flightModeRunnable, 	50, 	1);
+	//mainLoop.regEvent(&imuRunnable, 		5000, 		2);
+	mainLoop.regEvent(&i2cRunnable, 		0, 		2);
 
 	//mainLoop.regEvent(&ctrlRunnable, 		10, 	4);
-	mainLoop.regEvent(&djiRunnable, 		10, 	4);
+	mainLoop.regEvent(&djiRunnable, 		50, 	3);
 
-	mainLoop.regEvent(&dlinkRunnable, 		20, 	5);
+	mainLoop.regEvent(&dlinkRunnable, 		20, 	4);
 	//mainLoop.regEvent(&switchRunnable, 		50, 	7);
-	mainLoop.regEvent(&batteryRunnable, 	1000, 	6);
+	mainLoop.regEvent(&batteryRunnable, 	1000, 	5);
 
 	// tricky way to get rid of the initial large values!
 	while (kill.dutyCycle(servoIn_getPulse(KILL_CHAN3), 2) > 0.75);
@@ -185,7 +185,7 @@ int main()
 	//The first unkill the kill runnable isn't running yet
 	//So we have to manually do the unkill tasks
 	killRunnable.resetYaw();
-	sdcard.createFile();
+//	sdcard.createFile();
 
 //
 //	sdcard.closeFile();

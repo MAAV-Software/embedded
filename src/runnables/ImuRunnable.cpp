@@ -150,7 +150,7 @@ void ImuRunnable::run()
 	uint32_t time = MAP_TimerValueGet(TIMER4_BASE, TIMER_A);
 
 	// Run at 100Hz (10ms)
-	if (!IMU_DONE && ((time - imuTime) > (SYSCLOCK / 1000 * 10)))
+	if (!IMU_DONE && ((time - imuTime) > (SYSCLOCK / 1000 * 1)))
 	{
 		imuTime = time;
         MicroStrainCmd cmd = state->imu->formatMeasCmd();
@@ -160,18 +160,14 @@ void ImuRunnable::run()
 	if (IMU_DONE) // parse the measurement message if done
 	{
 
-		cycleCount++;
-		if(cycleCount % 20 == 0)
-		{
-			cycleCount++;
-		}
 
 		state->imu->RecordTime(millis());
 		state->imu->parse(IMU_RAW_DATA);
 		IMU_DONE = false;
 
-		state->dLink->send(state->imu->getImuData());
+
 	}
+	state->dLink->send(state->imu->getImuData());
 }
 
 void ImuRunnable::setMode()

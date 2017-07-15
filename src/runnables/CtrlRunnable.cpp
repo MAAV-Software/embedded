@@ -91,45 +91,45 @@ void CtrlRunnable::run()
 	else if (ppmRoll > ps->djiout->dutyCycle(1.00, 1)) ppmRoll = ps->djiout->dutyCycle(1.00, 1);
 
 
-	char msg[1024];
-	// time, IMU, px4, lidar, camera
-	uint32_t len = snprintf(msg, sizeof(msg),
-			"%f\t"//Time
-			"%u\t"//Mode
-			"%f\t%f\t%f\t"//Acc X,Y,Z
-			"%f\t%f\t%f\t"//AngRate X,Y,Z
-			"%f\t%f\t%f\t"//Mag X,Y,Z
-			"%f\t%f\t%f\t%f\t%f\t%f\t%f\t%f\t%f\t"//RotMat (9 elements)
-			"%f\t%f\t%f\t"//Px4Flow X,Y,Quality
-			"%f\t"//Dist
-			"%f\t%f\t%f\t%lu\t"//Pose message
-			"%f\t%f\t%f\t%f\t%f\t%f\t%f\t%f\t%f\t"//Filtered states, X,Y,Z,Xd,Yd,Zd Imu X,Y,Z
-			"%f\t%f\t%f\t"//KPID Start
-			"%f\t%f\t%f\t"
-			"%f\t%f\t%f\t"
-			"%f\t%f\t%f\t"
-			"%f\t%f\t%f\t"
-			"%f\t%f\t%f\t"
-			"%f\t%f\t%f\t"
-			"%f\t%f\t%f\t"//KPID End
-			"%f\t%f\t%f\t%f\t%f\t%f\t%f\t"//VAL SETPT X,Y,Z,YAW RATE SETPT X,Y,Z
-			"%f\t%f\t%f\t%f\t"//UVALS X,Y,Z RATE SETP YAW
-			"%u\t%u\t%u\t%u\t%u\t%u\t%u\t"//Flags
-			"%f\t"//Battery Volts
-			"%u\t%u\t%u\t%u\t"//RC Pilot Duty Cycles
-			"%f\t"//Setpt Message Flags
-			"%f\t%f\t%f\t%f\t"//DJI RPFzY
-			"%u\t%u\t%u\t%u\t"//PPM RPFzY
-			"%u\t"//msTime
-			"%f\t%f\t%f\t%f\t%f\t%u\n",//
-			time,
-			ps->mode,
-			ps->imu->getAccX(), ps->imu->getAccY(), ps->imu->getAccZ(),
-			ps->imu->getAngRateX(), ps->imu->getAngRateY(), ps->imu->getAngRateZ(),
-			ps->imu->getMagX(), ps->imu->getMagY(), ps->imu->getMagZ(),
-			RotMat[0], RotMat[1], RotMat[2], RotMat[3], RotMat[4], RotMat[5], RotMat[6], RotMat[7], RotMat[8],
-//			ps->px4->getXFlow(), ps->px4->getYFlow(), ps->px4->getQual(),
-			ps->lidar->getDist(),
+//	char msg[1024];
+//	// time, IMU, px4, lidar, camera
+//	uint32_t len = snprintf(msg, sizeof(msg),
+//			"%f\t"//Time
+//			"%u\t"//Mode
+//			"%f\t%f\t%f\t"//Acc X,Y,Z
+//			"%f\t%f\t%f\t"//AngRate X,Y,Z
+//			"%f\t%f\t%f\t"//Mag X,Y,Z
+//			"%f\t%f\t%f\t%f\t%f\t%f\t%f\t%f\t%f\t"//RotMat (9 elements)
+//			"%f\t%f\t%f\t"//Px4Flow X,Y,Quality
+//			"%f\t"//Dist
+//			"%f\t%f\t%f\t%lu\t"//Pose message
+//			"%f\t%f\t%f\t%f\t%f\t%f\t%f\t%f\t%f\t"//Filtered states, X,Y,Z,Xd,Yd,Zd Imu X,Y,Z
+//			"%f\t%f\t%f\t"//KPID Start
+//			"%f\t%f\t%f\t"
+//			"%f\t%f\t%f\t"
+//			"%f\t%f\t%f\t"
+//			"%f\t%f\t%f\t"
+//			"%f\t%f\t%f\t"
+//			"%f\t%f\t%f\t"
+//			"%f\t%f\t%f\t"//KPID End
+//			"%f\t%f\t%f\t%f\t%f\t%f\t%f\t"//VAL SETPT X,Y,Z,YAW RATE SETPT X,Y,Z
+//			"%f\t%f\t%f\t%f\t"//UVALS X,Y,Z RATE SETP YAW
+//			"%u\t%u\t%u\t%u\t%u\t%u\t%u\t"//Flags
+//			"%f\t"//Battery Volts
+//			"%u\t%u\t%u\t%u\t"//RC Pilot Duty Cycles
+//			"%f\t"//Setpt Message Flags
+//			"%f\t%f\t%f\t%f\t"//DJI RPFzY
+//			"%u\t%u\t%u\t%u\t"//PPM RPFzY
+//			"%u\t"//msTime
+//			"%f\t%f\t%f\t%f\t%f\t%u\n",//
+//			time,
+//			ps->mode,
+//			ps->imu->getAccX(), ps->imu->getAccY(), ps->imu->getAccZ(),
+//			ps->imu->getAngRateX(), ps->imu->getAngRateY(), ps->imu->getAngRateZ(),
+//			ps->imu->getMagX(), ps->imu->getMagY(), ps->imu->getMagZ(),
+//			RotMat[0], RotMat[1], RotMat[2], RotMat[3], RotMat[4], RotMat[5], RotMat[6], RotMat[7], RotMat[8],
+////			ps->px4->getXFlow(), ps->px4->getYFlow(), ps->px4->getQual(),
+//			ps->lidar->getDist(),
 			//dji.thrust,
 			//1.0f, 2.0f, 3.0f, 4.0f,
 //			ps->dLink->getRawPoseMsg().x, ps->dLink->getRawPoseMsg().y, ps->dLink->getRawPoseMsg().yaw, ps->dLink->getRawPoseMsg().utime, // this last time value is our tiva time
@@ -153,19 +153,19 @@ void CtrlRunnable::run()
 //			vlog.xUval, vlog.yUval, vlog.zUval, plogs[YAW][DOF_RATE].setpt,
 //			plogs[X_AXIS][DOF_VAL].flags, plogs[Y_AXIS][DOF_VAL].flags, plogs[Z_AXIS][DOF_VAL].flags,
 //			plogs[X_AXIS][DOF_RATE].flags, plogs[Y_AXIS][DOF_RATE].flags, plogs[Z_AXIS][DOF_RATE].flags, plogs[YAW][DOF_RATE].flags,
-			ps->battery->getVolts(),
-			ps->pilot->dutyCycle(servoIn_getPulse(RC_CHAN2), 1),
-			ps->pilot->dutyCycle(servoIn_getPulse(RC_CHAN1), 0),
-			ps->pilot->dutyCycle(servoIn_getPulse(RC_CHAN4), 3),
-			ps->pilot->dutyCycle(servoIn_getPulse(RC_CHAN3), 2),
-			dji.pitch, dji.roll, dji.thrust, dji.yawRate,
-			ppmRoll, ppmPitch, throttle, ppmYawRate,
-			msTime,
-			ps->lidar->getTimestamp(),
-			ps->imu->getTimestamp(),
-			poseTimestamp,
-			ps->imu->getRefYaw(),
-			ps->vehicle->getRCInputError());
-	ps->sdcard->write(msg, len);
+//			ps->battery->getVolts(),
+//			ps->pilot->dutyCycle(servoIn_getPulse(RC_CHAN2), 1),
+//			ps->pilot->dutyCycle(servoIn_getPulse(RC_CHAN1), 0),
+//			ps->pilot->dutyCycle(servoIn_getPulse(RC_CHAN4), 3),
+//			ps->pilot->dutyCycle(servoIn_getPulse(RC_CHAN3), 2),
+//			dji.pitch, dji.roll, dji.thrust, dji.yawRate,
+//			ppmRoll, ppmPitch, throttle, ppmYawRate,
+//			msTime,
+//			ps->lidar->getTimestamp(),
+//			ps->imu->getTimestamp(),
+//			poseTimestamp,
+//			ps->imu->getRefYaw(),
+//			ps->vehicle->getRCInputError());
+//	ps->sdcard->write(msg, len);
 }
 
