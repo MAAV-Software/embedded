@@ -58,6 +58,8 @@
 
 using namespace std;
 
+
+
 ////////////////////////////// MAIN FUNCTION ///////////////////////////////////
 int main()
 {
@@ -78,7 +80,7 @@ int main()
 
 // THESE ARE FOR 2016 SIGNAL BOARD
 	PPM_init(SYSCTL_PERIPH_TIMER2, SYSCLOCK, TIMER2_BASE, INT_TIMER2A,		// Chose any open timer
-			 GPIO_PORTE_BASE, GPIO_PIN_4, 4);								// Chose any open port/pin
+			 GPIO_PORTE_BASE, GPIO_PIN_4, 8);								// Chose any open port/pin
 
 	servoIn_init(SYSCTL_PERIPH_TIMER4, TIMER4_BASE); 						// Chose timer4 until encapsulated
 	servoIn_attachPin();
@@ -136,9 +138,9 @@ int main()
 	Battery battery;
 	feedback_t fbMsg;
 
-	RcController kill(Maav::hitec, Maav::hitecNumch);
+	RcController kill(Maav::futaba, Maav::futabaNumch);
 	RcController pilot(Maav::futaba, Maav::futabaNumch);
-	RcOutput djiout(Maav::dji, Maav::djiNumch);
+	RcOutput djiout(Maav::pixhawk, Maav::pixhawkNumch);
 
 	ProgramState pState(&v, &imu, &lidar, &sdcard, &battery, MANUAL,
 	        &dl, sw, &fbMsg, &kill, &pilot, &djiout);
@@ -147,25 +149,25 @@ int main()
 	FlightModeRunnable flightModeRunnable(&pState);
 	DjiRunnable djiRunnable(&pState);
 	KillRunnable killRunnable(&pState);
-	ImuRunnable	imuRunnable(&pState);
+	//ImuRunnable	imuRunnable(&pState);
 	I2CRunnable i2cRunnable(&pState);
-	CtrlRunnable ctrlRunnable(&pState);
-	SwitchRunnable switchRunnable(&pState);
+	//CtrlRunnable ctrlRunnable(&pState);
+	//SwitchRunnable switchRunnable(&pState);
 	DataLinkRunnable dlinkRunnable(&pState);
 	BatteryRunnable batteryRunnable(&pState);
 
 	Loop mainLoop;
 	mainLoop.regEvent(&killRunnable, 		0, 		0);
-	mainLoop.regEvent(&flightModeRunnable, 	10, 	1);
-	mainLoop.regEvent(&imuRunnable, 		0, 		2);
-	mainLoop.regEvent(&i2cRunnable, 		0, 		3);
+	mainLoop.regEvent(&flightModeRunnable,	1,		1);
+	//mainLoop.regEvent(&imuRunnable, 		5000, 		2);
+	mainLoop.regEvent(&i2cRunnable, 		0, 		2);
 
-	mainLoop.regEvent(&ctrlRunnable, 		10, 	4);
-	mainLoop.regEvent(&djiRunnable, 		10, 	5);
+	//mainLoop.regEvent(&ctrlRunnable, 		10, 	4);
+	mainLoop.regEvent(&djiRunnable, 		20, 	3);
 
-	mainLoop.regEvent(&dlinkRunnable, 		20, 	6);
-	mainLoop.regEvent(&switchRunnable, 		50, 	7);
-	mainLoop.regEvent(&batteryRunnable, 	1000, 	8);
+	mainLoop.regEvent(&dlinkRunnable, 		20, 	4);
+	//mainLoop.regEvent(&switchRunnable, 		50, 	7);
+	mainLoop.regEvent(&batteryRunnable, 	1000, 	5);
 
 	// tricky way to get rid of the initial large values!
 	while (kill.dutyCycle(servoIn_getPulse(KILL_CHAN3), 2) > 0.75);
@@ -182,8 +184,8 @@ int main()
 	}
 	//The first unkill the kill runnable isn't running yet
 	//So we have to manually do the unkill tasks
-	killRunnable.resetYaw();
-	sdcard.createFile();
+//	killRunnable.resetYaw();
+//	sdcard.createFile();
 
 //
 //	sdcard.closeFile();

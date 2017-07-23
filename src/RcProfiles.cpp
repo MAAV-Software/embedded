@@ -46,4 +46,16 @@ const Pair<uint32_t, uint32_t> dji[4] =
 
 const uint8_t djiNumch = 4;
 
+
+
+const Pair<uint32_t, uint32_t> pixhawk[4] =
+{
+		Pair<uint32_t, uint32_t>(67000, 169000), //Channel 1	(65000, 169000)
+        Pair<uint32_t, uint32_t>(73000, 169000), //Channel 2	(73000, 169000)
+        Pair<uint32_t, uint32_t>(70000, 169000), //Channel 3	(70000, 169000)
+        Pair<uint32_t, uint32_t>(72000, 169000) //Channel 4		(70000, 169000)
+};
+
+const uint8_t pixhawkNumch = 4;
+
 }

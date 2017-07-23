@@ -31,6 +31,8 @@ void Loop::regEvent(Runnable* task, int32_t periodMs, uint32_t idx)
 		_events[idx].period = periodMs;
 	}
 }
+//TODO remove, for debugging
+static int numMainCycles = 0;
 
 void Loop::run()
 {
@@ -38,6 +40,7 @@ void Loop::run()
 
 	for (;;)
 	{
+
 		loopTime = millis();
 		for (size_t i = 0; i < NUM_EVENT; ++i)
 		{
