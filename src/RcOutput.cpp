@@ -5,6 +5,9 @@
  *      Author: Sasawat
  */
 
+#include <stdlib.h>
+#include <string.h>
+
 #include "RcOutput.hpp"
 #include "MaavMath.hpp"
 #include "Pair.hpp"

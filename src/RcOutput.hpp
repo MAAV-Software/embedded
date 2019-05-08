@@ -8,7 +8,6 @@
 #ifndef RCOUTPUT_HPP_
 #define RCOUTPUT_HPP_
 
-
 #include <stdint.h>
 #include "Pair.hpp"
 

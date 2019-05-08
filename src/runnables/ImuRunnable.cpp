@@ -38,7 +38,7 @@ using MaavMath::Gravity;
 using namespace MaavImu;
 
 //TODO remove, counting iterations per second
-static int cycleCount = 0;
+//static int cycleCount = 0;
 
 void ImuRunnable::AccelCalib()
 {

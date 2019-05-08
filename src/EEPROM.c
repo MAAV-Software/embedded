@@ -17,12 +17,12 @@ void Config_EEPROM()
 
 void Write_PID_EEPROM(float * dataIn)
 {
-	ROM_EEPROMProgram(dataIn, 0x10, sizeof(floatArray));
+	ROM_EEPROMProgram((uint32_t*)dataIn, 0x10, sizeof(floatArray));
 }
 
 void Read_PID_EEPROM(float * dataOut)
 {
-	ROM_EEPROMRead(dataOut, 0x10, sizeof(floatArray));
+	ROM_EEPROMRead((uint32_t*)dataOut, 0x10, sizeof(floatArray));
 //	return floatArray;
 }
 

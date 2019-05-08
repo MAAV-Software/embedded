@@ -10,6 +10,35 @@ For more information or questions, contact:
  * Sasawat Prankprakma (psasawat@umich.edu)
  * Sajan Patel (sajanptl@umich.edu)
 
+
+Updates as of Summer 2019
+-------------------------
+* 7 May 2019: Updating hwtest test cases to reflect current state of embedded 
+code (e.g., no Px4 flow sensor, adding include dependency for general.h). The
+following tests are valid for 2019 and work: 
+	
+	kill, pilot, led, uart
+
+The following test is valid for 2019 but does not work as intended (triggering 
+FaultISR):
+	
+	lidar
+
+The following test is invalid for 2019 and needs to be refactored to reflect 
+MAAV's 2019 requirements:
+	
+	lcm
+
+The following test is no longer necessary for 2019, so do not run it (but do not
+remove it yet either; we will find a new location for it so that it remains archived):
+
+	imu
+
+The main maav project is a working product that works as intended. Also, a 
+new programmer unit has been assembled, but it is the only working one at the 
+moment, so DO NOT MISPLACE IT OR MESS IT UP.
+
+
 Installation Instructions (for test cases for hardware-independent code)
 ------------------------------------------------------------------------------
 If working on CAEN, please followed the specialized CAEN instructions below

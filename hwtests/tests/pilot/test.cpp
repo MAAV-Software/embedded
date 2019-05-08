@@ -15,9 +15,6 @@
 #include "messaging/RingBuffer.hpp"
 #include "messaging/emergency_t.h"
 #include "messaging/feedback_t.h"
-#include "messaging/gains_t.h"
-#include "messaging/raw_pose_t.h"
-#include "messaging/setpt_t.h"
 
 #include "runnables/DjiRunnable.hpp"
 #include "servoIn.hpp"
@@ -42,7 +39,7 @@ void TestFunction::run()
 
 	//Initialize the pilot RcController
 	RcController pilot(Maav::futaba, Maav::futabaNumch);
-	ProgramState pState(0, 0, 0, 0, 0, 0, MANUAL,
+	ProgramState pState(0, 0, 0, 0, 0, MANUAL,
 		       0, 0, 0, 0, &pilot, 0);
 
 	for(;;)

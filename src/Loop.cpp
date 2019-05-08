@@ -32,7 +32,7 @@ void Loop::regEvent(Runnable* task, int32_t periodMs, uint32_t idx)
 	}
 }
 //TODO remove, for debugging
-static int numMainCycles = 0;
+//static int numMainCycles = 0;
 
 void Loop::run()
 {

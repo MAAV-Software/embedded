@@ -44,6 +44,7 @@
 #include "driverlib/rom_map.h"
 #include "driverlib/interrupt.h"
 
+#include "general.h"
 #include "time_util.h"
 
 #include "TestFunction.hpp"

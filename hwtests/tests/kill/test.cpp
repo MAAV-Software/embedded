@@ -15,9 +15,6 @@
 #include "messaging/RingBuffer.hpp"
 #include "messaging/emergency_t.h"
 #include "messaging/feedback_t.h"
-#include "messaging/gains_t.h"
-#include "messaging/raw_pose_t.h"
-#include "messaging/setpt_t.h"
 
 #include "runnables/DjiRunnable.hpp"
 #include "servoIn.hpp"
@@ -42,18 +39,18 @@ void TestFunction::run()
 
 	//Initialize the kill RcController
 	RcController kill(Maav::hitec, Maav::hitecNumch);
-	ProgramState pState(0, 0, 0, 0, 0, 0, MANUAL,
-		       0, 0, 0, &kill, 0, 0);
+	ProgramState pState(0, 0, 0, 0, 0, MANUAL, 0, 0, 0, &kill, 0, 0);
 
 	for(;;)
 	{
 
 		// Get the duty cycle values for each stick
-		float dutyXd = abs(pState.kill->dutyCycle(servoIn_getPulse(RC_CHAN1), 0)); // pitch (vertical right stick)
-	    float dutyYd = abs(pState.kill->dutyCycle(servoIn_getPulse(RC_CHAN2), 1)); // roll (horizontal right stick)
-		float dutyFz = abs(pState.kill->dutyCycle(servoIn_getPulse(RC_CHAN3), 2)); // thrust (vertical left stick)
-		float dutyYawd = abs(pState.kill->dutyCycle(servoIn_getPulse(RC_CHAN4), 3)); // yaw rate (horizontal right stick)
-
+		float dutyXd = abs(pState.kill->dutyCycle(servoIn_getPulse(KILL_CHAN5), 0)); // pitch (vertical right stick)
+//	    float dutyYd = abs(pState.kill->dutyCycle(servoIn_getPulse(KILL_CHAN2), 1)); // roll (horizontal right stick)
+		float dutyFz = abs(pState.kill->dutyCycle(servoIn_getPulse(KILL_CHAN3), 2)); // thrust (vertical left stick)
+//		float dutyYawd = abs(pState.kill->dutyCycle(servoIn_getPulse(KILL_CHAN4), 3)); // yaw rate (horizontal right stick)
+		float dutyYd = 0;
+		float dutyYawd = 0;
 		// If the yaw is greater than 0.5, flash the active LEDs
 		if (dutyYawd > 0.5) {
 

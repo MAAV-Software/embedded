@@ -82,6 +82,7 @@ float KillRunnable::getYawOffset()
 //    IMU_DONE = false;
 //
 //    return imu.getYaw();
+      return 0.0;
 }
 
 void KillRunnable::resetYaw()
