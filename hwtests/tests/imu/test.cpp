@@ -15,9 +15,6 @@
 #include "messaging/RingBuffer.hpp"
 #include "messaging/emergency_t.h"
 #include "messaging/feedback_t.h"
-#include "messaging/gains_t.h"
-#include "messaging/raw_pose_t.h"
-#include "messaging/setpt_t.h"
 
 #include "runnables/ImuRunnable.hpp"
 #include "servoIn.hpp"
@@ -39,8 +36,7 @@ void TestFunction::run()
 
 	//Initialize the Imu (and make an almost empty ProgramState) and ImuRunnable
 	Imu imu;
-	ProgramState pState(0, &imu, 0, 0, 0, 0, MANUAL,
-		       0, 0, 0, 0, 0, 0);
+	ProgramState pState(0, &imu, 0, 0, 0, MANUAL, 0, 0, 0, 0, 0, 0);
 	ImuRunnable imuRunnable(&pState);
 
 	for(;;)

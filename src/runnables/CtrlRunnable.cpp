@@ -19,7 +19,7 @@ CtrlRunnable::CtrlRunnable(ProgramState* pState)
 void CtrlRunnable::run()
 {
 	uint32_t msTime = millis();
-	float time = ((float)msTime) / 1000.0f; // grab current time
+	//float time = ((float)msTime) / 1000.0f; // grab current time
 	float poseTimestamp = (float)millis() / 1000.0f;
 
 	if ((ps->mode == ASSISTED) || (ps->mode == MANUAL)) // set setpts here from rc pilot ctrl in assisted mode
