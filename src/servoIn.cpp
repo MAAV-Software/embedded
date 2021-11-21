@@ -9,7 +9,8 @@
 //#include <stdbool.h>
 
 #include "servoIn.hpp"
-
+#include "MaavMath.hpp"
+#include "MaavMath.cpp"
 #include "inc/hw_memmap.h"
 
 #include "driverlib/timer.h"
@@ -24,6 +25,7 @@
 volatile uint32_t pulseIn_PortA[8];
 //volatile uint32_t pulseIn_PortE[8];
 volatile uint32_t pulseIn_PortC[8];
+volatile float mm_traveled;
 
 
 static void servoIn_PortA_IntHandler(void);	// for PULSE in
@@ -177,5 +179,20 @@ void servoIn_PortC_IntHandler(void)
 	uint32_t currTime = MAP_TimerValueGet(TIMER4_BASE, TIMER_A);
 	MAP_GPIOIntClear(GPIO_PORTC_BASE, intStat);		// Clear the interrupt(s)
 	capturePortPulse(intStat, pinStat, riseTime, currTime, pulseIn_PortC);
+}
+
+void servoIn_IntHandler(void) {
+	float counter = 0.0;
+	//if A is high and B is low, increment counter by 1
+	if (A == HIGH and B == LOW) {
+		counter += 1;
+	}
+	//otherwise, if A is high and B is high, decrement counter by 1
+	else if (A == HIGH && B == HIGH) {
+		counter -= 1;
+	}
+	//Then just run the counter through the interpreter to find how far
+	//the servo has rotated
+	mm_traveled = counter_interpret(counter);
 }
 

@@ -77,5 +77,8 @@ float map(float x, float fromLow, float fromHigh, float toLow, float toHigh)
 {
 	return (((x - fromLow) * (toHigh - toLow)) / (fromHigh - fromLow)) + toLow;
 }
-
+// Takes in counter from InterruptHandler, converts to mm (assumes clockwise direction)
+float counter_interpret(float counter) {
+	return (counter * 2 * Pi * motor_diameter);
+}
 }
